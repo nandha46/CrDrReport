@@ -3,7 +3,7 @@
 		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="ISO-8859-1">
-    <title>List Users</title>
+    <title>Daybook Entries</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -19,25 +19,25 @@
         </form>
     </div>
     <div>
-        <h1>List of Users</h1>
+        <h1>Daybook Entries</h1>
     </div>
      
     <div>
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th>User ID</th>
-                    <th>E-mail</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Date</th>
+                    <th>Narration</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user: ${userList}">
-                    <td th:text="${user.id}">User ID</td>
-                    <td th:text="${user.email}">E-mail</td>
-                    <td th:text="${user.firstName}">First Name</td>
-                    <td th:text="${user.lastName}">Last Name</td>
+                <tr th:each="daybook: ${daybookList}">
+                    <td th:text="${daybook.date}">Date</td>
+                    <td th:text="${daybook.narration}">Narration</td>
+                    <td th:text="${daybook.crAmt}">Credit</td>
+                    <td th:text="${daybook.drAmt}">Debit</td>
                 </tr>
             </tbody>
         </table>

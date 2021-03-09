@@ -3,6 +3,7 @@ package in.trident.crdr.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,19 +12,23 @@ import org.springframework.data.domain.Sort;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.repositories.DaybookRepository;
 
-public class DaybookService implements DaybookRepository{
+public class DaybookService implements DaybookRepository {
 
+	@Autowired
+	private DaybookRepository daybookRepo; 
 	
+	
+	// will return multiple entry for daybook for a single day
 	@Override
-	public Daybook findDaybookByDate() {
-		// TODO Auto-generated method stub
-		return null;
+	public Daybook findDaybookByDate(String date) {
+		Daybook daybook = daybookRepo.findDaybookByDate(date);
+		return daybook;
 	}
 
 	@Override
 	public List<Daybook> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Daybook> daybooks = daybookRepo.findAll();
+		return daybooks;
 	}
 
 	@Override
@@ -47,7 +52,7 @@ public class DaybookService implements DaybookRepository{
 	@Override
 	public void flush() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -59,13 +64,13 @@ public class DaybookService implements DaybookRepository{
 	@Override
 	public void deleteInBatch(Iterable<Daybook> entities) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAllInBatch() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -119,25 +124,25 @@ public class DaybookService implements DaybookRepository{
 	@Override
 	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(Daybook entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAll(Iterable<? extends Daybook> entities) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAll() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -164,5 +169,5 @@ public class DaybookService implements DaybookRepository{
 		return false;
 	}
 
-	
+
 }

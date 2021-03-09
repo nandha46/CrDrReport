@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.User;
+import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
 
 @Controller
@@ -20,6 +22,8 @@ public class AppController {
 	
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private DaybookRepository daybookRepo;
 	
 	@GetMapping("")
 	public String showHomePage() {
@@ -46,5 +50,11 @@ public class AppController {
 		List<User> userList = userRepo.findAll();
 		model.addAttribute("userList",userList);
 		return "users";
+	}
+	@GetMapping("/daybooks")
+	public String listDaybook(Model model) {
+		List<Daybook> daybookList = daybookRepo.findAll();
+		model.addAttribute("daybookList",daybookList);
+		return "daybook";
 	}
 }
