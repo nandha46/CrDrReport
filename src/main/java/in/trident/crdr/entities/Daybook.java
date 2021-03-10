@@ -9,8 +9,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="daybook")
-public class Daybook {
+public class Daybook implements Comparable<Daybook>{
 	@Id
+	@Column(name="dbid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long dbId;
 	
@@ -22,19 +23,19 @@ public class Daybook {
 	// TODO date object or just String
 	
 	@Column(name="Narration", nullable = false)
-	private String narratiom;
+	private String narration;
 	
-	@Column(name="AccCode", nullable = false)
-	private int accCode;
+	@Column(name="acccode", nullable = false)
+	private int acccode;
 	
-	@Column(name="DrAmt", nullable = false)
+	@Column(name="dramt", nullable = false)
 	private Long drAmt;
 	// TODO Credit n Debit does it need to store negative value/double value
 	
-	@Column(name="CrAmt", nullable = false)
+	@Column(name="cramt", nullable = false)
 	private Long crAmt;
 	
-	@Column(name="SktValue", nullable = false)
+	@Column(name="stkvalue", nullable = false)
 	private int sktValue;
 	// TODO sktValue need to store negative value
 	
@@ -56,17 +57,17 @@ public class Daybook {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public String getNarratiom() {
-		return narratiom;
+	public String getNarration() {
+		return narration;
 	}
-	public void setNarratiom(String narratiom) {
-		this.narratiom = narratiom;
+	public void setNarration(String narratiom) {
+		this.narration = narratiom;
 	}
 	public int getAccCode() {
-		return accCode;
+		return acccode;
 	}
 	public void setAccCode(int accCode) {
-		this.accCode = accCode;
+		this.acccode = accCode;
 	}
 	public Long getDrAmt() {
 		return drAmt;
@@ -85,5 +86,9 @@ public class Daybook {
 	}
 	public void setSktValue(int sktValue) {
 		this.sktValue = sktValue;
+	}
+	@Override
+	public int compareTo(Daybook o) {
+		return this.date.compareTo(o.date);
 	}
 }

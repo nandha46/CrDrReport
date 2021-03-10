@@ -1,5 +1,6 @@
 package in.trident.crdr.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,8 @@ public class AppController {
 	@GetMapping("/daybooks")
 	public String listDaybook(Model model) {
 		List<Daybook> daybookList = daybookRepo.findAll();
+		Collections.sort(daybookList);
 		model.addAttribute("daybookList",daybookList);
-		return "daybook";
+		return "daybooks";
 	}
 }

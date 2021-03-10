@@ -20,8 +20,8 @@ public class DaybookService implements DaybookRepository {
 	
 	// will return multiple entry for daybook for a single day
 	@Override
-	public Daybook findDaybookByDate(String date) {
-		Daybook daybook = daybookRepo.findDaybookByDate(date);
+	public List<Daybook> findDaybookByDate(String date) {
+		List<Daybook> daybook = daybookRepo.findDaybookByDate(date);
 		return daybook;
 	}
 

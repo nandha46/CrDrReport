@@ -55,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/").hasAnyAuthority("developer","USER","ADMIN","CLIENT")
 			.antMatchers("/new").hasAnyAuthority("DEVELOPER","CLIENT")
 			.antMatchers("/edit/**").hasAnyAuthority("ADMIN")
+			.antMatchers("/daybooks").hasAnyAuthority("developer")
 			.antMatchers("/users").hasAnyAuthority("developer")
 			.antMatchers("/delete/**").hasAnyAuthority("DEVELOPER","CLIENT")
 			.anyRequest().authenticated()
