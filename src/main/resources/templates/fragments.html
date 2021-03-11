@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:fragments="head">
-	<meta charset="utf-8">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragments = "head" >
+	<meta charset="ISO-8859-1">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title> [[${pageTitle}]] </title>
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	 <!-- Font Awesome for Nav Bar icons -->
 	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -43,17 +41,18 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 </style>
 </head>
-<!-- Style for top nav bar -->
 
-<body>
-	<!--  Nav bar code -->
-<div th:fragments="nav">
+		<div th:fragment="navbar" >
 	<div class="navbar">
   <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
   <a th:href="@{/daybooks}"><i class="fa fa-fw fa-search"></i> Daybook</a> 
   <a th:href="@{/login}"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
   <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i> Login</a>
-	</div>
+		</div>
 </div>
+<body>
+	<footer th:fragment="footer">
+    <p>2019 FrontBackend.com</p>
+</footer>
 </body>
 </html>
