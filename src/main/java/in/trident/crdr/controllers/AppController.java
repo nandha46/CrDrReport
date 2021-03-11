@@ -27,7 +27,8 @@ public class AppController {
 	private DaybookRepository daybookRepo;
 	
 	@GetMapping("")
-	public String showHomePage() {
+	public String showHomePage(Model model) {
+		model.addAttribute("pageTitle", "CrDr Home");
 		return "index";
 	}
 	
@@ -57,6 +58,7 @@ public class AppController {
 		List<Daybook> daybookList = daybookRepo.findAll();
 		Collections.sort(daybookList);
 		model.addAttribute("daybookList",daybookList);
+		model.addAttribute("pageTitle","Daybook View");
 		return "daybooks";
 	}
 }
