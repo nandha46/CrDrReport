@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace = "fragments :: head" />
+<head>
+    <link href="jquery-ui.min.css" rel="stylesheet">
+    <link href="jquery.comiseo.daterangepicker.css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="moment.min.js"></script>
+    <script src="jquery.comiseo.daterangepicker.js"></script>
+    <script>
+        $(function() { $("#e1").daterangepicker(); });
+    </script>
+</head>
+
+<body>
+
+  	<div th:replace = "fragments::navbar"> </div>  
+	<!-- jQuery UI DateRangePicker -->	
+	<input id="e1" name="e1">
+
+	<div th:replace ="fragments::footer"></div>
+</body>
+</html>

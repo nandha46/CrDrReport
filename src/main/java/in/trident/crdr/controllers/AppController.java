@@ -53,12 +53,26 @@ public class AppController {
 		model.addAttribute("userList",userList);
 		return "users";
 	}
-	@GetMapping("/daybooks")
+/*	@GetMapping("/daybooks")
 	public String listDaybook(Model model) {
 		List<Daybook> daybookList = daybookRepo.findAll();
 		Collections.sort(daybookList);
 		model.addAttribute("daybookList",daybookList);
 		model.addAttribute("pageTitle","Daybook View");
 		return "daybooks";
+	} */
+	
+	@GetMapping("/daybooks")
+	public String listDaybook(Model model) {
+		List<Daybook> daybookList = daybookRepo.findDaybookByDate("date");
+		Collections.sort(daybookList);
+		model.addAttribute("daybookList",daybookList);
+		model.addAttribute("pageTitle","Daybook View");
+		return "daybooks";
+	}
+	
+	@GetMapping("/findDaybook")
+	public String findDaybook(String sDate, String eDate) {
+		return "findDaybook";
 	}
 }
