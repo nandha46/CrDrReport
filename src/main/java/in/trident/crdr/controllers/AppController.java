@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import in.trident.crdr.entities.Daybook;
+import in.trident.crdr.entities.FormData;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
@@ -23,6 +24,7 @@ public class AppController {
 	
 	@Autowired
 	private UserRepository userRepo;
+
 	@Autowired
 	private DaybookRepository daybookRepo;
 	
@@ -53,18 +55,12 @@ public class AppController {
 		model.addAttribute("userList",userList);
 		return "users";
 	}
-/*	@GetMapping("/daybooks")
-	public String listDaybook(Model model) {
-		List<Daybook> daybookList = daybookRepo.findAll();
-		Collections.sort(daybookList);
-		model.addAttribute("daybookList",daybookList);
-		model.addAttribute("pageTitle","Daybook View");
-		return "daybooks";
-	} */
 	
-	@GetMapping("/daybooks")
-	public String listDaybook(Model model) {
-		List<Daybook> daybookList = daybookRepo.findDaybookByDate("date");
+	@PostMapping("/daybooks")
+	public String listDaybook(Model model,FormData formdata) {
+		System.out.println(formdata.getStartDate());
+		formdata.setStartDate("2020-04-02");
+		List<Daybook> daybookList = daybookRepo.findDaybookByDate(formdata.getStartDate());
 		Collections.sort(daybookList);
 		model.addAttribute("daybookList",daybookList);
 		model.addAttribute("pageTitle","Daybook View");
@@ -72,7 +68,9 @@ public class AppController {
 	}
 	
 	@GetMapping("/findDaybook")
-	public String findDaybook(String sDate, String eDate) {
+	public String findDaybook(Model model) {
+		model.addAttribute("formdata", new FormData());
 		return "findDaybook";
 	}
+	
 }
