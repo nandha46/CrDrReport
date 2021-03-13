@@ -58,8 +58,6 @@ public class AppController {
 	
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model,FormData formdata) {
-		System.out.println(formdata.getStartDate());
-		formdata.setStartDate("2020-04-02");
 		List<Daybook> daybookList = daybookRepo.findDaybookByDate(formdata.getStartDate());
 		Collections.sort(daybookList);
 		model.addAttribute("daybookList",daybookList);
