@@ -24,8 +24,6 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	//TODO copy xml namespace from signup_form.html in other html files 
-	
 	@Column(nullable=false, unique = true, length=45)
 	private String email;
 	

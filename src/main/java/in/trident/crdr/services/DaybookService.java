@@ -17,8 +17,6 @@ public class DaybookService implements DaybookRepository {
 	@Autowired
 	private DaybookRepository daybookRepo; 
 	
-	
-	// will return multiple entry for daybook for a single day
 	@Override
 	public List<Daybook> findDaybookByDate(String date) {
 		List<Daybook> daybook = daybookRepo.findDaybookByDate(date);
