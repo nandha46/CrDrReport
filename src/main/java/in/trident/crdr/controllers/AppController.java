@@ -1,6 +1,10 @@
 package in.trident.crdr.controllers;
 
-import java.util.Collections;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +62,23 @@ public class AppController {
 	
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model,FormData formdata) {
-		List<Daybook> daybookList = daybookRepo.findDaybookByDate(formdata.getStartDate());
-		Collections.sort(daybookList);
-		model.addAttribute("daybookList",daybookList);
+		int days = formdata.findDays(formdata.getStartDate(), formdata.getEndDate());
+		System.out.println("Total days: "+days+"\n");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calender = Calendar.getInstance();
+		try {
+			calender.setTime(df.parse(formdata.getStartDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		ArrayList<ArrayList<Daybook>> listOflist = new ArrayList<ArrayList<Daybook>>();
+		ArrayList<Daybook> daybookList;
+		for (int i=0;i<=days;i++) {
+			daybookList = daybookRepo.findDaybookByDate(df.format(calender.getTime()));
+			listOflist.add(daybookList);
+			calender.add(Calendar.DATE, 1);
+		}
+		model.addAttribute("listOflist",listOflist);
 		model.addAttribute("pageTitle","Daybook View");
 		return "daybooks";
 	}

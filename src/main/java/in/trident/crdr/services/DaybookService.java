@@ -1,5 +1,6 @@
 package in.trident.crdr.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,8 @@ public class DaybookService implements DaybookRepository {
 	private DaybookRepository daybookRepo; 
 	
 	@Override
-	public List<Daybook> findDaybookByDate(String date) {
-		List<Daybook> daybook = daybookRepo.findDaybookByDate(date);
+	public ArrayList<Daybook> findDaybookByDate(String date) {
+		ArrayList<Daybook> daybook = daybookRepo.findDaybookByDate(date);
 		return daybook;
 	}
 

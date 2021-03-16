@@ -1,5 +1,6 @@
 package in.trident.crdr.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,7 @@ import in.trident.crdr.entities.Daybook;
 public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
 	@Query("Select u from Daybook u where u.date = ?1")
-	public List<Daybook> findDaybookByDate(String date);
+	public ArrayList<Daybook> findDaybookByDate(String date);
 	
 	//TODO Daybook search method filter by from and to dates
 }
