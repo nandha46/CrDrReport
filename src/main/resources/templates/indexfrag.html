@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragments = "head" >
+<head th:fragment = "headfra" >
 	<meta charset="ISO-8859-1">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title> [[${pageTitle}]] </title>
@@ -9,7 +9,39 @@
 	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+
+
 body {font-family: Arial, Helvetica, sans-serif;}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+.flex-container > div {
+  background-color: #f1f1f1;
+  width: 160px;
+  margin: 10px;
+  text-align: center;
+  line-height: 55px;
+  font-size: 30px;
+  border-radius : 8px;
+  box-shadow: 6px;
+}
+
+.flex-container > div:hover {
+  background-color: #f1f1f1;
+  width: 176px;
+  margin: 10px;
+  text-align: center;
+  line-height: 61px;
+  font-size: 30px;
+  border-radius : 8px;
+  
+}
+
 
 .navbar {
   width: 100%;
@@ -41,18 +73,4 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 </style>
 </head>
-
-
-<body>
-		<div th:fragment="navbar" >
-	<div class="navbar">
-  <a class="active" href="./"><i class="fa fa-fw fa-home"></i> Home</a> 
-  <a th:href="@{/findDaybook}"><i class="fa fa-fw fa-search"></i> Daybook</a> 
-  <a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i> Users</a> 
-  <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i> Login</a>
-  <a th:href="@{/register}"><i class="fa fa-fw fa-user"></i> Register</a>
-		</div>
-</div>
-
-</body>
 </html>

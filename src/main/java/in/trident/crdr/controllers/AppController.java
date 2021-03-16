@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import in.trident.crdr.entities.Daybook;
+import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.FormData;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.repositories.DaybookRepository;
@@ -80,6 +81,7 @@ public class AppController {
 		}
 		model.addAttribute("listOflist",listOflist);
 		model.addAttribute("pageTitle","Daybook View");
+		model.addAttribute("DaybookBalance",new DaybookBalance());
 		return "daybooks";
 	}
 	
