@@ -25,6 +25,13 @@ public class DaybookService implements DaybookRepository {
 	}
 
 	@Override
+	public ArrayList<Daybook> findDaybookRange(String d1, String d2) {
+		
+		//TODO Daybook search method filter by from and to dates
+		return null;
+	}
+	
+	@Override
 	public List<Daybook> findAll() {
 		List<Daybook> daybooks = daybookRepo.findAll();
 		return daybooks;
@@ -167,6 +174,8 @@ public class DaybookService implements DaybookRepository {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 
 
 }
