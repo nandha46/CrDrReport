@@ -11,7 +11,6 @@ public class FormData {
 	private boolean reportOrder;
 	private boolean transactedAccOnly;
 	private boolean cutOff;
-	private boolean isStockNeeded;
 	
 	public int findDays(String d1,String d2) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -63,12 +62,4 @@ public class FormData {
 		this.cutOff = cutOff;
 	}
 
-	public boolean isStockNeeded() {
-		return isStockNeeded;
-	}
-
-	public void setStockNeeded(boolean isStockNeeded) {
-		this.isStockNeeded = isStockNeeded;
-	}
-	
 }
