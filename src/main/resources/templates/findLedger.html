@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace = "fragments :: head" />
+<body>
+
+  	<div th:replace = "fragments::navbar"> </div>  
+	<!-- jQuery UI DateRangePicker -->	
+	<div class="container">
+		<form th:action="@{/ledger}" th:object="${formdata}" method="post" style="max-width: 600px; margin: 0 auto;">
+			From Date: <input type="date" th:filed="*{startDate}" name="startDate" min="2000-01-01" max="2022-01-01" value="2020-04-02" >
+		 	To Date: <input type="date" th:filed="*{endDate}" name="endDate" min="2000-01-02" max="2022-01-01" value ="2020-04-08">
+			<button type="submit">Submit </button>
+			<input type="button" value="Close">
+		</form>	
+	
+	</div>
+</body>
+</html>
