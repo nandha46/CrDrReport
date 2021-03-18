@@ -85,10 +85,21 @@ public class AppController {
 		return "daybooks";
 	}
 	
+	@PostMapping("/ledger")
+	public String listLedger(Model model,FormData formdata) {
+		model.addAttribute("pageTitle","Ledger");
+		return "ledger";
+	}
+	
 	@GetMapping("/findDaybook")
 	public String findDaybook(Model model) {
 		model.addAttribute("formdata", new FormData());
 		return "findDaybook";
+	}
+	@GetMapping("/findLedger")
+	public String findLedger(Model model) {
+		model.addAttribute("formdata", new FormData());
+		return "findLedger";
 	}
 	
 }

@@ -8,10 +8,35 @@
 	<!-- jQuery UI DateRangePicker -->	
 	<div class="container">
 		<form th:action="@{/ledger}" th:object="${formdata}" method="post" style="max-width: 600px; margin: 0 auto;">
+		<fieldset>	
+				<div class="form-group">
+    			<label for="exampleFormControlSelect1">Report Order</label>
+	          <select class="form-control" th:field="*{reportOrder}" id="exampleFormControlSelect1">
+    		  <option>Select</option>
+      		  <option>All</option>
+    		  </select>
+			  </div>
 			From Date: <input type="date" th:filed="*{startDate}" name="startDate" min="2000-01-01" max="2022-01-01" value="2020-04-02" >
 		 	To Date: <input type="date" th:filed="*{endDate}" name="endDate" min="2000-01-02" max="2022-01-01" value ="2020-04-08">
+			<div class="form-group">
+    			<label for="exampleFormControlSelect2">Transacted Accounts Only</label>
+	          <select class="form-control" th:field="*{transactedAccOnly}" id="exampleFormControlSelect2">
+    		  <option>No</option>
+      		  <option>Yes</option>
+    		  </select>
+			  </div>
+			<div class="form-group">
+    			<label for="exampleFormControlSelect3">Monthly Cut-Off</label>
+	          <select class="form-control" th:field="*{cutOff}" id="exampleFormControlSelect3">
+    		  <option>Don't Include</option>
+      		  <option>Include</option>
+    		  </select>
+			  </div>  
+			Stock Entries Needed: 	<input type="radio" th:field="*{isStockNeeded}">
+			
 			<button type="submit">Submit </button>
 			<input type="button" value="Close">
+		</fieldset>
 		</form>	
 	
 	</div>

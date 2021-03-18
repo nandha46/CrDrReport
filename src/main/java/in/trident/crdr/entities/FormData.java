@@ -8,6 +8,10 @@ public class FormData {
 
 	private String startDate;
 	private String endDate;
+	private boolean reportOrder;
+	private boolean transactedAccOnly;
+	private boolean cutOff;
+	private boolean isStockNeeded;
 	
 	public int findDays(String d1,String d2) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -21,6 +25,7 @@ public class FormData {
 		return (int)diff;
 	}
 	
+	
 	public String getStartDate() {
 		return startDate;
 	}
@@ -32,6 +37,38 @@ public class FormData {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isReportOrder() {
+		return reportOrder;
+	}
+
+	public void setReportOrder(boolean reportOrder) {
+		this.reportOrder = reportOrder;
+	}
+
+	public boolean isTransactedAccOnly() {
+		return transactedAccOnly;
+	}
+
+	public void setTransactedAccOnly(boolean transactedAccOnly) {
+		this.transactedAccOnly = transactedAccOnly;
+	}
+
+	public boolean isCutOff() {
+		return cutOff;
+	}
+
+	public void setCutOff(boolean cutOff) {
+		this.cutOff = cutOff;
+	}
+
+	public boolean isStockNeeded() {
+		return isStockNeeded;
+	}
+
+	public void setStockNeeded(boolean isStockNeeded) {
+		this.isStockNeeded = isStockNeeded;
 	}
 	
 }

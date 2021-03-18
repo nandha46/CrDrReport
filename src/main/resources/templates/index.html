@@ -3,14 +3,13 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace = "indexfrag :: headfra" />
 <body>
-
   	<div th:replace = "fragments::navbar"> </div>  
 	<div class="container text-center">
 	<h1>Welcome to CrDr</h1>
 	</div>
 	<div class="flex-container">
   <div><a th:href="@{/findDaybook}">Daybook</a></div>
-  <div>Ledger</div>
+  <div><a th:href="@{/findLedger}">Ledger</a></div>
   <div>Trial Balance</div>
   <div>Trading-Profit & Loss</div>
   <div>Balance Sheet</div>
