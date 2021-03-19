@@ -1,6 +1,10 @@
 package in.trident.crdr.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,12 +15,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import in.trident.crdr.entities.Daybook;
+import in.trident.crdr.entities.FormData;
 import in.trident.crdr.repositories.DaybookRepository;
 
 public class DaybookService implements DaybookRepository {
 
 	@Autowired
-	private DaybookRepository daybookRepo; 
+	private DaybookRepository daybookRepo;
+	
+	@Autowired
+	private FormData formdata;
 	
 	@Override
 	public ArrayList<Daybook> findDaybookByDate(String date) {
@@ -24,12 +32,27 @@ public class DaybookService implements DaybookRepository {
 		return daybook;
 	}
 
-//	@Override
-//	public ArrayList<Daybook> findDaybookRange(String d1, String d2) {
-//		
-//		//TODO Daybook search method filter by from and to dates
-//		return null;
-//	}
+	@Override
+	public ArrayList<Daybook> findDaybookRange(String d1, String d2) {
+		int days = formdata.findDays(d1, d2);
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calender = Calendar.getInstance();
+		try {
+			calender.setTime(df.parse(formdata.getStartDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		ArrayList<Daybook> daybookList;
+		ArrayList<ArrayList<Daybook>> listOflist = new ArrayList<ArrayList<Daybook>>();
+		// TODO need clarification
+		for (int i = 0; i <= days; i++) {
+			daybookList = daybookRepo.findDaybookByDate(df.format(calender.getTime()));
+			listOflist.add(daybookList);
+			calender.add(Calendar.DATE, 1);
+		}
+		return null;
+	}
+	
 	
 	@Override
 	public List<Daybook> findAll() {
@@ -174,8 +197,5 @@ public class DaybookService implements DaybookRepository {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
-
 
 }

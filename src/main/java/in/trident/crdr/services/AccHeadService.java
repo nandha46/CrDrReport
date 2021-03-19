@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import in.trident.crdr.entities.AccHead;
+import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.FormData;
 import in.trident.crdr.repositories.AccHeadRepo;
 
@@ -21,6 +22,27 @@ public class AccHeadService implements AccHeadRepo {
 	
 	@Override
 	public ArrayList<ArrayList<AccHead>> showLedger(FormData formdata) {
+		ArrayList<Daybook> daybooklist = new ArrayList<>();
+		if(formdata.isReportOrder()) { // true -> All acc heads
+			ArrayList<AccHead> headlist = accHeadRepo.findAllAccHead();
+			for (AccHead acchead : headlist) {
+				if (acchead.getAccCode() == 0) {
+					// Intentionally left empty
+				}
+				else {
+					daybooklist = accHeadRepo.findDaybookByAccCodeAndDate();
+				}
+			}
+			
+		}
+		else {
+			
+		}
+		return null;
+	}
+	
+	@Override
+	public ArrayList<Daybook> findDaybookByAccCodeAndDate() {
 		
 		return null;
 	}
@@ -174,6 +196,8 @@ public class AccHeadService implements AccHeadRepo {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 

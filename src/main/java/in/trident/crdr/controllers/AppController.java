@@ -70,7 +70,6 @@ public class AppController {
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model, FormData formdata) {
 		int days = formdata.findDays(formdata.getStartDate(), formdata.getEndDate());
-		System.out.println("Total days: " + days + "\n");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calender = Calendar.getInstance();
 		try {

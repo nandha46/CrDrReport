@@ -12,6 +12,6 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	@Query("Select u from Daybook u where u.date = ?1")
 	public ArrayList<Daybook> findDaybookByDate(String date);
 	
-	//public ArrayList<Daybook> findDaybookRange(String d1, String d2);
+	public ArrayList<Daybook> findDaybookRange(String d1, String d2);
 	
 }
