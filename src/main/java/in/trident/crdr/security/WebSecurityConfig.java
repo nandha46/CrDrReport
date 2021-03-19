@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.and().logout().logoutSuccessUrl("/").permitAll();	*/
 		http.authorizeRequests()
 			.antMatchers("/").hasAnyAuthority("developer","user","admin","client")
-			.antMatchers("/new").hasAnyAuthority("developer","client")
+			.antMatchers("/register").permitAll()
 			.antMatchers("/edit/**").hasAnyAuthority("ADMIN")
 			.antMatchers("/daybooks").hasAnyAuthority("developer")
 			.antMatchers("/findDaybook").hasAnyAuthority("developer")
@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/delete/**").hasAnyAuthority("developer","client")
 			.anyRequest().authenticated()
 			.and()
-			.formLogin().usernameParameter("email").defaultSuccessUrl("/users").permitAll()
+			.formLogin().usernameParameter("email").defaultSuccessUrl("/").permitAll()
 			.and()
 			.logout().logoutSuccessUrl("/").permitAll()
 			.and()

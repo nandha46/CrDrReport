@@ -11,20 +11,22 @@
 					<div>
 						<fieldset>
 							<legend>Select Account</legend>
+							<div class="scrol"> 
 							<table class="table table-striped table-bordered">
 								<thead class="thead-dark">
 									<tr>
-										<th>No</th>
+										<th>Acc Code</th>
 										<th>Account Name</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="daybook: ${list}">
-										<td th:text="${daybook.date}">Date</td>
-										<td th:text="${daybook.narration}">Narration</td>
+									<tr th:each="accHead : ${accHeadList}">
+										<td th:text="${accHead.accCode}">Acc Code</td>
+										<td th:text="${accHead.accName}">Account Name</td>
 									</tr>
 								</tbody>
 							</table>
+							</div>
 						</fieldset>
 					</div>
 				</div>
@@ -41,11 +43,11 @@
 									<option value="false">Select</option>
 								</select>
 							</div>
-							From Date: <input type="date" th:filed="*{startDate}"
+							From Date : <input type="date" th:filed="*{startDate}"
 								name="startDate" min="2000-01-01" max="2022-01-01"
-								value="2020-04-02"> To Date: <input type="date"
+								value="2020-04-02"> <br>To Date : <input type="date"
 								th:filed="*{endDate}" name="endDate" min="2000-01-02"
-								max="2022-01-01" value="2020-04-08">
+								max="2022-01-01" value="2020-04-30">
 							<div class="form-group">
 								<label for="exampleFormControlSelect2">Transacted
 									Accounts Only</label> <select class="form-control"

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragments = "head" >
-	<meta charset="ISO-8859-1">
+	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title> [[${pageTitle}]] </title>
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -15,6 +15,19 @@ body {font-family: Arial, Helvetica, sans-serif;}
   width: 100%;
   background-color: #555;
   overflow: auto;
+}
+
+.scrol {
+	float:left;
+	width: 500px;
+	overflow-y: auto;
+	height: 650px;
+}
+
+.scrol_daybook {
+	align-self : center;
+	overflow-y: auto;
+	height: 750px;
 }
 
 .navbar a {
