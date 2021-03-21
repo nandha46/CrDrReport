@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import in.trident.crdr.entities.AccHead;
-import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.FormData;
 
 public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
@@ -16,5 +15,4 @@ public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	
 	public ArrayList<ArrayList<AccHead>> showLedger(FormData formdata);
 	
-	public ArrayList<Daybook> findDaybookByAccCodeAndDate();
 }

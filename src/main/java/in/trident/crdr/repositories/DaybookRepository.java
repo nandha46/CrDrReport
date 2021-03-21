@@ -14,4 +14,7 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
 	public ArrayList<Daybook> findDaybookRange(String d1, String d2);
 	
+	public ArrayList<Daybook> findDaybookByAccCodeAndDate();
+
+	
 }

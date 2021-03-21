@@ -14,11 +14,20 @@ import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.FormData;
 import in.trident.crdr.repositories.AccHeadRepo;
+import in.trident.crdr.repositories.DaybookRepository;
+
+/*
+ * @author Nandhakumar Subramanian
+ * 
+ */
 
 public class AccHeadService implements AccHeadRepo {
 
 	@Autowired
 	private AccHeadRepo accHeadRepo;
+	
+	@Autowired
+	private DaybookRepository daybookRepo;
 	
 	@Override
 	public ArrayList<ArrayList<AccHead>> showLedger(FormData formdata) {
@@ -30,7 +39,7 @@ public class AccHeadService implements AccHeadRepo {
 					// Intentionally left empty
 				}
 				else {
-					daybooklist = accHeadRepo.findDaybookByAccCodeAndDate();
+					daybooklist = daybookRepo.findDaybookByAccCodeAndDate();
 				}
 			}
 			
@@ -41,11 +50,7 @@ public class AccHeadService implements AccHeadRepo {
 		return null;
 	}
 	
-	@Override
-	public ArrayList<Daybook> findDaybookByAccCodeAndDate() {
-		
-		return null;
-	}
+	
 	
 	@Override
 	public ArrayList<AccHead> findAll() {
@@ -198,7 +203,4 @@ public class AccHeadService implements AccHeadRepo {
 	}
 
 	
-
-	
-
 }

@@ -33,6 +33,12 @@ public class DaybookService implements DaybookRepository {
 	}
 
 	@Override
+	public ArrayList<Daybook> findDaybookByAccCodeAndDate() {
+		
+		return null;
+	}
+	
+	@Override
 	public ArrayList<Daybook> findDaybookRange(String d1, String d2) {
 		int days = formdata.findDays(d1, d2);
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
