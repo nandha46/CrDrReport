@@ -19,9 +19,6 @@ import in.trident.crdr.services.CustomUserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private DataSource dataSource;
-
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new CustomUserDetailsService();
@@ -52,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().formLogin().usernameParameter("email").defaultSuccessUrl("/users").permitAll()
 					.and().logout().logoutSuccessUrl("/").permitAll();	*/
 		http.authorizeRequests()
-			.antMatchers("/").hasAnyAuthority("developer","user","admin","client")
+			.antMatchers("/").permitAll()
 			.antMatchers("/register").permitAll()
 			.antMatchers("/edit/**").hasAnyAuthority("ADMIN")
 			.antMatchers("/daybooks").hasAnyAuthority("developer")

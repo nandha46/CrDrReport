@@ -31,11 +31,10 @@ public class DaybookService implements DaybookRepository {
 		ArrayList<Daybook> daybook = daybookRepo.findDaybookByDate(date);
 		return daybook;
 	}
-
+	
 	@Override
-	public ArrayList<Daybook> findDaybookByAccCodeAndDate() {
-		
-		return null;
+	public ArrayList<Daybook> findDaybookByAccCodeAndDate(int accCode, String d1, String d2) {
+		return daybookRepo.findDaybookByAccCodeAndDate(accCode, d1, d2);
 	}
 	
 	@Override
@@ -203,5 +202,7 @@ public class DaybookService implements DaybookRepository {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 
 }

@@ -39,8 +39,9 @@ public class AccHeadService implements AccHeadRepo {
 					// Intentionally left empty
 				}
 				else {
-					daybooklist = daybookRepo.findDaybookByAccCodeAndDate();
+					daybooklist = daybookRepo.findDaybookByAccCodeAndDate(acchead.getAccCode(), formdata.getStartDate(), formdata.getEndDate());
 				}
+				
 			}
 			
 		}

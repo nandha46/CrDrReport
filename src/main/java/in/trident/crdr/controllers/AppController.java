@@ -38,7 +38,7 @@ public class AppController {
 	@Autowired
 	private AccHeadRepo accHeadRepo;
 
-	@GetMapping("")
+	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
 		return "index";
