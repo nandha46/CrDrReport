@@ -81,7 +81,6 @@ public class User {
 		this.enabled = enabled;
 	}
 	public Set<Role> getRoles() {
-		System.out.println("getting roles..");
 		return roles;
 	}
 	public void setRoles(Set<Role> roles) {
