@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace = "indexfrag :: headfra" />
+<body>
+  	<div th:replace = "fragments::navbar"> </div>  
+	<div class="container text-center">
+	<h1>Access Restricted</h1>
+	</div>
+	<div class="flex-container">
+   <div style="height : 200px; width: 450px; word-wrap: break-word; background: red"> 
+   <p>This feature is being developed under production phase. User level access is denied.  </p>
+   </div>
+	</div>
+</body>
+</html>

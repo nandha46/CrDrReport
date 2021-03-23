@@ -54,6 +54,7 @@ public class AppController {
 	public String processRegister(User user) {
 		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
 		String encodedPass = passEncoder.encode(user.getPassword());
+		System.out.println("Password is : "+user.getPassword());
 		user.setPassword(encodedPass);
 		userRepo.save(user);
 		// TODO Check if user already exists by email id
@@ -115,4 +116,22 @@ public class AppController {
 		return "findLedger";
 	}
 
+	@GetMapping("/findTrialBal")
+	public String findTrial(Model model) {
+		model.addAttribute("pageTitle", "Trial Balance");
+		return "production";
+	}
+	
+	@GetMapping("/findTradingPL")
+	public String findTradingPl(Model model) {
+		model.addAttribute("pageTitle", "Trading - Profit and Loss");
+		return "production";
+	}
+	
+	@GetMapping("/findBalSheet")
+	public String findBalSheet(Model model) {
+		model.addAttribute("pageTitle", "Balance Sheet");
+		return "production";
+	}
+	
 }
