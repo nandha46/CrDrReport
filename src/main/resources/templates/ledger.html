@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-               	<th:block th:each="list: ${listOflist}">
+               	<th:block th:each="list: ${ledgerList}">
                		<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
                		 <td>Date</td>
                		 <td>Opening Balance</td>
