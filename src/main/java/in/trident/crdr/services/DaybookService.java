@@ -176,7 +176,6 @@ public class DaybookService implements DaybookRepository {
 	@Override
 	public void deleteAll() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
