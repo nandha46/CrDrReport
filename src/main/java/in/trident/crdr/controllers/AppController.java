@@ -18,6 +18,7 @@ import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.FormData;
+import in.trident.crdr.entities.LedgerBalance;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.DaybookRepository;
@@ -116,7 +117,7 @@ public class AppController {
 		}
 		model.addAttribute("headlist", headlist);
 		model.addAttribute("ledgerList", listOflist);
-		model.addAttribute("DaybookBalance", new DaybookBalance());
+		model.addAttribute("LedgerBalance", new LedgerBalance());
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
 	}

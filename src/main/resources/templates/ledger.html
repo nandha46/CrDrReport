@@ -36,13 +36,13 @@
                		 <td></td>
                		 <td></td>
                		</tr>
-               		<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
+               		<tr th:with="daybal=${LedgerBalance.findBalance(list)}">
                		 <td>Date</td>
                		 <td>Opening Balance</td>
                		 <td></td>
                		 <td style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
                		</tr>
-                	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
+                	<tr th:with="daybal=${LedgerBalance.findBalance(list)}">
 					 <td></td>
 					 <td></td>
                		 <td></td>
@@ -54,7 +54,7 @@
                      <td th:text="${daybook.crAmt}">Credit</td>
                      <td th:text="${daybook.drAmt}">Debit</td>
                 	</tr>
-                	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
+                	<tr th:with="daybal=${LedgerBalance.findBalance(list)}">
                		 <td></td>
                		 <td></td>
                		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>
