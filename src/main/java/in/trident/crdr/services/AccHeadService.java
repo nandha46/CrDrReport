@@ -29,7 +29,7 @@ public class AccHeadService implements AccHeadRepo {
 	@Autowired
 	private DaybookRepository daybookRepo;
 	
-	/*
+	
 	@Override
 	public ArrayList<ArrayList<Daybook>> showLedger(FormData formdata) {
 		ArrayList<Daybook> daybooklist = new ArrayList<>();
@@ -51,7 +51,7 @@ public class AccHeadService implements AccHeadRepo {
 			
 		}
 		return listOflist;
-	} */
+	} 
 	
 	
 	

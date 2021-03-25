@@ -94,8 +94,8 @@ public class AppController {
 
 	@PostMapping("/ledger")
 	public String listLedger(Model model, FormData formdata) {
-	//	ArrayList<ArrayList<Daybook>> ledgerList = accHeadRepo.showLedger(formdata);
-	//	model.addAttribute("ledgerList", ledgerList);
+		ArrayList<ArrayList<Daybook>> ledgerList = accHeadRepo.showLedger(formdata);
+		model.addAttribute("ledgerList", ledgerList);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
 	}
