@@ -21,6 +21,7 @@ public class DaybookBalance {
 			crTot += d.getCrAmt();
 			drTot += d.getDrAmt();
 			date = d.getDate();
+			System.out.println(d.toString());
 		}
 		closeBl = crTot - drTot;
 		DaybookBalance dBal = new DaybookBalance();

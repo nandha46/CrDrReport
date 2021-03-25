@@ -94,8 +94,29 @@ public class AppController {
 
 	@PostMapping("/ledger")
 	public String listLedger(Model model, FormData formdata) {
-		ArrayList<ArrayList<Daybook>> ledgerList = accHeadRepo.showLedger(formdata);
-		model.addAttribute("ledgerList", ledgerList);
+		ArrayList<Daybook> daybooklist = new ArrayList<>();
+		ArrayList<ArrayList<Daybook>> listOflist = new ArrayList<ArrayList<Daybook>>();
+		ArrayList<AccHead> headlist = new ArrayList<>();
+		if(formdata.isReportOrder()) { // true -> All acc heads
+			 headlist = accHeadRepo.findAllAccHead();
+			for (AccHead acchead : headlist) {
+				if (acchead.getAccCode() == 0) {
+					// Intentionally left empty
+				}
+				else {
+					daybooklist = daybookRepo.findDaybookByAccCodeAndDate(acchead.getAccCode(), formdata.getStartDate(), formdata.getEndDate());
+				}
+				if(daybooklist != null)
+				listOflist.add(daybooklist);
+			}
+			
+		}
+		else {
+			
+		}
+		model.addAttribute("headlist", headlist);
+		model.addAttribute("ledgerList", listOflist);
+		model.addAttribute("DaybookBalance", new DaybookBalance());
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
 	}

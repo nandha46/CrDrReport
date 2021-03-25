@@ -26,35 +26,6 @@ public class AccHeadService implements AccHeadRepo {
 	@Autowired
 	private AccHeadRepo accHeadRepo;
 	
-	@Autowired
-	private DaybookRepository daybookRepo;
-	
-	
-	@Override
-	public ArrayList<ArrayList<Daybook>> showLedger(FormData formdata) {
-		ArrayList<Daybook> daybooklist = new ArrayList<>();
-		ArrayList<ArrayList<Daybook>> listOflist = new ArrayList<ArrayList<Daybook>>();
-		if(formdata.isReportOrder()) { // true -> All acc heads
-			ArrayList<AccHead> headlist = accHeadRepo.findAllAccHead();
-			for (AccHead acchead : headlist) {
-				if (acchead.getAccCode() == 0) {
-					// Intentionally left empty
-				}
-				else {
-					daybooklist = daybookRepo.findDaybookByAccCodeAndDate(acchead.getAccCode(), formdata.getStartDate(), formdata.getEndDate());
-				}
-				listOflist.add(daybooklist);
-			}
-			
-		}
-		else {
-			
-		}
-		return listOflist;
-	} 
-	
-	
-	
 	@Override
 	public ArrayList<AccHead> findAll() {
 		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();

@@ -29,6 +29,13 @@
             </thead>
             <tbody>
                	<th:block th:each="list: ${ledgerList}">
+               		<th:blok th:each="acchead: ${headlist}">
+               		<tr>
+               		 <td></td>
+               		 <td th:text ="${acchead.accName}">Acc Head Name</td>
+               		 <td></td>
+               		 <td></td>
+               		</tr>
                		<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
                		 <td>Date</td>
                		 <td>Opening Balance</td>
@@ -36,8 +43,8 @@
                		 <td style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
                		</tr>
                 	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
-               		 <td style="color:red" th:text="${daybal.date}">Date</td>
-               		 <td style="color:red" th:text="${daybal.dayOfWeek}">Day of week</td>
+					 <td></td>
+					 <td></td>
                		 <td></td>
                		 <td></td>
                		</tr>
@@ -53,6 +60,7 @@
                		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>
                		 <td style="color:red" th:text="${daybal.drTot}">Debit Total</td>
                		</tr>
+               		</th:blok>
                 </th:block>
             </tbody>
         </table>

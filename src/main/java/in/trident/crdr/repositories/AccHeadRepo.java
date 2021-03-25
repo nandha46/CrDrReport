@@ -11,8 +11,6 @@ import in.trident.crdr.entities.FormData;
 
 public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	
-	public ArrayList<ArrayList<Daybook>> showLedger(FormData formdata);
-
 	@Query("Select u from AccHead u")
 	public ArrayList<AccHead> findAllAccHead(); 
 	
