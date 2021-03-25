@@ -11,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import in.trident.crdr.entities.AccHead;
-import in.trident.crdr.entities.Daybook;
-import in.trident.crdr.entities.FormData;
 import in.trident.crdr.repositories.AccHeadRepo;
-import in.trident.crdr.repositories.DaybookRepository;
 
 /**
  * @author Nandhakumar Subramanian

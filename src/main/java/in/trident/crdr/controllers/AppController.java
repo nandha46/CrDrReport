@@ -100,15 +100,19 @@ public class AppController {
 		ArrayList<AccHead> headlist = new ArrayList<>();
 		if(formdata.isReportOrder()) { // true -> All acc heads
 			 headlist = accHeadRepo.findAllAccHead();
+			 System.out.println("No of Acc heads: "+headlist.size());
 			for (AccHead acchead : headlist) {
 				if (acchead.getAccCode() == 0) {
 					// Intentionally left empty
+					System.out.println("Acc Head Id: "+acchead.getAccCode());
 				}
 				else {
+					System.out.println("Acc code :" +acchead.getAccCode());
 					daybooklist = daybookRepo.findDaybookByAccCodeAndDate(acchead.getAccCode(), formdata.getStartDate(), formdata.getEndDate());
 				}
-				if(daybooklist != null)
+				if(daybooklist.size() != 0)
 				listOflist.add(daybooklist);
+				System.out.println(listOflist.toString());
 			}
 			
 		}

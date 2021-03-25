@@ -25,6 +25,9 @@ public class LedgerBalance {
 		dBal.setCrTot(crTot);
 		dBal.setDrTot(drTot);
 		dBal.setDate(date);
+		crTot =0;
+		drTot=0;
+		closeBl = 0;
 		return dBal;
 	}
 	
