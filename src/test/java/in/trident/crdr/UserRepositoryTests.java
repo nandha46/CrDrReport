@@ -8,9 +8,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.test.annotation.Rollback;
 
+import in.trident.crdr.entities.Daybook;
+import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.User;
+import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -22,7 +26,11 @@ public class UserRepositoryTests {
      
     @Autowired
     private UserRepository repo;
-    
+
+    @Autowired
+    private DaybookRepository daybookRepo;
+
+    /*
     @Test
     public void testCreateUser() {
     	User user = new User();
@@ -36,5 +44,12 @@ public class UserRepositoryTests {
     	
     	assertThat(user.getEmail().equals(user2.getEmail()));
  
+    } */
+    
+    @Test
+    public void testDaybookBal() {
+    	DaybookBalance dbbal = daybookRepo.findDaybookBalance("2020-04-15");
+    	System.out.println(dbbal);
+    	
     }
 }

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 public class LedgerBalance {
 	
 	private String date;
-	private long crTot;
-	private long drTot;
-	private long closeBl;
+	private Double crTot;
+	private Double drTot;
+	private Double closeBl;
 	
 	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) {
 		
@@ -25,9 +25,9 @@ public class LedgerBalance {
 		dBal.setCrTot(crTot);
 		dBal.setDrTot(drTot);
 		dBal.setDate(date);
-		crTot =0;
-		drTot=0;
-		closeBl = 0;
+		crTot =0d;
+		drTot=0d;
+		closeBl = 0d;
 		return dBal;
 	}
 	
@@ -41,22 +41,22 @@ public class LedgerBalance {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public long getCrTot() {
+	public Double getCrTot() {
 		return crTot;
 	}
-	public void setCrTot(long crTot) {
+	public void setCrTot(Double crTot) {
 		this.crTot = crTot;
 	}
-	public long getDrTot() {
+	public Double getDrTot() {
 		return drTot;
 	}
-	public void setDrTot(long drTot) {
+	public void setDrTot(Double drTot) {
 		this.drTot = drTot;
 	}
-	public long getCloseBl() {
+	public Double getCloseBl() {
 		return closeBl;
 	}
-	public void setCloseBl(long closeBl) {
+	public void setCloseBl(Double closeBl) {
 		this.closeBl = closeBl;
 	}
 

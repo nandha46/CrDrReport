@@ -125,6 +125,12 @@ public class AppController {
 
 	@PostMapping("/trialBal")
 	public String trialbal(Model model, FormData formdata) {
+		/* Report order - Group/All
+		 * Trial Balance As on - date
+		 * Accounts with zero bal - yes/no
+		 * level - 1,2,3,4,5,6
+		 * */
+		
 		
 		return "trialbal";
 	}

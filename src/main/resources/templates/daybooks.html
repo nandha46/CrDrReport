@@ -24,8 +24,8 @@
                 <tr>
                     <th>Date</th>
                     <th>Narration</th>
-                    <th>Credit</th>
                     <th>Debit</th>
+                    <th>Credit</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,19 +45,19 @@
                     <tr th:each="daybook: ${list}">
                      <td th:text="${daybook.date}">Date</td>
                      <td th:text="${daybook.narration}">Narration</td>
-                     <td th:text="${daybook.crAmt}">Credit</td>
                      <td th:text="${daybook.drAmt}">Debit</td>
+                     <td th:text="${daybook.crAmt}">Credit</td>
                 	</tr>
                 	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
                		 <td></td>
                		 <td></td>
-               		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>
                		 <td style="color:red" th:text="${daybal.drTot}">Debit Total</td>
+               		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>
                		</tr>
                 </th:block>
             </tbody>
-            </div>
         </table>
+            </div>
     </div>
 </div>
 </body>

@@ -20,7 +20,6 @@ public class Daybook implements Comparable<Daybook>{
 	
 	@Column(name = "TDate", nullable= false)
 	private String date;
-	// TODO date object or just String
 	
 	@Column(name="Narration", nullable = false)
 	private String narration;
@@ -29,11 +28,10 @@ public class Daybook implements Comparable<Daybook>{
 	private int acccode;
 	
 	@Column(name="dramt", nullable = false)
-	private Long drAmt;
-	// TODO Credit n Debit does it need to store negative value/double value
+	private Double drAmt;
 	
 	@Column(name="cramt", nullable = false)
-	private Long crAmt;
+	private Double crAmt;
 	
 	@Column(name="stkvalue", nullable = false)
 	private int sktValue;
@@ -69,16 +67,16 @@ public class Daybook implements Comparable<Daybook>{
 	public void setAccCode(int accCode) {
 		this.acccode = accCode;
 	}
-	public Long getDrAmt() {
+	public Double getDrAmt() {
 		return drAmt;
 	}
-	public void setDrAmt(Long drAmt) {
+	public void setDrAmt(Double drAmt) {
 		this.drAmt = drAmt;
 	}
-	public Long getCrAmt() {
+	public Double getCrAmt() {
 		return crAmt;
 	}
-	public void setCrAmt(Long crAmt) {
+	public void setCrAmt(Double crAmt) {
 		this.crAmt = crAmt;
 	}
 	public int getSktValue() {

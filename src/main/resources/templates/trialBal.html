@@ -14,7 +14,7 @@
         </form>
     </div>
     <div>
-        <h1>Ledger</h1>
+        <h1>Trial Balance</h1>
     </div>
      
     <div>
@@ -22,43 +22,17 @@
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th>Date</th>
-                    <th>Narration</th>
-                    <th>Credit</th>
+                    <th>Account Name</th>
                     <th>Debit</th>
+                    <th>Credit</th>
                 </tr>
             </thead>
             <tbody>
                	<th:block th:each="list: ${listmap}">
-               		<tr>
-               		 <td></td>
-               		 <td th:text ="${list.key}">Acc Head Name</td>
-               		 <td></td>
-               		 <td></td>
-               		</tr>
                		<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
-               		 <td>Date</td>
-               		 <td>Opening Balance</td>
-               		 <td></td>
-               		 <td style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
-               		</tr>
-                	<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
-					 <td></td>
-					 <td></td>
-               		 <td></td>
-               		 <td></td>
-               		</tr>
-                    <tr th:each="daybook: ${list.value}">
-                     <td th:text="${daybook.date}">Date</td>
-                     <td th:text="${daybook.narration}">Narration</td>
-                     <td th:text="${daybook.crAmt}">Credit</td>
-                     <td th:text="${daybook.drAmt}">Debit</td>
-                	</tr>
-                	<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
-               		 <td></td>
-               		 <td></td>
-               		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>
-               		 <td style="color:red" th:text="${daybal.drTot}">Debit Total</td>
+               		 <td th:text ="${list.key}">Acc Head Name</td>
+               		 <td style="color:darkgreen" th:text="${daybal.closeBl}">Debit</td>
+               		 <td>Credit</td>
                		</tr>
                 </th:block>
             </tbody>

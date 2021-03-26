@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import in.trident.crdr.entities.Daybook;
+import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.FormData;
 import in.trident.crdr.repositories.DaybookRepository;
 
@@ -200,6 +201,13 @@ public class DaybookService implements DaybookRepository {
 	public <S extends Daybook> boolean exists(Example<S> example) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public DaybookBalance findDaybookBalance(String d1) {
+		DaybookBalance db = daybookRepo.findDaybookBalance(d1);
+		System.out.println(db);
+		return null;
 	}
 
 	

@@ -12,11 +12,22 @@ import org.springframework.stereotype.Component;
 public class DaybookBalance {
 
 	private String date;
-	private long crTot;
-	private long drTot;
-	private long closeBl;
+	private Double crTot;
+	private Double drTot;
+	private Double closeBl;
 	private String dayOfWeek;
 	
+public DaybookBalance(String date, Double crTot, Double drTot, Double closeBal, String dayOfWeek ) {
+	this.date = date;
+	this.crTot = crTot;
+	this.drTot = drTot;
+	this.closeBl = closeBal;
+	this.dayOfWeek = dayOfWeek;
+}
+	
+public DaybookBalance() {
+}
+
 	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) {
 		for (Daybook d : daybookList) {
 			crTot += d.getCrAmt();
@@ -42,7 +53,7 @@ public class DaybookBalance {
 	
 	@Override
 	public String toString() {
-		return "DaybookBalance [date=" + date + ", crTot=" + crTot + ", drTot=" + drTot + ", closeBl=" + closeBl + "]";
+		return "DaybookBalance [date=" + date + ", crTot=" + crTot + ", drTot=" + drTot + ", closeBl=" + closeBl + ", Day of week: "+ dayOfWeek +"]";
 	}
 	public String getDate() {
 		return date;
@@ -50,22 +61,22 @@ public class DaybookBalance {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public long getCrTot() {
+	public Double getCrTot() {
 		return crTot;
 	}
-	public void setCrTot(long crTot) {
+	public void setCrTot(Double crTot) {
 		this.crTot = crTot;
 	}
-	public long getDrTot() {
+	public Double getDrTot() {
 		return drTot;
 	}
-	public void setDrTot(long drTot) {
+	public void setDrTot(Double drTot) {
 		this.drTot = drTot;
 	}
-	public long getCloseBl() {
+	public Double getCloseBl() {
 		return closeBl;
 	}
-	public void setCloseBl(long closeBl) {
+	public void setCloseBl(Double closeBl) {
 		this.closeBl = closeBl;
 	}
 
