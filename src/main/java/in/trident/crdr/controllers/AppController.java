@@ -123,6 +123,12 @@ public class AppController {
 		return "ledger";
 	}
 
+	@PostMapping("/trialBal")
+	public String trialbal(Model model, FormData formdata) {
+		
+		return "trialbal";
+	}
+	
 	@GetMapping("/findDaybook")
 	public String findDaybook(Model model) {
 		model.addAttribute("formdata", new FormData());
@@ -141,8 +147,11 @@ public class AppController {
 
 	@GetMapping("/findTrialBal")
 	public String findTrial(Model model) {
+		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trial Balance");
-		return "production";
+		model.addAttribute("formdata", new FormData());
+		return "findTrialBal";
 	}
 	
 	@GetMapping("/findTradingPL")

@@ -11,6 +11,9 @@ public class FormData {
 	private boolean reportOrder;
 	private boolean transactedAccOnly;
 	private boolean cutOff;
+	private String date;
+	private boolean zeroBal;
+	private int level;
 	
 	public int findDays(String d1,String d2) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -60,6 +63,36 @@ public class FormData {
 
 	public void setCutOff(boolean cutOff) {
 		this.cutOff = cutOff;
+	}
+
+
+	public String getDate() {
+		return date;
+	}
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
+	public boolean isZeroBal() {
+		return zeroBal;
+	}
+
+
+	public void setZeroBal(boolean zeroBal) {
+		this.zeroBal = zeroBal;
+	}
+
+
+	public int getLevel() {
+		return level;
+	}
+
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 }

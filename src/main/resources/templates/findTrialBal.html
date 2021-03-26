@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments::navbar"></div>
+	<div class="container">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-7 col-sm-6 col-lg-8">
+					<div>
+						<fieldset>
+							<legend>Select Account</legend>
+							<div class="scrol">
+								<table class="table table-striped table-bordered">
+									<thead class="thead-dark">
+										<tr>
+											<th>Acc Code</th>
+											<th>Account Name</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="accHead : ${accHeadList}">
+											<td th:text="${accHead.accCode}">Acc Code</td>
+											<td th:text="${accHead.accName}">Account Name</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<div class="col-xs-5 col-sm-6 col-lg-4">
+					<form th:action="@{/ledger}" th:object="${formdata}" method="post"
+						style="max-width: 600px; margin: 0 auto;">
+						<fieldset>
+							<legend>Select Specifications</legend>
+							<div class="form-group">
+								<label for="exampleFormControlSelect1">Report Order</label> <select
+									class="form-control" th:field="*{reportOrder}"
+									id="exampleFormControlSelect1">
+									<option value="false" selected>All</option>
+									<option value="true">Group</option>
+								</select>
+							</div>
+							Trial Balance as on : <input type="date" th:filed="*{date}"
+								name="date" min="2000-01-01" max="2022-01-01"
+								value="2020-04-30"> <br>
+							<div class="form-group">
+								<label for="exampleFormControlSelect2">Accounts
+									with Zero Balance</label> <select class="form-control"
+									th:field="*{zeroBal}" id="exampleFormControlSelect2">
+									<option value="false">No</option>
+									<option value="true" selected>Yes</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlSelect3">Select Level</label> <select
+									class="form-control" th:field="*{level}"
+									id="exampleFormControlSelect3">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6" selected>6</option>
+								</select>
+							</div>
+							<button type="submit">Show</button>
+							<input type="button" value="Close">
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
