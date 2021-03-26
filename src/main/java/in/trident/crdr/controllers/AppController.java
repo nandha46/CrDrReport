@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,23 +97,19 @@ public class AppController {
 	@PostMapping("/ledger")
 	public String listLedger(Model model, FormData formdata) {
 		ArrayList<Daybook> daybooklist = new ArrayList<>();
-		ArrayList<ArrayList<Daybook>> listOflist = new ArrayList<ArrayList<Daybook>>();
 		ArrayList<AccHead> headlist = new ArrayList<>();
-		if(formdata.isReportOrder()) { // true -> All acc heads
+		HashMap<String,ArrayList<Daybook>> listmap = new HashMap<String,ArrayList<Daybook>>();
+		if(!formdata.isReportOrder()) { // false -> All acc heads
 			 headlist = accHeadRepo.findAllAccHead();
-			 System.out.println("No of Acc heads: "+headlist.size());
 			for (AccHead acchead : headlist) {
 				if (acchead.getAccCode() == 0) {
 					// Intentionally left empty
-					System.out.println("Acc Head Id: "+acchead.getAccCode());
 				}
 				else {
-					System.out.println("Acc code :" +acchead.getAccCode());
 					daybooklist = daybookRepo.findDaybookByAccCodeAndDate(acchead.getAccCode(), formdata.getStartDate(), formdata.getEndDate());
+					if (daybooklist.size() != 0)
+					listmap.put(acchead.getAccName(), daybooklist);
 				}
-				if(daybooklist.size() != 0)
-				listOflist.add(daybooklist);
-				System.out.println(listOflist.toString());
 			}
 			
 		}
@@ -120,7 +117,7 @@ public class AppController {
 			
 		}
 		model.addAttribute("headlist", headlist);
-		model.addAttribute("ledgerList", listOflist);
+		model.addAttribute("listmap", listmap);
 		model.addAttribute("LedgerBalance", new LedgerBalance());
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";

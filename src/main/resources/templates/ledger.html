@@ -29,32 +29,32 @@
                 </tr>
             </thead>
             <tbody>
-               	<th:block th:each="acchead: ${headlist}">
-               		<tr th:each="list: ${ledgerList}">
+               	<th:block th:each="list: ${listmap}">
+               		<tr>
                		 <td></td>
-               		 <td th:text ="${acchead.accName}">Acc Head Name</td>
+               		 <td th:text ="${list.key}">Acc Head Name</td>
                		 <td></td>
                		 <td></td>
                		</tr>
-               		<tr th:with="daybal=${LedgerBalance.findBalance(list)}">
+               		<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
                		 <td>Date</td>
                		 <td>Opening Balance</td>
                		 <td></td>
                		 <td style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
                		</tr>
-                	<tr th:with="daybal=${LedgerBalance.findBalance(list)}">
+                	<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
 					 <td></td>
 					 <td></td>
                		 <td></td>
                		 <td></td>
                		</tr>
-                    <tr th:each="daybook: ${list}">
+                    <tr th:each="daybook: ${list.value}">
                      <td th:text="${daybook.date}">Date</td>
                      <td th:text="${daybook.narration}">Narration</td>
                      <td th:text="${daybook.crAmt}">Credit</td>
                      <td th:text="${daybook.drAmt}">Debit</td>
                 	</tr>
-                	<tr th:with="daybal=${LedgerBalance.findBalance(list)}">
+                	<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
                		 <td></td>
                		 <td></td>
                		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>

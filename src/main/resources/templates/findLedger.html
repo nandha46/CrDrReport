@@ -11,21 +11,21 @@
 					<div>
 						<fieldset>
 							<legend>Select Account</legend>
-							<div class="scrol"> 
-							<table class="table table-striped table-bordered">
-								<thead class="thead-dark">
-									<tr>
-										<th>Acc Code</th>
-										<th>Account Name</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="accHead : ${accHeadList}">
-										<td th:text="${accHead.accCode}">Acc Code</td>
-										<td th:text="${accHead.accName}">Account Name</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="scrol">
+								<table class="table table-striped table-bordered">
+									<thead class="thead-dark">
+										<tr>
+											<th>Acc Code</th>
+											<th>Account Name</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="accHead : ${accHeadList}">
+											<td th:text="${accHead.accCode}">Acc Code</td>
+											<td th:text="${accHead.accName}">Account Name</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</fieldset>
 					</div>
@@ -39,21 +39,21 @@
 								<label for="exampleFormControlSelect1">Report Order</label> <select
 									class="form-control" th:field="*{reportOrder}"
 									id="exampleFormControlSelect1">
-									<option value="false">Select</option>
-									<option value="true">All</option>
+									<option value="false" selected>All</option>
+									<option value="true">Select</option>
 								</select>
 							</div>
 							From Date : <input type="date" th:filed="*{startDate}"
 								name="startDate" min="2000-01-01" max="2022-01-01"
-								value="2020-04-02"> <br>To Date : <input type="date"
-								th:filed="*{endDate}" name="endDate" min="2000-01-02"
-								max="2022-01-01" value="2020-04-30">
+								value="2020-04-02"> <br>To Date : <input
+								type="date" th:filed="*{endDate}" name="endDate"
+								min="2000-01-02" max="2022-01-01" value="2020-04-30">
 							<div class="form-group">
 								<label for="exampleFormControlSelect2">Transacted
 									Accounts Only</label> <select class="form-control"
 									th:field="*{transactedAccOnly}" id="exampleFormControlSelect2">
 									<option value="false">No</option>
-									<option value="true">Yes</option>
+									<option value="true" selected>Yes</option>
 								</select>
 							</div>
 							<div class="form-group">
