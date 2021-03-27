@@ -2,6 +2,8 @@ package in.trident.crdr;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -11,9 +13,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.test.annotation.Rollback;
 
+import in.trident.crdr.entities.DayBal;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.User;
+import in.trident.crdr.repositories.DaybookBalRepository;
+import in.trident.crdr.repositories.DaybookCRepository;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
 @DataJpaTest
@@ -30,6 +35,9 @@ public class UserRepositoryTests {
     @Autowired
     private DaybookRepository daybookRepo;
 
+    @Autowired
+    private DaybookBalRepository dbalrepo;
+    
     /*
     @Test
     public void testCreateUser() {
@@ -48,8 +56,10 @@ public class UserRepositoryTests {
     
     @Test
     public void testDaybookBal() {
-    	DaybookBalance dbbal = daybookRepo.findDaybookBalance("2020-04-15");
+    	DayBal dbbal = dbalrepo.findDaybookBalance("2020-04-15");
+    	System.out.println("\n\n");
     	System.out.println(dbbal);
+    	System.out.println("\n\n");
     	
     }
 }
