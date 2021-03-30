@@ -25,6 +25,7 @@ import in.trident.crdr.repositories.DaybookBalRepository;
 import in.trident.crdr.repositories.DaybookCRepository;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
@@ -61,9 +62,9 @@ public class UserRepositoryTests {
     @Test
     public void testDaybookBal() {
     	DayBal dbbal = dbalrepo.findDaybookBalance("2020-04-15");
-    	System.out.println("\n\n");
+    	System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<");
     	System.out.println(dbbal);
-    	System.out.println("\n\n");
+    	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
     	
     }
 }

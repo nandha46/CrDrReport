@@ -18,7 +18,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<thymeleaf.version>3.0.12.RELEASE</thymeleaf.version>
-    	<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
+		<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
+	    <blaze-persistence.version>1.5.1</blaze-persistence.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -86,6 +87,35 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator-core</artifactId>
+		</dependency>
+		<!-- Blazebit Dependancy -->
+		<dependency>
+			<groupId>com.blazebit</groupId>
+			<artifactId>blaze-persistence-core-api</artifactId>
+			<version>${blaze-persistence.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.blazebit</groupId>
+			<artifactId>blaze-persistence-core-impl</artifactId>
+			<version>${blaze-persistence.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- optional -->
+
+		<!-- Entity View module -->
+		<dependency>
+			<groupId>com.blazebit</groupId>
+			<artifactId>blaze-persistence-entity-view-api</artifactId>
+			<version>${blaze-persistence.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.blazebit</groupId>
+			<artifactId>blaze-persistence-entity-view-impl</artifactId>
+			<version>${blaze-persistence.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
