@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
-
+@Repository
 public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
 	@Query("Select u from Daybook u where u.date = ?1")
