@@ -28,9 +28,6 @@ import in.trident.crdr.repositories.UserRepository;
 @Controller
 public class AppController {
 
-	// TODO Implement Email notification of login feature -- Spring Email
-	// TODO Implement Session management via cookies
-
 	@Autowired
 	private UserRepository userRepo;
 
