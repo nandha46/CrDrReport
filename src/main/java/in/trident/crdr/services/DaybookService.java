@@ -204,10 +204,8 @@ public class DaybookService implements DaybookRepository {
 	}
 
 	@Override
-	public DaybookBalance findDaybookBalance(String d1) {
-		DaybookBalance db = daybookRepo.findDaybookBalance(d1);
-		System.out.println(db);
-		return null;
+	public List<Object[]> findDaybookBalance(String d1) {
+		return daybookRepo.findDaybookBalance(d1);
 	}
 
 	

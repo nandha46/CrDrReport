@@ -3,13 +3,13 @@ package in.trident.crdr.repositories;
  * @author Nandhakumar Subramanian
  */
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import in.trident.crdr.entities.Daybook;
-import in.trident.crdr.entities.DaybookBalance;
 @Repository
 public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
@@ -23,6 +23,6 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	public ArrayList<Daybook> findDaybookByAccCodeAndDate(int accCode, String d1, String d2);
 	
 	@Query("select date, sum(crAmt) as crTot, sum(drAmt) as drTot, sum(crAmt)-sum(drAmt) as dayBal, DAYNAME(?1) as dayOfWeek from Daybook u where u.date = ?1")
-	public DaybookBalance findDaybookBalance(String d1);
+	public List<Object[]> findDaybookBalance(String d1);
 
 }
