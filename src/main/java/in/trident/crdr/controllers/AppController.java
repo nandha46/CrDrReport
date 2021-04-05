@@ -60,6 +60,7 @@ public class AppController {
 		user.setPassword(encodedPass);
 		Set<Role> roles = new HashSet<Role>();
 		Role role = new Role();
+		// TODO Add another field in User object named role or pass it using JS
 		role.setRoleName("");
 		roles.add(role);
 		user.setRoles(roles);

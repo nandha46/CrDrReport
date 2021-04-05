@@ -20,6 +20,7 @@ public class Daybook implements Comparable<Daybook>{
 	
 	@Column(name = "TDate", nullable= false)
 	private String date;
+	//TODO @Temporal Type date 
 	
 	@Column(name="Narration", nullable = false)
 	private String narration;

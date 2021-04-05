@@ -6,6 +6,9 @@ package in.trident.crdr;
  */
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.repositories.UserRepository;
 
@@ -31,11 +35,15 @@ public class UserRepositoryTests {
     @Test
     public void testCreateUser() {
     	User user = new User();
-    	user.setEmail("nandha@icloud.com");
-    	user.setFirstName("Nandhakumar");
-    	user.setLastName("Subramanian");
+    	user.setEmail("asff@icloud.com");
+    	user.setFirstName("test");
+    	user.setLastName("user");
     	user.setPassword("pass@1");
-
+    	Set<Role> roles = new HashSet<Role>();
+    	Role role = new Role();
+    	role.setRoleName("Tester");
+		roles.add(role);
+		user.setRoles(roles);
     	User savedUser = repo.save(user);
     	User user2 = entityManager.find(User.class, savedUser.getId());
     	
@@ -43,5 +51,4 @@ public class UserRepositoryTests {
  
     } 
     
-   
 }

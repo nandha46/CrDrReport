@@ -39,7 +39,9 @@ public class User {
 	private boolean enabled;
 	
 	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinTable(name="users_roles", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
+	@JoinTable(name="users_roles", 
+	joinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"), 
+	inverseJoinColumns = @JoinColumn(name="role_id",referencedColumnName = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
 
