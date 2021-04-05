@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +22,7 @@ import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.FormData;
 import in.trident.crdr.entities.LedgerBalance;
+import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.DaybookRepository;
@@ -55,6 +58,11 @@ public class AppController {
 		String encodedPass = passEncoder.encode(user.getPassword());
 		System.out.println("Password is : "+user.getPassword());
 		user.setPassword(encodedPass);
+		Set<Role> roles = new HashSet<Role>();
+		Role role = new Role();
+		role.setRoleName("");
+		roles.add(role);
+		user.setRoles(roles);
 		userRepo.save(user);
 		// TODO Check if user already exists by email id
 		return "register_success";
