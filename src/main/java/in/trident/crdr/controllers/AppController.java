@@ -80,6 +80,7 @@ public class AppController {
 	public String listDaybook(Model model, FormData formdata) {
 		//TODO move this impl to service method for clean code
 		int days = formdata.findDays(formdata.getStartDate(), formdata.getEndDate());
+		//	int days = daybookRepo.findDaysBetween(formdata.getEndDate() , formdata.getStartDate());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calender = Calendar.getInstance();
 		try {

@@ -33,4 +33,12 @@ public class JPQLTests {
 			} );
 	}
 	
+	
+	@Test
+	public void testFindDays() {
+		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<");
+		int days = daybookRepo.findDaysBetween("2021-06-04", "2021-04-09");
+		System.out.println("Number of Days between dates : "+days);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+	}
 }

@@ -13,7 +13,7 @@ import in.trident.crdr.entities.Daybook;
 @Repository
 public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
-	@Query("Select u from Daybook u where u.date = ?1")
+	@Query("select u from Daybook u where u.date = ?1")
 	public ArrayList<Daybook> findDaybookByDate(String date);
 	
 	@Query("Select u from Daybook u where u.date between ?1 and ?2")
@@ -24,5 +24,8 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
 	@Query("select date, sum(crAmt) as crTot, sum(drAmt) as drTot, sum(crAmt)-sum(drAmt) as dayBal, DAYNAME(?1) as dayOfWeek from Daybook u where u.date = ?1")
 	public List<Object[]> findDaybookBalance(String d1);
+	
+	@Query(value = "select datediff(?1,?2)", nativeQuery = true)
+	public int findDaysBetween(String d1, String d2);
 
 }
