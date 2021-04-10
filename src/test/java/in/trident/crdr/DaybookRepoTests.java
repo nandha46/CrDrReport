@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
+
+import com.ibm.icu.text.NumberFormat;
 
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
@@ -24,12 +27,11 @@ public class DaybookRepoTests {
 
 	@Autowired
 	private DaybookRepository daybookRepo;
-	
+
 	@Test
 	public void testDaybookBal() {
 		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<");
-		int days = daybookRepo.findDaysBetween("2021-03-30","2020-04-01" );
-		System.out.println("Days : "+days);
+		int days = daybookRepo.findDaysBetween("2021-03-30", "2020-04-01");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calender = Calendar.getInstance();
 		try {
@@ -44,18 +46,18 @@ public class DaybookRepoTests {
 			listOflist.add(daybookList);
 			calender.add(Calendar.DATE, 1);
 		}
-		
-		System.out.println(listOflist.isEmpty());
-		for (ArrayList<Daybook> list : listOflist ) {
-			System.out.println(list.isEmpty());
-			DaybookBalance daybookBalance = new DaybookBalance();
-			DaybookBalance dbbal = daybookBalance.findBalance(list);
-			System.out.println("Closing Balance :" + dbbal.getCloseBl());	
-		}
-	/*	listOflist.forEach(list -> {
-		DaybookBalance dbbal = new DaybookBalance().findBalance(list);
-		System.out.println("Closing Balance :" + dbbal.getCloseBl());	
-		}); */
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en","in"));
+		listOflist.forEach(list -> {
+			DaybookBalance dbbal = new DaybookBalance().findBalance(list);
+			System.out.println("Closing Balance :" + nf.format(dbbal.getCloseBl()));
+		});
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+	}
+
+	@Test
+	public void testNumberformat() {
+		Double d = 45124853123456.78941;
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+		System.out.println(nf.format(d));
 	}
 }

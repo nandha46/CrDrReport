@@ -18,23 +18,22 @@ public class DaybookBalance {
 	private String dayOfWeek; 
 
 	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) {
-		System.out.println("Inside findBalance Method..");
+		String date = "";
+		Double crTot = 0d;
+		Double drTot = 0d;
+		Double closeBl = 0d;
 		for (Daybook d : daybookList) {
-			System.out.println("Parsing list of daybook...");
-			System.out.println("calculating daybook balance value");
-			this.setCrTot(d.getCrAmt());
-			this.setDrTot(d.getDrAmt());
-			this.setDate(d.getDate());
+			crTot =+ d.getCrAmt();
+			drTot =+ d.getDrAmt();
+			date = d.getDate();
 		}
 		
-		this.setCloseBl( this.getCrTot() - this.getDrTot() );
+		closeBl =  crTot - drTot ;
 		DaybookBalance dBal = new DaybookBalance();
-		System.out.println("DaybookBalance Object created");
-		dBal.setCloseBl(this.getCloseBl());
-		dBal.setCrTot(this.getCrTot());
-		dBal.setDrTot(this.getDrTot());
-		dBal.setDate(this.getDate());
-		System.out.println("Setting calculated value to object ");
+		dBal.setCloseBl(closeBl);
+		dBal.setCrTot(crTot);
+		dBal.setDrTot(drTot);
+		dBal.setDate(date);
 		Date date1 = new Date();
 		try {
 			date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -42,7 +41,6 @@ public class DaybookBalance {
 		}
 		DateFormat df = new SimpleDateFormat("EEEE");
 		dBal.setDayOfWeek(df.format(date1));
-		System.out.println("Returing object");
 		return dBal;
 	}
 	
