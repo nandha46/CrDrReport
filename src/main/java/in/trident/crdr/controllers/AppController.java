@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,8 @@ import in.trident.crdr.repositories.UserRepository;
 @Controller
 public class AppController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
+	
 	@Autowired
 	private UserRepository userRepo;
 
@@ -43,6 +47,7 @@ public class AppController {
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
+		LOGGER.trace("Inside Homepage controller");
 		return "index";
 	}
 
@@ -79,13 +84,15 @@ public class AppController {
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model, FormData formdata) {
 		//TODO move this impl to service method for clean code
-		int days = formdata.findDays(formdata.getStartDate(), formdata.getEndDate());
-		//	int days = daybookRepo.findDaysBetween(formdata.getEndDate() , formdata.getStartDate());
+		//int days = formdata.findDays(formdata.getStartDate(), formdata.getEndDate());
+		LOGGER.info("Inside daybooks method");
+		int days = daybookRepo.findDaysBetween(formdata.getEndDate() , formdata.getStartDate());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calender = Calendar.getInstance();
 		try {
 			calender.setTime(df.parse(formdata.getStartDate()));
 		} catch (ParseException e) {
+			LOGGER.warn("Calender parsing error in daybooks");
 			e.printStackTrace();
 		}
 		ArrayList<ArrayList<Daybook>> listOflist = new ArrayList<ArrayList<Daybook>>();
@@ -101,6 +108,8 @@ public class AppController {
 		return "daybooks";
 	}
 
+	//TODO Datatype of ledger list is changed to Hashmap so corresponding changes are required in ledger.html
+	
 	@PostMapping("/ledger")
 	public String listLedger(Model model, FormData formdata) {
 		ArrayList<Daybook> daybooklist = new ArrayList<>();
