@@ -34,7 +34,7 @@
                		 <td>Date</td>
                		 <td>Opening Balance</td>
                		 <td></td>
-               		 <td id="right_align" style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
+               		 <td id="right_align" style="color:darkgreen" th:text="${daybal.closeBalance}">Opening Balance Value</td>
                		</tr>
                 	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
                		 <td id="left_align" style="color:red" th:text="${daybal.date}">Date</td>
@@ -43,7 +43,7 @@
                		 <td></td>
                		</tr> 
                     <tr th:each="daybook: ${list}">
-                     <td id="left_align" th:text="${daybook.date}">Date</td>
+                     <td id="left_align" th:text="${#calendars.format(daybook.date,'dd MM yyyy')}">Date</td>
                      <td id="left_align" th:text="${daybook.narration}">Narration</td>
                      <td id="right_align" th:text="${daybook.drAmt}">Debit</td>
                      <td id="right_align" th:text="${daybook.crAmt}">Credit</td>
@@ -51,8 +51,8 @@
                   	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
                		 <td></td>
                		 <td></td>
-               		 <td id="right_align" style="color:red" th:text="${daybal.drTot}">Debit Total</td>
-               		 <td id="right_align" style="color:red" th:text="${daybal.crTot}">Credit Total</td>
+               		 <td id="right_align" style="color:red" th:text="${daybal.tDebit}">Debit Total</td>
+               		 <td id="right_align" style="color:red" th:text="${daybal.tCredit}">Credit Total</td>
                		</tr> 
                 </th:block>
             </tbody>

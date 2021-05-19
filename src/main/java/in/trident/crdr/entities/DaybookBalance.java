@@ -5,8 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.stereotype.Component;
+
+import com.ibm.icu.text.NumberFormat;
 
 @Component
 public class DaybookBalance {
@@ -16,7 +19,13 @@ public class DaybookBalance {
 	private Double drTot;
 	private Double closeBl;
 	private String dayOfWeek; 
+	
+	private String tCredit;
+	private String tDebit;
+	private String closeBalance;
 
+	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en","in"));
+	
 	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) {
 		String date = "";
 		Double crTot = 0d;
@@ -33,6 +42,9 @@ public class DaybookBalance {
 		dBal.setCloseBl(closeBl);
 		dBal.setCrTot(crTot);
 		dBal.setDrTot(drTot);
+		dBal.settCredit(nf.format(crTot));
+		dBal.settDebit(nf.format(drTot));
+		dBal.setCloseBalance(nf.format(closeBl));
 		dBal.setDate(date);
 		Date date1 = new Date();
 		try {
@@ -79,6 +91,30 @@ public class DaybookBalance {
 
 	public void setDayOfWeek(String dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
+	}
+
+	public String gettCredit() {
+		return tCredit;
+	}
+
+	public void settCredit(String tCredit) {
+		this.tCredit = tCredit;
+	}
+
+	public String gettDebit() {
+		return tDebit;
+	}
+
+	public void settDebit(String tDebit) {
+		this.tDebit = tDebit;
+	}
+
+	public String getCloseBalance() {
+		return closeBalance;
+	}
+
+	public void setCloseBalance(String closeBalance) {
+		this.closeBalance = closeBalance;
 	}
 	
 	

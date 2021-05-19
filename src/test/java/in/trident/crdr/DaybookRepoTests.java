@@ -31,7 +31,7 @@ public class DaybookRepoTests {
 	@Test
 	public void testDaybookBal() {
 		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<");
-		int days = daybookRepo.findDaysBetween("2021-03-30", "2020-04-01");
+		int days = daybookRepo.findDaysBetween("2020-04-08", "2020-04-01");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calender = Calendar.getInstance();
 		try {
@@ -43,6 +43,7 @@ public class DaybookRepoTests {
 		ArrayList<Daybook> daybookList;
 		for (int i = 0; i <= days; i++) {
 			daybookList = daybookRepo.findDaybookByDate(df.format(calender.getTime()));
+			daybookList.forEach(daybook -> System.out.println(daybook.getCrAmt()));
 			listOflist.add(daybookList);
 			calender.add(Calendar.DATE, 1);
 		}
@@ -59,5 +60,11 @@ public class DaybookRepoTests {
 		Double d = 45124853123456.78941;
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
 		System.out.println(nf.format(d));
+	}
+	
+	@Test
+	public void testDateFormat() {
+	String date = "2020-04-04 00:00:00";
+	System.out.println(date.substring(0,date.length()-9));
 	}
 }

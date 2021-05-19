@@ -51,7 +51,7 @@ public class Daybook implements Comparable<Daybook>{
 		this.sNo = sNo;
 	}
 	public String getDate() {
-		return date;
+		return date.substring(0, date.length()-9);
 	}
 	public void setDate(String date) {
 		this.date = date;
