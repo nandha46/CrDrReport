@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace ="fragments :: head"></head>
+<head th:replace ="fragments :: head"> </head>
 <body>
 <div th:replace ="fragments :: navbar"></div>
 <div class="container text-center">
@@ -34,25 +34,25 @@
                		 <td>Date</td>
                		 <td>Opening Balance</td>
                		 <td></td>
-               		 <td style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
+               		 <td id="right_align" style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
                		</tr>
                 	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
-               		 <td style="color:red" th:text="${daybal.date}">Date</td>
+               		 <td id="left_align" style="color:red" th:text="${daybal.date}">Date</td>
                		 <td style="color:red" th:text="${daybal.dayOfWeek}">Day of week</td>
                		 <td></td>
                		 <td></td>
                		</tr> 
                     <tr th:each="daybook: ${list}">
-                     <td th:text="${daybook.date}">Date</td>
-                     <td th:text="${daybook.narration}">Narration</td>
-                     <td th:text="${daybook.drAmt}">Debit</td>
-                     <td th:text="${daybook.crAmt}">Credit</td>
+                     <td id="left_align" th:text="${daybook.date}">Date</td>
+                     <td id="left_align" th:text="${daybook.narration}">Narration</td>
+                     <td id="right_align" th:text="${daybook.drAmt}">Debit</td>
+                     <td id="right_align" th:text="${daybook.crAmt}">Credit</td>
                 	</tr>
                   	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
                		 <td></td>
                		 <td></td>
-               		 <td style="color:red" th:text="${daybal.drTot}">Debit Total</td>
-               		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>
+               		 <td id="right_align" style="color:red" th:text="${daybal.drTot}">Debit Total</td>
+               		 <td id="right_align" style="color:red" th:text="${daybal.crTot}">Credit Total</td>
                		</tr> 
                 </th:block>
             </tbody>
