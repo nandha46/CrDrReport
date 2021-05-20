@@ -1,5 +1,9 @@
 package in.trident.crdr.entities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,8 +54,12 @@ public class Daybook implements Comparable<Daybook>{
 	public void setsNo(int sNo) {
 		this.sNo = sNo;
 	}
-	public String getDate() {
-		return date.substring(0, date.length()-9);
+	public String getDate() throws ParseException {
+	/*	SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+		Date d = sdf.parse(date);
+		sdf.applyPattern("dd-MM-yyyy");
+		date = sdf.format(d);  */
+		return date.substring(0,date.length()-9);
 	}
 	public void setDate(String date) {
 		this.date = date;

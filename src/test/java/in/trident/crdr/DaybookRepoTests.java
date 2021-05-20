@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,13 @@ public class DaybookRepoTests {
 		}
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en","in"));
 		listOflist.forEach(list -> {
-			DaybookBalance dbbal = new DaybookBalance().findBalance(list);
+			DaybookBalance dbbal = null;
+			try {
+				dbbal = new DaybookBalance().findBalance(list);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println("Closing Balance :" + nf.format(dbbal.getCloseBl()));
 		});
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
@@ -63,8 +70,12 @@ public class DaybookRepoTests {
 	}
 	
 	@Test
-	public void testDateFormat() {
-	String date = "2020-04-04 00:00:00";
-	System.out.println(date.substring(0,date.length()-9));
+	public void testDateFormat() throws ParseException {
+	String date = "2020-04-24 00:00:00";
+	SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+	Date d = sdf.parse(date);
+	sdf.applyPattern("dd-MM-yyyy");
+	date = sdf.format(d);
+	System.out.println(date);
 	}
 }

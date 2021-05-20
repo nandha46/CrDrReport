@@ -1,5 +1,6 @@
 package in.trident.crdr.entities;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ public class LedgerBalance {
 	private Double drTot;
 	private Double closeBl;
 	
-	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) {
+	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) throws ParseException {
 		
 		for (Daybook d : daybookList) {
 			crTot += d.getCrAmt();

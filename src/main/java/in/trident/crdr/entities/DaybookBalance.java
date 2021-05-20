@@ -26,7 +26,7 @@ public class DaybookBalance {
 
 	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en","in"));
 	
-	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) {
+	public DaybookBalance findBalance(ArrayList<Daybook> daybookList) throws ParseException {
 		String date = "";
 		Double crTot = 0d;
 		Double drTot = 0d;
