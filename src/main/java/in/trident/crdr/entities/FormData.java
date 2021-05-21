@@ -1,9 +1,5 @@
 package in.trident.crdr.entities;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 public class FormData {
 
 	private String startDate;
@@ -15,6 +11,11 @@ public class FormData {
 	private boolean zeroBal;
 	private int level;
 	
+	/** 
+	 * Deprecated method. Better alternative found
+	 */
+	
+	/*
 	public int findDays(String d1,String d2) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		long diff=0l;
@@ -27,6 +28,7 @@ public class FormData {
 		return (int)diff;
 	}
 	
+	*/
 	
 	public String getStartDate() {
 		return startDate;

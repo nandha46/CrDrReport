@@ -77,5 +77,6 @@ public class DaybookRepoTests {
 	sdf.applyPattern("dd-MM-yyyy");
 	date = sdf.format(d);
 	System.out.println(date);
+	
 	}
 }
