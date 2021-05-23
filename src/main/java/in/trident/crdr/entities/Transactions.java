@@ -6,6 +6,8 @@ public class Transactions {
 	private Double creditAmt;
 	private Double debitAmt;
 	private String narration;
+	private int stkValue;
+	
 	public int getsNo() {
 		return sNo;
 	}
@@ -29,6 +31,12 @@ public class Transactions {
 	}
 	public void setNarration(String narration) {
 		this.narration = narration;
+	}
+	public int getStkValue() {
+		return stkValue;
+	}
+	public void setStkValue(int stkValue) {
+		this.stkValue = stkValue;
 	}
 	@Override
 	public String toString() {

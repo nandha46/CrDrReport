@@ -27,5 +27,8 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
 	@Query(value = "select datediff(?1,?2)", nativeQuery = true)
 	public int findDaysBetween(String d1, String d2);
+	
+	@Query(value="select dayname(?1)", nativeQuery = true)
+	public String findDayOfWeek(String date);
 
 }
