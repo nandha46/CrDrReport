@@ -1,16 +1,22 @@
 package in.trident.crdr.entities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DaybookView {
 	
+	@Override
+	public String toString() {
+		return "DaybookView [date=" + date + ", dayOfWeek=" + dayOfWeek + ", closingBal=" + closingBal + ", creditTot="
+				+ creditTot + ", debitTot=" + debitTot + ", transList=" + transList + "]";
+	}
+
 	private String date;
 	private String dayOfWeek;
 	private String closingBal;
 	private String creditTot;
 	private String debitTot;
 	
-	private ArrayList<Transactions> transList;
+	private List<Transactions> transList;
 
 	public String getDate() {
 		return date;
@@ -52,11 +58,11 @@ public class DaybookView {
 		this.debitTot = debitTot;
 	}
 
-	public ArrayList<Transactions> getTransList() {
+	public List<Transactions> getTransList() {
 		return transList;
 	}
 
-	public void setTransList(ArrayList<Transactions> transList) {
+	public void setTransList(List<Transactions> transList) {
 		this.transList = transList;
 	}
 

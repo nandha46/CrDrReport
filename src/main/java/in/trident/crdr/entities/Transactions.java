@@ -1,17 +1,17 @@
 package in.trident.crdr.entities;
 
-public class Transactions {
+public class Transactions implements Comparable<Transactions>{
 
-	private int sNo;
+	private Integer sNo;
 	private Double creditAmt;
 	private Double debitAmt;
 	private String narration;
 	private int stkValue;
 	
-	public int getsNo() {
+	public Integer getsNo() {
 		return sNo;
 	}
-	public void setsNo(int sNo) {
+	public void setsNo(Integer sNo) {
 		this.sNo = sNo;
 	}
 	public Double getCreditAmt() {
@@ -42,6 +42,10 @@ public class Transactions {
 	public String toString() {
 		return "Transactions [sNo=" + sNo + ", creditAmt=" + creditAmt + ", debitAmt=" + debitAmt + ", narration="
 				+ narration + "]";
+	}
+	@Override
+	public int compareTo(Transactions o) {
+		return this.sNo.compareTo(o.sNo);
 	}
 	
 	

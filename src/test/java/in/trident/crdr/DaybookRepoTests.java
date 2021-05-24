@@ -24,7 +24,11 @@ import com.ibm.icu.util.Currency;
 
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
+import in.trident.crdr.entities.DaybookView;
+import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
+import in.trident.crdr.services.DaybookService;
+import in.trident.crdr.services.DaybookServiceImpl;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -34,6 +38,9 @@ public class DaybookRepoTests {
 	@Autowired
 	private DaybookRepository daybookRepo;
 
+	@Autowired
+	private CloseBalRepo closeBalRepo;
+	
 	@Test
 	public void testDaybookBal() {
 		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -96,4 +103,16 @@ public class DaybookRepoTests {
 		System.out.println(daybookRepo.findDaysBetween("2020-04-08","2020-04-01"));
 		System.out.println(daybookRepo.findDayOfWeek("2021-05-22"));
 	}
+	
+	
+	@Test
+	public void testDaybookView() {
+		DaybookService dbs = new DaybookServiceImpl(daybookRepo,closeBalRepo);
+		DaybookView dbv =  dbs.createDaybook("2020-04-02");
+		System.out.println(dbv.toString());
+	}
+	
+	
+	
+	
 }
