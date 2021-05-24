@@ -112,7 +112,4 @@ public class DaybookRepoTests {
 		System.out.println(dbv.toString());
 	}
 	
-	
-	
-	
 }

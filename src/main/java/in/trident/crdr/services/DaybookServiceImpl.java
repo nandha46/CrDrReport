@@ -1,6 +1,7 @@
 package in.trident.crdr.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,16 +47,12 @@ public class DaybookServiceImpl implements DaybookService {
 		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)));
 		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date)));
 		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)));
-		Transactions txns = new Transactions();
 		List<Transactions> trans = new ArrayList<Transactions>();
 		daybook.forEach(transaction -> {
-			txns.setsNo(transaction.getsNo());
-			txns.setCreditAmt(transaction.getCrAmt());
-			txns.setDebitAmt(transaction.getDrAmt());
-			txns.setNarration(transaction.getNarration());
-			txns.setStkValue(transaction.getsNo());
+			Transactions txns = new Transactions(transaction.getsNo(),transaction.getCrAmt(),transaction.getDrAmt(),transaction.getNarration(),transaction.getSktValue());
 			trans.add(txns);
 		});
+		Collections.sort(trans);
 		daybookView.setTransList(trans);
 		return daybookView;
 	}

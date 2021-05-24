@@ -8,6 +8,17 @@ public class Transactions implements Comparable<Transactions>{
 	private String narration;
 	private int stkValue;
 	
+	public Transactions () {
+		
+	}
+	
+	public Transactions(Integer sNo, Double creditAmt, Double debitAmt, String narration, int stkValue) {
+		this.sNo = sNo;
+		this.creditAmt = creditAmt;
+		this.debitAmt = debitAmt;
+		this.narration = narration;
+		this.stkValue = stkValue;
+	}
 	public Integer getsNo() {
 		return sNo;
 	}
