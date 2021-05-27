@@ -90,7 +90,7 @@ public class DaybookRepoTests {
 	
 	@Test
 	public void testDateFormat() throws ParseException {
-	String date = "2020-04-24 00:00:00";
+	String date = "2020-04-24 00:00:00"; 
 	SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
 	Date d = sdf.parse(date);
 	sdf.applyPattern("dd-MM-yyyy");

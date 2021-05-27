@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace ="fragments :: head"> </head>
+<body>
+<div th:replace ="fragments :: navbar"></div>
+<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
+            <input type="submit" value="Sign Out" />
+        </form>
+    </div>
+    <div>
+        <h1>Daybook Entries</h1>
+    </div>
+     
+    <div>
+    	<div class=scrol_daybook>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Narration</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                </tr>
+            </thead>
+            <tbody>
+               	<th:block th:each="list: ${listOflist}">
+               	  	<tr th:with="daybal = ${DaybookBalance.findBalance(list)}">
+               		 <td>Date</td>
+               		 <td>Opening Balance</td>
+               		 <td></td>
+               		 <td id="left_align" style="color:darkgreen" th:text="${daybal.closeBalance}">Opening Balance Value</td>
+               		</tr>
+                	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
+               		 <td id="left_align" style="color:red" th:text="${daybal.date}">Date</td>
+               		 <td style="color:red" th:text="${daybal.dayOfWeek}">Day of week</td>
+               		 <td></td>
+               		 <td></td>
+               		</tr> 
+                    <tr th:each="daybook: ${list}">
+                     <td id="left_align" th:text="${daybook.date}">Date</td>
+                     <td id="left_align" th:text="${daybook.narration}">Narration</td>
+                     <td id="right_align" th:text="${daybook.drAmt}">Debit</td>
+                     <td id="right_align" th:text="${daybook.crAmt}">Credit</td>
+                	</tr>
+                  	<tr th:with="daybal=${DaybookBalance.findBalance(list)}">
+               		 <td></td>
+               		 <td></td>
+               		 <td id="right_align" style="color:red" th:text="${daybal.tDebit}">Debit Total</td>
+               		 <td id="right_align" style="color:red" th:text="${daybal.tCredit}">Credit Total</td>
+               		</tr> 
+                </th:block>
+            </tbody>
+        </table>
+            </div>
+    </div>
+</div>
+</body>
+</html>

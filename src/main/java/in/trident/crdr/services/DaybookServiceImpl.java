@@ -1,13 +1,21 @@
 package in.trident.crdr.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ibm.icu.text.NumberFormat;
+
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookView;
 import in.trident.crdr.entities.Transactions;
@@ -18,6 +26,8 @@ import in.trident.crdr.repositories.DaybookRepository;
 public class DaybookServiceImpl implements DaybookService {
 
 	//TODO Autowire both after Testing Complete
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DaybookServiceImpl.class);
 	
 	private CloseBalRepo closeBalRepo;
 	
@@ -55,6 +65,27 @@ public class DaybookServiceImpl implements DaybookService {
 		Collections.sort(trans);
 		daybookView.setTransList(trans);
 		return daybookView;
+	}
+
+	@Override
+	public List<DaybookView> daybookViewRange(String startDate, String endDate) {
+		int days = dbRepo.findDaysBetween(endDate,startDate);
+		Calendar calendar = Calendar.getInstance();
+		List<DaybookView> daybooks = new LinkedList<DaybookView>();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			calendar.setTime(df.parse(startDate));
+		} catch (ParseException e) {
+			LOGGER.error("Calendar Parsing Exception at DaybookServiceImpl Class");
+			e.printStackTrace();
+		}
+		for(int i = 0; i<= days; i++ ) {
+			
+			daybooks.add(createDaybook(df.format(calendar.getTime())));
+			calendar.add(Calendar.DATE, 1);
+			
+		}
+		return daybooks;
 	}
 
 }

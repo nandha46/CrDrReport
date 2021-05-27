@@ -23,6 +23,7 @@ import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.CloseBal;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
+import in.trident.crdr.entities.DaybookView;
 import in.trident.crdr.entities.FormData;
 import in.trident.crdr.entities.LedgerBalance;
 import in.trident.crdr.entities.Role;
@@ -31,6 +32,7 @@ import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
+import in.trident.crdr.services.DaybookServiceImpl;
 
 @Controller
 public class AppController {
@@ -88,7 +90,6 @@ public class AppController {
 
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model, FormData formdata) {
-		// TODO move this impl to service method for clean code
 		LOGGER.info("Inside daybooks method");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calender = Calendar.getInstance();
@@ -112,6 +113,10 @@ public class AppController {
 		
 		closeBalList = closeBalRepo.findCloseBalList(formdata.getEndDate(), formdata.getStartDate());
 		
+		List<DaybookView> daybookViewObj = new DaybookServiceImpl(daybookRepo,closeBalRepo).daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
+		
+		model.addAttribute("daybookViewObj",daybookViewObj);
+	
 		model.addAttribute("closeBalList",closeBalList);
 		model.addAttribute("listOflist", listOflist);
 		model.addAttribute("pageTitle", "Daybook View");
