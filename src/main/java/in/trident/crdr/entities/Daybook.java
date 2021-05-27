@@ -36,7 +36,6 @@ public class Daybook implements Comparable<Daybook>{
 	
 	@Column(name="stkvalue", nullable = false)
 	private int sktValue;
-	// TODO sktValue need to store negative value
 	
 	public Long getDbId() {
 		return dbId;
