@@ -34,6 +34,15 @@ import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.DaybookServiceImpl;
 
+/**
+ * 
+ * @author Nandha
+ * 
+ * @since 1.0
+ * 
+ *
+ */
+
 @Controller
 public class AppController {
 
