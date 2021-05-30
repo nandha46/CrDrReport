@@ -21,7 +21,11 @@ import in.trident.crdr.entities.DaybookView;
 import in.trident.crdr.entities.Transactions;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
-
+/**
+ * 
+ * @author Nandhakumar Subramanian
+ *
+ */
 @Service
 public class DaybookServiceImpl implements DaybookService {
 
