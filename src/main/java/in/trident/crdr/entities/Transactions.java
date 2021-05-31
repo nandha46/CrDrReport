@@ -1,6 +1,9 @@
 package in.trident.crdr.entities;
 
 import java.util.Locale;
+/**
+ * @author Nandhakumar Subramanian
+ */
 
 import com.ibm.icu.text.NumberFormat;
 
