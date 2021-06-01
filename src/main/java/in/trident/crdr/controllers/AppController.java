@@ -1,10 +1,6 @@
 package in.trident.crdr.controllers;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,12 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import in.trident.crdr.entities.AccHead;
-import in.trident.crdr.entities.CloseBal;
 import in.trident.crdr.entities.Daybook;
-import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.DaybookView;
 import in.trident.crdr.entities.FormData;
-import in.trident.crdr.entities.LedgerBalance;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.repositories.AccHeadRepo;
@@ -100,36 +93,11 @@ public class AppController {
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model, FormData formdata) {
 		LOGGER.info("Inside daybooks method");
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar calender = Calendar.getInstance();
-		ArrayList<Daybook> daybookList;
-		ArrayList<ArrayList<Daybook>> listOflist = new ArrayList<ArrayList<Daybook>>();
-		ArrayList<CloseBal> closeBalList;
-		
-		int days = daybookRepo.findDaysBetween(formdata.getEndDate(), formdata.getStartDate());
-	
-		try {
-			calender.setTime(df.parse(formdata.getStartDate()));
-		} catch (ParseException e) {
-			LOGGER.warn("Calender parsing error in daybooks");
-			e.printStackTrace();
-		}
-		for (int i = 0; i <= days; i++) {
-			daybookList = daybookRepo.findDaybookByDate(df.format(calender.getTime()));
-			listOflist.add(daybookList);
-			calender.add(Calendar.DATE, 1);
-		}
-		
-		closeBalList = closeBalRepo.findCloseBalList(formdata.getEndDate(), formdata.getStartDate());
 		
 		List<DaybookView> daybookViewObj = new DaybookServiceImpl(daybookRepo,closeBalRepo,accHeadRepo).daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
 		
 		model.addAttribute("daybookViewObj",daybookViewObj);
-	
-		model.addAttribute("closeBalList",closeBalList);
-		model.addAttribute("listOflist", listOflist);
 		model.addAttribute("pageTitle", "Daybook View");
-		model.addAttribute("DaybookBalance", new DaybookBalance());
 		
 		return "daybooks";
 	}
@@ -160,7 +128,6 @@ public class AppController {
 		}
 		model.addAttribute("headlist", headlist);
 		model.addAttribute("listmap", listmap);
-		model.addAttribute("LedgerBalance", new LedgerBalance());
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
 	}
