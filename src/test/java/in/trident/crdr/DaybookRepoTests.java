@@ -25,6 +25,7 @@ import com.ibm.icu.util.Currency;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookBalance;
 import in.trident.crdr.entities.DaybookView;
+import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.services.DaybookService;
@@ -40,6 +41,9 @@ public class DaybookRepoTests {
 
 	@Autowired
 	private CloseBalRepo closeBalRepo;
+	
+	@Autowired
+	private AccHeadRepo accHeadRepo;
 	
 	@Test
 	public void testDaybookBal() {
@@ -107,7 +111,7 @@ public class DaybookRepoTests {
 	
 	@Test
 	public void testDaybookView() {
-		DaybookService dbs = new DaybookServiceImpl(daybookRepo,closeBalRepo);
+		DaybookService dbs = new DaybookServiceImpl(daybookRepo,closeBalRepo,accHeadRepo);
 		DaybookView dbv =  dbs.createDaybook("2020-04-02");
 		System.out.println(dbv.toString());
 	}

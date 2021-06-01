@@ -1,83 +1,91 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragments = "head" >
-	<meta charset="utf-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title> [[${pageTitle}]] </title>
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head th:fragments="head">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[[${pageTitle}]]</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f1f4f8
+}
 
-#left_align{
+#left_align {
 	text-align: left;
 }
 
-#right_align{
+#right_align {
 	text-align: right;
 }
 
-#center_align{
+#center_align {
 	text-align: center;
 }
 
 .navbar {
-  width: 100%;
-  background-color: #555;
-  overflow: auto;
+	width: 100%;
+	background-color: #555;
+	overflow: auto;
 }
 
 .scrol {
-	float:left;
+	float: left;
 	width: 500px;
 	overflow-y: auto;
 	height: 650px;
 }
 
 .scrol_daybook {
-	align-self : center;
+	align-self: center;
 	overflow-y: auto;
 	height: 750px;
 }
 
 .navbar a {
-  float: left;
-  padding: 12px;
-  color: white;
-  text-decoration: none;
-  font-size: 17px;
+	float: left;
+	padding: 12px;
+	color: white;
+	text-decoration: none;
+	font-size: 17px;
 }
 
 .navbar a:hover {
-  background-color: #000;
+	background-color: #000;
 }
 
 .active {
-  background-color: #4CAF50;
+	background-color: #4CAF50;
 }
 
 @media screen and (max-width: 500px) {
-  .navbar a {
-    float: none;
-    display: block;
-  }
+	.navbar a {
+		float: none;
+		display: block;
+	}
 }
 </style>
 </head>
 
 
 <body>
-		<div th:fragment="navbar" >
-	<div class="navbar">
-  <a class="active" href="./"><i class="fa fa-fw fa-home"></i> Home</a> 
-  <a th:href="@{/findDaybook}"><i class="fa fa-fw fa-search"></i> Daybook</a> 
-  <a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i> Users</a> 
-  <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i> Login</a>
-  <a th:href="@{/register}"><i class="fa fa-fw fa-user"></i> Register</a>
+	<div th:fragment="navbar">
+		<div class="navbar">
+			<a class="active" href="./"><i class="fa fa-fw fa-home"></i> HOME</a>
+			<a th:href="@{/findDaybook}"><i class="fa fa-fw fa-search"></i>
+				DAYBOOKS</a> <a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i>
+				USERS</a> <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i>
+				LOGIN</a> <a th:href="@{/register}"><i class="fa fa-fw fa-user"></i>
+				REGISTER</a>
 		</div>
-</div>
+	</div>
 
 </body>
 </html>

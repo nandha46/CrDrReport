@@ -19,6 +19,7 @@ import com.ibm.icu.text.NumberFormat;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.DaybookView;
 import in.trident.crdr.entities.Transactions;
+import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 /**
@@ -37,9 +38,12 @@ public class DaybookServiceImpl implements DaybookService {
 	
 	private DaybookRepository dbRepo;
 	
-	public DaybookServiceImpl(DaybookRepository dbRepo, CloseBalRepo closeBalRepo) {
+	private AccHeadRepo accHeadRepo;
+	
+	public DaybookServiceImpl(DaybookRepository dbRepo, CloseBalRepo closeBalRepo, AccHeadRepo accHeadRepo) {
 		this.dbRepo = dbRepo;
 		this.closeBalRepo = closeBalRepo;
+		this.accHeadRepo = accHeadRepo;
 	}
 	
 	/*
@@ -63,7 +67,8 @@ public class DaybookServiceImpl implements DaybookService {
 		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)));
 		List<Transactions> trans = new ArrayList<Transactions>();
 		daybook.forEach(transaction -> {
-			Transactions txns = new Transactions(transaction.getsNo(),transaction.getCrAmt(),transaction.getDrAmt(),transaction.getNarration(),transaction.getSktValue());
+			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAccCode());
+			Transactions txns = new Transactions(transaction.getsNo(),transaction.getCrAmt(),transaction.getDrAmt(),transaction.getNarration(),transaction.getSktValue(), temp);
 			trans.add(txns);
 		});
 		Collections.sort(trans);

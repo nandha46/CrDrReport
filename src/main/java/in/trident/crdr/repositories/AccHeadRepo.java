@@ -13,5 +13,7 @@ public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	@Query("Select u from AccHead u")
 	public ArrayList<AccHead> findAllAccHead(); 
 	
+	@Query("select shortName from AccHead a where accCode = ?1")
+	public String findShortNameByAccHead(int accCode);
 	
 }

@@ -43,13 +43,13 @@
 							<tr>
 								<td id="left_align" style="color: red"
 									th:text="${daybookview.date}">Date</td>
-								<td style="color: red" th:text="${daybookview.dayOfWeek}">Day
+								<td id="left_align" style="color: red" th:text="${daybookview.dayOfWeek}">Day
 									of week</td>
 								<td></td>
 								<td></td>
 							</tr>
 							<tr th:each="transaction: ${daybookview.transList}">
-								<td id="left_align" th:text="${daybookview.date}">Date</td>
+								<td id="left_align" th:text="${transaction.shortName}">Date</td>
 								<td id="left_align" th:text="${transaction.narration}">Narration</td>
 								<td id="right_align" th:text="${transaction.debitAmt}">Debit</td>
 								<td id="right_align" th:text="${transaction.creditAmt}">Credit</td>

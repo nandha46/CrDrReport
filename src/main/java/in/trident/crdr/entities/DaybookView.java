@@ -4,12 +4,6 @@ import java.util.List;
 
 public class DaybookView {
 	
-	@Override
-	public String toString() {
-		return "DaybookView [date=" + date + ", dayOfWeek=" + dayOfWeek + ", closingBal=" + closingBal + ", creditTot="
-				+ creditTot + ", debitTot=" + debitTot + ", transList=" + transList + "]";
-	}
-
 	private String date;
 	private String dayOfWeek;
 	private String closingBal;
@@ -58,12 +52,19 @@ public class DaybookView {
 		this.debitTot = debitTot;
 	}
 
+
 	public List<Transactions> getTransList() {
 		return transList;
 	}
 
 	public void setTransList(List<Transactions> transList) {
 		this.transList = transList;
+	}
+
+	@Override
+	public String toString() {
+		return "DaybookView [date=" + date + ", dayOfWeek=" + dayOfWeek + ", closingBal=" + closingBal + ", creditTot="
+				+ creditTot + ", debitTot=" + debitTot + ", transList=" + transList + "]";
 	}
 
 }

@@ -122,7 +122,7 @@ public class AppController {
 		
 		closeBalList = closeBalRepo.findCloseBalList(formdata.getEndDate(), formdata.getStartDate());
 		
-		List<DaybookView> daybookViewObj = new DaybookServiceImpl(daybookRepo,closeBalRepo).daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
+		List<DaybookView> daybookViewObj = new DaybookServiceImpl(daybookRepo,closeBalRepo,accHeadRepo).daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
 		
 		model.addAttribute("daybookViewObj",daybookViewObj);
 	

@@ -13,13 +13,15 @@ public class Transactions implements Comparable<Transactions>{
 	private String creditAmt, debitAmt;
 	private String narration;
 	private int stkValue;
+	private String shortName;
+	
 	private static final Double DOUBLE = (double) 0;
 
 	public Transactions () {
 		
 	}
 	
-	public Transactions(Integer sNo, Double creditAmt, Double debitAmt, String narration, int stkValue) {
+	public Transactions(Integer sNo, Double creditAmt, Double debitAmt, String narration, int stkValue, String shortName) {
 		
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
 		
@@ -38,6 +40,7 @@ public class Transactions implements Comparable<Transactions>{
 		}
 		this.narration = narration;
 		this.stkValue = stkValue;
+		this.shortName = shortName;
 	}
 	
 	public Integer getsNo() {
@@ -70,11 +73,19 @@ public class Transactions implements Comparable<Transactions>{
 	public void setStkValue(int stkValue) {
 		this.stkValue = stkValue;
 	}
+	public String getShortName() {
+		return shortName;
+	}
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+	
 	@Override
 	public String toString() {
 		return "Transactions [sNo=" + sNo + ", creditAmt=" + creditAmt + ", debitAmt=" + debitAmt + ", narration="
-				+ narration + "]";
+				+ narration + ", stkValue=" + stkValue + ", shortName=" + shortName + "]";
 	}
+
 	@Override
 	public int compareTo(Transactions o) {
 		return this.sNo.compareTo(o.sNo);
