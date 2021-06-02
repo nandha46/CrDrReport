@@ -18,12 +18,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import in.trident.crdr.entities.DaybookView;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.repositories.UserRepository;
-import in.trident.crdr.services.DaybookService;
-import in.trident.crdr.services.DaybookServiceImpl;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
