@@ -3,7 +3,7 @@
 		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace ="fragments :: head"></head>
 <body>
-<div class="container text-center">
+<div class="text-center">
 	<div th:replace ="fragments :: navbar"></div>
 
     <div>
@@ -18,8 +18,8 @@
         <h1>List of Users</h1>
     </div>
      
-    <div>
-        <table class="table table-striped table-bordered">
+    <div class="flex-container">
+        <table style= "width:60%" class="table table-striped table-bordered" >
             <thead class="thead-dark">
                 <tr>
                     <th>User ID</th>
