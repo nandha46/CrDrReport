@@ -156,6 +156,15 @@ public class AppController {
 		return "findLedger";
 	}
 
+	@GetMapping("/find2")
+	public String findTry(Model model) {
+		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		model.addAttribute("accHeadList", accHeadList);
+		model.addAttribute("PageTitle","Find Ledger");
+		model.addAttribute("formdata", new FormData());
+		return "findledger2";
+	}
+	
 	@GetMapping("/findTrialBal")
 	public String findTrial(Model model) {
 		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();

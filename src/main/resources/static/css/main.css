@@ -17,6 +17,16 @@ body {
 	text-align: center;
 }
 
+#nav-username{
+	float: right;
+	padding-right: 24px;
+	background: transparent;
+}
+
+a {
+	text-decoration: none;
+}
+
 .navbar {
   width: 100%;
   background-image: linear-gradient(to right,#b92b27,#1565C0);
