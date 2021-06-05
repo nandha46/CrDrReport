@@ -43,11 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
-			.antMatchers("/").permitAll()
-			.antMatchers("/register","/process_register").permitAll()
+			.antMatchers("/register","/process_register","/","/css/**").permitAll()
 			.antMatchers("/edit/**").hasAnyAuthority("admin")
 			.antMatchers("/daybooks").hasAnyAuthority("developer")
-			.antMatchers("/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet").hasAnyAuthority("developer")
+			.antMatchers("/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet","find2").hasAnyAuthority("developer")
 			.antMatchers("/users").hasAnyAuthority("developer")
 			.antMatchers("/delete/**").hasAnyAuthority("developer","client")
 			.anyRequest().authenticated()
