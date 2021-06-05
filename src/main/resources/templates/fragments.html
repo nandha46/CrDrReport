@@ -12,15 +12,33 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" th:href="@{/css/index.css}" />
 <link rel="stylesheet" th:href="@{/css/main.css}" />
 <link rel="stylesheet" th:href="@{/css/ledger.css}" />
+
 </head>
+
 <body>
 	<div th:fragment="navbar">
 		<div class="navbar">
 			<a class="active" href="./"><i class="fa fa-fw fa-home"></i> HOME</a>
+			<a th:href="@{/findDaybook}"><i class="fa fa-fw fa-search"></i> DAYBOOKS</a> 
+			<a th:href="@{/findLedger}"><i class="fa fa-fw fa-search"></i> LEDGER</a> 
+				<a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i>
+				USERS</a> <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i>
+				LOGIN</a> <a th:href="@{/register}"><i class="fa fa-fw fa-user"></i>
+				REGISTER</a>
+				<a href="#" th:inline="text" id="nav-username"><i class="fa fa-fw fa-user"> </i> [[${#request.userPrincipal.principal.name}]] </a>
+		</div>
+	</div>
+	
+	<div th:fragment="index-navbar">
+		<div class="navbar">
+			<a class="active" href="./"><i class="fa fa-fw fa-home"></i> HOME</a>
 			<a th:href="@{/findDaybook}"><i class="fa fa-fw fa-search"></i>
-				DAYBOOKS</a> <a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i>
+				DAYBOOKS</a> 
+				<a th:href="@{/findLedger}"><i class="fa fa-fw fa-search"></i> LEDGER</a>
+				<a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i>
 				USERS</a> <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i>
 				LOGIN</a> <a th:href="@{/register}"><i class="fa fa-fw fa-user"></i>
 				REGISTER</a>
