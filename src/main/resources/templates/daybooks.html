@@ -19,19 +19,14 @@
 		</div>
 
 		<div>
-			<table class="table table-striped table-bordered">
-				<thead class="thead-dark">
+			<div class="table-scroll">
+				<table id="daybooks">
 					<tr>
 						<th id="center_align">Date</th>
 						<th id="center_align">Narration</th>
 						<th id="center_align">Debit</th>
 						<th id="center_align">Credit</th>
 					</tr>
-				</thead>
-			</table>
-			<div class=scrol_daybook>
-				<table class="table table-striped table-bordered">
-					<tbody>
 						<th:block th:each="daybookview: ${daybookViewObj}">
 							<tr>
 								<td id="left_align">Date</td>
@@ -63,7 +58,6 @@
 									th:text="${daybookview.creditTot}">Credit Total</td>
 							</tr>
 						</th:block>
-					</tbody>
 				</table>
 			</div>
 		</div>

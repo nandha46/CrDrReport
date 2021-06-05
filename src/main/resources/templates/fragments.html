@@ -12,70 +12,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-
-body {
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #f1f4f8;
-}
-
-#left_align {
-	text-align: left;
-}
-
-#right_align {
-	text-align: right;
-}
-
-#center_align {
-	text-align: center;
-}
-
-.navbar {
-	width: 100%;
-	background-color: #555;
-	overflow: auto;
-}
-
-.scrol {
-	float: left;
-	width: 500px;
-	overflow-y: auto;
-	height: 650px;
-}
-
-.scrol_daybook {
-	align-self: center;
-	overflow-y: auto;
-	height: 750px;
-}
-
-.navbar a {
-	float: left;
-	padding: 12px;
-	color: white;
-	text-decoration: none;
-	font-size: 17px;
-}
-
-.navbar a:hover {
-	background-color: #000;
-}
-
-.active {
-	background-color: #b92b27;
-}
-
-@media screen and (max-width: 500px) {
-	.navbar a {
-		float: none;
-		display: block;
-	}
-}
-</style>
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+<link rel="stylesheet" th:href="@{/css/ledger.css}" />
 </head>
-
-
 <body>
 	<div th:fragment="navbar">
 		<div class="navbar">
@@ -87,6 +26,5 @@ body {
 				REGISTER</a>
 		</div>
 	</div>
-
 </body>
 </html>

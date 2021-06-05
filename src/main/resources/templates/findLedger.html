@@ -12,30 +12,26 @@
 						<form>
 							<fieldset>
 								<legend style="width: auto;">Select Account</legend>
-								<div class="scrol">
-									<table class="table table-striped table-bordered">
-										<thead class="thead-dark">
+									<div class="table-scroll">
+								  	<table id="account_selection">
+											<thead>
 											<tr>
-												<th>Acc Code &nbsp;&nbsp;&nbsp; Account Name</th>
+												<th>Acc Code</th>
+												<th>Account Name</th>
 											</tr>
-										</thead>
-										<tbody>
-											<!--		<tr th:each="accHead : ${accHeadList}">
-											<td th:text="${accHead.accCode}">Acc Code</td>
-											<td th:text="${accHead.accName}">Account Name</td>
-										</tr> -->
+											</thead>
+											<tbody>
 											<tr th:each="accHead : ${accHeadList}">
 												<td><input type="checkbox"
 													th:attr="id=${accHead.accHeadId}, name=${accHead.accHeadId}"
-													value="th:text=&quot${accHead.accName}&quot"> 
-													<label style="padding:12px; width:420px; height:15px; text-align:middle"
-													th:attr="for=${accHead.accHeadId}"
-													th:text="${accHead.accCode}+'&nbsp;&nbsp;&nbsp;'+${accHead.accName}">
+													value="th:text='${accHead.accName}'"> 
+													<label 	th:attr="for=${accHead.accHeadId}"
+													th:text="${accHead.accCode}">
 												</label></td>
-											</tr>
-										</tbody>
-
-									</table>
+												<td th:text="${accHead.accName}"> </td>
+											</tr> 
+											</tbody>
+									</table> 
 								</div>
 							</fieldset>
 						</form>

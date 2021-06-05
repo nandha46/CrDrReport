@@ -1,10 +1,5 @@
 @charset "utf-8";
 
-body {
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #f1f4f8;
-}
-
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -23,7 +18,7 @@ body {
   line-height: 55px;
   font-size: 30px;
   border-radius: 12px;
-  box-shadow: 0 0 8px 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   
 }
 
@@ -32,34 +27,4 @@ body {
   -webkit-transform: scale(1.1); /* Safari 3-8 */
   transform: scale(1.1);
   background-image: linear-gradient(to right,#b92b27,#1565C0); 
-}
-
-
-.navbar {
-  width: 100%;
-  background-image: linear-gradient(to right,#b92b27,#1565C0);
-  overflow: auto;
-}
-
-.navbar a {
-  float: left;
-  padding: 12px;
-  color: white;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.navbar a:hover {
-  background-color: #000;
-}
-
-.active {
-  background-color: #b92b27;
-}
-
-@media screen and (max-width: 500px) {
-  .navbar a {
-    float: none;
-    display: block;
-  }
 }

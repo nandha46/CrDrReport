@@ -1,1 +1,58 @@
-@charset "ISO-8859-1";
+@charset "utf-8";
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f1f4f8;
+}
+
+#left_align {
+	text-align: left;
+}
+
+#right_align {
+	text-align: right;
+}
+
+#center_align {
+	text-align: center;
+}
+
+.navbar {
+  width: 100%;
+  background-image: linear-gradient(to right,#b92b27,#1565C0);
+  overflow: auto;
+}
+
+table {
+	float: left;
+	width: 100%;
+	border: 3px solid red;
+}
+
+.table-scroll {
+    height: 650px;
+	overflow-y: scroll;	
+}
+
+.navbar a {
+	float: left;
+	padding: 12px;
+	color: white;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.navbar a:hover {
+	background-color: #000;
+}
+
+.active {
+	background-color: #b92b27;
+}
+
+@media screen and (max-width: 500px) {
+	.navbar a {
+		float: none;
+		display: block;
+	}
+}
