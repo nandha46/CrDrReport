@@ -1,4 +1,4 @@
-package in.trident.crdr.entities;
+package in.trident.crdr.models;
 
 import java.util.Locale;
 /**

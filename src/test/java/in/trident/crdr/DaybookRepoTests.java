@@ -19,7 +19,7 @@ import com.ibm.icu.number.NumberFormatter.GroupingStrategy;
 import com.ibm.icu.text.NumberFormat;
 import com.ibm.icu.util.Currency;
 
-import in.trident.crdr.entities.DaybookView;
+import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;

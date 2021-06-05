@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.Daybook;
-import in.trident.crdr.entities.DaybookView;
-import in.trident.crdr.entities.FormData;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
+import in.trident.crdr.models.DaybookView;
+import in.trident.crdr.models.FormData;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
@@ -154,15 +154,6 @@ public class AppController {
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		model.addAttribute("formdata", new FormData());
 		return "findLedger";
-	}
-
-	@GetMapping("/find2")
-	public String findTry(Model model) {
-		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();
-		model.addAttribute("accHeadList", accHeadList);
-		model.addAttribute("PageTitle","Find Ledger");
-		model.addAttribute("formdata", new FormData());
-		return "findledger2";
 	}
 	
 	@GetMapping("/findTrialBal")

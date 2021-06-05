@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/register","/process_register","/","/css/**").permitAll()
 			.antMatchers("/edit/**").hasAnyAuthority("admin")
 			.antMatchers("/daybooks").hasAnyAuthority("developer")
-			.antMatchers("/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet","find2").hasAnyAuthority("developer")
+			.antMatchers("/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet").hasAnyAuthority("developer")
 			.antMatchers("/users").hasAnyAuthority("developer")
 			.antMatchers("/delete/**").hasAnyAuthority("developer","client")
 			.anyRequest().authenticated()

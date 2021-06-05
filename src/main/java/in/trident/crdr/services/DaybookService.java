@@ -2,7 +2,7 @@ package in.trident.crdr.services;
 
 import java.util.List;
 
-import in.trident.crdr.entities.DaybookView;
+import in.trident.crdr.models.DaybookView;
 
 public interface DaybookService {
 	

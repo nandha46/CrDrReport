@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import com.ibm.icu.text.NumberFormat;
 
 import in.trident.crdr.entities.Daybook;
-import in.trident.crdr.entities.DaybookView;
-import in.trident.crdr.entities.Transactions;
+import in.trident.crdr.models.DaybookView;
+import in.trident.crdr.models.Transactions;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
