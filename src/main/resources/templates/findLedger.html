@@ -71,6 +71,16 @@
 									<option value="true">Include</option>
 								</select>
 							</div>
+							<!--  Nice Listing format for Acc Selection -->
+							<table>
+								<th:block th:each="accHead : ${accHeadList}">
+									<tr>
+										<td><label th:text="${accHead.accName}">zamow</label> <input
+											type="checkbox" th:field="*{accId}"
+											th:value="${accHead.accHeadId}" /></td>
+									</tr>
+								</th:block>
+							</table>
 							<button type="submit">Submit</button>
 							<input type="button" value="Close">
 						</form>

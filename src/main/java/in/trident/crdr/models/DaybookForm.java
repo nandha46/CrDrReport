@@ -1,15 +1,16 @@
 package in.trident.crdr.models;
 
+/**
+ * 
+ * @author Nandhakumar Subramanian
+ *
+ * @since 0.0.2
+ */
 public class DaybookForm {
 
 	private String startDate;
 	private String endDate;
-	private boolean reportOrder;
-	private boolean transactedAccOnly;
-	private boolean cutOff;
-	private String date;
-	private boolean zeroBal;
-	private int level;
+	
 	
 	/** 
 	* Deprecated method. Better alternative found
@@ -31,6 +32,7 @@ public class DaybookForm {
 	public String getStartDate() {
 		return startDate;
 	}
+	
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
@@ -41,58 +43,9 @@ public class DaybookForm {
 		this.endDate = endDate;
 	}
 
-	public boolean isReportOrder() {
-		return reportOrder;
-	}
-
-	public void setReportOrder(boolean reportOrder) {
-		this.reportOrder = reportOrder;
-	}
-
-	public boolean isTransactedAccOnly() {
-		return transactedAccOnly;
-	}
-
-	public void setTransactedAccOnly(boolean transactedAccOnly) {
-		this.transactedAccOnly = transactedAccOnly;
-	}
-
-	public boolean isCutOff() {
-		return cutOff;
-	}
-
-	public void setCutOff(boolean cutOff) {
-		this.cutOff = cutOff;
-	}
-
-
-	public String getDate() {
-		return date;
-	}
-
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-
-	public boolean isZeroBal() {
-		return zeroBal;
-	}
-
-
-	public void setZeroBal(boolean zeroBal) {
-		this.zeroBal = zeroBal;
-	}
-
-
-	public int getLevel() {
-		return level;
-	}
-
-
-	public void setLevel(int level) {
-		this.level = level;
+	@Override
+	public String toString() {
+		return "DaybookForm [startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
 
 }

@@ -1,6 +1,6 @@
 package in.trident.crdr.repositories;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,8 +10,11 @@ import in.trident.crdr.entities.AccHead;
 @Repository
 public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	
-	@Query("Select u from AccHead u")
-	public ArrayList<AccHead> findAllAccHead(); 
+	@Query("Select a from AccHead a")
+	public List<AccHead> findAllAccHead(); 
+	
+	@Query("select accName from AccHead a")
+	public List<String> findAccNames();
 	
 	@Query("select shortName from AccHead a where accCode = ?1")
 	public String findShortNameByAccHead(int accCode);

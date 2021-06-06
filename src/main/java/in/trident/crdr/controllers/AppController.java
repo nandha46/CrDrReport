@@ -1,7 +1,5 @@
 package in.trident.crdr.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,16 +14,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import in.trident.crdr.entities.AccHead;
-import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
+import in.trident.crdr.models.LedgerForm;
+import in.trident.crdr.models.LedgerView;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.DaybookServiceImpl;
+import in.trident.crdr.services.LedgerServiceImpl;
 
 /**
  * 
@@ -104,28 +104,9 @@ public class AppController {
 	// are required in ledger.html
 
 	@PostMapping("/ledger")
-	public String listLedger(Model model, DaybookForm formdata) {
-		ArrayList<Daybook> daybooklist = new ArrayList<>();
-		ArrayList<AccHead> headlist = new ArrayList<>();
-		HashMap<String, ArrayList<Daybook>> listmap = new HashMap<String, ArrayList<Daybook>>();
-		if (!formdata.isReportOrder()) { // false -> All acc heads
-			headlist = accHeadRepo.findAllAccHead();
-			for (AccHead acchead : headlist) {
-				if (acchead.getAccCode() == 0) {
-					// Intentionally left empty
-				} else {
-					daybooklist = daybookRepo.findDaybookByAccCodeAndDate(acchead.getAccCode(), formdata.getStartDate(),
-							formdata.getEndDate());
-					if (daybooklist.size() != 0)
-						listmap.put(acchead.getAccName(), daybooklist);
-				}
-			}
-
-		} else {
-
-		}
-		model.addAttribute("headlist", headlist);
-		model.addAttribute("listmap", listmap);
+	public String listLedger(Model model, LedgerForm ledgerForm) {
+		List<LedgerView> listLedger = new LedgerServiceImpl().createLedgerViewList(ledgerForm);
+		model.addAttribute("listLedger",listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
 	}
@@ -149,16 +130,16 @@ public class AppController {
 
 	@GetMapping("/findLedger")
 	public String findLedger(Model model) {
-		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "CrDr Ledger");
-		model.addAttribute("formdata", new DaybookForm());
+		model.addAttribute("formdata", new LedgerForm());
 		return "findLedger";
 	}
 	
 	@GetMapping("/findTrialBal")
 	public String findTrial(Model model) {
-		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trial Balance");
 		model.addAttribute("formdata", new DaybookForm());
