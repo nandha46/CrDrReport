@@ -21,7 +21,6 @@ public class CloseBalTests {
 	@Autowired
 	JdbcTemplate jdbc;
 	
-	@Test
 	public void testGetCloseBal() {
 		System.out.println("-----------Close Balance Test Start----------");
 		
@@ -33,7 +32,6 @@ public class CloseBalTests {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@Test
 	public void testDay() {
 	//	List<Integer> in = jdbc.query("select datediff(?,?)",(rs,rn)-> rs.getInt(0),new Object[] {"2020-04-01","2020-05-06"});
 		String num = jdbc.queryForObject("select dayname(?)", new Object[] {"2020-04-01"},String.class);
