@@ -1,6 +1,6 @@
 package in.trident.crdr.models;
 
-public class DaybookFormData {
+public class DaybookForm {
 
 	private String startDate;
 	private String endDate;
