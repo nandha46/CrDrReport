@@ -19,7 +19,6 @@ public class JPQLTests {
 	@Autowired
 	private DaybookRepository daybookRepo;
 	
-	@Test
 	public void testDaybookBalance(){
 		List<Object[]> obj = daybookRepo.findDaybookBalance("2020-04-30");
 		obj.forEach(s -> {
@@ -34,7 +33,6 @@ public class JPQLTests {
 	}
 	
 	
-	@Test
 	public void testFindDays() {
 		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<");
 		int days = daybookRepo.findDaysBetween("2021-06-04", "2021-04-09");

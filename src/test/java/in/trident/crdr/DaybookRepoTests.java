@@ -41,7 +41,6 @@ public class DaybookRepoTests {
 	private AccHeadRepo accHeadRepo;
 	
 
-	@Test
 	public void testNumberformat() {
 		Double d = 45124853123456.78941;
 		Double d2 = 100000d;
@@ -55,7 +54,6 @@ public class DaybookRepoTests {
 		System.out.println(nfr.format(d2).toString());
 	}
 	
-	@Test
 	public void testDateFormat() throws ParseException {
 	String date = "2020-04-24 00:00:00"; 
 	SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
@@ -65,14 +63,12 @@ public class DaybookRepoTests {
 	System.out.println(date);
 	}
 	
-	@Test
 	public void testFindDays() {
 		System.out.println(daybookRepo.findDaysBetween("2020-04-08","2020-04-01"));
 		System.out.println(daybookRepo.findDayOfWeek("2021-05-22"));
 	}
 	
 	
-	@Test
 	public void testDaybookView() {
 		DaybookService dbs = new DaybookServiceImpl(daybookRepo,closeBalRepo,accHeadRepo);
 		DaybookView dbv =  dbs.createDaybook("2020-04-02");

@@ -29,10 +29,10 @@ public class UserRepositoryTests {
 	
 	@Autowired
 	private UserRepository repo;
+	
 	@Autowired
 	private EntityManager entityManager;
     
-    @Test
     public void testCreateUser() {
     	User user = new User();
     	user.setEmail("asff@icloud.com");
