@@ -20,7 +20,7 @@ import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
-import in.trident.crdr.models.FormData;
+import in.trident.crdr.models.DaybookFormData;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
@@ -89,7 +89,7 @@ public class AppController {
 	}
 
 	@PostMapping("/daybooks")
-	public String listDaybook(Model model, FormData formdata) {
+	public String listDaybook(Model model, DaybookFormData formdata) {
 		LOGGER.info("Inside daybooks method");
 		
 		List<DaybookView> daybookViewObj = new DaybookServiceImpl(daybookRepo,closeBalRepo,accHeadRepo).daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
@@ -104,7 +104,7 @@ public class AppController {
 	// are required in ledger.html
 
 	@PostMapping("/ledger")
-	public String listLedger(Model model, FormData formdata) {
+	public String listLedger(Model model, DaybookFormData formdata) {
 		ArrayList<Daybook> daybooklist = new ArrayList<>();
 		ArrayList<AccHead> headlist = new ArrayList<>();
 		HashMap<String, ArrayList<Daybook>> listmap = new HashMap<String, ArrayList<Daybook>>();
@@ -131,7 +131,7 @@ public class AppController {
 	}
 
 	@PostMapping("/trialBal")
-	public String trialbal(Model model, FormData formdata) {
+	public String trialbal(Model model, DaybookFormData formdata) {
 		/*
 		 * Report order - Group/All Trial Balance As on - date Accounts with zero bal -
 		 * yes/no level - 1,2,3,4,5,6
@@ -142,7 +142,7 @@ public class AppController {
 
 	@GetMapping("/findDaybook")
 	public String findDaybook(Model model) {
-		model.addAttribute("formdata", new FormData());
+		model.addAttribute("formdata", new DaybookFormData());
 		model.addAttribute("pageTitle", "CrDr Daybook");
 		return "findDaybook";
 	}
@@ -152,7 +152,7 @@ public class AppController {
 		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "CrDr Ledger");
-		model.addAttribute("formdata", new FormData());
+		model.addAttribute("formdata", new DaybookFormData());
 		return "findLedger";
 	}
 	
@@ -161,7 +161,7 @@ public class AppController {
 		ArrayList<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trial Balance");
-		model.addAttribute("formdata", new FormData());
+		model.addAttribute("formdata", new DaybookFormData());
 		return "findTrialBal";
 	}
 
