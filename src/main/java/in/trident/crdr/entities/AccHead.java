@@ -7,6 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author Nandhakumar Subramanian
+ *
+ * @version 0.0.2
+ */
+
 @Entity
 @Table(name="acchead")
 public class AccHead implements Comparable<AccHead> {

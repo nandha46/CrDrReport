@@ -2,7 +2,7 @@ package in.trident.crdr.services;
 
 import java.util.List;
 
-import in.trident.crdr.models.AccountHeads;
+import in.trident.crdr.models.Dailybooks;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
 
@@ -16,6 +16,7 @@ import in.trident.crdr.models.LedgerView;
 public interface LedgerService {
 
 	List<LedgerView> createLedgerViewList(LedgerForm ledgerForm);
-	AccountHeads createAccountHead();
+	Dailybooks createDailybooks(String date);
+	LedgerView createLedgerView(Integer code, LedgerForm ledgerForm);
 	
 }

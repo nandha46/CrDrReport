@@ -16,8 +16,20 @@ public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	@Query("select accName from AccHead a")
 	public List<String> findAccNames();
 	
+	@Query("select accCode from AccHead a")
+	public List<Integer> findAccCodes();
+	
+	@Query("select accName from AccHead a where accCode = ?1")
+	public String findAccName(Integer code);
+	
 	@Query("select shortName from AccHead a where accCode = ?1")
 	public String findShortNameByAccHead(int accCode);
+	
+	@Query("select crAmt from AccHead a where accCode = ?1")
+	public Double findCrAmt(Integer code);
+	
+	@Query("select drAmt from AccHead a where accCode = ?1")
+	public Double findDrAmt(Integer code);
 	
 	@Query(value = "select datediff(?1,?2)", nativeQuery = true)
 	public int findDaysBetween(String d1, String d2);

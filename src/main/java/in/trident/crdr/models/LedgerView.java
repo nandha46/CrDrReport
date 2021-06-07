@@ -14,7 +14,9 @@ public class LedgerView {
 	private String accheadName;
 	private String OpeningBal;
 	private String date;
-	List<AccountHeads> listAccHeads;
+	private String dOrC;
+	
+	List<Dailybooks> listDailybooks;
 	
 	public String getAccheadName() {
 		return accheadName;
@@ -34,16 +36,22 @@ public class LedgerView {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public List<AccountHeads> getListAccHeads() {
-		return listAccHeads;
+	public List<Dailybooks> getListAccHeads() {
+		return listDailybooks;
 	}
-	public void setListAccHeads(List<AccountHeads> listAccHeads) {
-		this.listAccHeads = listAccHeads;
+	public void setListAccHeads(List<Dailybooks> listAccHeads) {
+		this.listDailybooks = listAccHeads;
+	}
+	public String getdOrC() {
+		return dOrC;
+	}
+	public void setdOrC(String dOrC) {
+		this.dOrC = dOrC;
 	}
 	@Override
 	public String toString() {
-		return "LedgerView [accheadName=" + accheadName + ", OpeningBal=" + OpeningBal + ", date=" + date
-				+ ", listAccHeads=" + listAccHeads + "]";
+		return "LedgerView [accheadName=" + accheadName + ", OpeningBal=" + OpeningBal + ", date=" + date + ", dOrC="
+				+ dOrC + ", listDailybooks=" + listDailybooks + "]";
 	}
 	
 }

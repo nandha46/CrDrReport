@@ -7,7 +7,7 @@ package in.trident.crdr.models;
  * 
  */
 
-public class AccountHeads {
+public class Dailybooks {
 	
 	private String date,narration,debitAmt,creditAmt,balance,debitOrCredit;
 
@@ -61,7 +61,7 @@ public class AccountHeads {
 
 	@Override
 	public String toString() {
-		return "AccountHeads [date=" + date + ", narration=" + narration + ", debitAmt=" + debitAmt + ", creditAmt="
+		return "Dailybooks [date=" + date + ", narration=" + narration + ", debitAmt=" + debitAmt + ", creditAmt="
 				+ creditAmt + ", balance=" + balance + ", debitOrCredit=" + debitOrCredit + "]";
 	}
 	
