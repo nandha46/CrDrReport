@@ -100,9 +100,6 @@ public class AppController {
 		return "daybooks";
 	}
 
-	// TODO Datatype of ledger list is changed to Hashmap so corresponding changes
-	// are required in ledger.html
-
 	@PostMapping("/ledger")
 	public String listLedger(Model model, LedgerForm ledgerForm) {
 		List<LedgerView> listLedger = new LedgerServiceImpl().createLedgerViewList(ledgerForm);
