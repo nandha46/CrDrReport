@@ -26,6 +26,7 @@ import in.trident.crdr.repositories.DaybookRepository;
  * 
  * @author Nandhakumar Subramanian
  *
+ * @version 0.0.4
  */
 @Service
 public class DaybookServiceImpl implements DaybookService {
