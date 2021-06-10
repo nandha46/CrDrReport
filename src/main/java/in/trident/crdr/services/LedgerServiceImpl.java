@@ -60,7 +60,7 @@ public class LedgerServiceImpl implements LedgerService {
 	}
 
 	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm) {
-		//TODO Needs an way to find if start of the Financial year
+		//TODO Needs a way to find if start of the Financial year
 		String arr[] = {"",""};
 		if(ledgerForm.getStartDate() == "2020-04-01") {
 			Double amt = accHeadRepo.findCrAmt(code);
