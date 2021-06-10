@@ -17,6 +17,8 @@ import in.trident.crdr.entities.Daybook;
 @Repository
 public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
+	//TODO Need a way to request daybooks for date range
+	
 	@Query("select u from Daybook u where u.date = ?1")
 	public ArrayList<Daybook> findDaybookByDate(String date);
 	
