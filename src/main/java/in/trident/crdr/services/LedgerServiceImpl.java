@@ -1,5 +1,6 @@
 package in.trident.crdr.services;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,6 +37,10 @@ public class LedgerServiceImpl implements LedgerService {
 
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
+		//ledgerForm.setAccCode(Arrays.asList(1,2,3));
+		ledgerForm.setStartDate("2020-04-01");
+		ledgerForm.setEndDate("2021-06-30");
+		ledgerForm.setReportOrder(true);
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
 		if(ledgerForm.isReportOrder()) {
 			List<Integer> accCodes = ledgerForm.getAccCode();

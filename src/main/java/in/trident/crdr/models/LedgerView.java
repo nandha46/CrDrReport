@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class LedgerView {
 	private String accheadName;
-	private String OpeningBal;
+	private String openingBal;
 	private String date;
 	private String dOrC;
 	
@@ -25,10 +25,10 @@ public class LedgerView {
 		this.accheadName = accheadName;
 	}
 	public String getOpeningBal() {
-		return OpeningBal;
+		return openingBal;
 	}
 	public void setOpeningBal(String openingBal) {
-		OpeningBal = openingBal;
+		this.openingBal = openingBal;
 	}
 	public String getDate() {
 		return date;
@@ -50,7 +50,7 @@ public class LedgerView {
 	}
 	@Override
 	public String toString() {
-		return "LedgerView [accheadName=" + accheadName + ", OpeningBal=" + OpeningBal + ", date=" + date + ", dOrC="
+		return "LedgerView [accheadName=" + accheadName + ", openingBal=" + openingBal + ", date=" + date + ", dOrC="
 				+ dOrC + ", listDailybooks=" + listDailybooks + "]";
 	}
 	

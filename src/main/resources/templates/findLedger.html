@@ -76,8 +76,8 @@
 								<th:block th:each="accHead : ${accHeadList}">
 									<tr>
 										<td><label th:text="${accHead.accName}">zamow</label> <input
-											type="checkbox" th:field="*{accId}"
-											th:value="${accHead.accHeadId}" /></td>
+											type="checkbox" th:field="*{accCode}"
+											th:value="${accHead.accCode}" /></td>
 									</tr>
 								</th:block>
 							</table>

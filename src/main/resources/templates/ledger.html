@@ -26,39 +26,43 @@
                     <th>Narration</th>
                     <th>Credit</th>
                     <th>Debit</th>
+                    <th>Balance</th>
+                    <th>D/C</th>
                 </tr>
             </thead>
             <tbody>
-               	<th:block th:each="list: ${listmap}">
+               	<th:block th:each="ledger: ${listLedger}">
                		<tr>
                		 <td></td>
-               		 <td th:text ="${list.key}">Acc Head Name</td>
+               		 <td th:text ="${ledger.accheadName}">Acc Head Name</td>
+               		 <td></td>
+               		 <td></td>
                		 <td></td>
                		 <td></td>
                		</tr>
-               		<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
-               		 <td>Date</td>
+               		<tr>
+               		 <td th:text = "${ledger.date}">Date</td>
                		 <td>Opening Balance</td>
                		 <td></td>
-               		 <td style="color:darkgreen" th:text="${daybal.closeBl}">Opening Balance Value</td>
-               		</tr>
-                	<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
-					 <td></td>
-					 <td></td>
+               		 <td style="color:darkgreen" th:text="${ledger.openingBal}">Opening Balance Value</td>
                		 <td></td>
                		 <td></td>
                		</tr>
-                    <tr th:each="daybook: ${list.value}">
-                     <td th:text="${daybook.date}">Date</td>
-                     <td th:text="${daybook.narration}">Narration</td>
-                     <td th:text="${daybook.crAmt}">Credit</td>
-                     <td th:text="${daybook.drAmt}">Debit</td>
-                	</tr>
-                	<tr th:with="daybal=${LedgerBalance.findBalance(list.value)}">
+                	<tr th:each ="dailybook : ${ledger.listDailybooks}">
+					 <td th:text = "${dailybook.date}"></td>
+					 <td th:text = "${dailybook.narration}"></td>
+					 <td th:text = "${dailybook.debitAmt}"></td>
+					 <td th:text = "${dailybook.creditAmt}"></td>
+               		 <td th:text = "${dailybook.balance}"></td>
+               		 <td th:text = "${dailybook.debitOrCredit}"></td>
+               		</tr>
+                	<tr>
                		 <td></td>
-               		 <td></td>
-               		 <td style="color:red" th:text="${daybal.crTot}">Credit Total</td>
-               		 <td style="color:red" th:text="${daybal.drTot}">Debit Total</td>
+               		 <td>Total</td>
+               		 <td style="color:red" th:text = "${dailybook.debitAmt}">Credit Total</td>
+               		 <td style="color:red" th:text = "${dailybook.creditAmt}">Debit Total</td>
+               		 <td th:text = "${dailybook.balance}"></td>
+               		 <td th:text = "${dailybook.debitOrCredit}"></td>
                		</tr>
                 </th:block>
             </tbody>
