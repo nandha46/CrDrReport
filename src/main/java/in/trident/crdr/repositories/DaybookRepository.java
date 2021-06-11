@@ -26,7 +26,7 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	public ArrayList<Daybook> findDaybookRange(String d1, String d2);
 	
 	@Query("Select u from Daybook u where u.acccode = ?1 and u.date between ?2 and ?3")
-	public ArrayList<Daybook> findDaybookByAccCodeAndDate(int accCode, String d1, String d2);
+	public List<Daybook> findDaybookByAccCodeAndDate(int accCode, String d1, String d2);
 	
 	@Query("select date, sum(crAmt) as crTot, sum(drAmt) as drTot, sum(crAmt)-sum(drAmt) as dayBal, DAYNAME(?1) as dayOfWeek from Daybook u where u.date = ?1")
 	public List<Object[]> findDaybookBalance(String d1);
