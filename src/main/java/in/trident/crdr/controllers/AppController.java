@@ -55,6 +55,7 @@ public class AppController {
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
 		LOGGER.trace("Inside Homepage controller");
+		LOGGER.warn("Use 'update users_roles set role_id = 1 where user_id = X' on MySQL DB to enable developer mode");
 		return "index";
 	}
 
