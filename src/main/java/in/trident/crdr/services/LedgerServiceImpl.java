@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.models.Dailybooks;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
 import in.trident.crdr.repositories.AccHeadRepo;
+import in.trident.crdr.repositories.DaybookRepository;
 /**
  * 
  * @author Nandhakumar Subramanian
@@ -22,6 +24,9 @@ public class LedgerServiceImpl implements LedgerService {
 	
 	@Autowired
 	private AccHeadRepo accHeadRepo;
+	
+	@Autowired
+	private DaybookRepository daybookRepo;
 	
 	@Override
 	public Dailybooks createDailybooks(String date) {
@@ -51,11 +56,20 @@ public class LedgerServiceImpl implements LedgerService {
  		ledgerview.setdOrC(arr[1]);
  		ledgerview.setDate(ledgerForm.getStartDate());
  		// Loop through date range
- 		List<Dailybooks> accHeadslist = new LinkedList<Dailybooks>();
- 		for(int i=0;i<10;i++) {
- 			String date = "";
- 			accHeadslist.add(createDailybooks(date));
- 		}
+ 		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
+ 		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, ledgerForm.getStartDate(), ledgerForm.getEndDate());
+ 		daybooks.forEach(db->{
+ 			Dailybooks dailybook = new Dailybooks();
+ 			//TODO create a constructor with args with primitive data types and NumberFormat it inside the Model class constuctor
+ 			dailybook.setDate(db.getDate());
+ 			dailybook.setDebitAmt(db.getDrAmt().toString());
+ 			dailybook.setDebitAmt(db.getCrAmt().toString());
+ 			dailybook.setNarration(db.getNarration());
+ 			dailybook.setDebitOrCredit("Dr");
+ 			dailybook.setBalance(accHeadRepo.findDrAmt(code)+db.getDrAmt().toString());
+ 			dailybooklist.add(dailybook);
+ 		});
+ 		ledgerview.setListAccHeads(dailybooklist);
 		return ledgerview;
 	}
 
@@ -73,8 +87,17 @@ public class LedgerServiceImpl implements LedgerService {
 			}
 		} else {
 			//TODO Logic to calculate Op Balance for middle of the year
+			Double amt = accHeadRepo.findCrAmt(code);
+			if (amt == 0) {
+			arr[0] = accHeadRepo.findDrAmt(code).toString();
+			arr[1] = "Dr";
+			} else {
+				arr[0] = amt.toString();
+				arr[1] = "Cr";
 		}
+	}
 		return arr;
+		
 	}
 
 }

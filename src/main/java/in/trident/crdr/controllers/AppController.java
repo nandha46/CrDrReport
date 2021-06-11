@@ -102,7 +102,7 @@ public class AppController {
 
 	@PostMapping("/ledger")
 	public String listLedger(Model model, LedgerForm ledgerForm) {
-		List<LedgerView> listLedger = new LedgerServiceImpl().createLedgerViewList(ledgerForm);
+		List<LedgerView> listLedger = new  LedgerServiceImpl().createLedgerViewList(ledgerForm);
 		model.addAttribute("listLedger",listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
