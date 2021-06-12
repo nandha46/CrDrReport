@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ibm.icu.text.NumberFormat;
@@ -35,17 +36,14 @@ public class DaybookServiceImpl implements DaybookService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DaybookServiceImpl.class);
 	
+	@Autowired
 	private CloseBalRepo closeBalRepo;
 	
+	@Autowired
 	private DaybookRepository dbRepo;
 	
+	@Autowired
 	private AccHeadRepo accHeadRepo;
-	
-	public DaybookServiceImpl(DaybookRepository dbRepo, CloseBalRepo closeBalRepo, AccHeadRepo accHeadRepo) {
-		this.dbRepo = dbRepo;
-		this.closeBalRepo = closeBalRepo;
-		this.accHeadRepo = accHeadRepo;
-	}
 	
 	/*
 	 * LocalizedNumberFormatter nfr =

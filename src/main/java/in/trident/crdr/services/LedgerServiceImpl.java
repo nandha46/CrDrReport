@@ -1,9 +1,10 @@
 package in.trident.crdr.services;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ import in.trident.crdr.repositories.DaybookRepository;
 @Service
 public class LedgerServiceImpl implements LedgerService {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LedgerServiceImpl.class);
+	
 	@Autowired
 	private AccHeadRepo accHeadRepo;
 	
@@ -32,15 +35,13 @@ public class LedgerServiceImpl implements LedgerService {
 	@Override
 	public Dailybooks createDailybooks(String date) {
 		// TODO Create dailybooks for the given Acc Code
-		return null;
+		return new Dailybooks();
 	}
 
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
-		//ledgerForm.setAccCode(Arrays.asList(1,2,3));
-		ledgerForm.setStartDate("2020-04-01");
-		ledgerForm.setEndDate("2021-06-30");
-		ledgerForm.setReportOrder(true);
+		LOGGER.warn("Inside Create Ledgerview method");
+		LOGGER.warn(ledgerForm.toString());
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
 		if(ledgerForm.isReportOrder()) {
 			List<Integer> accCodes = ledgerForm.getAccCode();
@@ -55,26 +56,32 @@ public class LedgerServiceImpl implements LedgerService {
 	@Override
 	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm) {
 		LedgerView ledgerview = new LedgerView();
-		ledgerview.setAccheadName(accHeadRepo.findAccName(code));
+		ledgerview.setAccheadName(accHeadRepo.findAccNameByAccCode(code));
 		String arr[] = findOpeningBal(code,ledgerForm);
  		ledgerview.setOpeningBal(arr[0]);
  		ledgerview.setdOrC(arr[1]);
  		ledgerview.setDate(ledgerForm.getStartDate());
+ 		LOGGER.warn("Ledgerview string"+ledgerview.toString());
  		// Loop through date range
  		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
  		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, ledgerForm.getStartDate(), ledgerForm.getEndDate());
+ 		LOGGER.warn("Daybooks for Acc Code fetched");
  		daybooks.forEach(db->{
  			Dailybooks dailybook = new Dailybooks();
+ 			LOGGER.warn("Inside daybooks forEach, New dailybook created");
  			//TODO create a constructor with args with primitive data types and NumberFormat it inside the Model class constuctor
  			dailybook.setDate(db.getDate());
  			dailybook.setDebitAmt(db.getDrAmt().toString());
  			dailybook.setDebitAmt(db.getCrAmt().toString());
  			dailybook.setNarration(db.getNarration());
  			dailybook.setDebitOrCredit("Dr");
- 			dailybook.setBalance(accHeadRepo.findDrAmt(code)+db.getDrAmt().toString());
+ 			dailybook.setBalance(accHeadRepo.findDrAmt(code).toString());
  			dailybooklist.add(dailybook);
+ 			LOGGER.warn("1 Dailybook added to list");
  		});
- 		ledgerview.setListAccHeads(dailybooklist);
+ 		ledgerview.setListDailybooks(dailybooklist);
+ 		LOGGER.warn("list set to ledgerview");
+ 		LOGGER.warn(ledgerview.toString());
 		return ledgerview;
 	}
 

@@ -19,8 +19,8 @@ public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	@Query("select accCode from AccHead a")
 	public List<Integer> findAccCodes();
 	
-	@Query("select accName from AccHead a where accCode = ?1")
-	public String findAccName(Integer code);
+	@Query("select accName from AccHead a where a.accCode = ?1")
+	public String findAccNameByAccCode(Integer code);
 	
 	@Query("select shortName from AccHead a where accCode = ?1")
 	public String findShortNameByAccHead(int accCode);

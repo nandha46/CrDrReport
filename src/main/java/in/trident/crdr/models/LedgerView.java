@@ -11,6 +11,7 @@ import java.util.List;
  * @since 0.0.5
  */
 public class LedgerView {
+	
 	private String accheadName;
 	private String openingBal;
 	private String date;
@@ -36,17 +37,17 @@ public class LedgerView {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public List<Dailybooks> getListAccHeads() {
-		return listDailybooks;
-	}
-	public void setListAccHeads(List<Dailybooks> listAccHeads) {
-		this.listDailybooks = listAccHeads;
-	}
 	public String getdOrC() {
 		return dOrC;
 	}
 	public void setdOrC(String dOrC) {
 		this.dOrC = dOrC;
+	}
+	public List<Dailybooks> getListDailybooks() {
+		return listDailybooks;
+	}
+	public void setListDailybooks(List<Dailybooks> listDailybooks) {
+		this.listDailybooks = listDailybooks;
 	}
 	@Override
 	public String toString() {

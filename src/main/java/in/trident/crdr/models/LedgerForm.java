@@ -10,6 +10,12 @@ import java.util.List;
 
 public class LedgerForm {
 	
+	@Override
+	public String toString() {
+		return "LedgerForm [startDate=" + startDate + ", endDate=" + endDate + ", reportOrder=" + reportOrder
+				+ ", transactedAccOnly=" + transactedAccOnly + ", cutOff=" + cutOff + ", zeroBal=" + zeroBal
+				+ ", stockNeeded=" + stockNeeded + ", accCode=" + accCode + "]";
+	}
 	private String startDate;
 	private String endDate;
 	private boolean reportOrder;
