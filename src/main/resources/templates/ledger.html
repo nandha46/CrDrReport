@@ -34,7 +34,7 @@
                	<th:block th:each="ledger: ${listLedger}">
                		<tr>
                		 <td></td>
-               		 <td th:text ="${ledger.accheadName}">Acc Head Name</td>
+               		 <td><b th:text ="${ledger.accheadName}">AccHead Name</b></td>
                		 <td></td>
                		 <td></td>
                		 <td></td>
@@ -42,7 +42,7 @@
                		</tr>
                		<tr>
                		 <td th:text = "${ledger.date}">Date</td>
-               		 <td>Opening Balance</td>
+               		 <td style="color:red">Opening Balance</td>
                		 <td></td>
                		 <td style="color:darkgreen" th:text="${ledger.openingBal}">Opening Balance Value</td>
                		 <td></td>
@@ -56,14 +56,14 @@
                		 <td th:text = "${dailybook.balance}"></td>
                		 <td th:text = "${dailybook.debitOrCredit}"></td>
                		</tr>
-                	<tr>
+                <!-- 	<tr>
                		 <td></td>
                		 <td>Total</td>
                		 <td style="color:red" th:text = "${dailybook.debitAmt}">Credit Total</td>
                		 <td style="color:red" th:text = "${dailybook.creditAmt}">Debit Total</td>
                		 <td th:text = "${dailybook.balance}"></td>
                		 <td th:text = "${dailybook.debitOrCredit}"></td>
-               		</tr>
+               		</tr>  -->	
                 </th:block>
             </tbody>
         </table>
