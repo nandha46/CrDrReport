@@ -70,7 +70,7 @@ public class DaybookRepoTests {
 	
 	
 	public void testDaybookView() {
-		DaybookService dbs = new DaybookServiceImpl(daybookRepo,closeBalRepo,accHeadRepo);
+		DaybookService dbs = new DaybookServiceImpl();
 		DaybookView dbv =  dbs.createDaybook("2020-04-02");
 		System.out.println(dbv.toString());
 	}
