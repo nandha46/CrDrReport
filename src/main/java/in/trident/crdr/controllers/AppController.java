@@ -21,11 +21,9 @@ import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
-import in.trident.crdr.repositories.CloseBalRepo;
-import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.UserRepository;
-import in.trident.crdr.services.DaybookServiceImpl;
-import in.trident.crdr.services.LedgerServiceImpl;
+import in.trident.crdr.services.DaybookService;
+import in.trident.crdr.services.LedgerService;
 
 /**
  * 
@@ -43,18 +41,17 @@ public class AppController {
 	private UserRepository userRepo;
 
 	@Autowired
-	private DaybookRepository daybookRepo;
-
-	@Autowired
 	private AccHeadRepo accHeadRepo;
 
 	@Autowired
-	private CloseBalRepo closeBalRepo;
+	private LedgerService ledgerService;
+	
+	@Autowired
+	private DaybookService daybookSerice;
 
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
-		LOGGER.trace("Inside Homepage controller");
 		LOGGER.warn("Use 'update users_roles set role_id = 1 where user_id = X' on MySQL DB to enable developer mode");
 		return "index";
 	}
@@ -92,18 +89,16 @@ public class AppController {
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model, DaybookForm formdata) {
 		LOGGER.info("Inside daybooks method");
-		
-		List<DaybookView> daybookViewObj = new DaybookServiceImpl(daybookRepo,closeBalRepo,accHeadRepo).daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
-		
+		List<DaybookView> daybookViewObj = daybookSerice.daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
 		model.addAttribute("daybookViewObj",daybookViewObj);
 		model.addAttribute("pageTitle", "Daybook View");
-		
 		return "daybooks";
 	}
 
 	@PostMapping("/ledger")
 	public String listLedger(Model model, LedgerForm ledgerForm) {
-		List<LedgerView> listLedger = new  LedgerServiceImpl().createLedgerViewList(ledgerForm);
+		LOGGER.warn("Ledger Page Start");
+		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm);
 		model.addAttribute("listLedger",listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
