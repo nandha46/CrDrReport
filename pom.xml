@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>in.trident.crdr</groupId>
 	<artifactId>CrDrReport</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.5b-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>CrDrReport</name>
 	<description>Web Reporting Tool for CrDr</description>
