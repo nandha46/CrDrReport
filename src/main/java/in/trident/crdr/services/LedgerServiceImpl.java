@@ -33,9 +33,24 @@ public class LedgerServiceImpl implements LedgerService {
 	private DaybookRepository daybookRepo;
 	
 	@Override
-	public Dailybooks createDailybooks(String date) {
-		// TODO Create dailybooks for the given Acc Code
-		return new Dailybooks();
+	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate) {
+		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
+ 		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate);
+ 		LOGGER.warn("Daybooks for Acc Code fetched");
+ 		daybooks.forEach(db->{
+ 			Dailybooks dailybook = new Dailybooks();
+ 			LOGGER.warn("Inside daybooks forEach, New dailybook created");
+ 			//TODO create a constructor with args and primitive data types, NumberFormat it inside the Model class
+ 			dailybook.setDate(db.getDate());
+ 			dailybook.setDebitAmt(db.getDrAmt().toString());
+ 			dailybook.setDebitAmt(db.getCrAmt().toString());
+ 			dailybook.setNarration(db.getNarration());
+ 			dailybook.setDebitOrCredit("Dr");
+ 			dailybook.setBalance(accHeadRepo.findDrAmt(code).toString());
+ 			dailybooklist.add(dailybook);
+ 			LOGGER.warn("1 Dailybook added to list");
+ 		});
+		return dailybooklist;
 	}
 
 	@Override
@@ -62,23 +77,7 @@ public class LedgerServiceImpl implements LedgerService {
  		ledgerview.setdOrC(arr[1]);
  		ledgerview.setDate(ledgerForm.getStartDate());
  		LOGGER.warn("Ledgerview string"+ledgerview.toString());
- 		// Loop through date range
- 		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
- 		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, ledgerForm.getStartDate(), ledgerForm.getEndDate());
- 		LOGGER.warn("Daybooks for Acc Code fetched");
- 		daybooks.forEach(db->{
- 			Dailybooks dailybook = new Dailybooks();
- 			LOGGER.warn("Inside daybooks forEach, New dailybook created");
- 			//TODO create a constructor with args with primitive data types and NumberFormat it inside the Model class constuctor
- 			dailybook.setDate(db.getDate());
- 			dailybook.setDebitAmt(db.getDrAmt().toString());
- 			dailybook.setDebitAmt(db.getCrAmt().toString());
- 			dailybook.setNarration(db.getNarration());
- 			dailybook.setDebitOrCredit("Dr");
- 			dailybook.setBalance(accHeadRepo.findDrAmt(code).toString());
- 			dailybooklist.add(dailybook);
- 			LOGGER.warn("1 Dailybook added to list");
- 		});
+ 		List<Dailybooks> dailybooklist = createDailybooks(code,ledgerForm.getStartDate(),ledgerForm.getEndDate());
  		ledgerview.setListDailybooks(dailybooklist);
  		LOGGER.warn("list set to ledgerview");
  		LOGGER.warn(ledgerview.toString());

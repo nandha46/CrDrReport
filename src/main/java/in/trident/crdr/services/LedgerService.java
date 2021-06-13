@@ -16,7 +16,7 @@ import in.trident.crdr.models.LedgerView;
 public interface LedgerService {
 
 	List<LedgerView> createLedgerViewList(LedgerForm ledgerForm);
-	Dailybooks createDailybooks(String date);
+	List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate);
 	LedgerView createLedgerView(Integer code, LedgerForm ledgerForm);
 	
 }
