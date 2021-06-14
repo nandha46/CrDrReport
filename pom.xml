@@ -19,7 +19,6 @@
 		<java.version>1.8</java.version>
 		<thymeleaf.version>3.0.12.RELEASE</thymeleaf.version>
 		<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
-		<blaze-persistence.version>1.6.0</blaze-persistence.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -112,14 +111,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
-		<dependency>
-            <groupId>com.blazebit</groupId>
-            <artifactId>blaze-persistence-bom</artifactId>
-            <version>${blaze-persistence.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>    
+		</dependency>    
 	</dependencies>
 
 	<build>
