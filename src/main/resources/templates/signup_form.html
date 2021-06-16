@@ -27,7 +27,7 @@
                 <label class="col-4 col-form-label">Password: </label>
                 <div class="col-8">
                     <input type="password" th:field="*{password}" class="form-control"
-                            required minlength="4" maxlength="10"/>
+                            required pattern=".{5,10}" />
                 </div>
             </div>
              
@@ -35,7 +35,7 @@
                 <label class="col-4 col-form-label">First Name: </label>
                 <div class="col-8">
                     <input type="text" th:field="*{firstName}" class="form-control"
-                            required minlength="2" maxlength="20"/>
+                            required pattern=".{5,10}" />
                 </div>
             </div>
              
@@ -43,7 +43,7 @@
                 <label class="col-4 col-form-label">Last Name: </label>
                 <div class="col-8">
                     <input type="text" th:field="*{lastName}" class="form-control"
-                            required minlength="1" maxlength="20" />
+                            required pattern=".{5,10}" />
                 </div>
             </div>
              
@@ -51,7 +51,7 @@
                 <label class="col-4 col-form-label">Enabled: </label>
                 <div class="col-8">
                     <input type="text" th:field="*{enabled}" class="form-control"
-                            required minlength="1" maxlength="1" />
+                            required pattern=".{5,10}" />
                 </div>
             </div>
              
