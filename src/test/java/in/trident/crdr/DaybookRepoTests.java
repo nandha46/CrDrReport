@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -20,8 +19,6 @@ import com.ibm.icu.text.NumberFormat;
 import com.ibm.icu.util.Currency;
 
 import in.trident.crdr.models.DaybookView;
-import in.trident.crdr.repositories.AccHeadRepo;
-import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.services.DaybookService;
 import in.trident.crdr.services.DaybookServiceImpl;
@@ -33,13 +30,6 @@ public class DaybookRepoTests {
 
 	@Autowired
 	private DaybookRepository daybookRepo;
-
-	@Autowired
-	private CloseBalRepo closeBalRepo;
-	
-	@Autowired
-	private AccHeadRepo accHeadRepo;
-	
 
 	public void testNumberformat() {
 		Double d = 45124853123456.78941;
