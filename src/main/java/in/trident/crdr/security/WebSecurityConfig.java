@@ -1,5 +1,12 @@
 package in.trident.crdr.security;
 
+/**
+ * @author Nandhakumar Subramanian
+ * 
+ * @since 
+ * @version 0.0.1
+ * 
+ */
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/register","/process_register","/","/css/**").permitAll()
 			.antMatchers("/edit/**").hasAnyAuthority("admin")
-			.antMatchers("/daybooks","/ledger").hasAnyAuthority("developer")
+			.antMatchers("/daybooks","/ledger","/trial").hasAnyAuthority("developer")
 			.antMatchers("/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet").hasAnyAuthority("developer")
 			.antMatchers("/users").hasAnyAuthority("developer")
 			.antMatchers("/delete/**").hasAnyAuthority("developer","client")

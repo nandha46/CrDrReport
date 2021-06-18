@@ -19,11 +19,14 @@ import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
+import in.trident.crdr.models.TrialForm;
+import in.trident.crdr.models.TrialView;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.DaybookService;
 import in.trident.crdr.services.LedgerService;
+import in.trident.crdr.services.TrialBalService;
 
 /**
  * 
@@ -49,6 +52,9 @@ public class AppController {
 	@Autowired
 	private DaybookService daybookSerice;
 
+	@Autowired
+	private TrialBalService trialBalService;
+	
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
@@ -104,16 +110,13 @@ public class AppController {
 		return "ledger";
 	}
 
-	@PostMapping("/trialBal")
-	public String trialbal(Model model, DaybookForm formdata) {
-		/*
-		 * Report order - Group/All 
-		 * Trial Balance As on - date 
-		 * Accounts with zero bal - yes/no 
-		 * level - 1,2,3,4,5,6
-		 */
-
-		return "trialbal";
+	@PostMapping("/trial")
+	public String trialbal(Model model, TrialForm trialform) {
+		LOGGER.warn("Trial Balance Page Start");
+		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform);
+		model.addAttribute("listTrailView",listTrailView);
+		model.addAttribute("pageTitle","Trial Balance");
+		return "trialBal";
 	}
 
 	@GetMapping("/findDaybook")
@@ -136,8 +139,8 @@ public class AppController {
 	public String findTrial(Model model) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		model.addAttribute("accHeadList", accHeadList);
-		model.addAttribute("pageTitle", "Trial Balance");
-		model.addAttribute("formdata", new DaybookForm());
+		model.addAttribute("pageTitle", "Find Trial Balance");
+		model.addAttribute("trialform", new TrialForm());
 		return "findTrialBal";
 	}
 
