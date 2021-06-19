@@ -1,11 +1,15 @@
 package in.trident.crdr.services;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
+import in.trident.crdr.repositories.AccHeadRepo;
 
 /**
  * 
@@ -20,10 +24,22 @@ import in.trident.crdr.models.TrialView;
 @Service
 public class TrialServiceImpl implements TrialBalService {
 
+	@Autowired
+	private AccHeadRepo accHeadRepo;
+	
 	@Override
 	public List<TrialView> createTrialBal(TrialForm trialform) {
-		
-		return null;
+		List<TrialView> listTrialview = new LinkedList<TrialView>();
+		List<AccHead> list = accHeadRepo.findAllAccHead();
+		Double value = new Double(100);
+		list.forEach((acc)->{
+			TrialView tv = new TrialView();
+			tv.setAccName(acc.getAccName());
+			tv.setDebit(value.toString());
+			tv.setCredit(value.toString());
+			listTrialview.add(tv);
+		});
+		return listTrialview;
 	}
 
 }
