@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments::navbar"></div>
+	<div class="container">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-7 col-sm-6 col-lg-8">
+					<div>
+						<form>
+							<fieldset>
+								<legend style="width: auto;">Select Account</legend>
+									<div class="table-scroll">
+								  	<table id="account_selection">
+											<thead>
+											<tr>
+												<th>Acc Code</th>
+												<th>Account Name</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="accHead : ${accHeadList}">
+												<td><input type="checkbox"
+													th:attr="id=${accHead.accHeadId}, name=${accHead.accHeadId}"
+													value="th:text='${accHead.accName}'"> 
+													<label 	th:attr="for=${accHead.accHeadId}"
+													th:text="${accHead.accCode}">
+												</label></td>
+												<td th:text="${accHead.accName}"> </td>
+											</tr> 
+											</tbody>
+									</table> 
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<div class="col-xs-5 col-sm-6 col-lg-4">
+					<fieldset>
+						<legend style="width: auto;">Select Specifications</legend>
+						<form th:action="@{/tradingPL}" th:object="${tradingPLForm}" method="post"
+							style="max-width: 600px; margin: 0 auto;">
+							<div class="form-group">
+								<label for="exampleFormControlSelect1">Report Order</label> <select
+									class="form-control" th:field="*{reportOrder}"
+									id="exampleFormControlSelect1">
+									<option value="false" selected>All</option>
+									<option value="true">Group</option>
+								</select>
+							</div>
+							Trial Balance as on : <input
+								type="date" th:filed="*{endDate}" name="endDate"
+								min="2000-01-02" max="2022-01-01" value="2021-03-31">
+							<div class="form-group">
+								<label for="exampleFormControlSelect2">Accounts with
+									zero Balance</label> <select class="form-control"
+									th:field="*{zeroBal}" id="exampleFormControlSelect2">
+									<option value="false">No</option>
+									<option value="true" selected>Yes</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlSelect3">Select Level</label> <select
+									class="form-control" th:field="*{level}"
+									id="exampleFormControlSelect3">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+								</select>
+							</div>
+							<!--  Nice Listing format for Acc Selection -->
+							<table>
+								<th:block th:each="accHead : ${accHeadList}">
+									<tr>
+										<td><label th:text="${accHead.accName}">zamow</label> <input
+											type="checkbox" th:field="*{accCode}"
+											th:value="${accHead.accCode}" /></td>
+									</tr>
+								</th:block>
+							</table>
+							<button type="submit">Submit</button>
+							<input type="button" value="Close">
+						</form>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
