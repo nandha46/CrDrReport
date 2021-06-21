@@ -19,6 +19,8 @@ import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
+import in.trident.crdr.models.TradingPLForm;
+import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
 import in.trident.crdr.models.DaybookForm;
@@ -26,13 +28,15 @@ import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.DaybookService;
 import in.trident.crdr.services.LedgerService;
+import in.trident.crdr.services.TradingPLService;
 import in.trident.crdr.services.TrialBalService;
 
 /**
  * 
  * @author Nandhakumar Subramanian
  * 
- * @since 0.0.1
+ * @since date
+ * @version 0.0.1
  */
 
 @Controller
@@ -54,6 +58,9 @@ public class AppController {
 
 	@Autowired
 	private TrialBalService trialBalService;
+	
+	@Autowired
+	private TradingPLService tradingPLService;
 	
 	@GetMapping("/")
 	public String showHomePage(Model model) {
@@ -119,6 +126,15 @@ public class AppController {
 		return "trialBal";
 	}
 
+	@PostMapping("/tradingPL")
+	public String tradingPL(Model model, TradingPLForm tradingPLForm) {
+		LOGGER.warn("TradingPL Page Start");
+		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm);
+		model.addAttribute("listTradingPL", listTradingPL);
+		model.addAttribute("pageTitle","Trading - Profit & Loss");
+		return "tradingPL";
+	}
+	
 	@GetMapping("/findDaybook")
 	public String findDaybook(Model model) {
 		model.addAttribute("formdata", new DaybookForm());
@@ -147,7 +163,7 @@ public class AppController {
 	@GetMapping("/findTradingPL")
 	public String findTradingPl(Model model) {
 		model.addAttribute("pageTitle", "Trading - Profit and Loss");
-		return "production";
+		return "findTradingPL";
 	}
 
 	@GetMapping("/findBalSheet")
