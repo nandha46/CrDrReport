@@ -17,7 +17,14 @@ import in.trident.crdr.models.TradingPLView;
  *
  */
 import in.trident.crdr.repositories.AccHeadRepo;
-
+/**
+ * 
+ * @author Nandhakumar Subramanian
+ * 
+ * @version 0.0.5b
+ * @since 21 Jun 2021
+ *
+ */
 public class TradingPLServiceImpl implements TradingPLService {
 
 	@Autowired
