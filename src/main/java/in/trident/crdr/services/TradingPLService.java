@@ -16,5 +16,6 @@ import in.trident.crdr.models.TradingPLView;
 public interface TradingPLService {
 
 	List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm);
+	
 
 }
