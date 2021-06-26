@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace ="fragments :: head"></head>
+<body>
+<div th:replace ="fragments :: navbar"></div>
+<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Welcome <b> [[${#request.userPrincipal.principal.fullName}]] </b>
+            </p>
+            <input type="submit" value="Sign Out" />
+        </form>
+    </div>
+    <div>
+        <h1>Trial Balance</h1>
+    </div>
+     
+    <div>
+    	<div class=scrol_daybook>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th id="center_align">Account Name</th>
+                    <th id="center_align">Debit</th>
+                    <th id="center_align">Credit</th>
+                </tr>
+            </thead>
+            <tbody>
+               		<tr th:each="trialview: ${listTrailView}">
+               		 <td id="left_align" th:text ="${trialview.accName}">Acc Head Name</td>
+               		 <td id="right_align" style="color:darkgreen" th:text="${trialview.debit}">Debit</td>
+               		 <td id="right_align" style="color:darkgreen" th:text="${trialview.credit}">Credit</td>
+               		</tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
