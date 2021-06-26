@@ -23,9 +23,12 @@ import in.trident.crdr.models.TradingPLForm;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
+import in.trident.crdr.models.BalSheetForm;
+import in.trident.crdr.models.BalanceSheetView;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.UserRepository;
+import in.trident.crdr.services.BalanceSheetService;
 import in.trident.crdr.services.DaybookService;
 import in.trident.crdr.services.LedgerService;
 import in.trident.crdr.services.TradingPLService;
@@ -62,6 +65,9 @@ public class AppController {
 	
 	@Autowired
 	private TradingPLService tradingPLService;
+	
+	@Autowired
+	private BalanceSheetService balanceSheetService;
 	
 	@GetMapping("/")
 	public String showHomePage(Model model) {
@@ -136,6 +142,14 @@ public class AppController {
 		return "tradingPL";
 	}
 	
+	@PostMapping("/BalanceSheet")
+	public String balanceSheet(Model model, BalSheetForm balSheetForm) {
+		LOGGER.warn("Balance Sheet start");
+		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm);
+		model.addAttribute("listBalSheet",listBalSheet);
+		return "BalanceSheet";
+		}
+	
 	@GetMapping("/findDaybook")
 	public String findDaybook(Model model) {
 		model.addAttribute("formdata", new DaybookForm());
@@ -170,7 +184,7 @@ public class AppController {
 	@GetMapping("/findBalSheet")
 	public String findBalSheet(Model model) {
 		model.addAttribute("pageTitle", "Balance Sheet");
-		return "production";
+		return "findBalanceSheet";
 	}
 
 }
