@@ -1,5 +1,6 @@
 package in.trident.crdr.services;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import in.trident.crdr.models.BalSheetForm;
@@ -17,8 +18,8 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 
 	@Override
 	public List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm) {
-
-		return null;
+		List<BalanceSheetView> listBalSheet = new LinkedList<BalanceSheetView>();
+		return listBalSheet;
 	}
 
 }
