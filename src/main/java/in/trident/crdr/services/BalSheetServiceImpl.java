@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.models.BalSheetForm;
@@ -18,6 +19,7 @@ import in.trident.crdr.repositories.AccHeadRepo;
  * @version 0.0.5b
  *
  */
+@Service
 public class BalSheetServiceImpl implements BalanceSheetService {
 
 	@Autowired

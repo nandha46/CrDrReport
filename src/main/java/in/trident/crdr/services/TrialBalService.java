@@ -2,6 +2,8 @@ package in.trident.crdr.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
 /**
@@ -13,6 +15,7 @@ import in.trident.crdr.models.TrialView;
  * @version 0.0.5b
  *
  */
+@Service
 public interface TrialBalService {
 
 	 List<TrialView> createTrialBal(TrialForm trialform);

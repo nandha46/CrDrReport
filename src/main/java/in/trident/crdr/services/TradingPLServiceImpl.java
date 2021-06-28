@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import in.trident.crdr.models.TradingPLForm;
 import in.trident.crdr.models.TradingPLView;
@@ -25,6 +26,7 @@ import in.trident.crdr.repositories.AccHeadRepo;
  * @since 21 Jun 2021
  *
  */
+@Service
 public class TradingPLServiceImpl implements TradingPLService {
 
 	@Autowired

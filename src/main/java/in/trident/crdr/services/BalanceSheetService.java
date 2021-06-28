@@ -2,6 +2,8 @@ package in.trident.crdr.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import in.trident.crdr.models.BalSheetForm;
 import in.trident.crdr.models.BalanceSheetView;
 
@@ -14,6 +16,7 @@ import in.trident.crdr.models.BalanceSheetView;
  * @version 0.0.5b
  *
  */
+@Service
 public interface BalanceSheetService {
 	
 	List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm); 
