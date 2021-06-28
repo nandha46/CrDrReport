@@ -62,7 +62,7 @@ public class AppController {
 
 	@Autowired
 	private TrialBalService trialBalService;
-
+	
 	@Autowired
 	private TradingPLService tradingPLService;
 
@@ -164,7 +164,7 @@ public class AppController {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trading - Profit and Loss");
-		model.addAttribute("tradinPLForm", new TradingPLForm());
+		model.addAttribute("tradingPLForm", new TradingPLForm());
 		return "findTradingPL";
 	}
 
