@@ -20,7 +20,7 @@ public class TrialView {
 	
 	@Override
 	public String toString() {
-		return "TrialObj [accName=" + accName + ", debit=" + debit + ", credit=" + credit + "]";
+		return "TrialView [accName=" + accName + ", debit=" + debit + ", credit=" + credit + "]";
 	}
 	public void setAccName(String accName) {
 		this.accName = accName;
