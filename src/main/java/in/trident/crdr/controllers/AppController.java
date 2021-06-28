@@ -56,19 +56,19 @@ public class AppController {
 
 	@Autowired
 	private LedgerService ledgerService;
-	
+
 	@Autowired
 	private DaybookService daybookSerice;
 
 	@Autowired
 	private TrialBalService trialBalService;
-	
+
 	@Autowired
 	private TradingPLService tradingPLService;
-	
+
 	@Autowired
 	private BalanceSheetService balanceSheetService;
-	
+
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
@@ -106,55 +106,21 @@ public class AppController {
 		return "users";
 	}
 
-	@PostMapping("/daybooks")
-	public String listDaybook(Model model, DaybookForm formdata) {
-		LOGGER.info("Inside daybooks method");
-		List<DaybookView> daybookViewObj = daybookSerice.daybookViewRange(formdata.getStartDate(), formdata.getEndDate());
-		model.addAttribute("daybookViewObj",daybookViewObj);
-		model.addAttribute("pageTitle", "Daybook View");
-		return "daybooks";
-	}
-
-	@PostMapping("/ledger")
-	public String listLedger(Model model, LedgerForm ledgerForm) {
-		LOGGER.warn("Ledger Page Start");
-		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm);
-		model.addAttribute("listLedger",listLedger);
-		model.addAttribute("pageTitle", "CrDr Ledger");
-		return "ledger";
-	}
-
-	@PostMapping("/trial")
-	public String trialbal(Model model, TrialForm trialform) {
-		LOGGER.warn("Trial Balance Page Start");
-		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform);
-		model.addAttribute("listTrailView",listTrailView);
-		model.addAttribute("pageTitle","Trial Balance");
-		return "trialBal";
-	}
-
-	@PostMapping("/tradingPL")
-	public String tradingPL(Model model, TradingPLForm tradingPLForm) {
-		LOGGER.warn("TradingPL Page Start");
-		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm);
-		model.addAttribute("listTradingPL", listTradingPL);
-		model.addAttribute("pageTitle","Trading - Profit & Loss");
-		return "tradingPL";
-	}
-	
-	@PostMapping("/BalanceSheet")
-	public String balanceSheet(Model model, BalSheetForm balSheetForm) {
-		LOGGER.warn("Balance Sheet start");
-		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm);
-		model.addAttribute("listBalSheet",listBalSheet);
-		return "BalanceSheet";
-		}
-	
 	@GetMapping("/findDaybook")
 	public String findDaybook(Model model) {
 		model.addAttribute("formdata", new DaybookForm());
 		model.addAttribute("pageTitle", "CrDr Daybook");
 		return "findDaybook";
+	}
+
+	@PostMapping("/daybooks")
+	public String listDaybook(Model model, DaybookForm formdata) {
+		LOGGER.info("Inside daybooks method");
+		List<DaybookView> daybookViewObj = daybookSerice.daybookViewRange(formdata.getStartDate(),
+				formdata.getEndDate());
+		model.addAttribute("daybookViewObj", daybookViewObj);
+		model.addAttribute("pageTitle", "Daybook View");
+		return "daybooks";
 	}
 
 	@GetMapping("/findLedger")
@@ -165,7 +131,16 @@ public class AppController {
 		model.addAttribute("formdata", new LedgerForm());
 		return "findLedger";
 	}
-	
+
+	@PostMapping("/ledger")
+	public String listLedger(Model model, LedgerForm ledgerForm) {
+		LOGGER.warn("Ledger Page Start");
+		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm);
+		model.addAttribute("listLedger", listLedger);
+		model.addAttribute("pageTitle", "CrDr Ledger");
+		return "ledger";
+	}
+
 	@GetMapping("/findTrialBal")
 	public String findTrial(Model model) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
@@ -175,16 +150,48 @@ public class AppController {
 		return "findTrialBal";
 	}
 
+	@PostMapping("/trial")
+	public String trialbal(Model model, TrialForm trialform) {
+		LOGGER.warn("Trial Balance Page Start");
+		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform);
+		model.addAttribute("listTrailView", listTrailView);
+		model.addAttribute("pageTitle", "Trial Balance");
+		return "trialBal";
+	}
+
 	@GetMapping("/findTradingPL")
 	public String findTradingPl(Model model) {
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trading - Profit and Loss");
+		model.addAttribute("tradinPLForm", new TradingPLForm());
 		return "findTradingPL";
+	}
+
+	@PostMapping("/tradingPL")
+	public String tradingPL(Model model, TradingPLForm tradingPLForm) {
+		LOGGER.warn("TradingPL Page Start");
+		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm);
+		model.addAttribute("listTradingPL", listTradingPL);
+		model.addAttribute("pageTitle", "Trading - Profit & Loss");
+		return "tradingPL";
 	}
 
 	@GetMapping("/findBalSheet")
 	public String findBalSheet(Model model) {
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Balance Sheet");
+		model.addAttribute("balSheetForm", new BalSheetForm());
 		return "findBalanceSheet";
+	}
+
+	@PostMapping("/BalanceSheet")
+	public String balanceSheet(Model model, BalSheetForm balSheetForm) {
+		LOGGER.warn("Balance Sheet start");
+		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm);
+		model.addAttribute("listBalSheet", listBalSheet);
+		return "BalanceSheet";
 	}
 
 }
