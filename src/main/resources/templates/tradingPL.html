@@ -29,7 +29,7 @@
             </thead>
             <tbody>
                		<tr th:each="tradingPL: ${listTradingPL}">
-               		 <td id="left_align" th:text ="${TradingPL.particulars}">Acc Head Name</td>
+               		 <td id="left_align" th:text ="${tradingPL.particulars}">Acc Head Name</td>
                		 <td id="right_align" style="color:darkgreen" th:text="${tradingPL.debit}">Debit</td>
                		 <td id="right_align" style="color:darkgreen" th:text="${tradingPL.credit}">Credit</td>
                		</tr>

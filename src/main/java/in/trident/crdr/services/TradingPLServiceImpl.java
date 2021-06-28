@@ -36,7 +36,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 		List<String> list =  accHeadRepo.findAccNames();
 		list.forEach((acchead)-> {
 			TradingPLView tradingPLView = new TradingPLView();
-			tradingPLView.setCredit(acchead);
+			tradingPLView.setParticulars(acchead);
 			tradingPLView.setDebit("10025");
 			tradingPLView.setCredit("12458");
 			listTradingPLView.add(tradingPLView);
