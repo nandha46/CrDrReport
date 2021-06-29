@@ -2,11 +2,14 @@ package in.trident.crdr.services;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ibm.icu.text.NumberFormat;
 
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.models.Dailybooks;
@@ -33,30 +36,7 @@ public class LedgerServiceImpl implements LedgerService {
 	private DaybookRepository daybookRepo;
 	
 	@Override
-	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate) {
-		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
- 		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate);
- 		LOGGER.warn("Daybooks for Acc Code fetched");
- 		daybooks.forEach(db->{
- 			Dailybooks dailybook = new Dailybooks();
- 			LOGGER.warn("Inside daybooks forEach, New dailybook created");
- 			//TODO create a constructor with args and primitive data types, NumberFormat it inside the Model class
- 			dailybook.setDate(db.getDate());
- 			dailybook.setDebitAmt(db.getDrAmt().toString());
- 			dailybook.setDebitAmt(db.getCrAmt().toString());
- 			dailybook.setNarration(db.getNarration());
- 			dailybook.setDebitOrCredit("Dr");
- 			dailybook.setBalance(accHeadRepo.findDrAmt(code).toString());
- 			dailybooklist.add(dailybook);
- 			LOGGER.warn("1 Dailybook added to list");
- 		});
-		return dailybooklist;
-	}
-
-	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
-		LOGGER.warn("Inside Create Ledgerview method");
-		LOGGER.warn(ledgerForm.toString());
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
 		if(ledgerForm.isReportOrder()) {
 			List<Integer> accCodes = ledgerForm.getAccCode();
@@ -67,7 +47,7 @@ public class LedgerServiceImpl implements LedgerService {
 		}
 		return ledgerList;
 	}
-
+	
 	@Override
 	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm) {
 		LedgerView ledgerview = new LedgerView();
@@ -82,6 +62,19 @@ public class LedgerServiceImpl implements LedgerService {
  		LOGGER.warn("list set to ledgerview");
  		LOGGER.warn(ledgerview.toString());
 		return ledgerview;
+	}
+
+
+	@Override
+	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate) {
+		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
+ 		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate);
+ 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+ 		daybooks.forEach(db->{
+ 			Dailybooks dailybook = new Dailybooks(db.getDate(), db.getNarration(), nf.format(db.getDrAmt()),nf.format(db.getCrAmt()),nf.format(accHeadRepo.findDrAmt(code)),"Dr");
+ 			dailybooklist.add(dailybook);
+ 		});
+		return dailybooklist;
 	}
 
 	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm) {
