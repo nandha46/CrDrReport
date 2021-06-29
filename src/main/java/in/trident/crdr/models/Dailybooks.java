@@ -10,6 +10,19 @@ package in.trident.crdr.models;
 public class Dailybooks {
 	
 	private String date,narration,debitAmt,creditAmt,balance,debitOrCredit;
+	
+	public Dailybooks() {
+		
+	}
+	
+	public Dailybooks(String date, String narration, String debitAmt, String creditAmt, String balance, String debitOrCredit) {
+		this.date = date;
+		this.narration = narration;
+		this.debitAmt = debitAmt;
+		this.creditAmt = creditAmt;
+		this.balance = balance;
+		this.debitOrCredit = debitOrCredit;
+	}
 
 	public String getDate() {
 		return date;
