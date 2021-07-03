@@ -94,7 +94,7 @@ public class LedgerServiceImpl implements LedgerService {
 			Double amt = accHeadRepo.findCrAmt(code);
 			if (amt == 0) {
 			arr[0] = accHeadRepo.findDrAmt(code).toString();
-			arr[1] = "Dr";
+			arr[1] = "Dr ";
 			} else {
 				arr[0] = amt.toString();
 				arr[1] = "Cr";
