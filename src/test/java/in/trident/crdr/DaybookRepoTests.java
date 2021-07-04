@@ -58,7 +58,6 @@ public class DaybookRepoTests {
 		System.out.println(daybookRepo.findDayOfWeek("2021-05-22"));
 	}
 	
-	
 	public void testDaybookView() {
 		DaybookService dbs = new DaybookServiceImpl();
 		DaybookView dbv =  dbs.createDaybook("2020-04-02");

@@ -70,6 +70,8 @@ public class LedgerServiceImpl implements LedgerService {
 		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
  		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate);
  		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+ 		//TODO Write a method to calculate balance for Daybooks
+ 		// Balance value changes from Opening balance gradually
  		daybooks.forEach(db->{
  			Dailybooks dailybook = new Dailybooks(db.getDate(), db.getNarration(), nf.format(db.getDrAmt()),nf.format(db.getCrAmt()),nf.format(accHeadRepo.findDrAmt(code)),"Dr");
  			dailybooklist.add(dailybook);
@@ -78,27 +80,62 @@ public class LedgerServiceImpl implements LedgerService {
 	}
 
 	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm) {
-		//TODO Needs a way to find if start of the Financial year
 		String arr[] = {"",""};
 		if(ledgerForm.getStartDate() == "2020-04-01") {
-			Double amt = accHeadRepo.findCrAmt(code);
-			if (amt == 0) {
-			arr[0] = accHeadRepo.findDrAmt(code).toString();
-			arr[1] = "Dr";
-			} else {
-				arr[0] = amt.toString();
+			Double d1 = accHeadRepo.findCrAmt(code);
+			Double d2 = accHeadRepo.findDrAmt(code);
+			if( d1 == 0d) {
+				arr[0] = d2.toString();
+				arr[1] = "Dr";
+			}
+			else {
+				arr[0] = d1.toString();
 				arr[1] = "Cr";
 			}
+			
 		} else {
-			//TODO Logic to calculate Op Balance for middle of the year
-			Double amt = accHeadRepo.findCrAmt(code);
-			if (amt == 0) {
-			arr[0] = accHeadRepo.findDrAmt(code).toString();
-			arr[1] = "Dr ";
-			} else {
-				arr[0] = amt.toString();
-				arr[1] = "Cr";
-		}
+			Double d1 = accHeadRepo.findCrAmt(code);
+			Double d2 = accHeadRepo.findDrAmt(code);
+			if( d1 == 0d) {
+				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate()) ;
+				// If tmp is +ve Dr else Cr
+				if (tmp > 0d || tmp == 0d) {
+					tmp = d2 + tmp;
+					arr[0] = tmp.toString();
+					arr[1] = "Dr";
+				} else {
+					d2 = d2 + tmp;
+						if (d2 > 0d) {
+							arr[0]  = d2.toString();
+							arr[1] = "Cr";
+						} else {
+							d2 *= -1;
+							arr[0] = d2.toString();
+							arr[1] = "Dr";
+						}
+				}
+			}
+			else {
+				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate()) ;
+				// If tmp is +ve Cr else Dr
+				if (tmp > 0d || tmp == 0d) {
+					tmp = d1 + tmp;
+					arr[0] = tmp.toString();
+					arr[1] = "Cr";
+				} else {
+					d1 = d1 + tmp;
+						if (d1 > 0d) {
+							arr[0]  = d1.toString();
+							arr[1] = "Dr";
+						} else {
+							d1 *= -1;
+							arr[0] = d1.toString();
+							arr[1] = "Cr";
+						}
+				}
+				
+			}
+			
 	}
 		return arr;
 		
