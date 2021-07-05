@@ -94,7 +94,7 @@ public class LedgerServiceImpl implements LedgerService {
 			}
 			
 		} else {
-			Double d1 = accHeadRepo.findCrAmt(code);
+			Double d1 = accHeadRepo.findCrAmt(code); 
 			Double d2 = accHeadRepo.findDrAmt(code);
 			if( d1 == 0d) {
 				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate()) ;
