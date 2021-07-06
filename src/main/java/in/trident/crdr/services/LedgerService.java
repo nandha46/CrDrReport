@@ -19,7 +19,7 @@ import in.trident.crdr.models.LedgerView;
 public interface LedgerService {
 
 	List<LedgerView> createLedgerViewList(LedgerForm ledgerForm);
-	List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate);
+	List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate, Double bal);
 	LedgerView createLedgerView(Integer code, LedgerForm ledgerForm);
 	
 }
