@@ -1,5 +1,9 @@
 package in.trident.crdr.models;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author Nandhakumar Subramanian
  * 
@@ -11,12 +15,21 @@ public class Dailybooks {
 	
 	private String date,narration,debitAmt,creditAmt,balance,debitOrCredit;
 	
+	SimpleDateFormat outsdf= new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat insdf= new SimpleDateFormat("yyyy-MM-dd");
+	
 	public Dailybooks() {
 		
 	}
 	
 	public Dailybooks(String date, String narration, String debitAmt, String creditAmt, String balance, String debitOrCredit) {
-		this.date = date;
+		Date date1 = new Date();
+		try {
+			date1 = insdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.date = outsdf.format(date1);
 		this.narration = narration;
 		this.debitAmt = debitAmt;
 		this.creditAmt = creditAmt;

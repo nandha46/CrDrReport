@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -59,7 +60,15 @@ public class DaybookServiceImpl implements DaybookService {
 		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date);
 		Daybook db = daybook.get(0);
 		DaybookView daybookView = new DaybookView();
-		daybookView.setDate(db.getDate());
+		SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date1 = new Date();
+		try {
+			date1 = insdf.parse(db.getDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		daybookView.setDate(sdf.format(date1));
 		daybookView.setDayOfWeek(dbRepo.findDayOfWeek(date));
 		//TODO Needs to find a way to get Collection of closeBal,debit n credit total for the date range to reduce calls to database
 		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)));
