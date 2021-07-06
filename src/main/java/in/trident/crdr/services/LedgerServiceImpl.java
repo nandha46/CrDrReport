@@ -1,5 +1,8 @@
 package in.trident.crdr.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +38,9 @@ public class LedgerServiceImpl implements LedgerService {
 	@Autowired
 	private DaybookRepository daybookRepo;
 	
+	SimpleDateFormat outsdf = new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
@@ -53,7 +59,14 @@ public class LedgerServiceImpl implements LedgerService {
 		LedgerView ledgerview = new LedgerView();
 		ledgerview.setAccheadName(accHeadRepo.findAccNameByAccCode(code));
 		String arr[] = findOpeningBal(code,ledgerForm);
- 		ledgerview.setDate(ledgerForm.getStartDate());
+ 		Date date1 = new Date();
+ 		try {
+			date1 = insdf.parse(ledgerForm.getStartDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		ledgerview.setDate(outsdf.format(date1));
  		Double bal = new Double(arr[0]);
  		if(arr[1].equals("Cr")) {
  			bal *= -1;
