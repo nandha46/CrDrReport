@@ -40,6 +40,7 @@ public class LedgerServiceImpl implements LedgerService {
 	
 	SimpleDateFormat outsdf = new SimpleDateFormat("dd-MM-yyyy");
 	SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
+	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
 	
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
@@ -85,26 +86,24 @@ public class LedgerServiceImpl implements LedgerService {
 		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
  		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate);
  		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
- 		//TODO Write a method to calculate balance for Daybooks
- 		// Balance value changes from Opening balance gradually
  		for(int i = 0; i<daybooks.size(); i++) {
  			String arr2[] = {"",""};
  			if(daybooks.get(i).getDrAmt() == 0) {
  				bal -= daybooks.get(i).getCrAmt();
  				if (bal > 0d) {
- 					arr2[0] = String.valueOf(Math.abs(bal));
+ 					arr2[0] = nf.format(Math.abs(bal));
  					arr2[1] = "Dr";
  				} else {
- 					arr2[0] = String.valueOf(Math.abs(bal));
+ 					arr2[0] = nf.format(Math.abs(bal));
  					arr2[1] = "Cr";
  				}
  			} else {
  				bal += daybooks.get(i).getDrAmt(); 
  				if (bal > 0d) {
- 					arr2[0] = String.valueOf(Math.abs(bal)); 
+ 					arr2[0] = nf.format(Math.abs(bal)); 
  					arr2[1] = "Dr";
  				} else {
- 					arr2[0] = String.valueOf(Math.abs(bal));
+ 					arr2[0] = nf.format(Math.abs(bal));
  					arr2[1] = "Cr";
  				}
  			}
@@ -116,11 +115,9 @@ public class LedgerServiceImpl implements LedgerService {
 
 	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm) {
 		String arr[] = {"",""};
-		LOGGER.warn("Form start date :" + ledgerForm.getStartDate());
 		if(ledgerForm.getStartDate().equals("2020-04-01")) {
 			Double d1 = accHeadRepo.findCrAmt(code);
 			Double d2 = accHeadRepo.findDrAmt(code);
-			LOGGER.warn("d1: " +d1+ "d2: "+d2);
 			if( d1 == 0d) {
 				arr[0] = d2.toString();
 				arr[1] = "Dr";
@@ -174,7 +171,6 @@ public class LedgerServiceImpl implements LedgerService {
 			}
 			
 	}
-		LOGGER.warn("Opening Balance: "+arr[0]+"<-->"+arr[1]);
 		return arr;
 	}
 }
