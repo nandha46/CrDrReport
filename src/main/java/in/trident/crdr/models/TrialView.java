@@ -13,15 +13,12 @@ public class TrialView {
 	private String accName;
 	private String debit;
 	private String credit;
+	private int level;
 	
 	public String getAccName() {
 		return accName;
 	}
 	
-	@Override
-	public String toString() {
-		return "TrialView [accName=" + accName + ", debit=" + debit + ", credit=" + credit + "]";
-	}
 	public void setAccName(String accName) {
 		this.accName = accName;
 	}
@@ -37,5 +34,19 @@ public class TrialView {
 	public void setCredit(String credit) {
 		this.credit = credit;
 	}
+	
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	@Override
+	public String toString() {
+		return "TrialView [accName=" + accName + ", debit=" + debit + ", credit=" + credit + ", level=" + level + "]";
+	}
+
 	
 }

@@ -1,5 +1,6 @@
 package in.trident.crdr.services;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,14 +32,20 @@ public class TrialServiceImpl implements TrialBalService {
 	public List<TrialView> createTrialBal(TrialForm trialform) {
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
 		List<AccHead> list = accHeadRepo.findAllAccHead();
-		Double value = new Double(100);
-		list.forEach((acc)->{
-			TrialView tv = new TrialView();
-			tv.setAccName(acc.getAccName());
-			tv.setDebit(value.toString());
-			tv.setCredit(value.toString());
-			listTrialview.add(tv);
-		});
+		Collections.sort(list);
+		if (trialform.isReportOrder()) {
+			Double value = new Double(100);
+			list.forEach((acc)->{
+				TrialView tv = new TrialView();
+				tv.setAccName(acc.getAccName());
+				tv.setDebit(value.toString());
+				tv.setCredit(value.toString());
+				listTrialview.add(tv);
+			});
+		} else {
+			
+		}
+		
 		return listTrialview;
 	}
 

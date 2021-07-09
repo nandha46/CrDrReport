@@ -52,6 +52,7 @@ public class LedgerServiceImpl implements LedgerService {
 				ledgerList.add(ledgerView);
 			});
 		}
+		LOGGER.warn("Ledger Created");
 		return ledgerList;
 	}
 	
