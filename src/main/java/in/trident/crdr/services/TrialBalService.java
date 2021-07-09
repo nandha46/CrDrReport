@@ -1,7 +1,6 @@
 package in.trident.crdr.services;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import in.trident.crdr.models.TrialForm;
@@ -19,5 +18,6 @@ import in.trident.crdr.models.TrialView;
 public interface TrialBalService {
 
 	 List<TrialView> createTrialBal(TrialForm trialform);
+	 String[] calculateTrialBalance(Integer code, String endDate);
 	
 }
