@@ -20,8 +20,6 @@ import in.trident.crdr.entities.Daybook;
 @Repository
 public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
-	//TODO Need a way to request daybooks for date range
-	
 	@Query("select u from Daybook u where u.date = ?1")
 	public ArrayList<Daybook> findDaybookByDate(String date);
 	
@@ -39,7 +37,7 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	
 	@Query(value="select dayname(?1)", nativeQuery = true)
 	public String findDayOfWeek(String date);
-
+	
 	@Query("select sum(crAmt)-sum(drAmt) as bal from Daybook d where d.acccode = ?1 and d.date between ?2 and ?3")
 	public Double openBal(int acccode, String d1, String d2);
 }
