@@ -71,13 +71,18 @@ public class TrialServiceImpl implements TrialBalService {
 		LOGGER.warn("Start of CalculateTrialBalance method");
 		String[] arr = {"",""}; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
-			String[] array = {"Cr",""};
+			String[] array = {"","Cr"};
 			return array;
 		}
 		// ----------------------------
 		Double d1 = accHeadRepo.findCrAmt(code); 
 		Double d2 = accHeadRepo.findDrAmt(code);
-		if( d1 == 0d) { // If Dr is the Budget Amt
+		if (d1 == null || d2 == null) {
+			arr[0] = "ZeroB";
+			arr[1] = "Dr";
+			return arr;
+		}
+		if(d1 == 0d) { // If Dr is the Budget Amt
 			LOGGER.warn("Budget is Dr");
 			LOGGER.warn("Now Acc Code is :"+code.toString());
 			// Null check daybook repos return value
