@@ -44,6 +44,8 @@ public class TrialServiceImpl implements TrialBalService {
 		Collections.sort(list);
 		LOGGER.warn("AccHeads retrieved and sorted");
 		if (trialform.isReportOrder()) {
+			
+		} else {
 			list.forEach((acc)->{
 				LOGGER.warn("Iteration of accHeads started");
 				TrialView tv = new TrialView();
@@ -57,10 +59,13 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setCredit("");
 				}
 				tv.setLevel(acc.getLevel1());
-				listTrialview.add(tv);
+				if (tv.getDebit().equals("ZeroB") && trialform.isZeroBal()) {
+					tv.setDebit(tv.getDebit().replace("ZeroB", "0"));
+					listTrialview.add(tv);
+				} else {
+					// If Debit returns ZeroB and isZeroBal is true trialview won't get added to view	
+				}
 			});
-		} else {
-			
 		}
 		LOGGER.warn("End of CreateTrialBal method");
 		return listTrialview;
@@ -77,16 +82,17 @@ public class TrialServiceImpl implements TrialBalService {
 		// ----------------------------
 		Double d1 = accHeadRepo.findCrAmt(code); 
 		Double d2 = accHeadRepo.findDrAmt(code);
-		if (d1 == null || d2 == null) {
-			arr[0] = "ZeroB";
-			arr[1] = "Dr";
-			return arr;
-		}
+		
 		if(d1 == 0d) { // If Dr is the Budget Amt
 			LOGGER.warn("Budget is Dr");
 			LOGGER.warn("Now Acc Code is :"+code.toString());
 			// Null check daybook repos return value
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate) ;
+			if ( tmp == null) {
+				arr[0] = "ZeroB";
+				arr[1] = "Dr";
+				return arr;
+			}
 			// If tmp is +ve Dr else Cr
 			if (tmp > 0d || tmp == 0d) {
 				tmp = d2 + tmp;
@@ -107,6 +113,11 @@ public class TrialServiceImpl implements TrialBalService {
 		else {  // If Cr is the Budget Amt
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
 			LOGGER.warn("Budget is Cr");
+			if ( tmp == null) {
+				arr[0] = "ZeroB";
+				arr[1] = "Dr";
+				return arr;
+			}
 			// If tmp is +ve Cr else Dr
 			if (tmp > 0d || tmp == 0d) {
 				tmp = d1 + tmp;
@@ -118,7 +129,7 @@ public class TrialServiceImpl implements TrialBalService {
 						arr[0]  = d1.toString();
 						arr[1] = "Dr";
 					} else {
-						d1 *= -1;
+						d1 *= -1 ;
 						arr[0] = d1.toString();
 						arr[1] = "Cr";
 					}
