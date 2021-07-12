@@ -3,9 +3,11 @@ package in.trident.crdr.services;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +49,10 @@ public class LedgerServiceImpl implements LedgerService {
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
 		if(ledgerForm.isReportOrder()) {
 			List<Integer> accCodes = ledgerForm.getAccCode();
+			
+		} else {
+			Set<Integer> accCodes = new HashSet<Integer>(accHeadRepo.findAccCodes());
+			accCodes.remove(0);
 			accCodes.forEach(code -> {
 				LedgerView ledgerView =  createLedgerView(code,ledgerForm);
 				ledgerList.add(ledgerView);
