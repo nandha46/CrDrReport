@@ -100,6 +100,7 @@ public class LedgerServiceImpl implements LedgerService {
  				if (bal > 0d) {
  					arr2[0] = nf.format(Math.abs(bal));
  					arr2[1] = "Dr";
+ 					
  				} else {
  					arr2[0] = nf.format(Math.abs(bal));
  					arr2[1] = "Cr";
