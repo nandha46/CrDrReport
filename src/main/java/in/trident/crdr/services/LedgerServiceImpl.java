@@ -163,8 +163,10 @@ public class LedgerServiceImpl implements LedgerService {
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d1 + tmp;
 					arr[0] = tmp.toString();
+					
 					arr[1] = "Cr";
 				} else {
+					
 					d1 = d1 + tmp;
 						if (d1 > 0d) {
 							arr[0]  = d1.toString();
