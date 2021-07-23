@@ -49,7 +49,10 @@ public class LedgerServiceImpl implements LedgerService {
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
 		if(ledgerForm.isReportOrder()) {
 			List<Integer> accCodes = ledgerForm.getAccCode();
-			
+			accCodes.forEach(code -> {
+				LedgerView ledgerView =  createLedgerView(code,ledgerForm);
+				ledgerList.add(ledgerView);
+			});
 		} else {
 			Set<Integer> accCodes = new HashSet<Integer>(accHeadRepo.findAccCodes());
 			accCodes.remove(0);
