@@ -63,7 +63,12 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setDebit(tv.getDebit().replace("ZeroB", "0"));
 					listTrialview.add(tv);
 				} else {
-					// If Debit returns ZeroB and isZeroBal is true trialview won't get added to view	
+					// If Debit returns ZeroB and isZeroBal is true trialview won't get added to view
+					if (tv.getDebit().equals("ZeroB")) {
+						
+					} else {
+						listTrialview.add(tv);
+					 }
 				}
 			});
 		}
