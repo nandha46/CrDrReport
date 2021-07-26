@@ -13,6 +13,8 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
+import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,6 +89,9 @@ public class DaybookServiceImpl implements DaybookService {
 
 	@Override
 	public List<DaybookView> daybookViewRange(String startDate, String endDate) {
+		Profiler profiler = new Profiler("DaybookServiceImpl");
+		profiler.setLogger(LOGGER);
+		profiler.start("DaybookService");
 		int days = dbRepo.findDaysBetween(endDate,startDate);
 		Calendar calendar = Calendar.getInstance();
 		List<DaybookView> daybooks = new LinkedList<DaybookView>();
@@ -103,6 +108,8 @@ public class DaybookServiceImpl implements DaybookService {
 			calendar.add(Calendar.DATE, 1);
 			
 		}
+		TimeInstrument ti = profiler.stop();
+		LOGGER.info("\n" + ti.toString());
 		return daybooks;
 	}
 

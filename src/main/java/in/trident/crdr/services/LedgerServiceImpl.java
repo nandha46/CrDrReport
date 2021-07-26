@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
+import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,9 @@ public class LedgerServiceImpl implements LedgerService {
 	
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
+		Profiler profiler = new Profiler("LedgerServiceImpl");
+		profiler.setLogger(LOGGER);
+		profiler.start("LedgerService");
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
 		if(ledgerForm.isReportOrder()) {
 			List<Integer> accCodes = ledgerForm.getAccCode();
@@ -61,7 +66,9 @@ public class LedgerServiceImpl implements LedgerService {
 				ledgerList.add(ledgerView);
 			});
 		}
-		LOGGER.warn("Ledger Created");
+		LOGGER.info("Ledger Created");
+		TimeInstrument ti =  profiler.stop();
+		LOGGER.info("\n" + ti.toString());
 		return ledgerList;
 	}
 	
