@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
+import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,14 +40,40 @@ public class TrialServiceImpl implements TrialBalService {
 	
 	@Override
 	public List<TrialView> createTrialBal(TrialForm trialform) {
-		LOGGER.warn("Start of CreateTrialBal method");
+		Profiler profiler = new Profiler("TrialBalService");
+		profiler.setLogger(LOGGER);
+		profiler.start("CreateTrialBal");
+		LOGGER.trace("Start of CreateTrialBal method");
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
 		List<AccHead> list = accHeadRepo.findAllAccHead();
 		Collections.sort(list);
 		LOGGER.warn("AccHeads retrieved and sorted");
 		if (trialform.isReportOrder()) {
 			List<Integer> accCodes = trialform.getAccCode();
-		//TODO find acchead by acccodes
+			accCodes.forEach((acc)->{
+				TrialView tv = new TrialView();
+				tv.setAccName(accHeadRepo.findAccNameByAccCode(acc));
+				String[] arr = calculateTrialBalance(acc, trialform.getEndDate());
+				if(arr[1].equals("Cr")) {
+					tv.setDebit("");
+					tv.setCredit(arr[0]);
+				} else {
+					tv.setDebit(arr[0]);
+					tv.setCredit("");
+				}
+				tv.setLevel(accHeadRepo.findLevelByAccCode(acc));
+				if (tv.getDebit().equals("ZeroB") && trialform.isZeroBal()) {
+					tv.setDebit(tv.getDebit().replace("ZeroB", "0"));
+					listTrialview.add(tv);
+				} else {
+					// If Debit returns ZeroB and isZeroBal is true trialview won't get added to view
+					if (tv.getDebit().equals("ZeroB")) {
+						
+					} else {
+						listTrialview.add(tv);
+					 }
+				}
+			});
 		} else {
 			list.forEach((acc)->{
 				LOGGER.warn("Iteration of accHeads started");
@@ -74,6 +102,9 @@ public class TrialServiceImpl implements TrialBalService {
 			});
 		}
 		LOGGER.warn("End of CreateTrialBal method");
+		TimeInstrument ti =  profiler.stop();
+		LOGGER.info("\n" + ti.toString());
+		ti.log();
 		return listTrialview;
 	}
 
@@ -90,8 +121,8 @@ public class TrialServiceImpl implements TrialBalService {
 		Double d2 = accHeadRepo.findDrAmt(code);
 		
 		if(d1 == 0d) { // If Dr is the Budget Amt
-			LOGGER.warn("Budget is Dr");
-			LOGGER.warn("Now Acc Code is :"+code.toString());
+			LOGGER.info("Budget is Dr");
+			LOGGER.info("Acc Code :"+code.toString());
 			// Null check daybook repos return value
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate) ;
 			if ( tmp == null) {
@@ -118,7 +149,8 @@ public class TrialServiceImpl implements TrialBalService {
 		}
 		else {  // If Cr is the Budget Amt
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
-			LOGGER.warn("Budget is Cr");
+			LOGGER.info("Budget is Cr");
+			LOGGER.info("Acc Code :"+code.toString());
 			if ( tmp == null) {
 				arr[0] = "ZeroB";
 				arr[1] = "Dr";
