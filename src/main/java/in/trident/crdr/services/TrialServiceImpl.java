@@ -44,7 +44,8 @@ public class TrialServiceImpl implements TrialBalService {
 		Collections.sort(list);
 		LOGGER.warn("AccHeads retrieved and sorted");
 		if (trialform.isReportOrder()) {
-			
+			List<Integer> accCodes = trialform.getAccCode();
+		//TODO find acchead by acccodes
 		} else {
 			list.forEach((acc)->{
 				LOGGER.warn("Iteration of accHeads started");
