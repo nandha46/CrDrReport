@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.models.TradingPLForm;
 import in.trident.crdr.models.TradingPLView;
 /**
@@ -35,15 +36,23 @@ public class TradingPLServiceImpl implements TradingPLService {
 	@Override
 	public List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm) {
 		List<TradingPLView> listTradingPLView = new LinkedList<TradingPLView>();
-		List<String> list =  accHeadRepo.findAccNames();
-		list.forEach((acchead)-> {
-			TradingPLView tradingPLView = new TradingPLView();
-			tradingPLView.setParticulars(acchead);
-			tradingPLView.setDebit("10025");
-			tradingPLView.setCredit("12458");
-			listTradingPLView.add(tradingPLView);
-		});
-		
+		if(tradingPLForm.isReportOrder()) {
+			List<AccHead> tradingInc = accHeadRepo.findAccHeadByAccType("Trading Income");
+			List<AccHead> tradingExp = accHeadRepo.findAccHeadByAccType("Trading Expense");
+			//TODO select between order code 3 and 6
+			TradingPLView grossProfit = new TradingPLView();
+			grossProfit.setParticulars("Gross Profit");
+			grossProfit.setCredit(null);
+			grossProfit.setDebit(null);
+			TradingPLView total = new TradingPLView();
+			total.setParticulars("Total");
+			total.setDebit(null);
+			total.setCredit(null);
+			List<AccHead> pnLInc = accHeadRepo.findAccHeadByAccType("P & L Income");
+			List<AccHead> pnLExp = accHeadRepo.findAccHeadByAccType("P & L Expense");
+		} else {
+			
+		}
 		return listTradingPLView;
 	}
 
