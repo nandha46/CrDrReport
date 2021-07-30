@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
+import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +45,13 @@ public class TradingPLServiceImpl implements TradingPLService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TradingPLServiceImpl.class);
 	
+	private static int counter = 0;
+	
 	@Override
 	public List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm) {
-		
+		Profiler profiler = new Profiler("TradingPLService");
+		profiler.setLogger(LOGGER);
+		profiler.start("Start TradingPL Service");
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		if(tradingPLForm.isReportOrder()) {
 			List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs();
@@ -54,46 +60,106 @@ public class TradingPLServiceImpl implements TradingPLService {
 				if (accs.getOrderCode() == 3 || accs.getOrderCode() == 4) {
 					TradingPLView tplv = new TradingPLView();
 					tplv.setParticulars(accs.getAccName());
-					tplv.setCredit(null);
-					tplv.setDebit(null);
+					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					if(arr[1].equals("Cr")) {
+						tplv.setDebit("");
+						tplv.setCredit(arr[0]);
+					} else {
+						tplv.setDebit(arr[0]);
+						tplv.setCredit("");
+					}
+					int level = accs.getAccCode() == 0 ? 0 : accHeadRepo.findLevelByAccCode(accs.getAccCode()) ;
+					tplv.setLevel(level);
 					tradingPLViewSet.add(tplv);
 				} else {
+					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					if (counter < 1) {
 					TradingPLView grossProfit = new TradingPLView();
 					grossProfit.setParticulars("Gross Profit");
-					grossProfit.setCredit(null);
-					grossProfit.setDebit(null);
+					if(arr[1].equals("Cr")) {
+						grossProfit.setDebit("");
+						grossProfit.setCredit(arr[0]);
+					} else {
+						grossProfit.setDebit(arr[0]);
+						grossProfit.setCredit("");
+					}
+					grossProfit.setLevel(0);
 					tradingPLViewSet.add(grossProfit);
 					TradingPLView total = new TradingPLView();
 					total.setParticulars("Total");
-					total.setDebit(null);
-					total.setCredit(null);
+					arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					if(arr[1].equals("Cr")) {
+						total.setDebit("");
+						total.setCredit(arr[0]);
+					} else {
+						total.setDebit(arr[0]);
+						total.setCredit("");
+					}
+					total.setLevel(0);
 					tradingPLViewSet.add(total);
 					TradingPLView grossProfitB = new TradingPLView();
-					total.setParticulars("Gross Profit Before");
-					total.setDebit(null);
-					total.setCredit(null);
-					tradingPLViewSet.add(grossProfitB);
+					grossProfitB.setParticulars("Gross Profit Before");
+					arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					if(arr[1].equals("Cr")) {
+						grossProfitB.setDebit("");
+						grossProfitB.setCredit(arr[0]);
+					} else {
+						grossProfitB.setDebit(arr[0]);
+						grossProfitB.setCredit("");
+					}
+					grossProfitB.setLevel(0);
+					tradingPLViewSet.add(grossProfitB); 
+					counter++;
+				}
 					TradingPLView tplv = new TradingPLView();
 					tplv.setParticulars(accs.getAccName());
-					tplv.setCredit(null);
-					tplv.setDebit(null);
+					arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					if(arr[1].equals("Cr")) {
+						tplv.setDebit("");
+						tplv.setCredit(arr[0]);
+					} else {
+						tplv.setDebit(arr[0]);
+						tplv.setCredit("");
+					}
+					int level = accs.getAccCode() == 0 ? 0 : accHeadRepo.findLevelByAccCode(accs.getAccCode()) ;
+					tplv.setLevel(level);
 					tradingPLViewSet.add(tplv);
-					TradingPLView netProfit = new TradingPLView();
-					grossProfit.setParticulars("Net Profit");
-					grossProfit.setCredit(null);
-					grossProfit.setDebit(null);
-					tradingPLViewSet.add(netProfit);
-					TradingPLView total2 = new TradingPLView();
-					grossProfit.setParticulars("Total");
-					grossProfit.setCredit(null);
-					grossProfit.setDebit(null);
-					tradingPLViewSet.add(total2);
+					
 				}
 			});
 		} else { // Report order group
 			
 		}
+		
+		TradingPLView netProfit = new TradingPLView();
+		netProfit.setParticulars("Net Profit");
+		String[] arr = {"31107.50","Dr"};
+		if(arr[1].equals("Cr")) {
+			netProfit.setDebit("");
+			netProfit.setCredit(arr[0]);
+		} else {
+			netProfit.setDebit(arr[0]);
+			netProfit.setCredit("");
+		}
+		netProfit.setLevel(0);
+		tradingPLViewSet.add(netProfit);
+		TradingPLView total2 = new TradingPLView();
+		total2.setParticulars("Total");
+		arr[0] = "58663.00";
+		arr[1] = "Cr";
+		if(arr[1].equals("Cr")) {
+			total2.setDebit("");
+			total2.setCredit(arr[0]);
+		} else {
+			total2.setDebit(arr[0]);
+			total2.setCredit("");
+		}
+		total2.setLevel(0);
+		tradingPLViewSet.add(total2);
 		List<TradingPLView> listTradingPLView = new LinkedList<TradingPLView>(tradingPLViewSet);
+		TimeInstrument ti = profiler.stop();
+		LOGGER.info("\n"+ti.toString());
+		ti.log();
 		return listTradingPLView;
 	}
 
