@@ -14,6 +14,7 @@ public class TradingPLView {
 	private String particulars;
 	private String debit;
 	private String credit;
+	private int level;
 	
 	public String getParticulars() {
 		return particulars;
@@ -33,10 +34,17 @@ public class TradingPLView {
 	public void setCredit(String credit) {
 		this.credit = credit;
 	}
-	
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	@Override
 	public String toString() {
-		return "TradingPLView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + "]";
+		return "TradingPLView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + ", level="
+				+ level + "]";
 	}
-
+	
+	
 }
