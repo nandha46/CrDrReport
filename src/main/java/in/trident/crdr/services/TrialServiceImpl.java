@@ -43,11 +43,11 @@ public class TrialServiceImpl implements TrialBalService {
 		Profiler profiler = new Profiler("TrialBalService");
 		profiler.setLogger(LOGGER);
 		profiler.start("CreateTrialBal");
-		LOGGER.trace("Start of CreateTrialBal method");
+		LOGGER.debug("Start of CreateTrialBal method");
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
 		List<AccHead> list = accHeadRepo.findAllAccHead();
 		Collections.sort(list);
-		LOGGER.warn("AccHeads retrieved and sorted");
+		LOGGER.debug("AccHeads retrieved and sorted");
 		if (trialform.isReportOrder()) {
 			List<Integer> accCodes = trialform.getAccCode();
 			accCodes.forEach((acc)->{
@@ -76,7 +76,7 @@ public class TrialServiceImpl implements TrialBalService {
 			});
 		} else {
 			list.forEach((acc)->{
-				LOGGER.warn("Iteration of accHeads started");
+				LOGGER.debug("Iteration of accHeads started");
 				TrialView tv = new TrialView();
 				tv.setAccName(acc.getAccName());
 				String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate());
@@ -101,7 +101,7 @@ public class TrialServiceImpl implements TrialBalService {
 				}
 			});
 		}
-		LOGGER.warn("End of CreateTrialBal method");
+		LOGGER.debug("End of CreateTrialBal method");
 		TimeInstrument ti =  profiler.stop();
 		LOGGER.info("\n" + ti.toString());
 		ti.log();
@@ -110,7 +110,7 @@ public class TrialServiceImpl implements TrialBalService {
 
 	@Override
 	public String[] calculateTrialBalance(Integer code, String endDate) {
-		LOGGER.warn("Start of CalculateTrialBalance method");
+		LOGGER.debug("Start of CalculateTrialBalance method");
 		String[] arr = {"",""}; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
 			String[] array = {"","Cr"};
@@ -121,8 +121,8 @@ public class TrialServiceImpl implements TrialBalService {
 		Double d2 = accHeadRepo.findDrAmt(code);
 		
 		if(d1 == 0d) { // If Dr is the Budget Amt
-			LOGGER.info("Budget is Dr");
-			LOGGER.info("Acc Code :"+code.toString());
+			LOGGER.debug("Budget is Dr");
+			LOGGER.debug("Acc Code :"+code.toString());
 			// Null check daybook repos return value
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate) ;
 			if ( tmp == null) {
@@ -149,8 +149,8 @@ public class TrialServiceImpl implements TrialBalService {
 		}
 		else {  // If Cr is the Budget Amt
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
-			LOGGER.info("Budget is Cr");
-			LOGGER.info("Acc Code :"+code.toString());
+			LOGGER.debug("Budget is Cr");
+			LOGGER.debug("Acc Code :"+code.toString());
 			if ( tmp == null) {
 				arr[0] = "ZeroB";
 				arr[1] = "Dr";
@@ -175,7 +175,7 @@ public class TrialServiceImpl implements TrialBalService {
 			
 		}
 		//----------------------------
-		LOGGER.warn("End of CalculateTrialBalance method");
+		LOGGER.debug("End of CalculateTrialBalance method");
 		return arr;
 	}
 

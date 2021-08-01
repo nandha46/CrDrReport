@@ -66,7 +66,7 @@ public class LedgerServiceImpl implements LedgerService {
 				ledgerList.add(ledgerView);
 			});
 		}
-		LOGGER.info("Ledger Created");
+		LOGGER.debug("Ledger Created");
 		TimeInstrument ti =  profiler.stop();
 		LOGGER.info("\n" + ti.toString());
 		return ledgerList;
