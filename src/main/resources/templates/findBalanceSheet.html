@@ -21,14 +21,14 @@
 											</tr>
 											</thead>
 											<tbody>
-											<tr th:each="accHead : ${accHeadList}">
+											<tr th:each="acc : ${accsList}">
 												<td><input type="checkbox"
-													th:attr="id=${accHead.accHeadId}, name=${accHead.accHeadId}"
-													value="th:text='${accHead.accName}'"> 
-													<label 	th:attr="for=${accHead.accHeadId}"
-													th:text="${accHead.accCode}">
+													th:attr="id=${acc.accCode}, name=${acc.accCode}"
+													value="th:text='${acc.accName}'"> 
+													<label 	th:attr="for=${acc.accCode}"
+													th:text="${acc.accCode}">
 												</label></td>
-												<td th:text="${accHead.accName}"> </td>
+												<td th:text="${acc.accName}"> </td>
 											</tr> 
 											</tbody>
 									</table> 
@@ -75,11 +75,11 @@
 							</div>
 							<!--  Nice Listing format for Acc Selection -->
 							<table>
-								<th:block th:each="accHead : ${accHeadList}">
+								<th:block th:each="acc : ${accsList}">
 									<tr>
-										<td><label th:text="${accHead.accName}">zamow</label> <input
+										<td><label th:text="${acc.accName}">zamow</label> <input
 											type="checkbox" th:field="*{accCode}"
-											th:value="${accHead.accCode}" /></td>
+											th:value="${acc.accCode}" /></td>
 									</tr>
 								</th:block>
 							</table>
