@@ -15,6 +15,7 @@ public class BalanceSheetView {
 	private String particulars;
 	private String debit;
 	private String credit;
+	private int level1;
 	
 	public String getParticulars() {
 		return particulars;
@@ -34,9 +35,17 @@ public class BalanceSheetView {
 	public void setCredit(String credit) {
 		this.credit = credit;
 	}
-	
+	public int getLevel1() {
+		return level1;
+	}
+	public void setLevel1(int level1) {
+		this.level1 = level1;
+	}
 	@Override
 	public String toString() {
-		return "BalanceSheetView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + "]";
-	}	
+		return "BalanceSheetView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + ", level1="
+				+ level1 + "]";
+	}
+	
+
 }

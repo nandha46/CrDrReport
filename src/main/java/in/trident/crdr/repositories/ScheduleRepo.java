@@ -12,5 +12,10 @@ public interface ScheduleRepo extends JpaRepository<Schedule, Integer>{
 	@Query("select a from Schedule a")
 	public List<Schedule> findAllAccounts();
 	
+	@Query("select drAmt from Schedule a where a.accCode = ?1")
+	public Double findDrAmt(Integer code);
+	
+	@Query("select crAmt from Schedule a where a.accCode = ?1")
+	public Double findCrAmt(Integer code);
 	
 }

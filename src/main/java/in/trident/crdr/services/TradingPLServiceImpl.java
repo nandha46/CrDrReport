@@ -68,9 +68,18 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tplv.setDebit(arr[0]);
 						tplv.setCredit("");
 					}
-					int level = accs.getAccCode() == 0 ? 0 : accHeadRepo.findLevelByAccCode(accs.getAccCode()) ;
-					tplv.setLevel(level);
-					tradingPLViewSet.add(tplv);
+					if (tplv.getDebit().equals("ZeroB") && tradingPLForm.isZeroBal()) {
+						tplv.setDebit(tplv.getDebit().replace("ZeroB", "0"));
+						tradingPLViewSet.add(tplv);
+					} else {
+						// If Debit returns ZeroB and isZeroBal is true tradingPLview won't get added to view
+						if (tplv.getDebit().equals("ZeroB")) {
+							
+						} else {
+							tradingPLViewSet.add(tplv);
+						 }
+					}
+					tplv.setLevel(accs.getLevel1());
 				} else {
 					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
 					if (counter < 1) {
@@ -95,6 +104,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 						total.setDebit(arr[0]);
 						total.setCredit("");
 					}
+					
 					total.setLevel(0);
 					tradingPLViewSet.add(total);
 					TradingPLView grossProfitB = new TradingPLView();
@@ -121,9 +131,18 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tplv.setDebit(arr[0]);
 						tplv.setCredit("");
 					}
-					int level = accs.getAccCode() == 0 ? 0 : accHeadRepo.findLevelByAccCode(accs.getAccCode()) ;
-					tplv.setLevel(level);
-					tradingPLViewSet.add(tplv);
+					if (tplv.getDebit().equals("ZeroB") && tradingPLForm.isZeroBal()) {
+						tplv.setDebit(tplv.getDebit().replace("ZeroB", "0"));
+						tradingPLViewSet.add(tplv);
+					} else {
+						// If Debit returns ZeroB and isZeroBal is true tradingPLview won't get added to view
+						if (tplv.getDebit().equals("ZeroB")) {
+							
+						} else {
+							tradingPLViewSet.add(tplv);
+						 }
+					}
+					tplv.setLevel(accs.getLevel1());
 					
 				}
 			});
@@ -165,7 +184,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 	@Override
 	public String[] calculateTradingBalance(Integer code, String endDate) {
-		LOGGER.warn("Start of CalculateTradingBalance method");
+		LOGGER.debug("Start of CalculateTradingBalance method");
 		String[] arr = {"",""}; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
 			String[] array = {"","Cr"};
@@ -176,8 +195,8 @@ public class TradingPLServiceImpl implements TradingPLService {
 		Double d2 = accHeadRepo.findDrAmt(code);
 		
 		if(d1 == 0d) { // If Dr is the Budget Amt
-			LOGGER.info("Budget is Dr");
-			LOGGER.info("Acc Code :"+code.toString());
+			LOGGER.debug("Budget is Dr");
+			LOGGER.debug("Acc Code :"+code.toString());
 			// Null check daybook repos return value
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate) ;
 			if ( tmp == null) {
@@ -204,8 +223,8 @@ public class TradingPLServiceImpl implements TradingPLService {
 		}
 		else {  // If Cr is the Budget Amt
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
-			LOGGER.info("Budget is Cr");
-			LOGGER.info("Acc Code :"+code.toString());
+			LOGGER.debug("Budget is Cr");
+			LOGGER.debug("Acc Code :"+code.toString());
 			if ( tmp == null) {
 				arr[0] = "ZeroB";
 				arr[1] = "Dr";
@@ -230,7 +249,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 			
 		}
 		//----------------------------
-		LOGGER.warn("End of CalculateTradingBalance method");
+		LOGGER.debug("End of CalculateTradingBalance method");
 		return arr;
 		
 	}

@@ -20,4 +20,5 @@ import in.trident.crdr.models.BalanceSheetView;
 public interface BalanceSheetService {
 	
 	List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm); 
+	String[] calculateLedgerBalance(Integer code, String endDate);
 }
