@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.Role;
+import in.trident.crdr.entities.Schedule;
 import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
@@ -27,6 +28,7 @@ import in.trident.crdr.models.BalSheetForm;
 import in.trident.crdr.models.BalanceSheetView;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
+import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.BalanceSheetService;
 import in.trident.crdr.services.DaybookService;
@@ -68,6 +70,9 @@ public class AppController {
 
 	@Autowired
 	private BalanceSheetService balanceSheetService;
+	
+	@Autowired
+	private ScheduleRepo scheduleRepo;
 
 	@GetMapping("/")
 	public String showHomePage(Model model) {
@@ -179,8 +184,8 @@ public class AppController {
 
 	@GetMapping("/findBalSheet")
 	public String findBalSheet(Model model) {
-		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
-		model.addAttribute("accHeadList", accHeadList);
+		List<Schedule> accsList = scheduleRepo.findAll();
+		model.addAttribute("accsList", accsList);
 		model.addAttribute("pageTitle", "Balance Sheet");
 		model.addAttribute("balSheetForm", new BalSheetForm());
 		return "findBalanceSheet";
