@@ -5,6 +5,9 @@ import java.util.Locale;
  * @author Nandhakumar Subramanian
  */
 
+import com.ibm.icu.number.LocalizedNumberFormatter;
+import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
 import com.ibm.icu.text.NumberFormat;
 
 public class Transactions implements Comparable<Transactions>{
@@ -23,20 +26,21 @@ public class Transactions implements Comparable<Transactions>{
 	
 	public Transactions(Integer sNo, Double creditAmt, Double debitAmt, String narration, int stkValue, String shortName) {
 		
-		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+	//	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en","in")).precision(Precision.fixedFraction(2));
 		
 		this.sNo = sNo;
 		
 		if ( creditAmt.equals(DOUBLE)) {
 			this.creditAmt = "";
 		} else {
-			this.creditAmt = nf.format(creditAmt);
+			this.creditAmt = nf.format(creditAmt).toString();
 		}
 		
 		if (debitAmt.equals(DOUBLE)) {
 			this.debitAmt = "";
 		} else {
-			this.debitAmt = nf.format(debitAmt);
+			this.debitAmt = nf.format(debitAmt).toString();
 		}
 		this.narration = narration;
 		this.stkValue = stkValue;
