@@ -18,6 +18,9 @@ import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.icu.number.LocalizedNumberFormatter;
+import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
 import com.ibm.icu.text.NumberFormat;
 
 import in.trident.crdr.entities.Daybook;
@@ -58,7 +61,8 @@ public class DaybookServiceImpl implements DaybookService {
 	
 	@Override
 	public DaybookView createDaybook(String date) {
-		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+	//	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en","in")).precision(Precision.fixedFraction(2));
 		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date);
 		Daybook db = daybook.get(0);
 		DaybookView daybookView = new DaybookView();
@@ -73,9 +77,9 @@ public class DaybookServiceImpl implements DaybookService {
 		daybookView.setDate(sdf.format(date1));
 		daybookView.setDayOfWeek(dbRepo.findDayOfWeek(date));
 		//TODO Needs to find a way to get Collection of closeBal,debit n credit total for the date range to reduce calls to database
-		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)));
-		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date)));
-		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)));
+		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)).toString());
+		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date)).toString());
+		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)).toString());
 		List<Transactions> trans = new ArrayList<Transactions>();
 		daybook.forEach(transaction -> {
 			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAccCode());
