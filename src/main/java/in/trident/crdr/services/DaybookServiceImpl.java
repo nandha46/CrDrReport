@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
-import com.ibm.icu.text.NumberFormat;
 
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.models.DaybookView;
@@ -29,6 +28,7 @@ import in.trident.crdr.models.Transactions;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
+
 /**
  * 
  * @author Nandhakumar Subramanian
@@ -38,19 +38,19 @@ import in.trident.crdr.repositories.DaybookRepository;
 @Service
 public class DaybookServiceImpl implements DaybookService {
 
-	//TODO Autowire both after Testing Complete
-	
+	// TODO Autowire both after Testing Complete
+	//TODO Optimize by Date, Calender Object restructuring or IBM ICU library
 	private static final Logger LOGGER = LoggerFactory.getLogger(DaybookServiceImpl.class);
-	
+
 	@Autowired
 	private CloseBalRepo closeBalRepo;
-	
+
 	@Autowired
 	private DaybookRepository dbRepo;
-	
+
 	@Autowired
 	private AccHeadRepo accHeadRepo;
-	
+
 	/*
 	 * LocalizedNumberFormatter nfr =
 	 * NumberFormatter.with().precision(Precision.maxSignificantDigits(2))
@@ -58,45 +58,15 @@ public class DaybookServiceImpl implements DaybookService {
 	 * .grouping(GroupingStrategy.ON_ALIGNED).locale(new Locale("en","in"));
 	 * 
 	 */
-	
-	@Override
-	public DaybookView createDaybook(String date) {
-	//	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
-		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en","in")).precision(Precision.fixedFraction(2));
-		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date);
-		Daybook db = daybook.get(0);
-		DaybookView daybookView = new DaybookView();
-		SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date date1 = new Date();
-		try {
-			date1 = insdf.parse(db.getDate());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		daybookView.setDate(sdf.format(date1));
-		daybookView.setDayOfWeek(dbRepo.findDayOfWeek(date));
-		//TODO Needs to find a way to get Collection of closeBal,debit n credit total for the date range to reduce calls to database
-		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)).toString());
-		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date)).toString());
-		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)).toString());
-		List<Transactions> trans = new ArrayList<Transactions>();
-		daybook.forEach(transaction -> {
-			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAccCode());
-			Transactions txns = new Transactions(transaction.getsNo(),transaction.getCrAmt(),transaction.getDrAmt(),transaction.getNarration(),transaction.getSktValue(), temp);
-			trans.add(txns);
-		});
-		Collections.sort(trans);
-		daybookView.setTransList(trans);
-		return daybookView;
-	}
 
 	@Override
 	public List<DaybookView> daybookViewRange(String startDate, String endDate) {
 		Profiler profiler = new Profiler("DaybookServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("DaybookService");
-		int days = dbRepo.findDaysBetween(endDate,startDate);
+		int days = dbRepo.findDaysBetween(endDate, startDate);
+		LOGGER.debug("No of Days in-between: {}", days);
+		LOGGER.debug("Start date:{} End Date:{}", startDate, endDate);
 		Calendar calendar = Calendar.getInstance();
 		List<DaybookView> daybooks = new LinkedList<DaybookView>();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -106,15 +76,58 @@ public class DaybookServiceImpl implements DaybookService {
 			LOGGER.error("Calendar Parsing Exception at DaybookServiceImpl Class");
 			e.printStackTrace();
 		}
-		for(int i = 0; i<= days; i++ ) {
-			
-			daybooks.add(createDaybook(df.format(calendar.getTime())));
+		for (int i = 0; i <= days; i++) {
+			DaybookView dbv = createDaybook(df.format(calendar.getTime()));
+			if (dbv != null) {
+				daybooks.add(dbv);
+			} else {
+				
+			}
 			calendar.add(Calendar.DATE, 1);
-			
+
 		}
 		TimeInstrument ti = profiler.stop();
 		LOGGER.info("\n" + ti.toString());
 		return daybooks;
+	}
+
+	@Override
+	public DaybookView createDaybook(String date) {
+		// NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
+				.precision(Precision.fixedFraction(2));
+		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date);
+		DaybookView daybookView = new DaybookView();
+		if (daybook.isEmpty()) {
+			return null;
+		} else {
+		Daybook db = daybook.get(0);
+		SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = new Date();
+		try {
+			date1 = insdf.parse(db.getDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		daybookView.setDate(sdf.format(date1));
+		daybookView.setDayOfWeek(dbRepo.findDayOfWeek(date));
+		// TODO Needs to find a way to get Collection of closeBal,debit n credit total
+		// for the date range to reduce calls to database
+		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)).toString());
+		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date)).toString());
+		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)).toString());
+		List<Transactions> trans = new ArrayList<Transactions>();
+		daybook.forEach(transaction -> {
+			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAccCode());
+			Transactions txns = new Transactions(transaction.getsNo(), transaction.getCrAmt(), transaction.getDrAmt(),
+					transaction.getNarration(), transaction.getSktValue(), temp);
+			trans.add(txns);
+		});
+		Collections.sort(trans);
+		daybookView.setTransList(trans);
+		}
+		return daybookView;
 	}
 
 }
