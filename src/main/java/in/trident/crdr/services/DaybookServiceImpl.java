@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +68,8 @@ public class DaybookServiceImpl implements DaybookService {
 		profiler.setLogger(LOGGER);
 		profiler.start("DaybookService");
 		int days = dbRepo.findDaysBetween(endDate, startDate);
+		if (days == 0)
+			days = 1;
 		LOGGER.debug("No of Days in-between: {}", days);
 		LOGGER.debug("Start date:{} End Date:{}", startDate, endDate);
 		Calendar calendar = Calendar.getInstance();
@@ -77,7 +82,7 @@ public class DaybookServiceImpl implements DaybookService {
 			e.printStackTrace();
 		}
 		for (int i = 0; i <= days; i++) {
-			DaybookView dbv = createDaybook(df.format(calendar.getTime()));
+			DaybookView dbv = createDaybook(df.format(calendar.getTime()),calendar.get(Calendar.DAY_OF_WEEK));
 			if (dbv != null) {
 				daybooks.add(dbv);
 			} else {
@@ -92,8 +97,16 @@ public class DaybookServiceImpl implements DaybookService {
 	}
 
 	@Override
-	public DaybookView createDaybook(String date) {
+	public DaybookView createDaybook(String date, int day) {
 		// NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+		Map<Integer,String> dayList = new HashMap<Integer,String>(7);
+		dayList.put(1, "SUNDAY");
+		dayList.put(2, "MONDAY");
+		dayList.put(3, "TUESDAY");
+		dayList.put(4, "WEDNESDAY");
+		dayList.put(5, "THURSDAY");
+		dayList.put(6, "FRIDAY");
+		dayList.put(7, "SATURDAY");
 		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 				.precision(Precision.fixedFraction(2));
 		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date);
@@ -104,6 +117,7 @@ public class DaybookServiceImpl implements DaybookService {
 		Daybook db = daybook.get(0);
 		SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date1 = new Date();
+		//TODO Replace with reversed date string
 		try {
 			date1 = insdf.parse(db.getDate());
 		} catch (ParseException e) {
@@ -112,6 +126,8 @@ public class DaybookServiceImpl implements DaybookService {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		daybookView.setDate(sdf.format(date1));
 		daybookView.setDayOfWeek(dbRepo.findDayOfWeek(date));
+	//	daybookView.setDayOfWeek(dayList.get(day));
+		
 		// TODO Needs to find a way to get Collection of closeBal,debit n credit total
 		// for the date range to reduce calls to database
 		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)).toString());
