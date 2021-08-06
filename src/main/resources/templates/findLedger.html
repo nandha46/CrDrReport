@@ -10,30 +10,13 @@
 				<div class="col-xs-7 col-sm-6 col-lg-8">
 					<div>
 						<form>
-							<fieldset>
-								<legend style="width: auto;">Select Account</legend>
-									<div class="table-scroll">
-								  	<table id="account_selection">
-											<thead>
-											<tr>
-												<th>Acc Code</th>
-												<th>Account Name</th>
-											</tr>
-											</thead>
-											<tbody>
-											<tr th:each="accHead : ${accHeadList}">
-												<td><input type="checkbox"
-													th:attr="id=${accHead.accHeadId}, name=${accHead.accHeadId}"
-													value="th:text='${accHead.accName}'"> 
-													<label 	th:attr="for=${accHead.accHeadId}"
-													th:text="${accHead.accCode}">
-												</label></td>
-												<td th:text="${accHead.accName}"> </td>
-											</tr> 
-											</tbody>
-									</table> 
-								</div>
-							</fieldset>
+							<label for="accs">Select an Account:</label> <select id="accs"
+								name="accounts" size="4" multiple>
+								<option th:attr="for=${accHead.accHeadId}"
+									th:text="${accHead.accName}, value=${accHead.accHeadId}">
+									NAME</option>
+							</select><br>
+							<br> <input type="submit">
 						</form>
 					</div>
 				</div>
@@ -72,15 +55,6 @@
 								</select>
 							</div>
 							<!--  Nice Listing format for Acc Selection -->
-							<table>
-								<th:block th:each="accHead : ${accHeadList}">
-									<tr>
-										<td><label th:text="${accHead.accName}">zamow</label> <input
-											type="checkbox" th:field="*{accCode}"
-											th:value="${accHead.accCode}" /></td>
-									</tr>
-								</th:block>
-							</table>
 							<button type="submit">Submit</button>
 							<input type="button" value="Close">
 						</form>
