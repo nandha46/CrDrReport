@@ -35,8 +35,10 @@ a {
 
 table {
 	float: left;
-	width: 100%;
+	width: 90%;
+	padding: 10px;
 	border: 3px solid red;
+	position: relative;
 }
 
 .table-scroll {
