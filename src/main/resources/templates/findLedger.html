@@ -9,12 +9,12 @@
 			<div class="row">
 				<div class="col-xs-7 col-sm-6 col-lg-8">
 					<div>
-						<form>
-							<label for="accs">Select an Account:</label> <select id="accs"
-								name="accounts" size="4" multiple>
-								<option th:attr="for=${accHead.accHeadId}"
-									th:text="${accHead.accName}, value=${accHead.accHeadId}">
-									NAME</option>
+						<form th:action="@{/ledger}" th:object="${formdata}" method="post">
+							<label for="accs">Select an Account:</label> <select th:field="*{accCode}" id="accs"
+								name="accCode" size="26" multiple>
+								<option th:each="accHead : ${accHeadList}"
+                          th:value="${accHead.accHeadId}"
+									th:text="${accHead.accName}"> WIREFRAME </option>
 							</select><br>
 							<br> <input type="submit">
 						</form>
