@@ -16,6 +16,9 @@ import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.icu.number.LocalizedNumberFormatter;
+import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
 import com.ibm.icu.text.NumberFormat;
 
 import in.trident.crdr.entities.Daybook;
@@ -44,8 +47,8 @@ public class LedgerServiceImpl implements LedgerService {
 	
 	SimpleDateFormat outsdf = new SimpleDateFormat("dd-MM-yyyy");
 	SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
-	
-	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
+	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
+			.precision(Precision.fixedFraction(2));
 	
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
@@ -103,30 +106,31 @@ public class LedgerServiceImpl implements LedgerService {
 	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate, Double bal) {
 		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
  		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate);
- 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
  		for(int i = 0; i<daybooks.size(); i++) {
  			String arr2[] = {"",""};
  			if(daybooks.get(i).getDrAmt() == 0) {
  				bal -= daybooks.get(i).getCrAmt();
  				if (bal > 0d) {
- 					arr2[0] = nf.format(Math.abs(bal));
+ 					arr2[0] = nf.format(bal).toString();
  					arr2[1] = "Dr";
  					
  				} else {
- 					arr2[0] = nf.format(Math.abs(bal));
+ 					arr2[0] = nf.format(bal).toString();
  					arr2[1] = "Cr";
  				}
  			} else {
  				bal += daybooks.get(i).getDrAmt(); 
  				if (bal > 0d) {
- 					arr2[0] = nf.format(Math.abs(bal)); 
+ 					arr2[0] = nf.format(bal).toString(); 
  					arr2[1] = "Dr";
  				} else {
- 					arr2[0] = nf.format(Math.abs(bal));
+ 					arr2[0] = nf.format(bal).toString();
  					arr2[1] = "Cr";
  				}
  			}
- 			Dailybooks dailybook = new Dailybooks(daybooks.get(i).getDate(), daybooks.get(i).getNarration(), nf.format(daybooks.get(i).getDrAmt()),nf.format(daybooks.get(i).getCrAmt()),arr2[0],arr2[1]);
+ 			Dailybooks dailybook = 
+ 					new Dailybooks(daybooks.get(i).getDate(), daybooks.get(i).getNarration(), nf.format(daybooks.get(i).getDrAmt()).toString(),
+ 							nf.format(daybooks.get(i).getCrAmt()).toString(),arr2[0],arr2[1]);
  			dailybooklist.add(dailybook);
  		}
 		return dailybooklist;
