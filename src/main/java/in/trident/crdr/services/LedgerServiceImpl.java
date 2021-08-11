@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
-import com.ibm.icu.text.NumberFormat;
 
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.models.Dailybooks;
@@ -90,11 +89,12 @@ public class LedgerServiceImpl implements LedgerService {
 		
 		ledgerview.setDate(outsdf.format(date1));
  		Double bal = new Double(arr[0]);
+ 		
  		if(arr[1].equals("Cr")) {
+ 			ledgerview.setdOrC(nf.format(bal).toString());
  			bal *= -1;
- 			ledgerview.setdOrC(arr[0]);
  		} else {
- 			ledgerview.setOpeningBal(arr[0]);
+ 			ledgerview.setOpeningBal(nf.format(bal).toString());
  		}
  		List<Dailybooks> dailybooklist = createDailybooks(code,ledgerForm.getStartDate(),ledgerForm.getEndDate(),bal);
  		ledgerview.setListDailybooks(dailybooklist);
@@ -115,7 +115,7 @@ public class LedgerServiceImpl implements LedgerService {
  					arr2[1] = "Dr";
  					
  				} else {
- 					arr2[0] = nf.format(bal).toString();
+ 					arr2[0] = nf.format(Math.abs(bal)).toString();
  					arr2[1] = "Cr";
  				}
  			} else {
@@ -124,7 +124,7 @@ public class LedgerServiceImpl implements LedgerService {
  					arr2[0] = nf.format(bal).toString(); 
  					arr2[1] = "Dr";
  				} else {
- 					arr2[0] = nf.format(bal).toString();
+ 					arr2[0] = nf.format(Math.abs(bal)).toString();
  					arr2[1] = "Cr";
  				}
  			}
