@@ -32,6 +32,10 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	@Query("select date, sum(crAmt) as crTot, sum(drAmt) as drTot, sum(crAmt)-sum(drAmt) as dayBal, DAYNAME(?1) as dayOfWeek from Daybook u where u.date = ?1")
 	public List<Object[]> findDaybookBalance(String d1);
 	
+	//Not sure it'll work
+	@Query("select sum(crAmt)+(select crAmt from accHead a where a.accCode = ?1) from Daybook d where d.accCode = ?1 and d.date between ?2 and ?3")
+	public Double findCrTotal(int accCode, String d1, String d2);
+	
 	@Query(value = "select datediff(?1,?2)", nativeQuery = true)
 	public int findDaysBetween(String d1, String d2);
 	
