@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +99,12 @@ public class LedgerServiceImpl implements LedgerService {
  			ledgerview.setOpeningBal(nf.format(bal).toString());
  		}
  		List<Dailybooks> dailybooklist = createDailybooks(code,ledgerForm.getStartDate(),ledgerForm.getEndDate(),bal);
+ //		dailybooklist.stream().collect(Collectors.summingDouble(d->d.getCreditAmt()));
+ 		String drTotal = "";
+ 		String crTotal = "";
+ 				
+ 		Dailybooks daily = new Dailybooks("","Total",drTotal,crTotal,"","");
+ 		dailybooklist.add(daily);
  		ledgerview.setListDailybooks(dailybooklist);
 		return ledgerview;
 	}
