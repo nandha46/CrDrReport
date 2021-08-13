@@ -26,6 +26,7 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	@Query("Select u from Daybook u where u.date between ?1 and ?2")
 	public ArrayList<Daybook> findDaybookRange(String d1, String d2);
 	
+	
 	@Query("Select u from Daybook u where u.acccode = ?1 and u.date between ?2 and ?3 order by u.date asc")
 	public List<Daybook> findDaybookByAccCodeAndDate(int accCode, String d1, String d2);
 	
