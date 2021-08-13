@@ -19,6 +19,7 @@ public class LedgerView {
 	
 	List<Dailybooks> listDailybooks;
 	
+	
 	public String getAccheadName() {
 		return accheadName;
 	}
