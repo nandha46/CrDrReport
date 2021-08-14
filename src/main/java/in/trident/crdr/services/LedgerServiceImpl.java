@@ -100,7 +100,6 @@ public class LedgerServiceImpl implements LedgerService {
  		}
  		List<Dailybooks> dailybooklist = createDailybooks(code,ledgerForm.getStartDate(),ledgerForm.getEndDate(),bal);
  //		dailybooklist.stream().collect(Collectors.summingDouble(d->d.getCreditAmt()));
- 		
  		String drTotal = "";
  		String crTotal = "";
  				
