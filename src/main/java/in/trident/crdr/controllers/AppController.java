@@ -65,7 +65,6 @@ public class AppController {
 	@Autowired
 	private TrialBalService trialBalService;
 	
-	
 	@Autowired
 	private TradingPLService tradingPLService;
 
