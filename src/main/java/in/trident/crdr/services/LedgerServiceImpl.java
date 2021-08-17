@@ -100,10 +100,27 @@ public class LedgerServiceImpl implements LedgerService {
  		List<Dailybooks> dailybooklist = createDailybooks(code,ledgerForm.getStartDate(),ledgerForm.getEndDate(),bal);
  		Double crT =  dailybooklist.stream().collect(Collectors.summingDouble(d-> new Double(d.getCreditAmt().replace(",", ""))));
  		Double drT = dailybooklist.stream().collect(Collectors.summingDouble(d-> new Double(d.getDebitAmt().replace(",", ""))));
+ 		
+ 		if(arr[1].equals("Cr")) {
+ 			crT +=new Double(arr[0]);
+ 		} else {
+ 			drT +=new Double(arr[0]);
+ 		}
+ 		
  		String drTotal = nf.format(drT).toString();
  		String crTotal = nf.format(crT).toString();
- 		Dailybooks daily = new Dailybooks("","Total",drTotal,crTotal,"","");
- 		dailybooklist.add(daily);
+ 		Dailybooks dailyTotal = new Dailybooks("Total",drTotal,crTotal);
+ 		dailybooklist.add(dailyTotal);
+
+ 		Dailybooks finalTotal;
+ 		
+ 		if (dailybooklist.size() > 1) {
+ 		String lastBal = dailybooklist.get(dailybooklist.size()-2).getBalance();
+ 			finalTotal = new Dailybooks("",lastBal,"");
+ 		 } else {
+ 			finalTotal = new Dailybooks("",nf.format(new Double(arr[0])).toString() ,"");
+ 		 }
+ 		dailybooklist.add(finalTotal);
  		ledgerview.setListDailybooks(dailybooklist);
 		return ledgerview;
 	}
