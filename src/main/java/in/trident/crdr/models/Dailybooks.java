@@ -38,6 +38,16 @@ public class Dailybooks {
 		this.debitOrCredit = debitOrCredit;
 	}
 
+	public Dailybooks(String narration, String debitAmt, String creditAmt) {
+		
+		this.date = "";
+		this.narration = narration;
+		this.debitAmt = debitAmt;
+		this.creditAmt = creditAmt;
+		this.balance = "";
+		this.debitOrCredit = "";
+	}
+	
 	public String getDate() {
 		return date;
 	}
