@@ -3,6 +3,7 @@ package in.trident.crdr.services;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,10 @@ import org.slf4j.profiler.Profiler;
 import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ibm.icu.number.LocalizedNumberFormatter;
+import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.models.TrialForm;
@@ -36,7 +41,10 @@ public class TrialServiceImpl implements TrialBalService {
 	@Autowired
 	private DaybookRepository daybookRepo;
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(TradingPLServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TrialServiceImpl.class);
+	
+	private LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
+			.precision(Precision.fixedFraction(2));
 	
 	@Override
 	public List<TrialView> createTrialBal(TrialForm trialform) {
@@ -133,16 +141,16 @@ public class TrialServiceImpl implements TrialBalService {
 			// If tmp is +ve Dr else Cr
 			if (tmp > 0d || tmp == 0d) {
 				tmp = d2 + tmp;
-				arr[0] = tmp.toString();
+				arr[0] = nf.format(tmp).toString();
 				arr[1] = "Dr";
 			} else {
 				d2 = d2 + tmp;
 					if (d2 > 0d) {
-						arr[0]  = d2.toString();
+						arr[0]  = nf.format(d2).toString();
 						arr[1] = "Cr";
 					} else {
 						d2 *= -1;
-						arr[0] = d2.toString();
+						arr[0] = nf.format(d2).toString();
 						arr[1] = "Dr";
 					}
 			}
@@ -159,16 +167,16 @@ public class TrialServiceImpl implements TrialBalService {
 			// If tmp is +ve Cr else Dr
 			if (tmp > 0d || tmp == 0d) {
 				tmp = d1 + tmp;
-				arr[0] = tmp.toString();
+				arr[0] = nf.format(tmp).toString();
 				arr[1] = "Cr";
 			} else {
 				d1 = d1 + tmp;
 					if (d1 > 0d) {
-						arr[0]  = d1.toString();
+						arr[0]  = nf.format(d1).toString();
 						arr[1] = "Dr";
 					} else {
 						d1 *= -1 ;
-						arr[0] = d1.toString();
+						arr[0] = nf.format(d1).toString();
 						arr[1] = "Cr";
 					}
 			}
