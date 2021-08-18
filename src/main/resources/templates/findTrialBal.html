@@ -9,31 +9,14 @@
 			<div class="row">
 				<div class="col-xs-7 col-sm-6 col-lg-8">
 					<div>
-						<form>
-							<fieldset>
-								<legend style="width: auto;">Select Account</legend>
-									<div class="table-scroll">
-								  	<table id="account_selection">
-											<thead>
-											<tr>
-												<th>Acc Code</th>
-												<th>Account Name</th>
-											</tr>
-											</thead>
-											<tbody>
-											<tr th:each="accHead : ${accHeadList}">
-												<td><input type="checkbox"
-													th:attr="id=${accHead.accHeadId}, name=${accHead.accHeadId}"
-													value="th:text='${accHead.accName}'"> 
-													<label 	th:attr="for=${accHead.accHeadId}"
-													th:text="${accHead.accCode}">
-												</label></td>
-												<td th:text="${accHead.accName}"> </td>
-											</tr> 
-											</tbody>
-									</table> 
-								</div>
-							</fieldset>
+						<form th:action="@{/trial}" th:object="${trialform}" method="post">
+							<label for="accs">Select an Account:</label> <select th:field="*{accCode}" id="accs"
+								name="accCode" size="26" multiple>
+								<option th:each="accHead : ${accHeadList}"
+                          th:value="${accHead.accHeadId}"
+									th:text="${accHead.accName}"> WIREFRAME </option>
+							</select><br>
+							<br> <input type="submit">
 						</form>
 					</div>
 				</div>
@@ -54,8 +37,7 @@
 								type="date" th:filed="*{endDate}" name="endDate"
 								min="2000-01-02" max="2022-01-01" value="2021-03-31">
 							<div class="form-group">
-								<label for="exampleFormControlSelect2">Accounts with
-									zero Balance</label> <select class="form-control"
+								<label for="exampleFormControlSelect2">Accounts with Zero Balance</label> <select class="form-control"
 									th:field="*{zeroBal}" id="exampleFormControlSelect2">
 									<option value="false">No</option>
 									<option value="true" selected>Yes</option>
@@ -74,15 +56,6 @@
 								</select>
 							</div>
 							<!--  Nice Listing format for Acc Selection -->
-							<table>
-								<th:block th:each="accHead : ${accHeadList}">
-									<tr>
-										<td><label th:text="${accHead.accName}">zamow</label> <input
-											type="checkbox" th:field="*{accCode}"
-											th:value="${accHead.accCode}" /></td>
-									</tr>
-								</th:block>
-							</table>
 							<button type="submit">Submit</button>
 							<input type="button" value="Close">
 						</form>
