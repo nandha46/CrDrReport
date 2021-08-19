@@ -129,8 +129,6 @@ public class TrialServiceImpl implements TrialBalService {
 		Double d2 = accHeadRepo.findDrAmt(code);
 		
 		if(d1 == 0d) { // If Dr is the Budget Amt
-			LOGGER.debug("Budget is Dr");
-			LOGGER.debug("Acc Code :"+code.toString());
 			// Null check daybook repos return value
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate) ;
 			if ( tmp == null) {
@@ -157,8 +155,6 @@ public class TrialServiceImpl implements TrialBalService {
 		}
 		else {  // If Cr is the Budget Amt
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
-			LOGGER.debug("Budget is Cr");
-			LOGGER.debug("Acc Code :"+code.toString());
 			if ( tmp == null) {
 				arr[0] = "ZeroB";
 				arr[1] = "Dr";
