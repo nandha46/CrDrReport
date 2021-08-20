@@ -55,7 +55,6 @@ public class TrialServiceImpl implements TrialBalService {
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
 		List<AccHead> list = accHeadRepo.findAllAccHead();
 		Collections.sort(list);
-		LOGGER.debug("AccHeads retrieved and sorted");
 		if (trialform.isReportOrder()) {
 			List<Integer> accCodes = trialform.getAccCode();
 			accCodes.forEach((acc)->{
@@ -84,7 +83,6 @@ public class TrialServiceImpl implements TrialBalService {
 			});
 		} else {
 			list.forEach((acc)->{
-				LOGGER.debug("Iteration of accHeads started");
 				TrialView tv = new TrialView();
 				tv.setAccName(acc.getAccName());
 				String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate());
