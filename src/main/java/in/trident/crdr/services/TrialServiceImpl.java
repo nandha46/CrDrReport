@@ -32,7 +32,6 @@ import in.trident.crdr.repositories.DaybookRepository;
  *
  */
 
-
 @Service
 public class TrialServiceImpl implements TrialBalService {
 
