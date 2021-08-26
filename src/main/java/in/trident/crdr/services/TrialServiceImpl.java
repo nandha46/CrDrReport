@@ -125,14 +125,20 @@ public class TrialServiceImpl implements TrialBalService {
 		// ----------------------------
 		Double d1 = accHeadRepo.findCrAmt(code); 
 		Double d2 = accHeadRepo.findDrAmt(code);
-		
+		LOGGER.debug("Acc code:"+code +"- CrAmount:"+d1 +" - DrAmount:"+d2+"\n");
 		if(d1 == 0d) { // If Dr is the Budget Amt
 			// Null check daybook repos return value
-			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate) ;
+			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
 			if ( tmp == null) {
-				arr[0] = "ZeroB";
-				arr[1] = "Dr";
-				return arr;
+				if (d1 == 0) {
+					arr[0] = nf.format(d2).toString();
+					arr[1] = "Dr";
+					return arr;
+				} else {
+					arr[0] = nf.format(d1).toString();
+					arr[1] = "Cr";
+					return arr;
+				}
 			}
 			// If tmp is +ve Dr else Cr
 			if (tmp > 0d || tmp == 0d) {
@@ -154,9 +160,15 @@ public class TrialServiceImpl implements TrialBalService {
 		else {  // If Cr is the Budget Amt
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
 			if ( tmp == null) {
-				arr[0] = "ZeroB";
-				arr[1] = "Dr";
-				return arr;
+				if (d1 == 0) {
+					arr[0] = nf.format(d2).toString();
+					arr[1] = "Dr";
+					return arr;
+				} else {
+					arr[0] = nf.format(d1).toString();
+					arr[1] = "Cr";
+					return arr;
+				}
 			}
 			// If tmp is +ve Cr else Dr
 			if (tmp > 0d || tmp == 0d) {
