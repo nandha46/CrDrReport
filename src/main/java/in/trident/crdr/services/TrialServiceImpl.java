@@ -69,7 +69,7 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setCredit("");
 				}
 				tv.setLevel(accHeadRepo.findLevelByAccCode(acc));
-				if (tv.getDebit().equals("ZeroB") && trialform.isZeroBal()) {
+			/*	if (tv.getDebit().equals("ZeroB") && trialform.isZeroBal()) {
 					tv.setDebit(tv.getDebit().replace("ZeroB", "0"));
 					listTrialview.add(tv);
 				} else {
@@ -79,7 +79,7 @@ public class TrialServiceImpl implements TrialBalService {
 					} else {
 						listTrialview.add(tv);
 					 }
-				}
+				} */
 			});
 		} else {
 			list.forEach((acc)->{
@@ -94,7 +94,7 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setCredit("");
 				}
 				tv.setLevel(acc.getLevel1());
-				if (tv.getDebit().equals("ZeroB") && trialform.isZeroBal()) {
+			/*	if (tv.getDebit().equals("ZeroB") && trialform.isZeroBal()) {
 					tv.setDebit(tv.getDebit().replace("ZeroB", "0"));
 					listTrialview.add(tv);
 				} else {
@@ -104,7 +104,7 @@ public class TrialServiceImpl implements TrialBalService {
 					} else {
 						listTrialview.add(tv);
 					 }
-				}
+				} */
 			});
 		}
 		LOGGER.debug("End of CreateTrialBal method");
