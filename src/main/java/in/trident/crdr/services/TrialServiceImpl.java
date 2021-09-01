@@ -113,7 +113,6 @@ public class TrialServiceImpl implements TrialBalService {
 		// ----------------------------
 		Double d1 = accHeadRepo.findCrAmt(code);
 		Double d2 = accHeadRepo.findDrAmt(code);
-		LOGGER.debug("Acc code:" + code + "- CrAmount:" + d1 + " - DrAmount:" + d2 + "\n");
 		if (d1 == 0d) { // If Dr is the Budget Amt
 			// Null check daybook repos return value
 			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
