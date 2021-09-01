@@ -1,5 +1,6 @@
 package in.trident.crdr.controllers;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -149,6 +150,7 @@ public class AppController {
 	@GetMapping("/findTrialBal")
 	public String findTrial(Model model) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		Collections.sort(accHeadList);
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Find Trial Balance");
 		model.addAttribute("trialform", new TrialForm());
@@ -167,6 +169,7 @@ public class AppController {
 	@GetMapping("/findTradingPL")
 	public String findTradingPl(Model model) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		Collections.sort(accHeadList);
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trading - Profit and Loss");
 		model.addAttribute("tradingPLForm", new TradingPLForm());
