@@ -9,31 +9,14 @@
 			<div class="row">
 				<div class="col-xs-7 col-sm-6 col-lg-8">
 					<div>
-						<form>
-							<fieldset>
-								<legend style="width: auto;">Select Account</legend>
-									<div class="table-scroll">
-								  	<table id="account_selection">
-											<thead>
-											<tr>
-												<th>Acc Code</th>
-												<th>Account Name</th>
-											</tr>
-											</thead>
-											<tbody>
-											<tr th:each="acc : ${accsList}">
-												<td><input type="checkbox"
-													th:attr="id=${acc.accCode}, name=${acc.accCode}"
-													value="th:text='${acc.accName}'"> 
-													<label 	th:attr="for=${acc.accCode}"
-													th:text="${acc.accCode}">
-												</label></td>
-												<td th:text="${acc.accName}"> </td>
-											</tr> 
-											</tbody>
-									</table> 
-								</div>
-							</fieldset>
+						<form th:action="@{/BalanceSheet}" th:object="${balSheetForm}" method="post">
+							<label for="accs">Select an Account:</label> <select th:field="*{accCode}" id="accs"
+								name="accCode" size="26" multiple>
+								<option th:each="accs : ${accsList}"
+                          th:value="${accs.accCode}"
+									th:text="${accs.accName}"> WIREFRAME </option>
+							</select><br>
+							<br> <input type="submit">
 						</form>
 					</div>
 				</div>
@@ -50,12 +33,11 @@
 									<option value="true">Group</option>
 								</select>
 							</div>
-							Trial Balance as on : <input
+							BalanceSheet  as on : <input
 								type="date" th:filed="*{endDate}" name="endDate"
 								min="2000-01-02" max="2022-01-01" value="2021-03-31">
 							<div class="form-group">
-								<label for="exampleFormControlSelect2">Accounts with
-									zero Balance</label> <select class="form-control"
+								<label for="exampleFormControlSelect2">Accounts with Zero Balance</label> <select class="form-control"
 									th:field="*{zeroBal}" id="exampleFormControlSelect2">
 									<option value="false">No</option>
 									<option value="true" selected>Yes</option>
@@ -74,15 +56,6 @@
 								</select>
 							</div>
 							<!--  Nice Listing format for Acc Selection -->
-							<table>
-								<th:block th:each="acc : ${accsList}">
-									<tr>
-										<td><label th:text="${acc.accName}">zamow</label> <input
-											type="checkbox" th:field="*{accCode}"
-											th:value="${acc.accCode}" /></td>
-									</tr>
-								</th:block>
-							</table>
 							<button type="submit">Submit</button>
 							<input type="button" value="Close">
 						</form>
