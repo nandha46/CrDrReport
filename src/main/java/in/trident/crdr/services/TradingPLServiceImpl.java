@@ -151,7 +151,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 		TradingPLView netProfit = new TradingPLView();
 		netProfit.setParticulars("Net Profit");
-		String[] arr = { "31107.50", "Dr" };
+		String[] arr = { "", "Dr" };
 		if (arr[1].equals("Cr")) {
 			netProfit.setDebit("");
 			netProfit.setCredit(arr[0]);
@@ -163,7 +163,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 		tradingPLViewSet.add(netProfit);
 		TradingPLView total2 = new TradingPLView();
 		total2.setParticulars("Total");
-		arr[0] = "58663.00";
+		arr[0] = "";
 		arr[1] = "Cr";
 		if (arr[1].equals("Cr")) {
 			total2.setDebit("");
@@ -195,7 +195,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 		if (d1 == 0d) { // If Dr is the Budget Amt
 			// Null check daybook repos return value
-			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
 			if (tmp == null) {
 				if (d1 == 0) {
 					arr[0] = nf.format(Math.abs(d2)).toString();
@@ -224,7 +224,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 				}
 			}
 		} else { // If Cr is the Budget Amt
-			Double tmp = daybookRepo.openBal(code, "2020-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
 			if (tmp == null) {
 				if (d1 == 0) {
 					arr[0] = nf.format(Math.abs(d2)).toString();
