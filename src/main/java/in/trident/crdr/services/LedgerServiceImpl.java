@@ -166,11 +166,11 @@ public class LedgerServiceImpl implements LedgerService {
 			Double d1 = accHeadRepo.findCrAmt(code);
 			Double d2 = accHeadRepo.findDrAmt(code);
 			if( d1 == 0d) {
-				arr[0] = d2.toString();
+				arr[0] = nf.format(d2).toString();
 				arr[1] = "Dr";
 			}
 			else {
-				arr[0] = d1.toString();
+				arr[0] = nf.format(d1).toString();
 				arr[1] = "Cr";
 			}
 			
@@ -182,16 +182,16 @@ public class LedgerServiceImpl implements LedgerService {
 				// If tmp is +ve Dr else Cr
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d2 + tmp;
-					arr[0] = tmp.toString();
+					arr[0] = nf.format(tmp).toString();
 					arr[1] = "Dr";
 				} else {
 					d2 = d2 + tmp;
 						if (d2 > 0d) {
-							arr[0]  = d2.toString();
+							arr[0]  = nf.format(d2).toString();
 							arr[1] = "Cr";
 						} else {
 							d2 *= -1;
-							arr[0] = d2.toString();
+							arr[0] = nf.format(d2).toString();
 							arr[1] = "Dr";
 						}
 				}
@@ -201,18 +201,18 @@ public class LedgerServiceImpl implements LedgerService {
 				// If tmp is +ve Cr else Dr
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d1 + tmp;
-					arr[0] = tmp.toString();
+					arr[0] = nf.format(tmp).toString();
 					
 					arr[1] = "Cr";
 				} else {
 					
 					d1 = d1 + tmp;
 						if (d1 > 0d) {
-							arr[0]  = d1.toString();
+							arr[0]  = nf.format(d1).toString();
 							arr[1] = "Dr";
 						} else {
 							d1 *= -1;
-							arr[0] = d1.toString();
+							arr[0] = nf.format(d1).toString();
 							arr[1] = "Cr";
 						}
 				}
