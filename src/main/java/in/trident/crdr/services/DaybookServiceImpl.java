@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -70,8 +69,6 @@ public class DaybookServiceImpl implements DaybookService {
 		int days = dbRepo.findDaysBetween(endDate, startDate);
 		if (days == 0)
 			days = 1;
-		LOGGER.debug("No of Days in-between: {}", days);
-		LOGGER.debug("Start date:{} End Date:{}", startDate, endDate);
 		Calendar calendar = Calendar.getInstance();
 		List<DaybookView> daybooks = new LinkedList<DaybookView>();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
