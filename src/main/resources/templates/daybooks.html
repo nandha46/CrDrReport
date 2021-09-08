@@ -31,13 +31,6 @@
 					<tbody>
 						<th:block th:each="daybookview: ${daybookViewObj}">
 							<tr>
-								<td id="left_align">Date</td>
-								<td id="left_align">Opening Balance</td>
-								<td></td>
-								<td id="right_align" style="color: darkgreen"
-									th:text="${daybookview.closingBal}">Opening Balance Value</td>
-							</tr>
-							<tr>
 								<td id="left_align" style="color: red"
 									th:text="${daybookview.date}">Date</td>
 								<td id="left_align" style="color: red"
@@ -58,6 +51,13 @@
 									th:text="${daybookview.debitTot}">Debit Total</td>
 								<td id="right_align" style="color: red"
 									th:text="${daybookview.creditTot}">Credit Total</td>
+							</tr>
+							<tr>
+								<td id="left_align"><!--   Date Placeholder --></td>
+								<td id="left_align"><!--   Closing Balance Placeholder --></td>
+								<td></td>
+								<td id="right_align" style="color: darkgreen"
+									th:text="${daybookview.closingBal}">Closing Balance Value</td>
 							</tr>
 						</th:block>
 					</tbody>
