@@ -139,6 +139,7 @@ public class DaybookServiceImpl implements DaybookService {
 		});
 		Collections.sort(trans);
 		daybookView.setTransList(trans);
+		
 		}
 		return daybookView;
 	}
