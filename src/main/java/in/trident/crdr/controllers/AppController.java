@@ -75,6 +75,8 @@ public class AppController {
 	@Autowired
 	private ScheduleRepo scheduleRepo;
 
+	//TODO need to implement user specific table data and filtering system
+	
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
