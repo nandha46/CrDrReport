@@ -30,6 +30,12 @@
 					</thead>
 					<tbody>
 						<th:block th:each="daybookview: ${daybookViewObj}">
+							<tr th:if="${daybookviewStat.first}">
+								<td id="left_align"> </td>
+								<td id="left_align">Opening Balance</td>
+								<td id="right_align"> </td>
+								<td id="right_align" th:text="${openingBal}">Opening Balance Value</td>
+							</tr>
 							<tr>
 								<td id="left_align" style="color: red"
 									th:text="${daybookview.date}">Date</td>
@@ -54,7 +60,7 @@
 							</tr>
 							<tr>
 								<td id="left_align"><!--   Date Placeholder --></td>
-								<td id="left_align"><!--   Closing Balance Placeholder --></td>
+								<td id="left_align" th:text="${daybookviewStat.last} ? 'Closing Balance'"><!--   Closing Balance Placeholder --></td>
 								<td></td>
 								<td id="right_align" style="color: darkgreen"
 									th:text="${daybookview.closingBal}">Closing Balance Value</td>
