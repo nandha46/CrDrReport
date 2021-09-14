@@ -79,14 +79,14 @@ public class DaybookServiceImpl implements DaybookService {
 			e.printStackTrace();
 		}
 		for (int i = 0; i <= days; i++) {
-			DaybookView dbv = createDaybook(df.format(calendar.getTime()),calendar.get(Calendar.DAY_OF_WEEK));
-			if (dbv != null) {
-				daybooks.add(dbv);
-			} else {
-				
-			}
+				DaybookView dbv = createDaybook(df.format(calendar.getTime()),calendar.get(Calendar.DAY_OF_WEEK));
+				if (dbv != null) {
+					daybooks.add(dbv);
+				} else {
+					System.out.println("Daybook for that date is null");
+					LOGGER.warn("Daybook for that date is null");
+				}	
 			calendar.add(Calendar.DATE, 1);
-
 		}
 		TimeInstrument ti = profiler.stop();
 		LOGGER.info("\n" + ti.toString());
