@@ -1,8 +1,12 @@
 package in.trident.crdr.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -13,6 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.ibm.icu.number.LocalizedNumberFormatter;
+import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.Role;
@@ -29,6 +37,7 @@ import in.trident.crdr.models.BalSheetForm;
 import in.trident.crdr.models.BalanceSheetView;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
+import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.BalanceSheetService;
@@ -74,6 +83,12 @@ public class AppController {
 	
 	@Autowired
 	private ScheduleRepo scheduleRepo;
+	
+	@Autowired
+	private CloseBalRepo closeBalRepo;
+	
+	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
+			.precision(Precision.fixedFraction(2));
 
 	//TODO need to implement user specific table data and filtering system
 	
@@ -127,6 +142,14 @@ public class AppController {
 		List<DaybookView> daybookViewObj = daybookSerice.daybookViewRange(formdata.getStartDate(),
 				formdata.getEndDate());
 		model.addAttribute("daybookViewObj", daybookViewObj);
+		Calendar cal = Calendar.getInstance();
+		try {
+			cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(formdata.getStartDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		model.addAttribute("openingBal",nf.format(closeBalRepo.findCloseBalByDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())))).toString();
 		model.addAttribute("pageTitle", "Daybook View");
 		return "daybooks";
 	}
