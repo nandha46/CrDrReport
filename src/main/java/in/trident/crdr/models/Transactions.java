@@ -8,7 +8,6 @@ import java.util.Locale;
 import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
-import com.ibm.icu.text.NumberFormat;
 
 public class Transactions implements Comparable<Transactions>{
 
