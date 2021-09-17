@@ -153,6 +153,7 @@ public class AppController {
 		model.addAttribute("pageTitle", "Daybook View");
 		return "daybooks";
 	}
+	
 
 	@GetMapping("/findLedger")
 	public String findLedger(Model model) {
