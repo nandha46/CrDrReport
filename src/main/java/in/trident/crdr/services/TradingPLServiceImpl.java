@@ -144,6 +144,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tradingPLViewSet.add(tplv);
 					}
 				}
+				
 			});
 		} else {
 			// TODO Implement Report order : All - false

@@ -51,6 +51,8 @@ public class LedgerServiceImpl implements LedgerService {
 	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
 
+	//TODO finish complete function before moving on
+	
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
 		Profiler profiler = new Profiler("LedgerServiceImpl");
