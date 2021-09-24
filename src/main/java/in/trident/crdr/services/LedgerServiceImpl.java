@@ -63,14 +63,22 @@ public class LedgerServiceImpl implements LedgerService {
 			List<Integer> accCodes = ledgerForm.getAccCode();
 			accCodes.forEach(code -> {
 				LedgerView ledgerView = createLedgerView(code, ledgerForm);
-				ledgerList.add(ledgerView);
+				if(ledgerView == null) {
+					LOGGER.trace("--Ledger is Empty--");
+				} else {
+					ledgerList.add(ledgerView);
+				}
 			});
 		} else {
 			Set<Integer> accCodes = new HashSet<Integer>(accHeadRepo.findAccCodes());
 			accCodes.remove(0);
 			accCodes.forEach(code -> {
 				LedgerView ledgerView = createLedgerView(code, ledgerForm);
-				ledgerList.add(ledgerView);
+				if(ledgerView == null) {
+					LOGGER.trace("--Ledger is Empty--");
+				} else {
+					ledgerList.add(ledgerView);
+				}
 			});
 		}
 		LOGGER.debug("Ledger Created");
@@ -103,6 +111,10 @@ public class LedgerServiceImpl implements LedgerService {
 		}
 		List<Dailybooks> dailybooklist = createDailybooks(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(),
 				bal);
+		if(dailybooklist.isEmpty() && ledgerForm.isTransactedAccOnly() ) {
+			LOGGER.trace("---No Transactions on Dailybooks-----");
+			return null;
+		}
 		Double crT = dailybooklist.stream()
 				.collect(Collectors.summingDouble(d -> new Double(d.getCreditAmt().replace(",", ""))));
 		Double drT = dailybooklist.stream()
@@ -168,14 +180,14 @@ public class LedgerServiceImpl implements LedgerService {
 
 	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm) {
 		String arr[] = { "", "" };
-		if (ledgerForm.getStartDate().equals("2020-04-01")) {
+		if (ledgerForm.getStartDate().equals("2018-04-01")) {
 			Double d1 = accHeadRepo.findCrAmt(code);
 			Double d2 = accHeadRepo.findDrAmt(code);
 			if (d1 == 0d) {
-				arr[0] = nf.format(d2).toString();
+				arr[0] = d2.toString();
 				arr[1] = "Dr";
 			} else {
-				arr[0] = nf.format(d1).toString();
+				arr[0] = d1.toString();
 				arr[1] = "Cr";
 			}
 
@@ -187,16 +199,16 @@ public class LedgerServiceImpl implements LedgerService {
 				// If tmp is +ve Dr else Cr
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d2 + tmp;
-					arr[0] = nf.format(tmp).toString();
+					arr[0] = tmp.toString();
 					arr[1] = "Dr";
 				} else {
 					d2 = d2 + tmp;
 					if (d2 > 0d) {
-						arr[0] = nf.format(d2).toString();
+						arr[0] = d2.toString();
 						arr[1] = "Cr";
 					} else {
 						d2 *= -1;
-						arr[0] = nf.format(d2).toString();
+						arr[0] = d2.toString();
 						arr[1] = "Dr";
 					}
 				}
@@ -205,18 +217,17 @@ public class LedgerServiceImpl implements LedgerService {
 				// If tmp is +ve Cr else Dr
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d1 + tmp;
-					arr[0] = nf.format(tmp).toString();
-
+					arr[0] = tmp.toString();
 					arr[1] = "Cr";
 				} else {
 
 					d1 = d1 + tmp;
 					if (d1 > 0d) {
-						arr[0] = nf.format(d1).toString();
+						arr[0] = d1.toString();
 						arr[1] = "Dr";
 					} else {
 						d1 *= -1;
-						arr[0] = nf.format(d1).toString();
+						arr[0] = d1.toString();
 						arr[1] = "Cr";
 					}
 				}
