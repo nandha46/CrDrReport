@@ -83,8 +83,7 @@ public class DaybookServiceImpl implements DaybookService {
 				if (dbv != null) {
 					daybooks.add(dbv);
 				} else {
-					System.out.println("Daybook for that date is null");
-					LOGGER.warn("Daybook for that date is null");
+					LOGGER.trace("Daybook for that date is null");
 				}	
 			calendar.add(Calendar.DATE, 1);
 		}
