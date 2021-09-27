@@ -10,18 +10,11 @@ import java.util.List;
 
 public class LedgerForm {
 	
-	@Override
-	public String toString() {
-		return "LedgerForm [startDate=" + startDate + ", endDate=" + endDate + ", reportOrder=" + reportOrder
-				+ ", transactedAccOnly=" + transactedAccOnly + ", cutOff=" + cutOff + ", zeroBal=" + zeroBal
-				+ ", stockNeeded=" + stockNeeded + ", accCode=" + accCode + "]";
-	}
 	private String startDate;
 	private String endDate;
 	private boolean reportOrder;
 	private boolean transactedAccOnly;
 	private boolean cutOff;
-	private boolean zeroBal;
 	private boolean stockNeeded;
 	private List<Integer> accCode;
 	
@@ -56,13 +49,6 @@ public class LedgerForm {
 		this.cutOff = cutOff;
 	}
 	
-	public boolean isZeroBal() {
-		return zeroBal;
-	}
-	public void setZeroBal(boolean zeroBal) {
-		this.zeroBal = zeroBal;
-	}
-
 	public boolean isStockNeeded() {
 		return stockNeeded;
 	}
@@ -74,6 +60,12 @@ public class LedgerForm {
 	}
 	public void setAccCode(List<Integer> accCode) {
 		this.accCode = accCode;
+	}
+	@Override
+	public String toString() {
+		return "LedgerForm [startDate=" + startDate + ", endDate=" + endDate + ", reportOrder=" + reportOrder
+				+ ", transactedAccOnly=" + transactedAccOnly + ", cutOff=" + cutOff + ", stockNeeded=" + stockNeeded
+				+ ", accCode=" + accCode + "]";
 	}
 	
 }
