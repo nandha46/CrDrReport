@@ -102,7 +102,6 @@ public class LedgerServiceImpl implements LedgerService {
 
 		ledgerview.setDate(outsdf.format(date1));
 		Double bal = new Double(arr[0]);
-
 		if (arr[1].equals("Cr")) {
 			ledgerview.setdOrC(nf.format(bal).toString());
 			bal *= -1;
@@ -116,10 +115,9 @@ public class LedgerServiceImpl implements LedgerService {
 			return null;
 		}
 		Double crT = dailybooklist.stream()
-				.collect(Collectors.summingDouble(d -> new Double(d.getCreditAmt().replace(",", ""))));
+				.collect(Collectors.summingDouble(d -> Double.parseDouble(d.getCreditAmt().replace(",", ""))));
 		Double drT = dailybooklist.stream()
-				.collect(Collectors.summingDouble(d -> new Double(d.getDebitAmt().replace(",", ""))));
-
+				.collect(Collectors.summingDouble(d -> Double.parseDouble(d.getDebitAmt().replace(",", ""))));
 		if (arr[1].equals("Cr")) {
 			crT += new Double(arr[0]);
 		} else {
@@ -171,7 +169,7 @@ public class LedgerServiceImpl implements LedgerService {
 				}
 			}
 			Dailybooks dailybook = new Dailybooks(daybooks.get(i).getDate(), daybooks.get(i).getNarration(),
-					nf.format(daybooks.get(i).getDrAmt()).toString(), nf.format(daybooks.get(i).getCrAmt()).toString(),
+					daybooks.get(i).getDrAmt(), daybooks.get(i).getCrAmt(),
 					arr2[0], arr2[1]);
 			dailybooklist.add(dailybook);
 		}
