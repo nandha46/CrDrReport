@@ -3,6 +3,11 @@ package in.trident.crdr.models;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import com.ibm.icu.number.LocalizedNumberFormatter;
+import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
 
 /**
  * @author Nandhakumar Subramanian
@@ -17,13 +22,14 @@ public class Dailybooks {
 	
 	SimpleDateFormat outsdf= new SimpleDateFormat("dd-MM-yyyy");
 	SimpleDateFormat insdf= new SimpleDateFormat("yyyy-MM-dd");
-	
+	private LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
+			.precision(Precision.fixedFraction(2));
 	
 	public Dailybooks() {
 		
 	}
 	
-	public Dailybooks(String date, String narration, String debitAmt, String creditAmt, String balance, String debitOrCredit) {
+	public Dailybooks(String date, String narration, Double debitAmt, Double creditAmt, String balance, String debitOrCredit) {
 		Date date1 = new Date();
 		try {
 			date1 = insdf.parse(date);
@@ -32,8 +38,8 @@ public class Dailybooks {
 		}
 		this.date = outsdf.format(date1);
 		this.narration = narration;
-		this.debitAmt = debitAmt;
-		this.creditAmt = creditAmt;
+		this.debitAmt = nf.format(debitAmt).toString();
+		this.creditAmt = nf.format(creditAmt).toString();
 		this.balance = balance;
 		this.debitOrCredit = debitOrCredit;
 	}
