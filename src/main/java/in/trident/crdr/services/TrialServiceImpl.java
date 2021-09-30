@@ -69,7 +69,8 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setCredit("");
 				}
 				tv.setLevel(accHeadRepo.findLevelByAccCode(acc));
-				if (trialform.isZeroBal() && ( (tv.getDebit().equals("0.00") && tv.getCredit().isEmpty()) || (tv.getCredit().equals("0.00") && tv.getDebit().isEmpty()))) {
+				if (trialform.isZeroBal() && ((tv.getDebit().equals("0.00") && tv.getCredit().isEmpty())
+						|| (tv.getCredit().equals("0.00") && tv.getDebit().isEmpty()))) {
 					// Intentionally left empty to remove ZeroBal accounts
 				} else {
 					listTrialview.add(tv);
@@ -88,7 +89,8 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setCredit("");
 				}
 				tv.setLevel(acc.getLevel1());
-				if (trialform.isZeroBal() && ( (tv.getDebit().equals("0.00") && tv.getCredit().isEmpty()) || (tv.getCredit().equals("0.00") && tv.getDebit().isEmpty()))) {
+				if (trialform.isZeroBal() && ((tv.getDebit().equals("0.00") && tv.getCredit().isEmpty())
+						|| (tv.getCredit().equals("0.00") && tv.getDebit().isEmpty()))) {
 					// Intentionally left empty to remove ZeroBal accounts
 				} else {
 					listTrialview.add(tv);
@@ -113,63 +115,52 @@ public class TrialServiceImpl implements TrialBalService {
 		// ----------------------------
 		Double d1 = accHeadRepo.findCrAmt(code);
 		Double d2 = accHeadRepo.findDrAmt(code);
-		if (d1 == 0d) { // If Dr is the Budget Amt
+		if (d1 == 0d) {
+			// Prev year Bal is Dr
+			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
 			// Null check daybook repos return value
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
 			if (tmp == null) {
-				if (d1 == 0) {
-					arr[0] = nf.format(Math.abs(d2)).toString();
-					arr[1] = "Dr";
-					return arr;
-				} else {
-					arr[0] = nf.format(Math.abs(d1)).toString();
-					arr[1] = "Cr";
-					return arr;
-				}
-			}
-			// If tmp is +ve Dr else Cr
-			if (tmp > 0d || tmp == 0d) {
-				tmp = d2 + tmp;
-				arr[0] = nf.format(Math.abs(tmp)).toString();
+				// d2 is also zero, so there is no txn & no prev year bal
+				// whether d2 is 0 or Somevalue Balance is Dr
+				arr[0] = nf.format(Math.abs(d2)).toString();
 				arr[1] = "Dr";
-			} else {
-				d2 = d2 + tmp;
-				if (d2 > 0d) {
-					arr[0] = nf.format(Math.abs(d2)).toString();
-					arr[1] = "Cr";
-				} else {
-					d2 *= -1;
-					arr[0] = nf.format(Math.abs(d2)).toString();
+				return arr;
+			} else if (tmp > 0d || tmp == 0d) {
+				// tmp is +ve so Cr
+				tmp = d2 - tmp;
+				if (tmp > 0d) {
+					arr[0] = nf.format(Math.abs(tmp)).toString();
 					arr[1] = "Dr";
+				} else {
+					arr[0] = nf.format(Math.abs(tmp)).toString();
+					arr[1] = "Cr";
 				}
+			} else {
+				d2 = d2 - tmp;
+				arr[0] = nf.format(Math.abs(d2)).toString();
+				arr[1] = "Dr";
 			}
-		} else { // If Cr is the Budget Amt
+		} else {  // then Prev year Bal is Cr
 			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
 			if (tmp == null) {
-				if (d1 == 0) {
-					arr[0] = nf.format(Math.abs(d2)).toString();
-					arr[1] = "Dr";
-					return arr;
-				} else {
-					arr[0] = nf.format(Math.abs(d1)).toString();
-					arr[1] = "Cr";
-					return arr;
-				}
-			}
-			// If tmp is +ve Cr else Dr
-			if (tmp > 0d || tmp == 0d) {
+				arr[0] = nf.format(Math.abs(d1)).toString();
+				arr[1] = "Cr";
+				return arr;
+			} else if (tmp > 0d || tmp == 0d) {
+				// tmp is +ve so Cr
 				tmp = d1 + tmp;
 				arr[0] = nf.format(Math.abs(tmp)).toString();
 				arr[1] = "Cr";
 			} else {
+				// tmp is -ve so Dr
 				d1 = d1 + tmp;
 				if (d1 > 0d) {
 					arr[0] = nf.format(Math.abs(d1)).toString();
-					arr[1] = "Dr";
-				} else {
-					d1 *= -1;
-					arr[0] = nf.format(Math.abs(d1)).toString();
 					arr[1] = "Cr";
+				} else {
+					arr[0] = nf.format(Math.abs(d1)).toString();
+					arr[1] = "Dr";
 				}
 			}
 
