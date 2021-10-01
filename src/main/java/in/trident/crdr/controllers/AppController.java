@@ -74,24 +74,24 @@ public class AppController {
 
 	@Autowired
 	private TrialBalService trialBalService;
-	
+
 	@Autowired
 	private TradingPLService tradingPLService;
 
 	@Autowired
 	private BalanceSheetService balanceSheetService;
-	
+
 	@Autowired
 	private ScheduleRepo scheduleRepo;
-	
+
 	@Autowired
 	private CloseBalRepo closeBalRepo;
-	
+
 	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
 
-	//TODO need to implement user specific table data and filtering system
-	
+	// TODO need to implement user specific table data and filtering system
+
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
@@ -149,11 +149,12 @@ public class AppController {
 			e.printStackTrace();
 		}
 		cal.add(Calendar.DAY_OF_MONTH, -1);
-		model.addAttribute("openingBal",nf.format(closeBalRepo.findCloseBalByDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())))).toString();
+		model.addAttribute("openingBal",
+				nf.format(closeBalRepo.findCloseBalByDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()))))
+				.toString();
 		model.addAttribute("pageTitle", "Daybook View");
 		return "daybooks";
 	}
-	
 
 	@GetMapping("/findLedger")
 	public String findLedger(Model model) {
