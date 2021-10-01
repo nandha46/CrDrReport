@@ -51,8 +51,8 @@ public class LedgerServiceImpl implements LedgerService {
 	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
 
-	//TODO finish complete function before moving on
-	
+	// TODO finish complete function before moving on
+
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
 		Profiler profiler = new Profiler("LedgerServiceImpl");
@@ -63,7 +63,7 @@ public class LedgerServiceImpl implements LedgerService {
 			List<Integer> accCodes = ledgerForm.getAccCode();
 			accCodes.forEach(code -> {
 				LedgerView ledgerView = createLedgerView(code, ledgerForm);
-				if(ledgerView == null) {
+				if (ledgerView == null) {
 					LOGGER.trace("--Ledger is Empty--");
 				} else {
 					ledgerList.add(ledgerView);
@@ -74,7 +74,7 @@ public class LedgerServiceImpl implements LedgerService {
 			accCodes.remove(0);
 			accCodes.forEach(code -> {
 				LedgerView ledgerView = createLedgerView(code, ledgerForm);
-				if(ledgerView == null) {
+				if (ledgerView == null) {
 					LOGGER.trace("--Ledger is Empty--");
 				} else {
 					ledgerList.add(ledgerView);
@@ -86,7 +86,6 @@ public class LedgerServiceImpl implements LedgerService {
 		LOGGER.info("\n" + ti.toString());
 		return ledgerList;
 	}
-	
 
 	@Override
 	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm) {
@@ -110,7 +109,7 @@ public class LedgerServiceImpl implements LedgerService {
 		}
 		List<Dailybooks> dailybooklist = createDailybooks(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(),
 				bal);
-		if(dailybooklist.isEmpty() && ledgerForm.isTransactedAccOnly() ) {
+		if (dailybooklist.isEmpty() && ledgerForm.isTransactedAccOnly()) {
 			LOGGER.trace("---No Transactions on Dailybooks-----");
 			return null;
 		}
@@ -169,8 +168,7 @@ public class LedgerServiceImpl implements LedgerService {
 				}
 			}
 			Dailybooks dailybook = new Dailybooks(daybooks.get(i).getDate(), daybooks.get(i).getNarration(),
-					daybooks.get(i).getDrAmt(), daybooks.get(i).getCrAmt(),
-					arr2[0], arr2[1]);
+					daybooks.get(i).getDrAmt(), daybooks.get(i).getCrAmt(), arr2[0], arr2[1]);
 			dailybooklist.add(dailybook);
 		}
 		return dailybooklist;

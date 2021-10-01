@@ -141,7 +141,7 @@ public class TrialServiceImpl implements TrialBalService {
 				arr[0] = nf.format(Math.abs(d2)).toString();
 				arr[1] = "Dr";
 			}
-		} else {  // then Prev year Bal is Cr
+		} else { // then Prev year Bal is Cr
 			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
