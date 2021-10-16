@@ -9,21 +9,21 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container text-center">
+    <div class="container">
         <div>
-            <h1>User Registration - Sign Up</h1>
+            <h1 style="text-align:center">User Registration - Sign Up</h1>
         </div>
         <form th:action="@{/process_register}" th:object="${user}"
             method="post" style="max-width: 600px; margin: 0 auto;">
         <div class="m-3">
-            <div class="form-group row">
+            <div class="form-group">
                 <label class="col-4 col-form-label">E-mail: </label>
                 <div class="col-8">
                     <input type="email" th:field="*{email}" class="form-control" required />
                 </div>
             </div>
              
-            <div class="form-group row">
+            <div class="form-group">
                 <label class="col-4 col-form-label">Password: </label>
                 <div class="col-8">
                     <input type="password" th:field="*{password}" class="form-control"
@@ -31,7 +31,7 @@
                 </div>
             </div>
              
-            <div class="form-group row">
+            <div class="form-group">
                 <label class="col-4 col-form-label">First Name: </label>
                 <div class="col-8">
                     <input type="text" th:field="*{firstName}" class="form-control"
@@ -39,7 +39,7 @@
                 </div>
             </div>
              
-            <div class="form-group row">
+            <div class="form-group">
                 <label class="col-4 col-form-label">Last Name: </label>
                 <div class="col-8">
                     <input type="text" th:field="*{lastName}" class="form-control"
@@ -47,7 +47,7 @@
                 </div>
             </div>
              
-             <div class="form-group row">
+             <div class="form-group">
                 <label class="col-4 col-form-label">Enabled: </label>
                 <div class="col-8">
                     <input type="text" th:field="*{enabled}" class="form-control"
