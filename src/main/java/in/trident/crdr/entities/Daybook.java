@@ -93,6 +93,21 @@ public class Daybook implements Comparable<Daybook>{
 	public int getSktValue() {
 		return sktValue;
 	}
+	
+	public Daybook() {
+
+	}
+
+	public Daybook(int sno, String date, String narration, int acccode, double dramt, double cramt, int stkvalue) {
+		this.sNo = sno;
+		this.date = date;
+		this.narration = narration;
+		this.acccode = acccode;
+		this.drAmt = dramt;
+		this.crAmt = cramt;
+		this.sktValue = stkvalue;
+	}
+	
 	@Override
 	public String toString() {
 		return "Daybook [dbId=" + dbId + ", sNo=" + sNo + ", date=" + date + ", narration=" + narration + ", acccode="
