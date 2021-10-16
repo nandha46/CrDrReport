@@ -7,15 +7,23 @@
   	<div th:replace = "fragments::navbar"> </div>  
 	<!-- jQuery UI DateRangePicker -->	
 	<div class="container">
-		<form th:action="@{/daybooks}" th:object="${formdata}" method="post" style="max-width: 600px; margin: 0 auto;">
-			<fieldset>
-			<legend>Select Date Range</legend>
-			From Date: <input type="date" th:filed="*{startDate}" name="startDate" min="2000-01-01" max="2022-01-01" value="2018-04-01" >
-		 	<br><br>To Date: <input type="date" th:filed="*{endDate}" name="endDate" min="2000-01-02" max="2022-01-01" value ="2019-03-31">
-			<br><br><span><button type="submit">Submit </button></span>
-			<input type="button" value="Close">
-		</fieldset>
-		</form>	
+        <h2 style="text-align: left;">Select Date Range</h2>
+		<form class="form-horizontal" th:action="@{/daybooks}" th:object="${formdata}" method="post" style="max-width: 600px; margin: 0 auto;">
+            <div class="form-group">
+                <label class="control-label col-sm-2">From Date:</label>  
+                <div class="col-sm-4">   
+			 <input type="date" class="form-control" th:filed="*{startDate}" name="startDate" min="2000-01-01" max="2022-01-01" value="2018-04-01" >
+            </div></div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">To Date:</label>
+                <div class="col-sm-4">
+                <input type="date" class="form-control" th:filed="*{endDate}" name="endDate" min="2000-01-02" max="2022-01-01" value ="2019-03-31">
+        </div> </div>
+        <div class="col-sm-offset-2 col-sm-4">
+        <button type="submit" class="btn btn-primary">Submit </button>
+		<button type="button" value="Close" class="btn btn-default">Close</button>
+	</div>	
+    </form>	
 	</div>
 </body>
 </html>
