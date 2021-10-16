@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>in.trident.crdr</groupId>
 	<artifactId>CrDrReport</artifactId>
-	<version>0.0.6b-SNAPSHOT</version>
+	<version>0.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>CrDrReport</name>
 	<description>Web Reporting Tool for CrDr</description>
@@ -116,6 +116,11 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-ext</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.9.0</version>
 		</dependency>
 	</dependencies>
 
