@@ -98,6 +98,13 @@ public class AppController {
 		LOGGER.warn("Use 'update users_roles set role_id = 1 where user_id = X' on MySQL DB to enable developer mode");
 		return "index";
 	}
+	
+	@GetMapping("/reports")
+	public String showReports(Model model) {
+		model.addAttribute("pageTitle", "Reports");
+		LOGGER.info("Reports Page loading...");
+		return "reports";
+	}
 
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
@@ -147,6 +154,7 @@ public class AppController {
 			cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(formdata.getStartDate()));
 		} catch (ParseException e) {
 			e.printStackTrace();
+			LOGGER.info("Calendar Parsing Exception: Daybook Start date");
 		}
 		cal.add(Calendar.DAY_OF_MONTH, -1);
 		model.addAttribute("openingBal",
@@ -159,6 +167,8 @@ public class AppController {
 	@GetMapping("/findLedger")
 	public String findLedger(Model model) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+		Collections.sort(accHeadList);
+		LOGGER.info("Loading Ledgers...");
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		model.addAttribute("formdata", new LedgerForm());
@@ -167,7 +177,7 @@ public class AppController {
 
 	@PostMapping("/ledger")
 	public String listLedger(Model model, LedgerForm ledgerForm) {
-		LOGGER.warn("Ledger Page Start");
+		LOGGER.info("Ledger is Ready");
 		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm);
 		model.addAttribute("listLedger", listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
@@ -178,6 +188,7 @@ public class AppController {
 	public String findTrial(Model model) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		Collections.sort(accHeadList);
+		LOGGER.info("Loading Trial Balance...");
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Find Trial Balance");
 		model.addAttribute("trialform", new TrialForm());
@@ -188,6 +199,7 @@ public class AppController {
 	public String trialbal(Model model, TrialForm trialform) {
 		LOGGER.warn("Trial Balance Page Start");
 		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform);
+		LOGGER.info("Trial Balnce is Ready");
 		model.addAttribute("listTrailView", listTrailView);
 		model.addAttribute("pageTitle", "Trial Balance");
 		return "trialBal";
@@ -197,6 +209,7 @@ public class AppController {
 	public String findTradingPl(Model model) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
 		Collections.sort(accHeadList);
+		LOGGER.info("Loading TradingPL...");
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trading - Profit and Loss");
 		model.addAttribute("tradingPLForm", new TradingPLForm());
@@ -205,8 +218,8 @@ public class AppController {
 
 	@PostMapping("/tradingPL")
 	public String tradingPL(Model model, TradingPLForm tradingPLForm) {
-		LOGGER.warn("TradingPL Page Start");
 		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm);
+		LOGGER.info("TradingPL is ready");
 		model.addAttribute("listTradingPL", listTradingPL);
 		model.addAttribute("pageTitle", "Trading - Profit & Loss");
 		return "tradingPL";
@@ -215,6 +228,8 @@ public class AppController {
 	@GetMapping("/findBalSheet")
 	public String findBalSheet(Model model) {
 		List<Schedule> accsList = scheduleRepo.findAll();
+		Collections.sort(accsList);
+		LOGGER.info("Loading Balance Sheet...");
 		model.addAttribute("accsList", accsList);
 		model.addAttribute("pageTitle", "Balance Sheet");
 		model.addAttribute("balSheetForm", new BalSheetForm());
@@ -223,7 +238,7 @@ public class AppController {
 
 	@PostMapping("/BalanceSheet")
 	public String balanceSheet(Model model, BalSheetForm balSheetForm) {
-		LOGGER.warn("Balance Sheet start");
+		LOGGER.info("Balance Sheet Ready");
 		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm);
 		model.addAttribute("listBalSheet", listBalSheet);
 		return "BalanceSheet";
