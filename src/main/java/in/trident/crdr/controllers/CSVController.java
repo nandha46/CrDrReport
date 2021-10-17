@@ -27,16 +27,43 @@ public class CSVController {
 	@PostMapping("/uploaded")
 	public String success(Model model, CSVUploadModel csvUploadModel) {
 		String message ="";
-		MultipartFile file = csvUploadModel.getFile();
-		if (CSVUtil.hasCSVFormat(file)) {
+		MultipartFile file1 = csvUploadModel.getFile1();
+		if (CSVUtil.hasCSVFormat(file1)) {
 			try {
-				csvService.save(file);
-		        message = "Uploaded the file successfully: " + file.getOriginalFilename();
+				csvService.save(file1);
+		        message = "Uploaded the file successfully: " + file1.getOriginalFilename()+"/n";
 			} catch (Exception e) {
-				message = "Could not upload the file: "+file.getOriginalFilename();
+				message = "Could not upload the file: "+file1.getOriginalFilename()+"/n";
 			}
 		}
 		
+		MultipartFile file2 = csvUploadModel.getFile1();
+		if (CSVUtil.hasCSVFormat(file2)) {
+			try {
+				csvService.save(file2);
+		        message.concat("Uploaded the file successfully: " + file2.getOriginalFilename()+"/n");
+			} catch (Exception e) {
+				message.concat("Could not upload the file: "+file2.getOriginalFilename()+"/n");
+			}
+		}
+		MultipartFile file3 = csvUploadModel.getFile1();
+		if (CSVUtil.hasCSVFormat(file3)) {
+			try {
+				csvService.save(file3);
+		        message.concat("Uploaded the file successfully: " + file3.getOriginalFilename()+"/n");
+			} catch (Exception e) {
+				message.concat("Could not upload the file: "+file3.getOriginalFilename()+"/n");
+			}
+		}
+		MultipartFile file4 = csvUploadModel.getFile1();
+		if (CSVUtil.hasCSVFormat(file4)) {
+			try {
+				csvService.save(file4);
+		        message.concat("Uploaded the file successfully: " + file4.getOriginalFilename()+"/n");
+			} catch (Exception e) {
+				message = "Could not upload the file: "+file4.getOriginalFilename()+"/n";
+			}
+		}
 		model.addAttribute("message",message);
 		
 		return "success";
