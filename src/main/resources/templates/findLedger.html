@@ -5,62 +5,69 @@
 <body>
 	<div th:replace="fragments::navbar"></div>
 	<div class="container">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-7 col-sm-6 col-lg-8">
-					<div>
-						<form th:action="@{/ledger}" th:object="${formdata}" method="post">
-							<label for="accs">Select an Account:</label> <select th:field="*{accCode}" id="accs"
-								name="accCode" size="26" multiple>
-								<option th:each="accHead : ${accHeadList}"
-                          th:value="${accHead.accHeadId}"
-									th:text="${accHead.accName}"> WIREFRAME </option>
-							</select><br>
-							<br> <input type="submit">
-						</form>
-					</div>
-				</div>
-				<div class="col-xs-5 col-sm-6 col-lg-4">
+		<div class="row">
+			<form th:action="@{/ledger}" th:object="${formdata}" method="post">
+				<div class="col-xs-7 col-sm-6 col-lg-7">
 					<fieldset>
-						<legend style="width: auto;">Select Specifications</legend>
-						<form th:action="@{/ledger}" th:object="${formdata}" method="post"
-							style="max-width: 600px; margin: 0 auto;">
-							<div class="form-group">
-								<label for="exampleFormControlSelect1">Report Order</label> <select
-									class="form-control" th:field="*{reportOrder}"
-									id="exampleFormControlSelect1">
-									<option value="false" selected>All</option>
-									<option value="true">Select</option>
-								</select>
-							</div>
-							From Date : <input type="date" th:filed="*{startDate}"
-								name="startDate" min="2000-01-01" max="2022-01-01"
-								value="2018-04-01"> <br>To Date : <input
-								type="date" th:filed="*{endDate}" name="endDate"
-								min="2000-01-02" max="2022-01-01" value="2019-03-31">
-							<div class="form-group">
-								<label for="exampleFormControlSelect2">Transacted
-									Accounts Only</label> <select class="form-control"
-									th:field="*{transactedAccOnly}" id="exampleFormControlSelect2">
-									<option value="false">No</option>
-									<option value="true" selected>Yes</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="exampleFormControlSelect3">Monthly Cut-Off</label> <select
-									class="form-control" th:field="*{cutOff}"
-									id="exampleFormControlSelect3">
-									<option value="false">Don't Include</option>
-									<option value="true">Include</option>
-								</select>
-							</div>
-							<!--  Nice Listing format for Acc Selection -->
-							<button type="submit">Submit</button>
-							<input type="button" value="Close">
-						</form>
+						<legend>Select an Account</legend>
+						<div class="form-group col-xs-8">
+							<select class="form-control" th:field="*{accCode}" id="accs"
+								name="accCode" size="22" multiple>
+								<option th:each="accHead : ${accHeadList}"
+									th:value="${accHead.accHeadId}" th:text="${accHead.accName}">
+									WIREFRAME</option>
+							</select>
+						</div>
 					</fieldset>
 				</div>
-			</div>
+				<div class="col-xs-5 col-sm-6 col-lg-5">
+					<fieldset>
+						<legend style="width: auto;">Select Specifications</legend>
+						<div class="form-group  col-xs-10">
+							<label for="exampleFormControlSelect1">Report Order</label> <select
+								class="form-control" th:field="*{reportOrder}"
+								id="exampleFormControlSelect1">
+								<option value="false" selected>All</option>
+								<option value="true">Select</option>
+							</select>
+						</div>
+						<div class="form-group  col-xs-10">
+							<label for="inputdefault">From Date :</label> <input
+								class="input-group date" type="text" th:filed="*{startDate}"
+								name="startDate" min="2000-01-01" max="2022-01-01"
+								value="2018-04-01">
+						</div>
+						<div class="form-group  col-xs-10">
+							<label for="inputdefault">To Date :</label> <input
+								class="input-group date" type="text" th:filed="*{endDate}"
+								name="endDate" min="2000-01-02" max="2022-01-01"
+								value="2019-03-31">
+						</div>
+						<div class="form-group  col-xs-10">
+							<label for="exampleFormControlSelect2">Transacted
+								Accounts Only</label> <select class="form-control"
+								th:field="*{transactedAccOnly}" id="exampleFormControlSelect2">
+								<option value="false">No</option>
+								<option value="true" selected>Yes</option>
+							</select>
+						</div>
+						<div class="form-group  col-xs-10">
+							<label for="exampleFormControlSelect3">Monthly Cut-Off</label> <select
+								class="form-control" th:field="*{cutOff}"
+								id="exampleFormControlSelect3">
+								<option value="false">Don't Include</option>
+								<option value="true">Include</option>
+							</select>
+						</div>
+						<div class="form-group  col-xs-10">
+							<!--  Nice Listing format for Acc Selection -->
+							<button class="btn btn-success" type="submit">Submit</button>
+							<button class="btn btn-danger" type="button" value="Close">Close</button>
+						</div>
+
+					</fieldset>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>
