@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<div th:replace="fragments :: profile"> </div>
+</head>
+<body>
+	<div th:replace="fragments::navbar"></div>
+	<h2 style="text-align:center">Company Profile</h2>
+
+<div class="card">
+  <img th:src="@{/img/logo.png}" alt="Trident" style="width:100%">
+  <h1>Trident Software</h1>
+  <p class="title">Software For Small Business</p>
+  <p>Dindigul, TN</p>
+  <div style="margin: 24px 0;">
+    <a href="#"><i class="fa fa-dribbble"></i></a> 
+    <a href="#"><i class="fa fa-twitter"></i></a>  
+    <a href="#"><i class="fa fa-linkedin"></i></a>  
+    <a href="#"><i class="fa fa-facebook"></i></a> 
+  </div>
+  <p><button>Contact</button></p>
+</div>
+</body>
+</html>
