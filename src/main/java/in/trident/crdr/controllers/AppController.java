@@ -99,6 +99,13 @@ public class AppController {
 		return "index";
 	}
 	
+	@GetMapping("/profile")
+	public String showProfile(Model model) {
+		model.addAttribute("pageTitle","Company Profile");
+		LOGGER.info("Loading Profile...");
+		return "profile";
+	}
+	
 	@GetMapping("/reports")
 	public String showReports(Model model) {
 		model.addAttribute("pageTitle", "Reports");

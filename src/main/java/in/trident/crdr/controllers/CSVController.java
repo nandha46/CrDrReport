@@ -1,5 +1,8 @@
 package in.trident.crdr.controllers;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,8 @@ public class CSVController {
 	@Autowired
 	private CSVService csvService;
 	
+	private static final Logger LOGGER =LoggerFactory.getLogger(CSVController.class);
+	
 	@GetMapping("/upload")
 	public String uploadCSV(Model model) {
 		model.addAttribute("pageTitle", "Upload CSV File");
@@ -26,46 +31,48 @@ public class CSVController {
 	
 	@PostMapping("/uploaded")
 	public String success(Model model, CSVUploadModel csvUploadModel) {
-		String message ="";
+		StringBuffer sbr = new StringBuffer();
 		MultipartFile file1 = csvUploadModel.getFile1();
 		if (CSVUtil.hasCSVFormat(file1)) {
 			try {
 				csvService.save(file1);
-		        message = "Uploaded the file successfully: " + file1.getOriginalFilename()+"/n";
+				sbr.append("Uploaded the file successfully: " + file1.getOriginalFilename()+"\n");
 			} catch (Exception e) {
-				message = "Could not upload the file: "+file1.getOriginalFilename()+"/n";
+				sbr.append("Could not upload the file: "+file1.getOriginalFilename()+"\n");
 			}
 		}
-		
-		MultipartFile file2 = csvUploadModel.getFile1();
+		LOGGER.info(sbr.toString());
+		MultipartFile file2 = csvUploadModel.getFile2();
 		if (CSVUtil.hasCSVFormat(file2)) {
 			try {
 				csvService.save(file2);
-		        message.concat("Uploaded the file successfully: " + file2.getOriginalFilename()+"/n");
+				sbr.append("Uploaded the file successfully: " + file2.getOriginalFilename()+"\n");
 			} catch (Exception e) {
-				message.concat("Could not upload the file: "+file2.getOriginalFilename()+"/n");
+				sbr.append("Could not upload the file: "+file2.getOriginalFilename()+"\n");
 			}
 		}
-		MultipartFile file3 = csvUploadModel.getFile1();
+		LOGGER.info(sbr.toString());
+		MultipartFile file3 = csvUploadModel.getFile3();
 		if (CSVUtil.hasCSVFormat(file3)) {
 			try {
 				csvService.save(file3);
-		        message.concat("Uploaded the file successfully: " + file3.getOriginalFilename()+"/n");
+				sbr.append("Uploaded the file successfully: " + file3.getOriginalFilename()+"\n");
 			} catch (Exception e) {
-				message.concat("Could not upload the file: "+file3.getOriginalFilename()+"/n");
+				sbr.append("Could not upload the file: "+file3.getOriginalFilename()+"\n");
 			}
 		}
-		MultipartFile file4 = csvUploadModel.getFile1();
+		LOGGER.info(sbr.toString());
+		MultipartFile file4 = csvUploadModel.getFile4();
 		if (CSVUtil.hasCSVFormat(file4)) {
 			try {
 				csvService.save(file4);
-		        message.concat("Uploaded the file successfully: " + file4.getOriginalFilename()+"/n");
+		        sbr.append("Uploaded the file successfully: " + file4.getOriginalFilename()+"\n");
 			} catch (Exception e) {
-				message = "Could not upload the file: "+file4.getOriginalFilename()+"/n";
+				sbr.append("Could not upload the file: "+file4.getOriginalFilename()+"\n");
 			}
 		}
-		model.addAttribute("message",message);
-		
+		model.addAttribute("message",sbr.toString());
+		LOGGER.info(sbr.toString());
 		return "success";
 	}
 }
