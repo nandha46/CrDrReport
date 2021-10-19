@@ -13,6 +13,8 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.trident.crdr.entities.Daybook;
@@ -28,8 +30,10 @@ import in.trident.crdr.entities.Daybook;
 public class CSVUtil {
 	public static String type = "text/csv";
 	static String[] headers = {};
+	private static final Logger LOGGER =LoggerFactory.getLogger(CSVUtil.class);
 	
 	public static boolean hasCSVFormat(MultipartFile file) {
+		LOGGER.info("File type: "+file.getContentType());
 		if(type.equals(file.getContentType())) {
 			return true;
 		}
