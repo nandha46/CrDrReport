@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments::navbar"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<blockquote class="blockquote text-center">
+					<p class="mb-0">[[${message}]]</p>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
