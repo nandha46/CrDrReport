@@ -28,16 +28,24 @@ import in.trident.crdr.entities.Daybook;
  *
  */
 public class CSVUtil {
-	public static String type = "text/csv";
+	public static String csv = "text/csv";
+	public static String excel = "text/excel";
 	static String[] headers = {};
 	private static final Logger LOGGER =LoggerFactory.getLogger(CSVUtil.class);
 	
 	public static boolean hasCSVFormat(MultipartFile file) {
 		LOGGER.info("File type: "+file.getContentType());
-		if(type.equals(file.getContentType())) {
+		if(csv.equals(file.getContentType())) {
 			return true;
 		}
-		
+		return false;
+	}
+	
+	public static boolean hasExcelFormat(MultipartFile file) {
+		LOGGER.info("File type: "+file.getContentType());
+		if(excel.equals(file.getContentType())) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -66,4 +74,31 @@ public class CSVUtil {
 			throw new RuntimeException("Failed to parse CSV file: "+ e.getMessage());
 		}
 	}
+	
+	public static List<Daybook> ExcelToDaybook(InputStream in){
+		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(in,"UTF-8"));
+				CSVParser csvParser = new CSVParser(fileReader, 
+						CSVFormat.DEFAULT.builder().setTrim(true).setSkipHeaderRecord(true).setIgnoreHeaderCase(true).build());
+				){
+			List<Daybook> daybooks = new ArrayList<>();
+			Iterable<CSVRecord> records = csvParser.getRecords();
+			for (CSVRecord record : records) {
+				Daybook daybook = new Daybook(
+						Integer.parseInt(record.get("Sno")),
+						record.get("TDate"),
+						record.get("Narration"),
+						Integer.parseInt(record.get("acccode")),
+						Double.parseDouble(record.get("dramt")),
+						Double.parseDouble(record.get("cramt")),
+						Integer.parseInt(record.get("stkvalue"))
+						);
+				daybooks.add(daybook);
+			}
+			return daybooks;
+		}
+		catch (IOException e) {
+			throw new RuntimeException("Failed to parse CSV file: "+ e.getMessage());
+		}
+	}
 }
+
