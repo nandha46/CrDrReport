@@ -62,7 +62,7 @@ public class DaybookServiceImpl implements DaybookService {
 	 */
 
 	@Override
-	public List<DaybookView> daybookViewRange(String startDate, String endDate) {
+	public List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid) {
 		Profiler profiler = new Profiler("DaybookServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("DaybookService");
@@ -79,7 +79,7 @@ public class DaybookServiceImpl implements DaybookService {
 			e.printStackTrace();
 		}
 		for (int i = 0; i <= days; i++) {
-				DaybookView dbv = createDaybook(df.format(calendar.getTime()),calendar.get(Calendar.DAY_OF_WEEK));
+				DaybookView dbv = createDaybook(df.format(calendar.getTime()),calendar.get(Calendar.DAY_OF_WEEK), userid);
 				if (dbv != null) {
 					daybooks.add(dbv);
 				} else {
@@ -93,7 +93,7 @@ public class DaybookServiceImpl implements DaybookService {
 	}
 
 	@Override
-	public DaybookView createDaybook(String date, int day) {
+	public DaybookView createDaybook(String date, int day, Long userid) {
 		// NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
 		Map<Integer,String> dayList = new HashMap<Integer,String>(7);
 		dayList.put(1, "SUNDAY");
@@ -105,7 +105,7 @@ public class DaybookServiceImpl implements DaybookService {
 		dayList.put(7, "SATURDAY");
 		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 				.precision(Precision.fixedFraction(2));
-		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date);
+		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date,userid);
 		DaybookView daybookView = new DaybookView();
 		if (daybook.isEmpty()) {
 			return null;
@@ -131,7 +131,7 @@ public class DaybookServiceImpl implements DaybookService {
 		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)).toString());
 		List<Transactions> trans = new ArrayList<Transactions>();
 		daybook.forEach(transaction -> {
-			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAccCode());
+			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAcccode());
 			Transactions txns = new Transactions(transaction.getsNo(), transaction.getCrAmt(), transaction.getDrAmt(),
 					transaction.getNarration(), transaction.getSktValue(), temp);
 			trans.add(txns);

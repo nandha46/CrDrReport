@@ -17,7 +17,7 @@ import in.trident.crdr.models.TrialView;
 @Service
 public interface TrialBalService {
 
-	 List<TrialView> createTrialBal(TrialForm trialform);
-	 String[] calculateTrialBalance(Integer code, String endDate);
+	 List<TrialView> createTrialBal(TrialForm trialform, Long userid);
+	 String[] calculateTrialBalance(Integer code, String endDate, Long userid);
 	
 }

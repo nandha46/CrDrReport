@@ -17,9 +17,9 @@ public class CSVService {
 	@Autowired
 	private DaybookRepository daybookRepo;
 	
-	public void save(MultipartFile file) {
+	public void save(Long userid ,MultipartFile file) {
 		try {
-			List<Daybook> daybooks = CSVUtil.csvToDaybook(file.getInputStream());
+			List<Daybook> daybooks = CSVUtil.csvToDaybook(userid, file.getInputStream());
 			daybookRepo.saveAll(daybooks);
 		} 
 		catch (IOException e) {

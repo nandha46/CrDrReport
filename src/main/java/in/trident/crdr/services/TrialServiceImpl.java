@@ -47,7 +47,7 @@ public class TrialServiceImpl implements TrialBalService {
 			.precision(Precision.fixedFraction(2));
 
 	@Override
-	public List<TrialView> createTrialBal(TrialForm trialform) {
+	public List<TrialView> createTrialBal(TrialForm trialform, Long userid) {
 		Profiler profiler = new Profiler("TrialBalService");
 		profiler.setLogger(LOGGER);
 		profiler.start("CreateTrialBal");
@@ -60,7 +60,7 @@ public class TrialServiceImpl implements TrialBalService {
 			accCodes.forEach((acc) -> {
 				TrialView tv = new TrialView();
 				tv.setAccName(accHeadRepo.findAccNameByAccCode(acc));
-				String[] arr = calculateTrialBalance(acc, trialform.getEndDate());
+				String[] arr = calculateTrialBalance(acc, trialform.getEndDate(), userid);
 				if (arr[1].equals("Cr")) {
 					tv.setDebit("");
 					tv.setCredit(arr[0]);
@@ -80,7 +80,7 @@ public class TrialServiceImpl implements TrialBalService {
 			list.forEach((acc) -> {
 				TrialView tv = new TrialView();
 				tv.setAccName(acc.getAccName());
-				String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate());
+				String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate(), userid);
 				if (arr[1].equals("Cr")) {
 					tv.setDebit("");
 					tv.setCredit(arr[0]);
@@ -105,7 +105,7 @@ public class TrialServiceImpl implements TrialBalService {
 	}
 
 	@Override
-	public String[] calculateTrialBalance(Integer code, String endDate) {
+	public String[] calculateTrialBalance(Integer code, String endDate, Long userid) {
 		LOGGER.debug("Start of CalculateTrialBalance method");
 		String[] arr = { "", "" }; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
@@ -118,7 +118,7 @@ public class TrialServiceImpl implements TrialBalService {
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
 			// Null check daybook repos return value
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
@@ -142,7 +142,7 @@ public class TrialServiceImpl implements TrialBalService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";
