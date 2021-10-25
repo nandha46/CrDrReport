@@ -12,6 +12,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,7 @@ import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.BalanceSheetService;
+import in.trident.crdr.services.CustomUserDetails;
 import in.trident.crdr.services.DaybookService;
 import in.trident.crdr.services.LedgerService;
 import in.trident.crdr.services.TradingPLService;
@@ -70,7 +72,7 @@ public class AppController {
 	private LedgerService ledgerService;
 
 	@Autowired
-	private DaybookService daybookSerice;
+	private DaybookService daybookService;
 
 	@Autowired
 	private TrialBalService trialBalService;
@@ -151,10 +153,10 @@ public class AppController {
 	}
 
 	@PostMapping("/daybooks")
-	public String listDaybook(Model model, DaybookForm formdata) {
+	public String listDaybook(Model model, DaybookForm formdata, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Inside daybooks method");
-		List<DaybookView> daybookViewObj = daybookSerice.daybookViewRange(formdata.getStartDate(),
-				formdata.getEndDate());
+		List<DaybookView> daybookViewObj = daybookService.daybookViewRange(formdata.getStartDate(),
+				formdata.getEndDate(), user.getId());
 		model.addAttribute("daybookViewObj", daybookViewObj);
 		Calendar cal = Calendar.getInstance();
 		try {
@@ -183,9 +185,9 @@ public class AppController {
 	}
 
 	@PostMapping("/ledger")
-	public String listLedger(Model model, LedgerForm ledgerForm) {
+	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Ledger is Ready");
-		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm);
+		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId());
 		model.addAttribute("listLedger", listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
@@ -203,9 +205,9 @@ public class AppController {
 	}
 
 	@PostMapping("/trial")
-	public String trialbal(Model model, TrialForm trialform) {
+	public String trialbal(Model model, TrialForm trialform, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.warn("Trial Balance Page Start");
-		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform);
+		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform, user.getId());
 		LOGGER.info("Trial Balnce is Ready");
 		model.addAttribute("listTrailView", listTrailView);
 		model.addAttribute("pageTitle", "Trial Balance");
@@ -224,8 +226,8 @@ public class AppController {
 	}
 
 	@PostMapping("/tradingPL")
-	public String tradingPL(Model model, TradingPLForm tradingPLForm) {
-		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm);
+	public String tradingPL(Model model, TradingPLForm tradingPLForm, @AuthenticationPrincipal CustomUserDetails user) {
+		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId());
 		LOGGER.info("TradingPL is ready");
 		model.addAttribute("listTradingPL", listTradingPL);
 		model.addAttribute("pageTitle", "Trading - Profit & Loss");
@@ -244,9 +246,9 @@ public class AppController {
 	}
 
 	@PostMapping("/BalanceSheet")
-	public String balanceSheet(Model model, BalSheetForm balSheetForm) {
+	public String balanceSheet(Model model, BalSheetForm balSheetForm, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Balance Sheet Ready");
-		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm);
+		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId());
 		model.addAttribute("listBalSheet", listBalSheet);
 		return "BalanceSheet";
 	}

@@ -4,6 +4,7 @@ package in.trident.crdr.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import in.trident.crdr.models.CSVUploadModel;
 import in.trident.crdr.services.CSVService;
+import in.trident.crdr.services.CustomUserDetails;
 import in.trident.crdr.util.CSVUtil;
 
 @Controller
@@ -36,13 +38,13 @@ public class CSVController {
 		return "uploadExcel";
 	}
 	
-	@PostMapping("/uploadedExcel")
-	public String success2(Model model, CSVUploadModel csvUploadModel) {
+	@PostMapping("/uploaded")
+	public String success(@AuthenticationPrincipal CustomUserDetails user, Model model, CSVUploadModel csvUploadModel) {
 		StringBuffer sbr = new StringBuffer();
 		MultipartFile file1 = csvUploadModel.getFile1();
-		if (CSVUtil.hasExcelFormat(file1)) {
+		if (CSVUtil.hasCSVFormat(file1)) {
 			try {
-				csvService.save(file1);
+				csvService.save(user.getId(), file1);
 				sbr.append("Uploaded the file successfully: " + file1.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file1.getOriginalFilename()+"\n");
@@ -50,9 +52,9 @@ public class CSVController {
 		}
 		LOGGER.info(sbr.toString());
 		MultipartFile file2 = csvUploadModel.getFile2();
-		if (CSVUtil.hasExcelFormat(file2)) {
+		if (CSVUtil.hasCSVFormat(file2)) {
 			try {
-				csvService.save(file2);
+				csvService.save(user.getId(),file2);
 				sbr.append("Uploaded the file successfully: " + file2.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file2.getOriginalFilename()+"\n");
@@ -60,9 +62,9 @@ public class CSVController {
 		}
 		LOGGER.info(sbr.toString());
 		MultipartFile file3 = csvUploadModel.getFile3();
-		if (CSVUtil.hasExcelFormat(file3)) {
+		if (CSVUtil.hasCSVFormat(file3)) {
 			try {
-				csvService.save(file3);
+				csvService.save(user.getId(),file3);
 				sbr.append("Uploaded the file successfully: " + file3.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file3.getOriginalFilename()+"\n");
@@ -70,9 +72,9 @@ public class CSVController {
 		}
 		LOGGER.info(sbr.toString());
 		MultipartFile file4 = csvUploadModel.getFile4();
-		if (CSVUtil.hasExcelFormat(file4)) {
+		if (CSVUtil.hasCSVFormat(file4)) {
 			try {
-				csvService.save(file4);
+				csvService.save(user.getId(),file4);
 		        sbr.append("Uploaded the file successfully: " + file4.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file4.getOriginalFilename()+"\n");
@@ -83,13 +85,13 @@ public class CSVController {
 		return "success";
 	}
 	
-	@PostMapping("/uploaded")
-	public String success(Model model, CSVUploadModel csvUploadModel) {
+	@PostMapping("/uploadedExcel")
+	public String success2(@AuthenticationPrincipal CustomUserDetails user, Model model, CSVUploadModel csvUploadModel) {
 		StringBuffer sbr = new StringBuffer();
 		MultipartFile file1 = csvUploadModel.getFile1();
-		if (CSVUtil.hasCSVFormat(file1)) {
+		if (CSVUtil.hasExcelFormat(file1)) {
 			try {
-				csvService.save(file1);
+				csvService.save(user.getId(),file1);
 				sbr.append("Uploaded the file successfully: " + file1.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file1.getOriginalFilename()+"\n");
@@ -97,9 +99,9 @@ public class CSVController {
 		}
 		LOGGER.info(sbr.toString());
 		MultipartFile file2 = csvUploadModel.getFile2();
-		if (CSVUtil.hasCSVFormat(file2)) {
+		if (CSVUtil.hasExcelFormat(file2)) {
 			try {
-				csvService.save(file2);
+				csvService.save(user.getId(),file2);
 				sbr.append("Uploaded the file successfully: " + file2.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file2.getOriginalFilename()+"\n");
@@ -107,9 +109,9 @@ public class CSVController {
 		}
 		LOGGER.info(sbr.toString());
 		MultipartFile file3 = csvUploadModel.getFile3();
-		if (CSVUtil.hasCSVFormat(file3)) {
+		if (CSVUtil.hasExcelFormat(file3)) {
 			try {
-				csvService.save(file3);
+				csvService.save(user.getId(),file3);
 				sbr.append("Uploaded the file successfully: " + file3.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file3.getOriginalFilename()+"\n");
@@ -117,9 +119,9 @@ public class CSVController {
 		}
 		LOGGER.info(sbr.toString());
 		MultipartFile file4 = csvUploadModel.getFile4();
-		if (CSVUtil.hasCSVFormat(file4)) {
+		if (CSVUtil.hasExcelFormat(file4)) {
 			try {
-				csvService.save(file4);
+				csvService.save(user.getId(),file4);
 		        sbr.append("Uploaded the file successfully: " + file4.getOriginalFilename()+"\n");
 			} catch (Exception e) {
 				sbr.append("Could not upload the file: "+file4.getOriginalFilename()+"\n");
@@ -129,4 +131,5 @@ public class CSVController {
 		LOGGER.info(sbr.toString());
 		return "success";
 	}
+	
 }
