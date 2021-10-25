@@ -68,10 +68,15 @@ public class AccHead implements Comparable<AccHead> {
 	@Column(name="stk_status")
 	private String stkStatus;
 	
+	@Column(name="userid", nullable = false)
+	private Long userid;
+	
 	@Override
 	public int compareTo(AccHead o) {
 		return Integer.compare(this.sNo, o.sNo);
 	}
+
+	
 
 	@Override
 	public String toString() {
@@ -79,8 +84,10 @@ public class AccHead implements Comparable<AccHead> {
 				+ accType + ", drAmt=" + drAmt + ", crAmt=" + crAmt + ", sNo=" + sNo + ", level1=" + level1
 				+ ", orderCode=" + orderCode + ", shortName=" + shortName + ", budgetDrAmt=" + budgetDrAmt
 				+ ", budgetCrAmt=" + budgetCrAmt + ", userStatus=" + userStatus + ", stkNeeded=" + stkNeeded
-				+ ", stkOpen=" + stkOpen + ", stkStatus=" + stkStatus + "]";
+				+ ", stkOpen=" + stkOpen + ", stkStatus=" + stkStatus + ", userid=" + userid + "]";
 	}
+
+
 
 	public Long getAccHeadId() {
 		return accHeadId;
@@ -208,6 +215,14 @@ public class AccHead implements Comparable<AccHead> {
 
 	public void setStkStatus(String stkStatus) {
 		this.stkStatus = stkStatus;
+	}
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
 	}
 
 }

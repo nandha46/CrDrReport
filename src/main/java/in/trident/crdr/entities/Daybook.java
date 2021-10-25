@@ -43,6 +43,9 @@ public class Daybook implements Comparable<Daybook>{
 	@Column(name="stkvalue", nullable = false)
 	private int sktValue;
 	
+	@Column(name="userid", nullable = false)
+	private Long userid;
+	
 	public Long getDbId() {
 		return dbId;
 	}
@@ -72,12 +75,6 @@ public class Daybook implements Comparable<Daybook>{
 	public void setNarration(String narratiom) {
 		this.narration = narratiom;
 	}
-	public int getAccCode() {
-		return acccode;
-	}
-	public void setAccCode(int accCode) {
-		this.acccode = accCode;
-	}
 	public Double getDrAmt() {
 		return drAmt;
 	}
@@ -94,11 +91,23 @@ public class Daybook implements Comparable<Daybook>{
 		return sktValue;
 	}
 	
+	public int getAcccode() {
+		return acccode;
+	}
+	public void setAcccode(int acccode) {
+		this.acccode = acccode;
+	}
+	public Long getUserid() {
+		return userid;
+	}
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
 	public Daybook() {
 
 	}
 
-	public Daybook(int sno, String date, String narration, int acccode, double dramt, double cramt, int stkvalue) {
+	public Daybook(int sno, String date, String narration, int acccode, double dramt, double cramt, int stkvalue, Long userid) {
 		this.sNo = sno;
 		this.date = date;
 		this.narration = narration;
@@ -106,15 +115,17 @@ public class Daybook implements Comparable<Daybook>{
 		this.drAmt = dramt;
 		this.crAmt = cramt;
 		this.sktValue = stkvalue;
+		this.userid = userid;
 	}
 	
+	public void setSktValue(int sktValue) {
+		this.sktValue = sktValue;
+	}
 	@Override
 	public String toString() {
 		return "Daybook [dbId=" + dbId + ", sNo=" + sNo + ", date=" + date + ", narration=" + narration + ", acccode="
-				+ acccode + ", drAmt=" + drAmt + ", crAmt=" + crAmt + ", sktValue=" + sktValue + "]";
-	}
-	public void setSktValue(int sktValue) {
-		this.sktValue = sktValue;
+				+ acccode + ", drAmt=" + drAmt + ", crAmt=" + crAmt + ", sktValue=" + sktValue + ", userid=" + userid
+				+ "]";
 	}
 	@Override
 	public int compareTo(Daybook o) {

@@ -28,6 +28,9 @@ public class CloseBal {
 	
 	@Column(name="close_bal")
 	private double closeBal;
+	
+	@Column(name="userid", nullable = false)
+	private Long userid;
 
 	public long getId() {
 		return id;
@@ -69,10 +72,20 @@ public class CloseBal {
 		this.closeBal = closeBal;
 	}
 
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
 	@Override
 	public String toString() {
 		return "CloseBal [id=" + id + ", date=" + date + ", drTot=" + drTot + ", crTot=" + crTot + ", closeBal="
-				+ closeBal + "]";
+				+ closeBal + ", userid=" + userid + "]";
 	}
+
+	
 
 }
