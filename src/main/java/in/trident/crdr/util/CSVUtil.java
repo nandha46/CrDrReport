@@ -15,9 +15,11 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.trident.crdr.entities.Daybook;
+import in.trident.crdr.services.CustomUserDetails;
 
 /**
  * @author Nandhakumar Subramanian
@@ -49,7 +51,7 @@ public class CSVUtil {
 		return false;
 	}
 	
-	public static List<Daybook> csvToDaybook(InputStream in){
+	public static List<Daybook> csvToDaybook(Long userid, InputStream in){
 		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(in,"UTF-8"));
 				CSVParser csvParser = new CSVParser(fileReader, 
 						CSVFormat.DEFAULT.builder().setTrim(true).setSkipHeaderRecord(true).setIgnoreHeaderCase(true).build());
@@ -64,7 +66,8 @@ public class CSVUtil {
 						Integer.parseInt(record.get("acccode")),
 						Double.parseDouble(record.get("dramt")),
 						Double.parseDouble(record.get("cramt")),
-						Integer.parseInt(record.get("stkvalue"))
+						Integer.parseInt(record.get("stkvalue")),
+						userid
 						);
 				daybooks.add(daybook);
 			}
@@ -75,7 +78,7 @@ public class CSVUtil {
 		}
 	}
 	
-	public static List<Daybook> ExcelToDaybook(InputStream in){
+	public static List<Daybook> ExcelToDaybook(@AuthenticationPrincipal CustomUserDetails user,InputStream in){
 		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(in,"UTF-8"));
 				CSVParser csvParser = new CSVParser(fileReader, 
 						CSVFormat.DEFAULT.builder().setTrim(true).setSkipHeaderRecord(true).setIgnoreHeaderCase(true).build());
@@ -90,7 +93,8 @@ public class CSVUtil {
 						Integer.parseInt(record.get("acccode")),
 						Double.parseDouble(record.get("dramt")),
 						Double.parseDouble(record.get("cramt")),
-						Integer.parseInt(record.get("stkvalue"))
+						Integer.parseInt(record.get("stkvalue")),
+						user.getId()
 						);
 				daybooks.add(daybook);
 			}

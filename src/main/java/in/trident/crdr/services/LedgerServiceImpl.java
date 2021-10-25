@@ -54,7 +54,7 @@ public class LedgerServiceImpl implements LedgerService {
 	// TODO finish complete function before moving on
 
 	@Override
-	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm) {
+	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm, Long userid) {
 		Profiler profiler = new Profiler("LedgerServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("LedgerService");
@@ -62,7 +62,7 @@ public class LedgerServiceImpl implements LedgerService {
 		if (ledgerForm.isReportOrder()) {
 			List<Integer> accCodes = ledgerForm.getAccCode();
 			accCodes.forEach(code -> {
-				LedgerView ledgerView = createLedgerView(code, ledgerForm);
+				LedgerView ledgerView = createLedgerView(code, ledgerForm, userid);
 				if (ledgerView == null) {
 					LOGGER.trace("--Ledger is Empty--");
 				} else {
@@ -73,7 +73,7 @@ public class LedgerServiceImpl implements LedgerService {
 			Set<Integer> accCodes = new HashSet<Integer>(accHeadRepo.findAccCodes());
 			accCodes.remove(0);
 			accCodes.forEach(code -> {
-				LedgerView ledgerView = createLedgerView(code, ledgerForm);
+				LedgerView ledgerView = createLedgerView(code, ledgerForm, userid);
 				if (ledgerView == null) {
 					LOGGER.trace("--Ledger is Empty--");
 				} else {
@@ -88,7 +88,7 @@ public class LedgerServiceImpl implements LedgerService {
 	}
 
 	@Override
-	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm) {
+	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm, Long userid) {
 		LedgerView ledgerview = new LedgerView();
 		ledgerview.setAccheadName(accHeadRepo.findAccNameByAccCode(code));
 		String arr[] = findOpeningBal(code, ledgerForm);
@@ -108,7 +108,7 @@ public class LedgerServiceImpl implements LedgerService {
 			ledgerview.setOpeningBal(nf.format(bal).toString());
 		}
 		List<Dailybooks> dailybooklist = createDailybooks(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(),
-				bal);
+				bal, userid);
 		if (dailybooklist.isEmpty() && ledgerForm.isTransactedAccOnly()) {
 			LOGGER.trace("---No Transactions on Dailybooks-----");
 			return null;
@@ -142,9 +142,9 @@ public class LedgerServiceImpl implements LedgerService {
 	}
 
 	@Override
-	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate, Double bal) {
+	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate, Double bal, Long userid) {
 		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
-		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate);
+		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate, userid);
 		for (int i = 0; i < daybooks.size(); i++) {
 			String arr2[] = { "", "" };
 			if (daybooks.get(i).getDrAmt() == 0) {
