@@ -57,20 +57,20 @@ public class TradingPLServiceImpl implements TradingPLService {
 	private static int counter = 0;
 
 	@Override
-	public List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm) {
+	public List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm, Long userid) {
 		Profiler profiler = new Profiler("TradingPLService");
 		profiler.setLogger(LOGGER);
 		profiler.start("Start TradingPL Service");
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		counter = 0;
 		if (tradingPLForm.isReportOrder()) { // Group == true
-			List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs();
+			List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs(userid);
 			Collections.sort(tradingAccs);
 			tradingAccs.forEach((accs) -> {
 				if (accs.getOrderCode() == 3 || accs.getOrderCode() == 4) {
 					TradingPLView tplv = new TradingPLView();
 					tplv.setParticulars(accs.getAccName());
-					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), userid);
 					if (arr[1].equals("Cr")) {
 						tplv.setDebit("");
 						tplv.setCredit(arr[0]);
@@ -87,7 +87,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 					}
 
 				} else {
-					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), userid);
 					if (counter < 1) {
 						TradingPLView grossProfit = new TradingPLView();
 						grossProfit.setParticulars("Gross Profit");
@@ -102,7 +102,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tradingPLViewSet.add(grossProfit);
 						TradingPLView total = new TradingPLView();
 						total.setParticulars("Total");
-						arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+						arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), userid);
 						if (arr[1].equals("Cr")) {
 							total.setDebit("");
 							total.setCredit(arr[0]);
@@ -115,7 +115,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tradingPLViewSet.add(total);
 						TradingPLView grossProfitB = new TradingPLView();
 						grossProfitB.setParticulars("Gross Profit Before");
-						arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+						arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), userid);
 						if (arr[1].equals("Cr")) {
 							grossProfitB.setDebit("");
 							grossProfitB.setCredit(arr[0]);
@@ -129,7 +129,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 					}
 					TradingPLView tplv = new TradingPLView();
 					tplv.setParticulars(accs.getAccName());
-					arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate());
+					arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), userid);
 					if (arr[1].equals("Cr")) {
 						tplv.setDebit("");
 						tplv.setCredit(arr[0]);
@@ -184,7 +184,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 	}
 
 	@Override
-	public String[] calculateTradingBalance(Integer code, String endDate) {
+	public String[] calculateTradingBalance(Integer code, String endDate, Long userid) {
 		LOGGER.debug("Start of CalculateTradingBalance method");
 		String[] arr = { "", "" }; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
@@ -198,7 +198,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
 				// whether d2 is 0 or Somevalue Balance is Dr
@@ -221,7 +221,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate,userid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";
