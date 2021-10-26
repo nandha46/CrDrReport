@@ -40,6 +40,6 @@ public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	@Query(value = "select a from AccHead a where a.accType = ?1")
 	public List<AccHead> findAccHeadByAccType(String accType);
 	
-	@Query(value = "select a from AccHead a where a.orderCode between 3 and 6")
-	public List<AccHead> findTradingPLAccs();
+	@Query(value = "select a from AccHead a where a.userid = ?1 and a.orderCode between 3 and 6")
+	public List<AccHead> findTradingPLAccs(Long userid);
 }
