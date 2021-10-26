@@ -46,7 +46,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 			.precision(Precision.fixedFraction(2));
 
 	@Override
-	public List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm) {
+	public List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm, Long userid) {
 		Profiler profiler = new Profiler("BalSheetServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("Balance Sheet");
@@ -61,7 +61,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 				BalanceSheetView balSheetView = new BalanceSheetView();
 				balSheetView.setParticulars(acc.getAccName());
 				balSheetView.setLevel1(acc.getLevel1());
-				String[] arr = calculateLedgerBalance(acc.getAccCode(), balSheetForm.getEndDate());
+				String[] arr = calculateLedgerBalance(acc.getAccCode(), balSheetForm.getEndDate(), userid);
 				if (arr[1].equals("Cr")) {
 					balSheetView.setDebit("");
 					balSheetView.setCredit(arr[0]);
@@ -85,7 +85,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 	}
 
 	@Override
-	public String[] calculateLedgerBalance(Integer code, String endDate) {
+	public String[] calculateLedgerBalance(Integer code, String endDate, Long userid) {
 		LOGGER.debug("Start of CalculateLedgerBalance method");
 		String[] arr = { "", "" }; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
@@ -99,7 +99,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
 				// whether d2 is 0 or Somevalue Balance is Dr
@@ -122,7 +122,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";

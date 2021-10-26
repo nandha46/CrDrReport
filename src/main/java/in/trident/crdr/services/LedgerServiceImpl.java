@@ -91,7 +91,7 @@ public class LedgerServiceImpl implements LedgerService {
 	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm, Long userid) {
 		LedgerView ledgerview = new LedgerView();
 		ledgerview.setAccheadName(accHeadRepo.findAccNameByAccCode(code));
-		String arr[] = findOpeningBal(code, ledgerForm);
+		String arr[] = findOpeningBal(code, ledgerForm, userid);
 		Date date1 = new Date();
 		try {
 			date1 = insdf.parse(ledgerForm.getStartDate());
@@ -174,7 +174,7 @@ public class LedgerServiceImpl implements LedgerService {
 		return dailybooklist;
 	}
 
-	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm) {
+	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm, Long userid) {
 		String arr[] = { "", "" };
 		if (ledgerForm.getStartDate().equals("2018-04-01")) {
 			Double d1 = accHeadRepo.findCrAmt(code);
@@ -191,7 +191,7 @@ public class LedgerServiceImpl implements LedgerService {
 			Double d1 = accHeadRepo.findCrAmt(code);
 			Double d2 = accHeadRepo.findDrAmt(code);
 			if (d1 == 0d) {
-				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate());
+				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(), userid);
 				// If tmp is +ve Dr else Cr
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d2 + tmp;
@@ -209,7 +209,7 @@ public class LedgerServiceImpl implements LedgerService {
 					}
 				}
 			} else {
-				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate());
+				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(), userid);
 				// If tmp is +ve Cr else Dr
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d1 + tmp;

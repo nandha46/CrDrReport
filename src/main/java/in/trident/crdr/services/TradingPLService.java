@@ -18,7 +18,7 @@ import in.trident.crdr.models.TradingPLView;
 @Service
 public interface TradingPLService {
 
-	List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm);
-	String[] calculateTradingBalance(Integer code, String endDate);
+	List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm, Long userid);
+	String[] calculateTradingBalance(Integer code, String endDate, Long userid);
 
 }
