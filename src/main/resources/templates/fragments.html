@@ -15,7 +15,6 @@
  <link rel="stylesheet" th:href="@{/css/index.css}" />
 <link rel="stylesheet" th:href="@{/css/main.css}" />
 <link rel="stylesheet" th:href="@{/css/ledger.css}" />
-
 </head>
 
 
@@ -23,27 +22,21 @@
 <body>
 	<div th:fragment="navbar">
 		<div class="navbar">
-			<a class="active" href="./"><i class="fa fa-fw fa-home"></i> HOME</a>
-			<a th:href="@{/findDaybook}"><i class="fa fa-fw fa-search"></i> DAYBOOKS</a> 
-			<a th:href="@{/findLedger}"><i class="fa fa-fw fa-search"></i> LEDGER</a> 
-				<a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i>
-				USERS</a> <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i>
-				LOGIN</a> <a th:href="@{/register}"><i class="fa fa-fw fa-user"></i>
+			<a class="active" href="./"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
+			<a th:href="@{/reports}"><i class="fa fa-book" aria-hidden="true"></i> REPORTS</a> 
+			<a th:href="@{/upload}"><i class="fa fa-cloud-upload" aria-hidden="true"></i> UPLOAD</a> 
+				<a th:href="@{/users}"><i class="fa fa-users" aria-hidden="true"></i>
+				USERS</a>  <a th:href="@{/register}"><i class="fa fa-fw fa-user" aria-hidden="true"></i>
 				REGISTER</a>
-				<a href="#" th:inline="text" id="nav-username"><i class="fa fa-fw fa-user"> </i> [[${#request.userPrincipal.principal.name}]] </a>
+				<a href="#" th:inline="text" id="nav-username"><i class="fa fa-fw fa-user" aria-hidden="true"> </i> [[${#request.userPrincipal.principal.name}]] </a>
 		</div>
 	</div>
 	
 	<div th:fragment="index-navbar">
 		<div class="navbar">
-			<a class="active" href="./"><i class="fa fa-fw fa-home"></i> HOME</a>
-			<a th:href="@{/findDaybook}"><i class="fa fa-fw fa-search"></i>
-				DAYBOOKS</a> 
-				<a th:href="@{/findLedger}"><i class="fa fa-fw fa-search"></i> LEDGER</a>
-				<a th:href="@{/users}"><i class="fa fa-fw fa-envelope"></i>
-				USERS</a> <a th:href="@{/login}"><i class="fa fa-fw fa-user"></i>
-				LOGIN</a> <a th:href="@{/register}"><i class="fa fa-fw fa-user"></i>
-				REGISTER</a>
+			<a class="active" href="./"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
+			 <a th:href="@{/login}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				LOGIN</a>
 		</div>
 	</div>
 	
