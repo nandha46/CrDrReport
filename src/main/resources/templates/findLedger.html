@@ -12,7 +12,7 @@
 						<legend>Select an Account</legend>
 						<div class="form-group col-xs-8">
 							<select class="form-control" th:field="*{accCode}" id="accs"
-								name="accCode" size="22" multiple>
+								name="accCode" size="22" multiple disabled>
 								<option th:each="accHead : ${accHeadList}"
 									th:value="${accHead.accHeadId}" th:text="${accHead.accName}">
 									WIREFRAME</option>
@@ -33,13 +33,13 @@
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="inputdefault">From Date :</label> <input
-								class="input-group date" type="text" th:filed="*{startDate}"
+								class="input-group date" type="date" th:filed="*{startDate}"
 								name="startDate" min="2000-01-01" max="2022-01-01"
 								value="2018-04-01">
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="inputdefault">To Date :</label> <input
-								class="input-group date" type="text" th:filed="*{endDate}"
+								class="input-group date" type="date" th:filed="*{endDate}"
 								name="endDate" min="2000-01-02" max="2022-01-01"
 								value="2019-03-31">
 						</div>
@@ -62,7 +62,7 @@
 						<div class="form-group  col-xs-10">
 							<!--  Nice Listing format for Acc Selection -->
 							<button class="btn btn-success" type="submit">Submit</button>
-							<button class="btn btn-danger" type="button" value="Close">Close</button>
+							<button class="btn btn-danger" type="button" onclick="window.history.back()" value="Close">Close</button>
 						</div>
 
 					</fieldset>
@@ -70,5 +70,6 @@
 			</form>
 		</div>
 	</div>
+	<script th:src="@{/script/disableselect.js}"></script>
 </body>
 </html>
