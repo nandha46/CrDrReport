@@ -64,6 +64,9 @@ public class TradingPLServiceImpl implements TradingPLService {
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		counter = 0;
 		if (tradingPLForm.isReportOrder()) { // Group == true
+			
+		} else {
+			// All - false
 			List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs(userid);
 			Collections.sort(tradingAccs);
 			tradingAccs.forEach((accs) -> {
@@ -147,8 +150,6 @@ public class TradingPLServiceImpl implements TradingPLService {
 				}
 				
 			});
-		} else {
-			// All - false
 		}
 
 		TradingPLView netProfit = new TradingPLView();
