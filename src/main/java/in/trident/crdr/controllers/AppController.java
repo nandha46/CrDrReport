@@ -1,5 +1,6 @@
 package in.trident.crdr.controllers;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,8 +46,10 @@ import in.trident.crdr.services.BalanceSheetService;
 import in.trident.crdr.services.CustomUserDetails;
 import in.trident.crdr.services.DaybookService;
 import in.trident.crdr.services.LedgerService;
+import in.trident.crdr.services.PdfService;
 import in.trident.crdr.services.TradingPLService;
 import in.trident.crdr.services.TrialBalService;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  * 
@@ -88,6 +91,9 @@ public class AppController {
 
 	@Autowired
 	private CloseBalRepo closeBalRepo;
+	
+	@Autowired
+	private PdfService pdfService;
 
 	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
@@ -185,9 +191,10 @@ public class AppController {
 	}
 
 	@PostMapping("/ledger")
-	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) {
+	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) throws FileNotFoundException, JRException {
 		LOGGER.info("Ledger is Ready");
 		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId());
+		pdfService.exportPdf(ledgerForm, user.getId());
 		model.addAttribute("listLedger", listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
