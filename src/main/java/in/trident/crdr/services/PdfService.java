@@ -3,11 +3,14 @@ package in.trident.crdr.services;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.logging.log4j.core.util.datetime.DatePrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -43,8 +46,7 @@ public class PdfService {
 		parameters.put("LedgerListParam", datasource);
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters , new JREmptyDataSource());
-		int x = new Random().nextInt();
-		JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\nandh\\OneDrive\\Desktop\\Pdfs\\ledger_"+x+".pdf");
+		JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\nandh\\OneDrive\\Desktop\\Pdfs\\ledger_"+Calendar.getInstance().getTime()+".pdf");
 		return "Report generated";
 	}
 }
