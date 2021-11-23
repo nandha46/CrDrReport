@@ -91,7 +91,7 @@ public class AppController {
 
 	@Autowired
 	private CloseBalRepo closeBalRepo;
-	
+
 	@Autowired
 	private PdfService pdfService;
 
@@ -103,17 +103,16 @@ public class AppController {
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
-		LOGGER.warn("Use 'update users_roles set role_id = 1 where user_id = X' on MySQL DB to enable developer mode");
 		return "index";
 	}
-	
+
 	@GetMapping("/profile")
 	public String showProfile(Model model) {
-		model.addAttribute("pageTitle","Company Profile");
+		model.addAttribute("pageTitle", "Company Profile");
 		LOGGER.info("Loading Profile...");
 		return "profile";
 	}
-	
+
 	@GetMapping("/reports")
 	public String showReports(Model model) {
 		model.addAttribute("pageTitle", "Reports");
@@ -191,7 +190,8 @@ public class AppController {
 	}
 
 	@PostMapping("/ledger")
-	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) throws FileNotFoundException, JRException {
+	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user)
+			throws FileNotFoundException, JRException {
 		LOGGER.info("Ledger is Ready");
 		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId());
 		pdfService.exportPdf(ledgerForm, user.getId());
@@ -253,7 +253,8 @@ public class AppController {
 	}
 
 	@PostMapping("/BalanceSheet")
-	public String balanceSheet(Model model, BalSheetForm balSheetForm, @AuthenticationPrincipal CustomUserDetails user) {
+	public String balanceSheet(Model model, BalSheetForm balSheetForm,
+			@AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Balance Sheet Ready");
 		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId());
 		model.addAttribute("listBalSheet", listBalSheet);
