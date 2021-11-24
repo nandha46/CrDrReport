@@ -48,6 +48,9 @@ public class Schedule implements Comparable<Schedule>{
 	@Column(name="userid", nullable = false)
 	private Long userid;
 	
+	@Column(name="companyid", nullable = false)
+	private Long companyid;
+	
 	public Integer getsNo() {
 		return sNo;
 	}
@@ -120,6 +123,14 @@ public class Schedule implements Comparable<Schedule>{
 		this.userid = userid;
 	}
 
+	public Long getCompanyid() {
+		return companyid;
+	}
+
+	public void setCompanyid(Long companyid) {
+		this.companyid = companyid;
+	}
+
 	@Override
 	public int compareTo(Schedule o) {
 		return this.sNo.compareTo(o.sNo);
@@ -129,7 +140,7 @@ public class Schedule implements Comparable<Schedule>{
 	public String toString() {
 		return "Schedule [sNo=" + sNo + ", accCode=" + accCode + ", accName=" + accName + ", crAmt=" + crAmt
 				+ ", drAmt=" + drAmt + ", level1=" + level1 + ", orderCode=" + orderCode + ", accType=" + accType
-				+ ", userid=" + userid + "]";
+				+ ", userid=" + userid + ", companyid=" + companyid + "]";
 	}
 
 	

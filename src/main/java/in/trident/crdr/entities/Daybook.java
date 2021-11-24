@@ -46,6 +46,9 @@ public class Daybook implements Comparable<Daybook>{
 	@Column(name="userid", nullable = false)
 	private Long userid;
 	
+	@Column(name="companyid", nullable = false)
+	private Long companyid;
+	
 	public Long getDbId() {
 		return dbId;
 	}
@@ -121,11 +124,17 @@ public class Daybook implements Comparable<Daybook>{
 	public void setSktValue(int sktValue) {
 		this.sktValue = sktValue;
 	}
+	public Long getCompanyid() {
+		return companyid;
+	}
+	public void setCompanyid(Long companyid) {
+		this.companyid = companyid;
+	}
 	@Override
 	public String toString() {
 		return "Daybook [dbId=" + dbId + ", sNo=" + sNo + ", date=" + date + ", narration=" + narration + ", acccode="
 				+ acccode + ", drAmt=" + drAmt + ", crAmt=" + crAmt + ", sktValue=" + sktValue + ", userid=" + userid
-				+ "]";
+				+ ", companyid=" + companyid + "]";
 	}
 	@Override
 	public int compareTo(Daybook o) {

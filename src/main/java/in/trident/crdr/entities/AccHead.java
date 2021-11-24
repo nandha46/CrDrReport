@@ -71,6 +71,9 @@ public class AccHead implements Comparable<AccHead> {
 	@Column(name="userid", nullable = false)
 	private Long userid;
 	
+	@Column(name="companyid", nullable = false)
+	private Long companyid;
+	
 	@Override
 	public int compareTo(AccHead o) {
 		return Integer.compare(this.sNo, o.sNo);
@@ -84,7 +87,8 @@ public class AccHead implements Comparable<AccHead> {
 				+ accType + ", drAmt=" + drAmt + ", crAmt=" + crAmt + ", sNo=" + sNo + ", level1=" + level1
 				+ ", orderCode=" + orderCode + ", shortName=" + shortName + ", budgetDrAmt=" + budgetDrAmt
 				+ ", budgetCrAmt=" + budgetCrAmt + ", userStatus=" + userStatus + ", stkNeeded=" + stkNeeded
-				+ ", stkOpen=" + stkOpen + ", stkStatus=" + stkStatus + ", userid=" + userid + "]";
+				+ ", stkOpen=" + stkOpen + ", stkStatus=" + stkStatus + ", userid=" + userid + ", companyid="
+				+ companyid + "]";
 	}
 
 
@@ -223,6 +227,18 @@ public class AccHead implements Comparable<AccHead> {
 
 	public void setUserid(Long userid) {
 		this.userid = userid;
+	}
+
+
+
+	public Long getCompanyid() {
+		return companyid;
+	}
+
+
+
+	public void setCompanyid(Long companyid) {
+		this.companyid = companyid;
 	}
 
 }
