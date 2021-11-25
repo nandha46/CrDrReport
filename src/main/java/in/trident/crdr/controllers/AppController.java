@@ -8,17 +8,24 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
@@ -35,14 +42,17 @@ import in.trident.crdr.models.TradingPLForm;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
+import in.trident.crdr.models.YearCriteria;
 import in.trident.crdr.models.BalSheetForm;
 import in.trident.crdr.models.BalanceSheetView;
+import in.trident.crdr.models.CompanySelectCriteria;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.BalanceSheetService;
+import in.trident.crdr.services.CompanyService;
 import in.trident.crdr.services.CustomUserDetails;
 import in.trident.crdr.services.DaybookService;
 import in.trident.crdr.services.LedgerService;
@@ -91,6 +101,9 @@ public class AppController {
 
 	@Autowired
 	private CloseBalRepo closeBalRepo;
+	
+	@Autowired
+	private CompanyService companyService;
 
 	@Autowired
 	private PdfService pdfService;
@@ -106,6 +119,28 @@ public class AppController {
 		return "index";
 	}
 
+	@GetMapping("/company_selection")
+	public String showCompanies(Model model,  @AuthenticationPrincipal CustomUserDetails user) {
+		model.addAttribute("pageTitle","Select Company");
+		model.addAttribute("companies",companyService.listCompanies(user.getId()));
+		model.addAttribute("CompanySelectCriteria", new CompanySelectCriteria());
+		Map<Long, String> years = new TreeMap<>();
+		model.addAttribute("years", years);
+		return "company_select";
+	}
+	
+	@RequestMapping(value = "/loadyears", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE , consumes =  MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Map<Long, String> showYears(@RequestBody YearCriteria yearCriteria) {
+		Map<Long, String> years = companyService.listYears(yearCriteria.getCompanyName());
+		return years;
+	}
+	
+	@PostMapping("/StoreCompany")
+	public String processCompany(Model model, CompanySelectCriteria csc) {
+		companyService.storeSelection(csc.getCid());
+		return "reports";
+	}
+	
 	@GetMapping("/profile")
 	public String showProfile(Model model) {
 		model.addAttribute("pageTitle", "Company Profile");
