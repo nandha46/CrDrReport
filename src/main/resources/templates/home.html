@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace = "fragments :: head" />
+<body>
+  	<div th:replace = "fragments::index-navbar"> </div>  
+	<div class="container text-center">
+	<h1>Welcome to CrDr</h1>
+	</div>
+	<div class="flex-container">
+  <div class="zoom"><a th:href="@{/profile}">Profile</a></div>
+  <div class="zoom"><a th:href="@{/reports}">Reports</a></div>
+  <div class="zoom"><a th:href="@{/upload}">CSV Upload</a></div>
+	</div>
+</body>
+</html>
