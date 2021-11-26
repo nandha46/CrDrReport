@@ -23,7 +23,7 @@ import javax.persistence.Table;
 public class CompanySelection {
 	@Id
 	@Column(name ="sid")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long sid;
 	private Long companyId;
 	private Long userId;

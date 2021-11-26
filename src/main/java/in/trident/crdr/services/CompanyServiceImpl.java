@@ -26,6 +26,7 @@ public class CompanyServiceImpl implements CompanyService {
 		Company c = companyRepo.findCompanyById(cid);
 		CompanySelection cs = new CompanySelection(c.getCompanyid(), c.getUserid(), c.getCompName(), "20"+c.getCompYear(), c.getFromDate(), c.getToDate(), c.getAddress1()+c.getAddress2()+c.getCity(), c.getcNoofAc(), c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(), c.getCompType());
 		csr.save(cs);
+		
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class CompanyServiceImpl implements CompanyService {
 		Map<Long, String> map = new TreeMap<>();
 		List<Company> companies = companyRepo.findCompanyYearsByName(cname);
 		companies.forEach(c->{
-			map.put(c.getCompanyid(), c.getCompYear());
+			map.put(c.getCompanyid(), "20"+c.getCompYear());
 		});
 		return map;
 	}
