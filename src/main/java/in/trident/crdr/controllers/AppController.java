@@ -10,22 +10,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
@@ -121,22 +115,27 @@ public class AppController {
 
 	@GetMapping("/company_selection")
 	public String showCompanies(Model model,  @AuthenticationPrincipal CustomUserDetails user) {
+		LOGGER.info("show company accessed");
 		model.addAttribute("pageTitle","Select Company");
 		model.addAttribute("companies",companyService.listCompanies(user.getId()));
-		model.addAttribute("CompanySelectCriteria", new CompanySelectCriteria());
-		Map<Long, String> years = new TreeMap<>();
-		model.addAttribute("years", years);
+		model.addAttribute("yearCriteria", new YearCriteria());
 		return "company_select";
 	}
 	
-	@RequestMapping(value = "/loadyears", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE , consumes =  MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Map<Long, String> showYears(@RequestBody YearCriteria yearCriteria) {
+	@PostMapping("/companyselect")
+	public String showYears(Model model, YearCriteria yearCriteria) {
+		LOGGER.info("Company Name: "+yearCriteria.getCompanyName());
 		Map<Long, String> years = companyService.listYears(yearCriteria.getCompanyName());
-		return years;
+		LOGGER.info(years.toString());
+		model.addAttribute("pageTitle","Select Year");
+		model.addAttribute("years",years);
+		model.addAttribute("companySelectCriteria", new CompanySelectCriteria());
+		return "year_select";
 	}
 	
 	@PostMapping("/StoreCompany")
 	public String processCompany(Model model, CompanySelectCriteria csc) {
+		LOGGER.info("Store company accessed");
 		companyService.storeSelection(csc.getCid());
 		return "reports";
 	}
