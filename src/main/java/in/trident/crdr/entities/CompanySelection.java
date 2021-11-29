@@ -59,6 +59,23 @@ public class CompanySelection {
 		this.companyType = companyType;
 	}
 	
+	public CompanySelection(Long sid, Long cid, long uid, String cName, String year, LocalDateTime fromDate, LocalDateTime toDate, String address, int noOfaccs, int noOfEntries, Date uploadDate, Double closingStock, Double openCash, String companyType) {
+		this.sid = sid;
+		this.companyId = cid;
+		this.userId = uid;
+		this.companyName = cName;
+		this.year = year;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.address = address;
+		this.noOfAccs = noOfaccs;
+		this.noOfEntries = noOfEntries;
+		this.uploadDate = uploadDate;
+		this.closingStock = closingStock;
+		this.openCash = openCash;
+		this.companyType = companyType;
+	}
+	
 	public Long getSid() {
 		return sid;
 	}
