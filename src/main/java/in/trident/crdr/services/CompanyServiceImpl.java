@@ -23,10 +23,16 @@ public class CompanyServiceImpl implements CompanyService {
 	private CompSelectionRepo csr;
 	
 	public void storeSelection(Long cid){
+		CompanySelection cs0 = csr.findCompanyByCompanyid(cid);
+		if (cs0 == null) {
+			Company c = companyRepo.findCompanyById(cid);
+			 cs0 = new CompanySelection(c.getCompanyid(), c.getUserid(), c.getCompName(), "20"+c.getCompYear(), c.getFromDate(), c.getToDate(), c.getAddress1()+c.getAddress2()+c.getCity(), c.getcNoofAc(), c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(), c.getCompType());
+			csr.save(cs0); 
+		}
+		Long sid = cs0.getSid();
 		Company c = companyRepo.findCompanyById(cid);
-		CompanySelection cs = new CompanySelection(c.getCompanyid(), c.getUserid(), c.getCompName(), "20"+c.getCompYear(), c.getFromDate(), c.getToDate(), c.getAddress1()+c.getAddress2()+c.getCity(), c.getcNoofAc(), c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(), c.getCompType());
-		csr.save(cs);
-		
+		 cs0 = new CompanySelection(sid, c.getCompanyid(), c.getUserid(), c.getCompName(), "20"+c.getCompYear(), c.getFromDate(), c.getToDate(), c.getAddress1()+c.getAddress2()+c.getCity(), c.getcNoofAc(), c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(), c.getCompType());
+		csr.save(cs0);
 	}
 
 	@Override
