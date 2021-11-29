@@ -12,10 +12,10 @@ import in.trident.crdr.entities.Company;
 public interface CompanyRepo extends JpaRepository<Company, Long> {
 
 	@Query("select c from Company c where c.userid = ?1")
-	public List<Company> findCompaniesByUser(Long userid);
+	public List<Company> findCompaniesByUser(Long uid);
 	
 	@Query(value = "select DISTINCT c.compName from Company c where c.userid = ?1", nativeQuery = true)
-	public List<String> findUniqueCompanyByUser(long uid);
+	public List<String> findUniqueCompanyByUser(Long uid);
 	
 	@Query("select c from Company c where c.compName = ?1")
 	public List<Company> findCompanyYearsByName(String cname);
