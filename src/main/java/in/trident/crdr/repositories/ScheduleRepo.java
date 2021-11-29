@@ -9,13 +9,13 @@ import in.trident.crdr.entities.Schedule;
 
 public interface ScheduleRepo extends JpaRepository<Schedule, Integer>{
 
-	@Query("select a from Schedule a")
-	public List<Schedule> findAllAccounts();
+	@Query("select a from Schedule a where a.userid = ?1 and a.companyid = ?2")
+	public List<Schedule> findAllAccounts(Long uid, Long cid);
 	
-	@Query("select drAmt from Schedule a where a.accCode = ?1")
-	public Double findDrAmt(Integer code);
+	@Query("select drAmt from Schedule a where a.accCode = ?1 and a.userid = ?2 and a.companyid = ?3")
+	public Double findDrAmt(Integer code, Long uid, Long cid);
 	
-	@Query("select crAmt from Schedule a where a.accCode = ?1")
-	public Double findCrAmt(Integer code);
+	@Query("select crAmt from Schedule a where a.accCode = ?1 and a.userid = ?2 and a.companyid = ?3")
+	public Double findCrAmt(Integer code, Long uid, Long cid);
 	
 }
