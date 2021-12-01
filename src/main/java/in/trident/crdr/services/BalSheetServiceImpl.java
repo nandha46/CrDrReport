@@ -46,7 +46,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 			.precision(Precision.fixedFraction(2));
 
 	@Override
-	public List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm, Long userid) {
+	public List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm, Long uid, Long cid) {
 		Profiler profiler = new Profiler("BalSheetServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("Balance Sheet");
@@ -61,7 +61,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 				BalanceSheetView balSheetView = new BalanceSheetView();
 				balSheetView.setParticulars(acc.getAccName());
 				balSheetView.setLevel1(acc.getLevel1());
-				String[] arr = calculateLedgerBalance(acc.getAccCode(), balSheetForm.getEndDate(), userid);
+				String[] arr = calculateLedgerBalance(acc.getAccCode(), balSheetForm.getEndDate(), uid, cid);
 				if (arr[1].equals("Cr")) {
 					balSheetView.setDebit("");
 					balSheetView.setCredit(arr[0]);
@@ -85,7 +85,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 	}
 
 	@Override
-	public String[] calculateLedgerBalance(Integer code, String endDate, Long userid) {
+	public String[] calculateLedgerBalance(Integer code, String endDate, Long uid, Long cid) {
 		LOGGER.debug("Start of CalculateLedgerBalance method");
 		String[] arr = { "", "" }; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
@@ -93,13 +93,13 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 			return array;
 		}
 		// ----------------------------
-		Double d1 = scheduleRepo.findCrAmt(code);
-		Double d2 = scheduleRepo.findDrAmt(code);
+		Double d1 = scheduleRepo.findCrAmt(code,uid,cid);
+		Double d2 = scheduleRepo.findDrAmt(code,uid,cid);
 
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid,cid);
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
 				// whether d2 is 0 or Somevalue Balance is Dr
@@ -122,7 +122,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid,cid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";

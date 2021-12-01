@@ -47,20 +47,20 @@ public class TrialServiceImpl implements TrialBalService {
 			.precision(Precision.fixedFraction(2));
 
 	@Override
-	public List<TrialView> createTrialBal(TrialForm trialform, Long userid) {
+	public List<TrialView> createTrialBal(TrialForm trialform, Long uid, Long cid) {
 		Profiler profiler = new Profiler("TrialBalService");
 		profiler.setLogger(LOGGER);
 		profiler.start("CreateTrialBal");
 		LOGGER.debug("Start TrialBal Service");
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
-		List<AccHead> list = accHeadRepo.findAllAccHead();
+		List<AccHead> list = accHeadRepo.findAllAccHead(uid,cid);
 		Collections.sort(list);
 		if (trialform.isReportOrder()) { //
 			List<Integer> accCodes = trialform.getAccCode();
 			accCodes.forEach((acc) -> {
 				TrialView tv = new TrialView();
-				tv.setAccName(accHeadRepo.findAccNameByAccCode(acc));
-				String[] arr = calculateTrialBalance(acc, trialform.getEndDate(), userid);
+				tv.setAccName(accHeadRepo.findAccNameByAccCode(acc,uid,cid));
+				String[] arr = calculateTrialBalance(acc, trialform.getEndDate(), uid,cid);
 				if (arr[1].equals("Cr")) {
 					tv.setDebit("");
 					tv.setCredit(arr[0]);
@@ -68,7 +68,7 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setDebit(arr[0]);
 					tv.setCredit("");
 				}
-				tv.setLevel(accHeadRepo.findLevelByAccCode(acc));
+				tv.setLevel(accHeadRepo.findLevelByAccCode(acc,uid,cid));
 				if (trialform.isZeroBal() && ((tv.getDebit().equals("0.00") && tv.getCredit().isEmpty())
 						|| (tv.getCredit().equals("0.00") && tv.getDebit().isEmpty()))) {
 					// Intentionally left empty to remove ZeroBal accounts
@@ -80,7 +80,7 @@ public class TrialServiceImpl implements TrialBalService {
 			list.forEach((acc) -> {
 				TrialView tv = new TrialView();
 				tv.setAccName(acc.getAccName());
-				String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate(), userid);
+				String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate(), uid,cid);
 				if (arr[1].equals("Cr")) {
 					tv.setDebit("");
 					tv.setCredit(arr[0]);
@@ -105,7 +105,7 @@ public class TrialServiceImpl implements TrialBalService {
 	}
 
 	@Override
-	public String[] calculateTrialBalance(Integer code, String endDate, Long userid) {
+	public String[] calculateTrialBalance(Integer code, String endDate, Long uid, Long cid) {
 		LOGGER.debug("Start of CalculateTrialBalance method");
 		String[] arr = { "", "" }; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
@@ -113,12 +113,12 @@ public class TrialServiceImpl implements TrialBalService {
 			return array;
 		}
 		// ----------------------------
-		Double d1 = accHeadRepo.findCrAmt(code);
-		Double d2 = accHeadRepo.findDrAmt(code);
+		Double d1 = accHeadRepo.findCrAmt(code,uid,cid);
+		Double d2 = accHeadRepo.findDrAmt(code,uid,cid);
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid,cid);
 			// Null check daybook repos return value
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
@@ -142,7 +142,7 @@ public class TrialServiceImpl implements TrialBalService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, userid);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid,cid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";

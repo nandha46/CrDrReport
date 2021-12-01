@@ -62,7 +62,7 @@ public class DaybookServiceImpl implements DaybookService {
 	 */
 
 	@Override
-	public List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid) {
+	public List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid, Long cid) {
 		Profiler profiler = new Profiler("DaybookServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("DaybookService");
@@ -79,7 +79,7 @@ public class DaybookServiceImpl implements DaybookService {
 			e.printStackTrace();
 		}
 		for (int i = 0; i <= days; i++) {
-				DaybookView dbv = createDaybook(df.format(calendar.getTime()),calendar.get(Calendar.DAY_OF_WEEK), userid);
+				DaybookView dbv = createDaybook(df.format(calendar.getTime()),calendar.get(Calendar.DAY_OF_WEEK), userid, cid);
 				if (dbv != null) {
 					daybooks.add(dbv);
 				} else {
@@ -93,7 +93,7 @@ public class DaybookServiceImpl implements DaybookService {
 	}
 
 	@Override
-	public DaybookView createDaybook(String date, int day, Long userid) {
+	public DaybookView createDaybook(String date, int day, Long uid, Long cid) {
 		// NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "in"));
 		Map<Integer,String> dayList = new HashMap<Integer,String>(7);
 		dayList.put(1, "SUNDAY");
@@ -105,7 +105,7 @@ public class DaybookServiceImpl implements DaybookService {
 		dayList.put(7, "SATURDAY");
 		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 				.precision(Precision.fixedFraction(2));
-		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date,userid);
+		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date,uid,cid);
 		DaybookView daybookView = new DaybookView();
 		if (daybook.isEmpty()) {
 			return null;
@@ -126,12 +126,12 @@ public class DaybookServiceImpl implements DaybookService {
 		
 		// TODO Needs to find a way to get Collection of closeBal,debit n credit total
 		// for the date range to reduce calls to database
-		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date)).toString());
-		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date)).toString());
-		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date)).toString());
+		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date,uid,cid)).toString());
+		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date,uid,cid)).toString());
+		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date,uid,cid)).toString());
 		List<Transactions> trans = new ArrayList<Transactions>();
 		daybook.forEach(transaction -> {
-			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAcccode());
+			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAcccode(),uid,cid);
 			Transactions txns = new Transactions(transaction.getsNo(), transaction.getCrAmt(), transaction.getDrAmt(),
 					transaction.getNarration(), transaction.getSktValue(), temp);
 			trans.add(txns);
