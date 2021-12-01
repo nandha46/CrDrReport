@@ -9,7 +9,7 @@ import in.trident.crdr.models.DaybookView;
 @Service
 public interface DaybookService {
 	
-	 List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid);
-	 DaybookView createDaybook(String date, int day, Long userid);
+	 List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid, Long cid);
+	 DaybookView createDaybook(String date, int day, Long userid, Long cid);
 	 
 }

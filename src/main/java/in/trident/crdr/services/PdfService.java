@@ -4,13 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import org.apache.logging.log4j.core.util.datetime.DatePrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -34,8 +30,8 @@ public class PdfService {
 	@Autowired
 	private LedgerService ledgerService;
 	
-	public String exportPdf(LedgerForm ledgerForm, Long id) throws FileNotFoundException, JRException {
-		List<LedgerView> ledgers = ledgerService.createLedgerViewList(ledgerForm, id);
+	public String exportPdf(LedgerForm ledgerForm, Long uid, Long cid) throws FileNotFoundException, JRException {
+		List<LedgerView> ledgers = ledgerService.createLedgerViewList(ledgerForm, uid,cid);
 		File file = ResourceUtils.getFile("classpath:Blank_A4.jrxml");
 		JasperDesign jd = JRXmlLoader.load(new FileInputStream(file));
 		JasperReport jasperReport = JasperCompileManager.compileReport(jd);
