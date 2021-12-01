@@ -33,7 +33,7 @@ public class CloseBal {
 	private Long userid;
 	
 	@Column(name="companyid", nullable = false)
-	private Long comapnyid;
+	private Long companyid;
 
 	public long getId() {
 		return id;
@@ -84,17 +84,17 @@ public class CloseBal {
 	}
 
 	public Long getComapnyid() {
-		return comapnyid;
+		return companyid;
 	}
 
 	public void setComapnyid(Long comapnyid) {
-		this.comapnyid = comapnyid;
+		this.companyid = comapnyid;
 	}
 
 	@Override
 	public String toString() {
 		return "CloseBal [id=" + id + ", date=" + date + ", drTot=" + drTot + ", crTot=" + crTot + ", closeBal="
-				+ closeBal + ", userid=" + userid + ", comapnyid=" + comapnyid + "]";
+				+ closeBal + ", userid=" + userid + ", companyid=" + companyid + "]";
 	}
 
 	
