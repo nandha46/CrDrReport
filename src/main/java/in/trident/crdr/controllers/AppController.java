@@ -43,6 +43,7 @@ import in.trident.crdr.models.CompanySelectCriteria;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
+import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.BalanceSheetService;
@@ -98,6 +99,9 @@ public class AppController {
 	
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private CompSelectionRepo csr;
 
 	@Autowired
 	private PdfService pdfService;
@@ -195,7 +199,7 @@ public class AppController {
 	public String listDaybook(Model model, DaybookForm formdata, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Inside daybooks method");
 		List<DaybookView> daybookViewObj = daybookService.daybookViewRange(formdata.getStartDate(),
-				formdata.getEndDate(), user.getId());
+				formdata.getEndDate(), user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		model.addAttribute("daybookViewObj", daybookViewObj);
 		Calendar cal = Calendar.getInstance();
 		try {
@@ -206,15 +210,15 @@ public class AppController {
 		}
 		cal.add(Calendar.DAY_OF_MONTH, -1);
 		model.addAttribute("openingBal",
-				nf.format(closeBalRepo.findCloseBalByDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()))))
+				nf.format(closeBalRepo.findCloseBalByDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()),user.getId(),csr.findCompanyIdByUserId(user.getId()))))
 				.toString();
 		model.addAttribute("pageTitle", "Daybook View");
 		return "daybooks";
 	}
 
 	@GetMapping("/findLedger")
-	public String findLedger(Model model) {
-		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+	public String findLedger(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading Ledgers...");
 		model.addAttribute("accHeadList", accHeadList);
@@ -227,16 +231,16 @@ public class AppController {
 	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user)
 			throws FileNotFoundException, JRException {
 		LOGGER.info("Ledger is Ready");
-		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId());
-		pdfService.exportPdf(ledgerForm, user.getId());
+		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
+		pdfService.exportPdf(ledgerForm, user.getId(), csr.findCompanyIdByUserId(user.getId()));
 		model.addAttribute("listLedger", listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
 	}
 
 	@GetMapping("/findTrialBal")
-	public String findTrial(Model model) {
-		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+	public String findTrial(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading Trial Balance...");
 		model.addAttribute("accHeadList", accHeadList);
@@ -248,7 +252,7 @@ public class AppController {
 	@PostMapping("/trial")
 	public String trialbal(Model model, TrialForm trialform, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.warn("Trial Balance Page Start");
-		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform, user.getId());
+		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform, user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		LOGGER.info("Trial Balnce is Ready");
 		model.addAttribute("listTrailView", listTrailView);
 		model.addAttribute("pageTitle", "Trial Balance");
@@ -256,8 +260,8 @@ public class AppController {
 	}
 
 	@GetMapping("/findTradingPL")
-	public String findTradingPl(Model model) {
-		List<AccHead> accHeadList = accHeadRepo.findAllAccHead();
+	public String findTradingPl(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading TradingPL...");
 		model.addAttribute("accHeadList", accHeadList);
@@ -268,7 +272,7 @@ public class AppController {
 
 	@PostMapping("/tradingPL")
 	public String tradingPL(Model model, TradingPLForm tradingPLForm, @AuthenticationPrincipal CustomUserDetails user) {
-		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId());
+		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		LOGGER.info("TradingPL is ready");
 		model.addAttribute("listTradingPL", listTradingPL);
 		model.addAttribute("pageTitle", "Trading - Profit & Loss");
@@ -276,8 +280,8 @@ public class AppController {
 	}
 
 	@GetMapping("/findBalSheet")
-	public String findBalSheet(Model model) {
-		List<Schedule> accsList = scheduleRepo.findAll();
+	public String findBalSheet(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		List<Schedule> accsList = scheduleRepo.findAllAccounts(user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		Collections.sort(accsList);
 		LOGGER.info("Loading Balance Sheet...");
 		model.addAttribute("accsList", accsList);
@@ -290,7 +294,7 @@ public class AppController {
 	public String balanceSheet(Model model, BalSheetForm balSheetForm,
 			@AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Balance Sheet Ready");
-		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId());
+		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		model.addAttribute("listBalSheet", listBalSheet);
 		return "BalanceSheet";
 	}
