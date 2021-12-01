@@ -5,16 +5,26 @@
 
  -->
  <Configuration>
-    <Appenders>
+    <Appenders >
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout
                 pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
         </Console>
- 
-        <File name="File" fileName="CrDr.log">
+<!--  
+        <File name="File" fileName="CrDr.log" >
             <PatternLayout
                 pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
-        </File>
+        </File>  -->
+        <RollingFile name="File"
+            fileName="CrDr.log"
+            filePattern="CrDr-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1024KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+        
     </Appenders>
  
     <Loggers>
@@ -23,4 +33,5 @@
             <AppenderRef ref="File" />
         </Root>
     </Loggers>
+    
 </Configuration>
