@@ -18,10 +18,7 @@ import com.ibm.icu.number.NumberFormatter.GroupingStrategy;
 import com.ibm.icu.text.NumberFormat;
 import com.ibm.icu.util.Currency;
 
-import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.repositories.DaybookRepository;
-import in.trident.crdr.services.DaybookService;
-import in.trident.crdr.services.DaybookServiceImpl;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -57,11 +54,13 @@ public class DaybookRepoTests {
 		System.out.println(daybookRepo.findDaysBetween("2020-04-08","2020-04-01"));
 		System.out.println(daybookRepo.findDayOfWeek("2021-05-22"));
 	}
-	
+	/*
 	public void testDaybookView() {
 		DaybookService dbs = new DaybookServiceImpl();
-		DaybookView dbv =  dbs.createDaybook("2020-04-02",2, new Long(9));
+		Long uid = new Long(9l);
+		Long cid = new Long(1l);
+		DaybookView dbv =  dbs.createDaybook("2020-04-02",uid,cid);
 		System.out.println(dbv.toString());
 	}
-	
+	*/
 }

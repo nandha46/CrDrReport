@@ -1,6 +1,5 @@
 package in.trident.crdr;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -18,6 +17,7 @@ public class JPQLTests {
 	@Autowired
 	private DaybookRepository daybookRepo;
 	
+	/*
 	public void testDaybookBalance(){
 		List<Object[]> obj = daybookRepo.findDaybookBalance("2020-04-30");
 		obj.forEach(s -> {
@@ -29,7 +29,7 @@ public class JPQLTests {
 			System.out.println("Week Day: "+s[4]);
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
 			} );
-	}
+	} */
 	
 	
 	public void testFindDays() {

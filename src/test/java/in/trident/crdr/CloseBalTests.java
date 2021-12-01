@@ -24,7 +24,7 @@ public class CloseBalTests {
 		System.out.println("-----------Close Balance Test Start----------");
 		
 		String date = "2020-04-01";
-		Double closeBal = closeBalRepo.findCloseBalByDate(date);
+		Double closeBal = closeBalRepo.findCloseBalByDate(date,9L,1L);
 		System.out.println(closeBal);
 		
 		System.out.println("-----------Close Balance Test End----------");
