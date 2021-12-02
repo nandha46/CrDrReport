@@ -26,6 +26,7 @@ import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.AccHead;
+import in.trident.crdr.entities.CompanySelection;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.Schedule;
 import in.trident.crdr.entities.User;
@@ -138,10 +139,10 @@ public class AppController {
 	}
 	
 	@PostMapping("/StoreCompany")
-	public String processCompany(Model model, CompanySelectCriteria csc) {
+	public String processCompany(Model model, CompanySelectCriteria csc, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Store company accessed");
-		companyService.storeSelection(csc.getCid());
-		return "reports";
+		companyService.storeSelection(user.getId(),csc.getCid());
+		return "redirect:/reports";
 	}
 	
 	@GetMapping("/profile")
@@ -152,8 +153,10 @@ public class AppController {
 	}
 
 	@GetMapping("/reports")
-	public String showReports(Model model) {
+	public String showReports(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		model.addAttribute("pageTitle", "Reports");
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute("companyName", cs.getCompanyName());
 		LOGGER.info("Reports Page loading...");
 		return "reports";
 	}
@@ -228,14 +231,19 @@ public class AppController {
 	}
 
 	@PostMapping("/ledger")
-	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user)
-			throws FileNotFoundException, JRException {
+	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Ledger is Ready");
 		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
-		pdfService.exportPdf(ledgerForm, user.getId(), csr.findCompanyIdByUserId(user.getId()));
 		model.addAttribute("listLedger", listLedger);
 		model.addAttribute("pageTitle", "CrDr Ledger");
 		return "ledger";
+	}
+	
+	@PostMapping("/pdfLedger")
+	public String ledgerPdf(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) throws FileNotFoundException, JRException {
+		LOGGER.info("---Printing Ledger to PDF--");
+		pdfService.exportPdf(ledgerForm, user.getId(), csr.findCompanyIdByUserId(user.getId()));
+		return "success";
 	}
 
 	@GetMapping("/findTrialBal")
