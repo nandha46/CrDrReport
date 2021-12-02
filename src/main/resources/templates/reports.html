@@ -3,9 +3,9 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace = "fragments :: head" />
 <body>
-  	<div th:replace = "fragments::index-navbar"> </div>  
+  	<div th:replace = "fragments::reports-navbar"> </div>  
 	<div class="container text-center">
-	<h1>Welcome to CrDr</h1>
+	<h1>Welcome to [[${companyName}]]</h1>
 	</div>
 	<div class="flex-container">
   <div class="zoom"><a th:href="@{/findDaybook}">Daybook</a></div>

@@ -25,10 +25,23 @@
 			<a class="active" href="./"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
 			<a th:href="@{/reports}"><i class="fa fa-book" aria-hidden="true"></i> REPORTS</a> 
 			<a th:href="@{/upload}"><i class="fa fa-cloud-upload" aria-hidden="true"></i> UPLOAD</a> 
-				<a th:href="@{/users}"><i class="fa fa-users" aria-hidden="true"></i>
-				USERS</a>  <a th:href="@{/register}"><i class="fa fa-fw fa-user" aria-hidden="true"></i>
-				REGISTER</a>
 				<a href="#" th:inline="text" id="nav-username"><i class="fa fa-fw fa-user" aria-hidden="true"> </i> [[${#request.userPrincipal.principal.name}]] </a>
+		</div>
+	</div>
+	
+	<div th:fragment="reports-navbar">
+		<div class="navbar">
+			<a class="active" href="./"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
+			 <a th:href="@{/login}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				LOGIN</a>
+			<a th:href="@{/company_selection}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				CHANGE COMPANY</a>
+			<a th:href="@{/upload}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				CSV UPLOAD</a>
+			<a th:href="@{/profile}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				PROFILE</a>	
+			<a th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				LOGOUT</a>
 		</div>
 	</div>
 	
