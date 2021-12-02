@@ -15,6 +15,17 @@ public class TrialView {
 	private String credit;
 	private int level;
 	
+	public TrialView() {
+		
+	}
+	
+	public TrialView (String aName, String debit, String credit, int level ) {
+		this.accName = aName;
+		this.debit = debit;
+		this.credit = credit;
+		this.level = level;
+	}
+	
 	public String getAccName() {
 		return accName;
 	}
