@@ -56,11 +56,15 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 	private static int counter = 0;
 
+	private Double netCredit = 0d;
+	private Double netDebit = 0d;
+	
 	@Override
 	public List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm, Long uid, Long cid) {
 		Profiler profiler = new Profiler("TradingPLService");
 		profiler.setLogger(LOGGER);
 		profiler.start("Start TradingPL Service");
+		
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		counter = 0;
 		if (tradingPLForm.isReportOrder()) { // Group == true
@@ -92,39 +96,52 @@ public class TradingPLServiceImpl implements TradingPLService {
 				} else {
 					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid,cid);
 					if (counter < 1) {
+						// Closing Stock
+						TradingPLView closingStock = new TradingPLView();
+						closingStock.setParticulars("Clsoing Stock");
+						closingStock.setLevel(1);
+						closingStock.setDebit("");
+						closingStock.setCredit(nf.format(tradingPLForm.getClosingStock()).toString());
+						tradingPLViewSet.add(closingStock);
+						// Gross Profit
 						TradingPLView grossProfit = new TradingPLView();
 						grossProfit.setParticulars("Gross Profit");
-						if (arr[1].equals("Cr")) {
+						Double debitTotal = tradingPLViewSet.stream().filter(x -> !x.getDebit().isEmpty())
+								.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
+						Double creditTotal = tradingPLViewSet.stream().filter(x -> !x.getCredit().isEmpty())
+								.mapToDouble(x -> Double.parseDouble(x.getCredit().replace(",", ""))).sum();
+						Double gp = debitTotal - creditTotal;
+						if (gp > 0d) {
 							grossProfit.setDebit("");
-							grossProfit.setCredit(arr[0]);
+							grossProfit.setCredit(nf.format(Math.abs(gp)).toString());
 						} else {
-							grossProfit.setDebit(arr[0]);
+							grossProfit.setDebit(nf.format(Math.abs(gp)).toString());
 							grossProfit.setCredit("");
 						}
 						grossProfit.setLevel(0);
 						tradingPLViewSet.add(grossProfit);
+						// Total
 						TradingPLView total = new TradingPLView();
 						total.setParticulars("Total");
-						arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid,cid);
-						if (arr[1].equals("Cr")) {
-							total.setDebit("");
-							total.setCredit(arr[0]);
-						} else {
-							total.setDebit(arr[0]);
-							total.setCredit("");
-						}
-
+						debitTotal = tradingPLViewSet.stream().filter(x -> !x.getDebit().isEmpty())
+								.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
+						creditTotal = tradingPLViewSet.stream().filter(x -> !x.getCredit().isEmpty())
+								.mapToDouble(x -> Double.parseDouble(x.getCredit().replace(",", ""))).sum();
+						total.setDebit(nf.format(debitTotal).toString());
+						total.setCredit(nf.format(creditTotal).toString());
 						total.setLevel(0);
 						tradingPLViewSet.add(total);
+						// Gross Profit B/f
 						TradingPLView grossProfitB = new TradingPLView();
-						grossProfitB.setParticulars("Gross Profit Before");
-						arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid,cid);
-						if (arr[1].equals("Cr")) {
-							grossProfitB.setDebit("");
-							grossProfitB.setCredit(arr[0]);
-						} else {
-							grossProfitB.setDebit(arr[0]);
+						grossProfitB.setParticulars("Gross Profit B/f");
+						if (gp > 0d) {
+							grossProfitB.setDebit(nf.format(Math.abs(gp)).toString());
 							grossProfitB.setCredit("");
+							netDebit += Math.abs(gp);
+						} else {
+							grossProfitB.setDebit("");
+							grossProfitB.setCredit(nf.format(Math.abs(gp)).toString());
+							netCredit += Math.abs(gp);
 						}
 						grossProfitB.setLevel(0);
 						tradingPLViewSet.add(grossProfitB);
@@ -136,10 +153,20 @@ public class TradingPLServiceImpl implements TradingPLService {
 					if (arr[1].equals("Cr")) {
 						tplv.setDebit("");
 						tplv.setCredit(arr[0]);
-					} else {
+						if (arr[0].equals("")) {
+							// Intentionally left empty to remove empty string
+						} else {
+						netCredit += Double.parseDouble(arr[0].replace(",", ""));
+						}
+						} else {
 						tplv.setDebit(arr[0]);
 						tplv.setCredit("");
-					}
+						if (arr[0].equals("")) {
+							// Intentionally left empty to remove empty string
+						} else {
+						netDebit += Double.parseDouble(arr[0].replace(",", ""));
+						}
+						}
 					tplv.setLevel(accs.getLevel1());
 					if (tradingPLForm.isZeroBal() && ((tplv.getDebit().equals("0.00") && tplv.getCredit().isEmpty())
 							|| (tplv.getCredit().equals("0.00") && tplv.getDebit().isEmpty()))) {
@@ -154,27 +181,24 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 		TradingPLView netProfit = new TradingPLView();
 		netProfit.setParticulars("Net Profit");
-		String[] arr = { "", "Dr" };
-		if (arr[1].equals("Cr")) {
-			netProfit.setDebit("");
-			netProfit.setCredit(arr[0]);
-		} else {
-			netProfit.setDebit(arr[0]);
+		Double netprofitvalue = netDebit - netCredit;
+		if (netprofitvalue > 0) {
 			netProfit.setCredit("");
+			netProfit.setDebit(nf.format(Math.abs(netprofitvalue)).toString());
+		} else {
+			netProfit.setCredit(nf.format(Math.abs(netprofitvalue)).toString());
+			netProfit.setDebit("");
 		}
 		netProfit.setLevel(0);
 		tradingPLViewSet.add(netProfit);
 		TradingPLView total2 = new TradingPLView();
 		total2.setParticulars("Total");
-		arr[0] = "";
-		arr[1] = "Cr";
-		if (arr[1].equals("Cr")) {
-			total2.setDebit("");
-			total2.setCredit(arr[0]);
-		} else {
-			total2.setDebit(arr[0]);
-			total2.setCredit("");
-		}
+		Double totalC = tradingPLViewSet.stream().filter(x -> !x.getCredit().isEmpty())
+				.mapToDouble(x -> Double.parseDouble(x.getCredit().replace(",", ""))).sum();
+		Double totalD = tradingPLViewSet.stream().filter(x -> !x.getDebit().isEmpty())
+				.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
+		total2.setCredit(nf.format(totalC).toString());
+		total2.setDebit(nf.format(totalD).toString());
 		total2.setLevel(0);
 		tradingPLViewSet.add(total2);
 		List<TradingPLView> listTradingPLView = new LinkedList<TradingPLView>(tradingPLViewSet);

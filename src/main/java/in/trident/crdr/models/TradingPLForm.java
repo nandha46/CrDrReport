@@ -16,6 +16,7 @@ public class TradingPLForm {
 	private boolean reportOrder;
 	private String endDate;
 	private boolean zeroBal;
+	private Double closingStock;
 	private int level;
 	private List<Integer> accCode;
 	
@@ -37,6 +38,12 @@ public class TradingPLForm {
 	public void setZeroBal(boolean zeroBal) {
 		this.zeroBal = zeroBal;
 	}
+	public Double getClosingStock() {
+		return closingStock;
+	}
+	public void setClosingStock(Double closingStock) {
+		this.closingStock = closingStock;
+	}
 	public int getLevel() {
 		return level;
 	}
@@ -52,8 +59,8 @@ public class TradingPLForm {
 	
 	@Override
 	public String toString() {
-		return "TradingPLForm [reportOrder=" + reportOrder + ", endDate=" + endDate + ", zeroBal=" + zeroBal + ", level="
-				+ level + ", accCode=" + accCode + "]";
+		return "TradingPLForm [reportOrder=" + reportOrder + ", endDate=" + endDate + ", zeroBal=" + zeroBal
+				+ ", closingStock=" + closingStock + ", level=" + level + ", accCode=" + accCode + "]";
 	}	
 	
 }
