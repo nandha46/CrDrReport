@@ -596,3 +596,732 @@
 2021-Dec-02 23:28:59 [RMI TCP Connection(55)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
 2021-Dec-02 23:28:59 [RMI TCP Connection(55)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-7 - Shutdown initiated...
 2021-Dec-02 23:28:59 [RMI TCP Connection(55)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-7 - Shutdown completed.
+2021-Dec-03 12:27:27 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 2500 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-03 12:27:27 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-03 12:27:27 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-03 12:27:27 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-03 12:27:28 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-03 12:27:28 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-03 12:27:28 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 103 ms. Found 7 JPA repository interfaces.
+2021-Dec-03 12:27:28 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-03 12:27:28 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1888 ms
+2021-Dec-03 12:27:29 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [AA20EC2840E92A3D17865C7090DBEB01]
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-03 12:27:29 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-03 12:27:30 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-03 12:27:35 [restartedMain] ERROR c.z.h.p.HikariPool                                 - HikariPool-1 - Exception during pool initialization.
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:174) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:833) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:453) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:246) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-3.4.5.jar:?]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) [spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1153) [spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:907) [spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:582) [spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) [spring-boot-2.4.3.jar:2.4.3]
+	at in.trident.crdr.CrDrReportApplication.main(CrDrReportApplication.java:15) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_251]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.4.3.jar:2.4.3]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_251]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_251]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:151) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:167) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:144) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:953) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:823) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	... 55 more
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method) ~[?:1.8.0_251]
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85) ~[?:1.8.0_251]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[?:1.8.0_251]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[?:1.8.0_251]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[?:1.8.0_251]
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172) ~[?:1.8.0_251]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[?:1.8.0_251]
+	at java.net.Socket.connect(Socket.java:606) ~[?:1.8.0_251]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:155) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:144) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:953) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:823) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	... 55 more
+2021-Dec-03 12:27:35 [restartedMain] WARN  o.h.e.j.e.i.JdbcEnvironmentInitiator               - HHH000342: Could not obtain connection to query metadata
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:174) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:833) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:453) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:246) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-3.4.5.jar:?]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) [spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1153) [spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:907) [spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:582) [spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) [spring-boot-2.4.3.jar:2.4.3]
+	at in.trident.crdr.CrDrReportApplication.main(CrDrReportApplication.java:15) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_251]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.4.3.jar:2.4.3]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_251]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_251]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:151) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:167) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:144) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:953) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:823) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	... 55 more
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method) ~[?:1.8.0_251]
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85) ~[?:1.8.0_251]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[?:1.8.0_251]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[?:1.8.0_251]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[?:1.8.0_251]
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172) ~[?:1.8.0_251]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[?:1.8.0_251]
+	at java.net.Socket.connect(Socket.java:606) ~[?:1.8.0_251]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:155) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:144) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:953) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:823) ~[mysql-connector-java-8.0.23.jar:8.0.23]
+	... 55 more
+2021-Dec-03 12:27:35 [restartedMain] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean     - Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2021-Dec-03 12:27:35 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2021-Dec-03 12:27:35 [restartedMain] INFO  o.a.c.c.StandardService                            - Stopping service [Tomcat]
+2021-Dec-03 12:27:35 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-Dec-03 12:27:35 [restartedMain] ERROR o.s.b.SpringApplication                            - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1153) ~[spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:907) ~[spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:582) ~[spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) [spring-boot-2.4.3.jar:2.4.3]
+	at in.trident.crdr.CrDrReportApplication.main(CrDrReportApplication.java:15) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_251]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.4.3.jar:2.4.3]
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:275) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.3.4.jar:5.3.4]
+	... 22 more
+Caused by: org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.determineDialect(DialectFactoryImpl.java:100) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:54) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:137) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.28.Final.jar:5.4.28.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845) ~[spring-beans-5.3.4.jar:5.3.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.3.4.jar:5.3.4]
+	... 22 more
+2021-Dec-07 10:56:13 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 16608 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-07 10:56:13 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-07 10:56:13 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-07 10:56:13 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-07 10:56:14 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 10:56:14 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-07 10:56:15 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 92 ms. Found 7 JPA repository interfaces.
+2021-Dec-07 10:56:15 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-07 10:56:15 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 10:56:15 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-07 10:56:15 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 10:56:15 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-07 10:56:15 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-07 10:56:16 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-07 10:56:16 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 2247 ms
+2021-Dec-07 10:56:16 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-07 10:56:16 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-07 10:56:16 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-07 10:56:16 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-07 10:56:17 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-07 10:56:17 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-07 10:56:18 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-07 10:56:18 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 10:56:19 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-07 10:56:19 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43af23c9, org.springframework.security.web.context.SecurityContextPersistenceFilter@159bdadc, org.springframework.security.web.header.HeaderWriterFilter@acb97f2, org.springframework.security.web.csrf.CsrfFilter@5545459b, org.springframework.security.web.authentication.logout.LogoutFilter@5dae8688, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7c628096, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@96d0187, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@52944efb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3cb55198, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2257eef4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1b280a87, org.springframework.security.web.session.SessionManagementFilter@6bad5754, org.springframework.security.web.access.ExceptionTranslationFilter@2a48520, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@548df8f5]
+2021-Dec-07 10:56:19 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 10:56:19 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-07 10:56:20 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-07 10:56:20 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-07 10:56:20 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 10:56:20 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-07 10:56:20 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 7.368 seconds (JVM running for 9.123)
+2021-Dec-07 10:56:21 [RMI TCP Connection(3)-127.0.0.1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-07 10:56:21 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-07 10:56:21 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-07 10:56:32 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-07 10:56:36 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-07 10:56:36 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-07 10:56:37 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-07 10:56:37 [http-nio-8080-exec-10] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Tue Dec 07 10:56:37 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-07 10:56:37 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-07 10:56:39 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 10:56:41 [http-nio-8080-exec-10] WARN  i.t.c.c.AppController                              - Trial Balance Page Start
+2021-Dec-07 10:56:41 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Trial Balnce is Ready
+2021-Dec-07 10:56:57 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-07 10:56:58 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 10:58:29 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 10:58:30 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 10:58:30 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 10:58:33 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 10:58:34 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 11:01:54 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 11:01:55 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 11:01:55 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 11:56:42 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 11:57:18 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-07 11:57:33 [RMI TCP Connection(72)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2021-Dec-07 11:57:33 [RMI TCP Connection(72)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 11:57:33 [RMI TCP Connection(72)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 11:57:33 [RMI TCP Connection(72)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-07 11:57:33 [RMI TCP Connection(72)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-07 15:52:12 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 14168 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-07 15:52:12 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-07 15:52:12 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-07 15:52:12 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-07 15:52:13 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 15:52:13 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-07 15:52:13 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 69 ms. Found 7 JPA repository interfaces.
+2021-Dec-07 15:52:13 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-07 15:52:13 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1539 ms
+2021-Dec-07 15:52:14 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [913D1E80AF279C06402F161054C37BA4]
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-07 15:52:14 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-07 15:52:14 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-07 15:52:15 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-07 15:52:15 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-07 15:52:15 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-07 15:52:15 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 15:52:16 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-07 15:52:16 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@551bddc3, org.springframework.security.web.context.SecurityContextPersistenceFilter@25a0fba0, org.springframework.security.web.header.HeaderWriterFilter@71c7b1a, org.springframework.security.web.csrf.CsrfFilter@6bad5754, org.springframework.security.web.authentication.logout.LogoutFilter@41a4727, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3f9c7c25, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@586a7779, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@7f9a64cc, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5dae8688, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3c8f868e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@62521b28, org.springframework.security.web.session.SessionManagementFilter@642aa11a, org.springframework.security.web.access.ExceptionTranslationFilter@71377b7b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3d59e91c]
+2021-Dec-07 15:52:16 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:52:17 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 15:52:17 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-07 15:52:17 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Pausing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.a.c.c.StandardService                            - Stopping service [Tomcat]
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Stopping ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Destroying ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:52:17 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-Dec-07 15:52:17 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter             - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2021-Dec-07 15:55:07 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 17072 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-07 15:55:07 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-07 15:55:07 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-07 15:55:07 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-07 15:55:07 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 15:55:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-07 15:55:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 65 ms. Found 7 JPA repository interfaces.
+2021-Dec-07 15:55:08 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-07 15:55:08 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 15:55:08 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-07 15:55:08 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:08 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-07 15:55:08 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-07 15:55:08 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-07 15:55:08 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1529 ms
+2021-Dec-07 15:55:08 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-07 15:55:09 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-07 15:55:09 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-07 15:55:09 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-07 15:55:09 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-07 15:55:09 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-07 15:55:10 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-07 15:55:10 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 15:55:11 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@41232eeb, org.springframework.security.web.context.SecurityContextPersistenceFilter@4012a6b9, org.springframework.security.web.header.HeaderWriterFilter@29e3b059, org.springframework.security.web.csrf.CsrfFilter@48ec4792, org.springframework.security.web.authentication.logout.LogoutFilter@423ba3ad, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3bd08407, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@58c151e5, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@12b8e4e5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@56a76100, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6348a94, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1d99a0bf, org.springframework.security.web.session.SessionManagementFilter@3bc1e76b, org.springframework.security.web.access.ExceptionTranslationFilter@32074597, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7bd32e1d]
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:11 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 15:55:11 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-07 15:55:11 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Pausing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.a.c.c.StandardService                            - Stopping service [Tomcat]
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Stopping ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:11 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Destroying ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:12 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-Dec-07 15:55:12 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter             - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2021-Dec-07 15:55:26 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 7396 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-07 15:55:26 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-07 15:55:26 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-07 15:55:26 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-07 15:55:27 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 80 ms. Found 7 JPA repository interfaces.
+2021-Dec-07 15:55:27 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-07 15:55:27 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-07 15:55:27 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1753 ms
+2021-Dec-07 15:55:28 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-07 15:55:28 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-07 15:55:28 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-07 15:55:28 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-07 15:55:29 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-07 15:55:29 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-07 15:55:29 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-07 15:55:29 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 15:55:30 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@14d77015, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ee03ae7, org.springframework.security.web.header.HeaderWriterFilter@4f664f11, org.springframework.security.web.csrf.CsrfFilter@3dafabaa, org.springframework.security.web.authentication.logout.LogoutFilter@1b8bdb99, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3123a790, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@27b05d51, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@64a875fe, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5279ccd0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@25bb81cc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@372f035c, org.springframework.security.web.session.SessionManagementFilter@1c82fdac, org.springframework.security.web.access.ExceptionTranslationFilter@26ec6c9a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@52a62d09]
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:31 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 15:55:31 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-07 15:55:31 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Pausing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.a.c.c.StandardService                            - Stopping service [Tomcat]
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Stopping ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Destroying ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 15:55:31 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-Dec-07 15:55:31 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter             - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2021-Dec-07 17:16:56 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 1548 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-07 17:16:56 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-07 17:16:56 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-07 17:16:56 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-07 17:16:57 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 17:16:57 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-07 17:16:57 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 87 ms. Found 7 JPA repository interfaces.
+2021-Dec-07 17:16:57 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-07 17:16:57 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1790 ms
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-07 17:16:58 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-07 17:16:58 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-07 17:16:59 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-07 17:16:59 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-07 17:17:00 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-07 17:17:00 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 17:17:00 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-07 17:17:01 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@62521b28, org.springframework.security.web.context.SecurityContextPersistenceFilter@5dae8688, org.springframework.security.web.header.HeaderWriterFilter@642aa11a, org.springframework.security.web.csrf.CsrfFilter@159bdadc, org.springframework.security.web.authentication.logout.LogoutFilter@44db2896, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7bea3834, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@5b92ec5f, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@2ad9b75d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3ad57d52, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@586a7779, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@21a79200, org.springframework.security.web.session.SessionManagementFilter@25a0fba0, org.springframework.security.web.access.ExceptionTranslationFilter@71c7b1a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5ce8db24]
+2021-Dec-07 17:17:01 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 17:17:01 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-07 17:17:01 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-07 17:17:01 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-07 17:17:01 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 17:17:01 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-07 17:17:01 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 5.943 seconds (JVM running for 7.288)
+2021-Dec-07 17:17:08 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-07 17:17:08 [http-nio-8080-exec-2] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-07 17:17:08 [http-nio-8080-exec-2] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-07 17:17:12 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-07 17:17:15 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-07 17:17:15 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-07 17:17:16 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-07 17:17:16 [http-nio-8080-exec-9] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Tue Dec 07 17:17:16 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-07 17:17:16 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-07 17:17:25 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-07 17:17:27 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   199.325 milliseconds.
+|-- Total              [TradingPLService]   199.615 milliseconds.
+
+2021-Dec-07 17:17:27 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - TradingPL is ready
+2021-Dec-07 17:17:37 [RMI TCP Connection(10)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2021-Dec-07 17:17:37 [RMI TCP Connection(10)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 17:17:37 [RMI TCP Connection(10)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 17:17:37 [RMI TCP Connection(10)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-07 17:17:37 [RMI TCP Connection(10)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-07 22:55:49 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 7088 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-07 22:55:49 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-07 22:55:49 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-07 22:55:49 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-07 22:55:50 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 22:55:50 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-07 22:55:50 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 82 ms. Found 7 JPA repository interfaces.
+2021-Dec-07 22:55:50 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-07 22:55:50 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 22:55:50 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-07 22:55:50 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 22:55:50 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-07 22:55:50 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-07 22:55:51 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-07 22:55:51 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1534 ms
+2021-Dec-07 22:55:51 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [25EAFF4E117177751BC29796CEDB1AD0]
+2021-Dec-07 22:55:51 [restartedMain] ERROR o.a.c.s.StandardManager                            - Exception loading sessions from persistent storage
+java.io.StreamCorruptedException: invalid type code: 00
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1655) ~[?:1.8.0_251]
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2343) ~[?:1.8.0_251]
+	at java.io.ObjectInputStream.defaultReadObject(ObjectInputStream.java:594) ~[?:1.8.0_251]
+	at java.lang.Throwable.readObject(Throwable.java:915) ~[?:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_251]
+	at java.io.ObjectStreamClass.invokeReadObject(ObjectStreamClass.java:1185) ~[?:1.8.0_251]
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2234) ~[?:1.8.0_251]
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2125) ~[?:1.8.0_251]
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1624) ~[?:1.8.0_251]
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:464) ~[?:1.8.0_251]
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422) ~[?:1.8.0_251]
+	at org.apache.catalina.session.StandardSession.doReadObject(StandardSession.java:1545) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.session.StandardSession.readObjectData(StandardSession.java:1040) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.session.StandardManager.doLoad(StandardManager.java:218) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.session.StandardManager.load(StandardManager.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.session.StandardManager.startInternal(StandardManager.java:354) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5194) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1384) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1374) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [?:1.8.0_251]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:134) [?:1.8.0_251]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:909) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:843) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1384) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1374) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [?:1.8.0_251]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:134) [?:1.8.0_251]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:909) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:262) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:434) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:930) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:486) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:450) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:199) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:181) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:159) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:576) [spring-context-5.3.4.jar:5.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) [spring-boot-2.4.3.jar:2.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) [spring-boot-2.4.3.jar:2.4.3]
+	at in.trident.crdr.CrDrReportApplication.main(CrDrReportApplication.java:15) [classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_251]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.4.3.jar:2.4.3]
+2021-Dec-07 22:55:51 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-07 22:55:51 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-07 22:55:51 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-07 22:55:51 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-07 22:55:51 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-07 22:55:51 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-07 22:55:52 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-07 22:55:52 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 22:55:53 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-07 22:55:53 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1087955f, org.springframework.security.web.context.SecurityContextPersistenceFilter@413d44cf, org.springframework.security.web.header.HeaderWriterFilter@1e8a6e02, org.springframework.security.web.csrf.CsrfFilter@3be75f1d, org.springframework.security.web.authentication.logout.LogoutFilter@736abb46, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@677dc57f, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@758f2eb0, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4330d483, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c9fd073, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@22376d9a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b56ed29, org.springframework.security.web.session.SessionManagementFilter@11e22253, org.springframework.security.web.access.ExceptionTranslationFilter@2cade233, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@474178d4]
+2021-Dec-07 22:55:53 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 22:55:53 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-07 22:55:54 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-07 22:55:54 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-07 22:55:54 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 22:55:54 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-07 22:55:54 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 4.954 seconds (JVM running for 6.042)
+2021-Dec-07 22:55:55 [RMI TCP Connection(3)-127.0.0.1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-07 22:55:55 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-07 22:55:55 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-07 22:57:01 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-07 22:57:05 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-07 22:57:05 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-07 22:57:06 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-07 22:57:06 [http-nio-8080-exec-5] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Tue Dec 07 22:57:06 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-07 22:57:06 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-07 22:57:08 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-07 22:57:21 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   159.339 milliseconds.
+|-- Total              [TradingPLService]   159.619 milliseconds.
+
+2021-Dec-07 22:57:21 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - TradingPL is ready
+2021-Dec-07 23:00:04 [Thread-8] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 23:00:04 [Thread-8] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 23:00:04 [Thread-8] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-07 23:00:04 [Thread-8] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-07 23:00:04 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 7088 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-07 23:00:04 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-07 23:00:04 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 31 ms. Found 7 JPA repository interfaces.
+2021-Dec-07 23:00:04 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-07 23:00:04 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 463 ms
+2021-Dec-07 23:00:04 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [209F9B7922EEDA2DFE4F144F13972FE6]
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-07 23:00:04 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-2 - Starting...
+2021-Dec-07 23:00:04 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-2 - Start completed.
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-07 23:00:04 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-07 23:00:05 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@58b2fcf7, org.springframework.security.web.context.SecurityContextPersistenceFilter@3f994cfe, org.springframework.security.web.header.HeaderWriterFilter@2b7ce029, org.springframework.security.web.csrf.CsrfFilter@610a584d, org.springframework.security.web.authentication.logout.LogoutFilter@11933ca4, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@78eb81dc, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@4b34e172, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@163517ef, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ed63ab7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@52e7ecec, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@418085b4, org.springframework.security.web.session.SessionManagementFilter@c62b50f, org.springframework.security.web.access.ExceptionTranslationFilter@38d337a5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7b359aff]
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-07 23:00:05 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 1.304 seconds (JVM running for 257.511)
+2021-Dec-07 23:00:05 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener  - Condition evaluation unchanged
+2021-Dec-07 23:16:51 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-07 23:16:51 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-07 23:16:51 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 3 ms
+2021-Dec-07 23:16:53 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-07 23:17:01 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-07 23:17:01 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-07 23:17:03 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-07 23:17:03 [http-nio-8080-exec-9] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Tue Dec 07 23:17:03 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-07 23:17:03 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-07 23:17:10 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-07 23:17:17 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    56.070 milliseconds.
+|-- Total              [TradingPLService]    56.080 milliseconds.
+
+2021-Dec-07 23:17:17 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - TradingPL is ready
