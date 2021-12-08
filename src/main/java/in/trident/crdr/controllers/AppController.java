@@ -33,12 +33,11 @@ import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
-import in.trident.crdr.models.TradingPLForm;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
 import in.trident.crdr.models.YearCriteria;
-import in.trident.crdr.models.BalSheetForm;
+import in.trident.crdr.models.CommonForm;
 import in.trident.crdr.models.BalanceSheetView;
 import in.trident.crdr.models.CompanySelectCriteria;
 import in.trident.crdr.models.DaybookForm;
@@ -274,12 +273,12 @@ public class AppController {
 		LOGGER.info("Loading TradingPL...");
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trading - Profit and Loss");
-		model.addAttribute("tradingPLForm", new TradingPLForm());
+		model.addAttribute("tradingPLForm", new CommonForm());
 		return "findTradingPL";
 	}
 
 	@PostMapping("/tradingPL")
-	public String tradingPL(Model model, TradingPLForm tradingPLForm, @AuthenticationPrincipal CustomUserDetails user) {
+	public String tradingPL(Model model, CommonForm tradingPLForm, @AuthenticationPrincipal CustomUserDetails user) {
 		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		LOGGER.info("TradingPL is ready");
 		model.addAttribute("listTradingPL", listTradingPL);
@@ -294,12 +293,12 @@ public class AppController {
 		LOGGER.info("Loading Balance Sheet...");
 		model.addAttribute("accsList", accsList);
 		model.addAttribute("pageTitle", "Balance Sheet");
-		model.addAttribute("balSheetForm", new BalSheetForm());
+		model.addAttribute("balSheetForm", new CommonForm());
 		return "findBalanceSheet";
 	}
 
 	@PostMapping("/BalanceSheet")
-	public String balanceSheet(Model model, BalSheetForm balSheetForm,
+	public String balanceSheet(Model model, CommonForm balSheetForm,
 			@AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Balance Sheet Ready");
 		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));

@@ -10,11 +10,12 @@ import java.util.List;
  * @version 0.0.5b
  *
  */
-public class BalSheetForm {
+public class CommonForm {
 	
 	private boolean reportOrder;
 	private String endDate;
 	private boolean zeroBal;
+	private Double closingStock;
 	private int level;
 	private List<Integer> accCode;
 	
@@ -36,6 +37,12 @@ public class BalSheetForm {
 	public void setZeroBal(boolean zeroBal) {
 		this.zeroBal = zeroBal;
 	}
+	public Double getClosingStock() {
+		return closingStock;
+	}
+	public void setClosingStock(Double closingStock) {
+		this.closingStock = closingStock;
+	}
 	public int getLevel() {
 		return level;
 	}
@@ -51,8 +58,8 @@ public class BalSheetForm {
 	
 	@Override
 	public String toString() {
-		return "BalSheetForm [reportOrder=" + reportOrder + ", endDate=" + endDate + ", zeroBal=" + zeroBal + ", level="
-				+ level + ", accCode=" + accCode + "]";
+		return "CommonForm [reportOrder=" + reportOrder + ", endDate=" + endDate + ", zeroBal=" + zeroBal
+				+ ", closingStock=" + closingStock + ", level=" + level + ", accCode=" + accCode + "]";
 	}	
 	
 }
