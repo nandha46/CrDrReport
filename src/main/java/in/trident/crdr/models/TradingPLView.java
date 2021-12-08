@@ -45,6 +45,33 @@ public class TradingPLView {
 		return "TradingPLView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + ", level="
 				+ level + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + level;
+		result = prime * result + ((particulars == null) ? 0 : particulars.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TradingPLView other = (TradingPLView) obj;
+		if (level != other.level)
+			return false;
+		if (particulars == null) {
+			if (other.particulars != null)
+				return false;
+		} else if (!particulars.equals(other.particulars))
+			return false;
+		return true;
+	}
+	
 	
 	
 }
