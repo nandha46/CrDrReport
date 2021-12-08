@@ -33,15 +33,14 @@
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="inputdefault">Trading P&amp;L  as on :</label> <input
-								class="input-group date" type="text" th:filed="*{endDate}"
+								class="input-group date" type="date" th:filed="*{endDate}"
 								name="endDate" min="2000-01-02" max="2022-01-01"
 								value="2019-03-31">
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="closingStock">Closing Stock </label> <input
 								class="input-group" type="number" th:field="*{closingStock}"
-								name="closingStock" min="2000-01-02" max="2022-01-01"
-								value="2019-03-31">
+								name="closingStock" value=0>
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="exampleFormControlSelect2">Accounts with Zero Balance</label> <select class="form-control"

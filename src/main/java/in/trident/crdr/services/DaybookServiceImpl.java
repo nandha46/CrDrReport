@@ -126,9 +126,20 @@ public class DaybookServiceImpl implements DaybookService {
 		
 		// TODO Needs to find a way to get Collection of closeBal,debit n credit total
 		// for the date range to reduce calls to database
+		Calendar ca = Calendar.getInstance();
+		ca.setTime(date1);
+		ca.add(Calendar.DAY_OF_MONTH, -1);
+		// changes
+		Double prevClose = closeBalRepo.findCloseBalByDate(insdf.format(ca.getTime()), uid, cid);
+		if (prevClose > 0) {
+			// add to credit
+			daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date,uid,cid)).toString());
+			daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date,uid,cid)+prevClose).toString());
+		} else {
+			daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date,uid,cid)+Math.abs(prevClose)).toString());
+			daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date,uid,cid)).toString());
+		}
 		daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date,uid,cid)).toString());
-		daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date,uid,cid)).toString());
-		daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date,uid,cid)).toString());
 		List<Transactions> trans = new ArrayList<Transactions>();
 		daybook.forEach(transaction -> {
 			String temp = accHeadRepo.findShortNameByAccHead(transaction.getAcccode(),uid,cid);

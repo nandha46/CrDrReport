@@ -1,6 +1,5 @@
 package in.trident.crdr.services;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -17,8 +16,10 @@ import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.Schedule;
-import in.trident.crdr.models.BalSheetForm;
+import in.trident.crdr.models.CommonForm;
+import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.BalanceSheetView;
+import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.ScheduleRepo;
 
@@ -39,25 +40,52 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 
 	@Autowired
 	private DaybookRepository daybookRepo;
+	
+	@Autowired
+	private TradingPLService tradingPLService;
+	
+	@Autowired
+	private CloseBalRepo closeBalrepo;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BalSheetServiceImpl.class);
+	
+	private static int counter = 0;
 
 	private LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
 
 	@Override
-	public List<BalanceSheetView> createBalSheet(BalSheetForm balSheetForm, Long uid, Long cid) {
+	public List<BalanceSheetView> createBalSheet(CommonForm balSheetForm, Long uid, Long cid) {
 		Profiler profiler = new Profiler("BalSheetServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("Balance Sheet");
 		List<BalanceSheetView> listBalSheet = new LinkedList<BalanceSheetView>();
+		counter = 0;
 		if (balSheetForm.isReportOrder()) {
 			// True = Group
 		} else {
 			// false = Select All
-			List<Schedule> list = scheduleRepo.findAll();
-			Collections.sort(list);
-			list.forEach((acc) -> {
+			List<Schedule> liabilitylist = scheduleRepo.findAllLiabilityAccounts(uid, cid);
+			liabilitylist.forEach((acc) -> {
+				if (counter == 1) {
+					// Net Profit B/f from TradingPL
+					TradingPLView test = new TradingPLView();
+					test.setLevel(0);
+					test.setParticulars("Net Profit");
+					List<TradingPLView> listTPL = tradingPLService.createTradingPL(balSheetForm, uid, cid);
+					TradingPLView netProfitTplview =  listTPL.get(listTPL.indexOf(test));
+					BalanceSheetView netProfitB4 = new BalanceSheetView();
+					netProfitB4.setLevel1(2);
+					netProfitB4.setParticulars("Net Profit B/f");
+					netProfitB4.setCredit(netProfitTplview.getDebit());
+					netProfitB4.setDebit(netProfitTplview.getCredit());
+					listBalSheet.add(netProfitB4);
+					counter++;
+					}
+				if (counter == 0) {
+				// skiping first iteration
+					counter++;
+				}
 				BalanceSheetView balSheetView = new BalanceSheetView();
 				balSheetView.setParticulars(acc.getAccName());
 				balSheetView.setLevel1(acc.getLevel1());
@@ -77,6 +105,65 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 					listBalSheet.add(balSheetView);
 				}
 			});
+			List<Schedule> assetList = scheduleRepo.findAllAssetAccounts(uid, cid);
+			assetList.forEach((acc) -> {
+				if (counter == 3) {
+					// add cash on hand by closebalRepo 
+					BalanceSheetView cash = new BalanceSheetView();
+					cash.setLevel1(2);
+					cash.setParticulars("Cash on Hand");
+					Double cashOnHand = closeBalrepo.findCloseBalByDate(balSheetForm.getEndDate(), uid, cid);
+					cash.setDebit(nf.format(cashOnHand).toString());
+					cash.setCredit("");
+					listBalSheet.add(cash);
+					counter++;
+				}
+				
+				if (counter == 2) {
+				//skipping first iteration
+					counter++;
+				}
+				BalanceSheetView balSheetView = new BalanceSheetView();
+				balSheetView.setParticulars(acc.getAccName());
+				balSheetView.setLevel1(acc.getLevel1());
+				String[] arr = calculateLedgerBalance(acc.getAccCode(), balSheetForm.getEndDate(), uid, cid);
+				if (arr[1].equals("Cr")) {
+					balSheetView.setDebit("");
+					balSheetView.setCredit(arr[0]);
+				} else {
+					balSheetView.setDebit(arr[0]);
+					balSheetView.setCredit("");
+				}
+				if (balSheetForm.isZeroBal()
+						&& ((balSheetView.getDebit().equals("0.00") && balSheetView.getCredit().isEmpty())
+								|| (balSheetView.getCredit().equals("0.00") && balSheetView.getDebit().isEmpty()))) {
+					// Intentionally left empty to remove ZeroBal accounts
+				} else {
+					listBalSheet.add(balSheetView);
+				}
+			});
+			//  Closing stock
+			BalanceSheetView closingStock = new BalanceSheetView();
+			closingStock.setLevel1(2);
+			closingStock.setParticulars("Closing Stock");
+			closingStock.setCredit("");
+			if (balSheetForm.getClosingStock() == null) {
+				closingStock.setDebit("");
+			} else {
+				closingStock.setDebit(nf.format(balSheetForm.getClosingStock()).toString());
+			}
+			listBalSheet.add(closingStock);
+			// Total
+			BalanceSheetView total = new BalanceSheetView();
+			total.setLevel1(1);
+			total.setParticulars("Total");
+			Double tdebit = listBalSheet.stream().filter(x -> !x.getDebit().isEmpty())
+					.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
+			Double tcredit  = listBalSheet.stream().filter(x -> !x.getCredit().isEmpty())
+					.mapToDouble(x -> Double.parseDouble(x.getCredit().replace(",", ""))).sum();
+			total.setCredit(nf.format(tcredit).toString());
+			total.setDebit(nf.format(tdebit).toString());
+			listBalSheet.add(total);
 		}
 		TimeInstrument ti = profiler.stop();
 		LOGGER.info("\n" + ti.toString());

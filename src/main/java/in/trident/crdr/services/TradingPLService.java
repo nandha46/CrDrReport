@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import in.trident.crdr.models.TradingPLForm;
+import in.trident.crdr.models.CommonForm;
 import in.trident.crdr.models.TradingPLView;
 
 /** 
@@ -18,7 +18,7 @@ import in.trident.crdr.models.TradingPLView;
 @Service
 public interface TradingPLService {
 
-	List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm, Long uid, Long cid);
+	List<TradingPLView> createTradingPL(CommonForm tradingPLForm, Long uid, Long cid);
 	String[] calculateTradingBalance(Integer code, String endDate, Long uid, Long cid);
 
 }

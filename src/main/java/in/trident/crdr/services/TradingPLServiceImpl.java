@@ -18,17 +18,8 @@ import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.AccHead;
-import in.trident.crdr.models.TradingPLForm;
+import in.trident.crdr.models.CommonForm;
 import in.trident.crdr.models.TradingPLView;
-/**
- * 
- * @author Nandhakumar Subramanian
- * 
- * @since 21 Jun 2021
- * 
- * @version 0.0.5b
- *
- */
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 
@@ -58,20 +49,20 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 	private Double netCredit = 0d;
 	private Double netDebit = 0d;
-	
+
 	@Override
-	public List<TradingPLView> createTradingPL(TradingPLForm tradingPLForm, Long uid, Long cid) {
+	public List<TradingPLView> createTradingPL(CommonForm tradingPLForm, Long uid, Long cid) {
 		Profiler profiler = new Profiler("TradingPLService");
 		profiler.setLogger(LOGGER);
 		profiler.start("Start TradingPL Service");
-		
+
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		counter = 0;
 		if (tradingPLForm.isReportOrder()) { // Group == true
-			
+
 		} else {
 			// All - false
-			List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs(uid,cid);
+			List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs(uid, cid);
 			Collections.sort(tradingAccs);
 			tradingAccs.forEach((accs) -> {
 				if (accs.getOrderCode() == 3 || accs.getOrderCode() == 4) {
@@ -94,14 +85,18 @@ public class TradingPLServiceImpl implements TradingPLService {
 					}
 
 				} else {
-					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid,cid);
+					String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid, cid);
 					if (counter < 1) {
 						// Closing Stock
 						TradingPLView closingStock = new TradingPLView();
 						closingStock.setParticulars("Clsoing Stock");
 						closingStock.setLevel(1);
 						closingStock.setDebit("");
-						closingStock.setCredit(nf.format(tradingPLForm.getClosingStock()).toString());
+						if (tradingPLForm.getClosingStock() == null) {
+							closingStock.setCredit(nf.format(0.0d).toString());
+						} else {
+							closingStock.setCredit(nf.format(tradingPLForm.getClosingStock()).toString());
+						}
 						tradingPLViewSet.add(closingStock);
 						// Gross Profit
 						TradingPLView grossProfit = new TradingPLView();
@@ -149,24 +144,24 @@ public class TradingPLServiceImpl implements TradingPLService {
 					}
 					TradingPLView tplv = new TradingPLView();
 					tplv.setParticulars(accs.getAccName());
-					arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid,cid);
+					arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid, cid);
 					if (arr[1].equals("Cr")) {
 						tplv.setDebit("");
 						tplv.setCredit(arr[0]);
 						if (arr[0].equals("")) {
 							// Intentionally left empty to remove empty string
 						} else {
-						netCredit += Double.parseDouble(arr[0].replace(",", ""));
+							netCredit += Double.parseDouble(arr[0].replace(",", ""));
 						}
-						} else {
+					} else {
 						tplv.setDebit(arr[0]);
 						tplv.setCredit("");
 						if (arr[0].equals("")) {
 							// Intentionally left empty to remove empty string
 						} else {
-						netDebit += Double.parseDouble(arr[0].replace(",", ""));
+							netDebit += Double.parseDouble(arr[0].replace(",", ""));
 						}
-						}
+					}
 					tplv.setLevel(accs.getLevel1());
 					if (tradingPLForm.isZeroBal() && ((tplv.getDebit().equals("0.00") && tplv.getCredit().isEmpty())
 							|| (tplv.getCredit().equals("0.00") && tplv.getDebit().isEmpty()))) {
@@ -175,7 +170,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tradingPLViewSet.add(tplv);
 					}
 				}
-				
+
 			});
 		}
 
@@ -183,22 +178,20 @@ public class TradingPLServiceImpl implements TradingPLService {
 		netProfit.setParticulars("Net Profit");
 		Double netprofitvalue = netDebit - netCredit;
 		if (netprofitvalue > 0) {
-			netProfit.setCredit("");
-			netProfit.setDebit(nf.format(Math.abs(netprofitvalue)).toString());
-		} else {
 			netProfit.setCredit(nf.format(Math.abs(netprofitvalue)).toString());
 			netProfit.setDebit("");
+			netCredit += Math.abs(netprofitvalue);
+		} else {
+			netProfit.setCredit("");
+			netProfit.setDebit(nf.format(Math.abs(netprofitvalue)).toString());
+			netDebit += Math.abs(netprofitvalue);
 		}
 		netProfit.setLevel(0);
 		tradingPLViewSet.add(netProfit);
 		TradingPLView total2 = new TradingPLView();
-		total2.setParticulars("Total");
-		Double totalC = tradingPLViewSet.stream().filter(x -> !x.getCredit().isEmpty())
-				.mapToDouble(x -> Double.parseDouble(x.getCredit().replace(",", ""))).sum();
-		Double totalD = tradingPLViewSet.stream().filter(x -> !x.getDebit().isEmpty())
-				.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
-		total2.setCredit(nf.format(totalC).toString());
-		total2.setDebit(nf.format(totalD).toString());
+		total2.setParticulars("Total.");
+		total2.setCredit(nf.format(netCredit).toString());
+		total2.setDebit(nf.format(netDebit).toString());
 		total2.setLevel(0);
 		tradingPLViewSet.add(total2);
 		List<TradingPLView> listTradingPLView = new LinkedList<TradingPLView>(tradingPLViewSet);
@@ -217,13 +210,13 @@ public class TradingPLServiceImpl implements TradingPLService {
 			return array;
 		}
 		// ----------------------------
-		Double d1 = accHeadRepo.findCrAmt(code,uid,cid);
-		Double d2 = accHeadRepo.findDrAmt(code,uid,cid);
+		Double d1 = accHeadRepo.findCrAmt(code, uid, cid);
+		Double d2 = accHeadRepo.findDrAmt(code, uid, cid);
 
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid,cid);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid, cid);
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
 				// whether d2 is 0 or Somevalue Balance is Dr
@@ -246,7 +239,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate,uid,cid);
+			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid, cid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";
