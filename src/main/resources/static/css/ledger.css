@@ -32,3 +32,13 @@ border: 1px solid #ddd;
   color: white;
 }
 
+#accs option[isHeader='1']
+{
+color:red;
+font-weight:bold;
+}
+
+#accs option[isHeader='0']
+{
+font-weight:bold;
+}

@@ -11,11 +11,51 @@
 					<fieldset>
 						<legend>Select an Account</legend>
 						<div class="form-group col-xs-8">
-							<select class="form-control" th:field="*{accCode}" id="accs"
+							<!-- 	<select class="form-control" th:field="*{accCode}" id="accs"
 								name="accCode" size="22" multiple disabled>
 								<option th:each="accHead : ${accHeadList}"
 									th:value="${accHead.accHeadId}" th:text="${accHead.accName}">
 									WIREFRAME</option>
+							</select>  
+						---	Second select --
+						<select class="form-control" th:field="*{accCode}" id="accs"
+								name="accCode" size="22" multiple disabled onchange=multiSelect(this)>  -->
+
+							<select class="form-control" th:field="*{accCode}" id="accs"
+								name="accCode" size="22" multiple disabled
+								style="font-weight: bold;" onchange=multiSelect(this)>
+								<th:block th:each="accHead,accStat : ${accHeadList}">
+									<th:block th:switch="${accHead.level1}">
+										<option th:case="1" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="2" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="3" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="4" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="5" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="6" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
 							</select>
 						</div>
 					</fieldset>
@@ -62,7 +102,8 @@
 						<div class="form-group  col-xs-10">
 							<!--  Nice Listing format for Acc Selection -->
 							<button class="btn btn-success" type="submit">Submit</button>
-							<button class="btn btn-danger" type="button" onclick="window.history.back()" value="Close">Close</button>
+							<button class="btn btn-danger" type="button"
+								onclick="window.history.back()" value="Close">Close</button>
 						</div>
 
 					</fieldset>
@@ -70,6 +111,29 @@
 			</form>
 		</div>
 	</div>
+	<script>
+	function multiSelect(obj){
+		console.log("level: "+obj.options[obj.selectedIndex].id + " count: "+obj.options[obj.selectedIndex].getAttribute('count'));
+		if (obj.options[obj.selectedIndex].value == 0){
+		second(obj, parseInt(obj.options[obj.selectedIndex].id), parseInt(obj.options[obj.selectedIndex].getAttribute('count')));
+	}
+		}
+	
+	function second (elem, level,count){
+	//	console.log(typeof level);
+			for(var i = 0; i < elem.options.length; i++){
+				if (parseInt(elem.options[i].getAttribute('count')) > count){
+					if (parseInt(elem.options[i].id) <= level){
+						return;	
+						}
+					elem.options[i].selected = true;
+					console.log("Selected:"+elem.options[i].getAttribute('count'));
+					
+				}
+			}
+	}
+	
+	</script>
 	<script th:src="@{/script/disableselect.js}"></script>
 </body>
 </html>
