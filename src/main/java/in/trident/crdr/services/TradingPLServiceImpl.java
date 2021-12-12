@@ -55,7 +55,8 @@ public class TradingPLServiceImpl implements TradingPLService {
 		Profiler profiler = new Profiler("TradingPLService");
 		profiler.setLogger(LOGGER);
 		profiler.start("Start TradingPL Service");
-
+		netCredit = 0d;
+		netDebit = 0d;
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		counter = 0;
 		if (tradingPLForm.isReportOrder()) { // Group == true
@@ -100,7 +101,6 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tradingPLViewSet.add(closingStock);
 						// Gross Profit
 						TradingPLView grossProfit = new TradingPLView();
-						grossProfit.setParticulars("Gross Profit");
 						Double debitTotal = tradingPLViewSet.stream().filter(x -> !x.getDebit().isEmpty())
 								.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
 						Double creditTotal = tradingPLViewSet.stream().filter(x -> !x.getCredit().isEmpty())
@@ -109,9 +109,11 @@ public class TradingPLServiceImpl implements TradingPLService {
 						if (gp > 0d) {
 							grossProfit.setDebit("");
 							grossProfit.setCredit(nf.format(Math.abs(gp)).toString());
+							grossProfit.setParticulars("Gross Loss");
 						} else {
 							grossProfit.setDebit(nf.format(Math.abs(gp)).toString());
 							grossProfit.setCredit("");
+							grossProfit.setParticulars("Gross Profit");
 						}
 						grossProfit.setLevel(0);
 						tradingPLViewSet.add(grossProfit);
@@ -128,14 +130,15 @@ public class TradingPLServiceImpl implements TradingPLService {
 						tradingPLViewSet.add(total);
 						// Gross Profit B/f
 						TradingPLView grossProfitB = new TradingPLView();
-						grossProfitB.setParticulars("Gross Profit B/f");
 						if (gp > 0d) {
 							grossProfitB.setDebit(nf.format(Math.abs(gp)).toString());
 							grossProfitB.setCredit("");
+							grossProfitB.setParticulars("Gross Loss B/f");
 							netDebit += Math.abs(gp);
 						} else {
 							grossProfitB.setDebit("");
 							grossProfitB.setCredit(nf.format(Math.abs(gp)).toString());
+							grossProfitB.setParticulars("Gross Profit B/f");
 							netCredit += Math.abs(gp);
 						}
 						grossProfitB.setLevel(0);
@@ -173,21 +176,24 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 			});
 		}
-
+		// Net Profit or Loss
 		TradingPLView netProfit = new TradingPLView();
-		netProfit.setParticulars("Net Profit");
 		Double netprofitvalue = netDebit - netCredit;
 		if (netprofitvalue > 0) {
 			netProfit.setCredit(nf.format(Math.abs(netprofitvalue)).toString());
 			netProfit.setDebit("");
+			netProfit.setParticulars("Net Loss");
 			netCredit += Math.abs(netprofitvalue);
-		} else {
+			} else {
 			netProfit.setCredit("");
 			netProfit.setDebit(nf.format(Math.abs(netprofitvalue)).toString());
 			netDebit += Math.abs(netprofitvalue);
+			netProfit.setParticulars("Net Profit");
 		}
 		netProfit.setLevel(0);
 		tradingPLViewSet.add(netProfit);
+		
+		// Total
 		TradingPLView total2 = new TradingPLView();
 		total2.setParticulars("Total.");
 		total2.setCredit(nf.format(netCredit).toString());

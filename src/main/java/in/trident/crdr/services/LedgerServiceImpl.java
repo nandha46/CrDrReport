@@ -3,7 +3,7 @@ package in.trident.crdr.services;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -59,8 +59,10 @@ public class LedgerServiceImpl implements LedgerService {
 		profiler.setLogger(LOGGER);
 		profiler.start("LedgerService");
 		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
-		if (ledgerForm.isReportOrder()) {
-			List<Integer> accCodes = ledgerForm.getAccCode();
+		if (ledgerForm.isReportOrder()) { // True - Report order :Select
+			List<Integer> accCode = ledgerForm.getAccCode();
+			Set<Integer> accCodes = new LinkedHashSet<>(accCode);
+			accCodes.remove(0);
 			accCodes.forEach(code -> {
 				LedgerView ledgerView = createLedgerView(code, ledgerForm, uid,cid);
 				if (ledgerView == null) {
@@ -69,8 +71,8 @@ public class LedgerServiceImpl implements LedgerService {
 					ledgerList.add(ledgerView);
 				}
 			});
-		} else {
-			Set<Integer> accCodes = new HashSet<Integer>(accHeadRepo.findAccCodes(uid,cid));
+		} else { // False - Report order : All
+			Set<Integer> accCodes = new LinkedHashSet<Integer>(accHeadRepo.findAccCodes(uid,cid));
 			accCodes.remove(0);
 			accCodes.forEach(code -> {
 				LedgerView ledgerView = createLedgerView(code, ledgerForm, uid,cid);
@@ -113,9 +115,14 @@ public class LedgerServiceImpl implements LedgerService {
 			LOGGER.trace("---No Transactions on Dailybooks-----");
 			return null;
 		}
-		Double crT = dailybooklist.stream()
+		/*
+		 * Double debitTotal = listTrialview.stream().filter(x -> !x.getDebit().isEmpty())
+				.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
+		 * */
+		
+		Double crT = dailybooklist.stream().filter(d -> !d.getCreditAmt().isEmpty())
 				.collect(Collectors.summingDouble(d -> Double.parseDouble(d.getCreditAmt().replace(",", ""))));
-		Double drT = dailybooklist.stream()
+		Double drT = dailybooklist.stream().filter(d -> !d.getDebitAmt().isEmpty())
 				.collect(Collectors.summingDouble(d -> Double.parseDouble(d.getDebitAmt().replace(",", ""))));
 		if (arr[1].equals("Cr")) {
 			crT += new Double(arr[0]);

@@ -73,14 +73,18 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 					test.setLevel(0);
 					test.setParticulars("Net Profit");
 					List<TradingPLView> listTPL = tradingPLService.createTradingPL(balSheetForm, uid, cid);
-					TradingPLView netProfitTplview =  listTPL.get(listTPL.indexOf(test));
-					BalanceSheetView netProfitB4 = new BalanceSheetView();
-					netProfitB4.setLevel1(2);
-					netProfitB4.setParticulars("Net Profit B/f");
-					netProfitB4.setCredit(netProfitTplview.getDebit());
-					netProfitB4.setDebit(netProfitTplview.getCredit());
-					listBalSheet.add(netProfitB4);
-					counter++;
+					int index = listTPL.indexOf(test);
+					if (index != -1) {
+						TradingPLView netProfitTplview =  listTPL.get(index);
+						BalanceSheetView netProfitB4 = new BalanceSheetView();
+						netProfitB4.setLevel1(2);
+						netProfitB4.setParticulars("Net Profit B/f");
+						netProfitB4.setCredit(netProfitTplview.getDebit());
+						netProfitB4.setDebit(netProfitTplview.getCredit());
+						listBalSheet.add(netProfitB4);
+					}
+					counter++;	
+					
 					}
 				if (counter == 0) {
 				// skiping first iteration
@@ -117,6 +121,22 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 					cash.setCredit("");
 					listBalSheet.add(cash);
 					counter++;
+					// Net Profit B/f from TradingPL
+					TradingPLView test2 = new TradingPLView();
+					test2.setLevel(0);
+					test2.setParticulars("Net Loss");
+					List<TradingPLView> listTPL = tradingPLService.createTradingPL(balSheetForm, uid, cid);
+					int index = listTPL.indexOf(test2);
+					if (index != -1) {
+						TradingPLView netProfitTplview =  listTPL.get(index);
+						BalanceSheetView netProfitB4 = new BalanceSheetView();
+						netProfitB4.setLevel1(2);
+						netProfitB4.setParticulars("Net Loss B/f");
+						netProfitB4.setCredit(netProfitTplview.getDebit());
+						netProfitB4.setDebit(netProfitTplview.getCredit());
+						listBalSheet.add(netProfitB4);
+					}
+					
 				}
 				
 				if (counter == 2) {
