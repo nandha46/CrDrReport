@@ -14,7 +14,10 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -117,6 +120,18 @@ public class AppController {
 		return "index";
 	}
 
+	@GetMapping("/login")
+	public String showlogin(Model model){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		LOGGER.info("Inside login controller");
+		if(auth == null || auth instanceof AnonymousAuthenticationToken) {
+			LOGGER.info("Anonymous user");
+			return "login";
+		}
+		LOGGER.info("Redirection");
+		return "redirect:/company_selection";
+	}
+	
 	@GetMapping("/company_selection")
 	public String showCompanies(Model model,  @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("show company accessed");
