@@ -17,19 +17,20 @@ import com.ibm.icu.number.Precision;
  */
 
 public class Dailybooks {
-	
-	private String date,narration,debitAmt,creditAmt,balance,debitOrCredit;
-	
-	SimpleDateFormat outsdf= new SimpleDateFormat("dd-MM-yyyy");
-	SimpleDateFormat insdf= new SimpleDateFormat("yyyy-MM-dd");
+
+	private String date, narration, debitAmt, creditAmt, balance, debitOrCredit;
+
+	SimpleDateFormat outsdf = new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
 	private LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
-	
+
 	public Dailybooks() {
-		
+
 	}
-	
-	public Dailybooks(String date, String narration, Double debitAmt, Double creditAmt, String balance, String debitOrCredit) {
+
+	public Dailybooks(String date, String narration, Double debitAmt, Double creditAmt, String balance,
+			String debitOrCredit) {
 		Date date1 = new Date();
 		try {
 			date1 = insdf.parse(date);
@@ -38,14 +39,22 @@ public class Dailybooks {
 		}
 		this.date = outsdf.format(date1);
 		this.narration = narration;
-		this.debitAmt = nf.format(debitAmt).toString();
-		this.creditAmt = nf.format(creditAmt).toString();
+		if (debitAmt.toString().equalsIgnoreCase("0.0")) {
+			this.debitAmt = "";
+		} else {
+			this.debitAmt = nf.format(debitAmt).toString();
+		}
+		if (creditAmt.toString().equalsIgnoreCase("0.0")) {
+			this.creditAmt = "";
+		} else {
+			this.creditAmt = nf.format(creditAmt).toString();
+		}
 		this.balance = balance;
 		this.debitOrCredit = debitOrCredit;
 	}
 
 	public Dailybooks(String narration, String debitAmt, String creditAmt) {
-		
+
 		this.date = "";
 		this.narration = narration;
 		this.debitAmt = debitAmt;
@@ -53,7 +62,7 @@ public class Dailybooks {
 		this.balance = "";
 		this.debitOrCredit = "";
 	}
-	
+
 	public String getDate() {
 		return date;
 	}
@@ -75,7 +84,9 @@ public class Dailybooks {
 	}
 
 	public void setDebitAmt(String debitAmt) {
+
 		this.debitAmt = debitAmt;
+
 	}
 
 	public String getCreditAmt() {
@@ -83,7 +94,9 @@ public class Dailybooks {
 	}
 
 	public void setCreditAmt(String creditAmt) {
+
 		this.creditAmt = creditAmt;
+
 	}
 
 	public String getBalance() {
@@ -107,6 +120,5 @@ public class Dailybooks {
 		return "Dailybooks [date=" + date + ", narration=" + narration + ", debitAmt=" + debitAmt + ", creditAmt="
 				+ creditAmt + ", balance=" + balance + ", debitOrCredit=" + debitOrCredit + "]";
 	}
-	
-	
+
 }

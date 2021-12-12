@@ -125,14 +125,15 @@ public class TrialServiceImpl implements TrialBalService {
 				}
 			});
 		}
-		TimeInstrument ti = profiler.stop();
-		ti.log();
+		
 		Double debitTotal = listTrialview.stream().filter(x -> !x.getDebit().isEmpty())
 				.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
 		Double creditTotal = listTrialview.stream().filter(x -> !x.getCredit().isEmpty())
 				.mapToDouble(x -> Double.parseDouble(x.getCredit().replace(",", ""))).sum();
 		listTrialview
 				.add(new TrialView("Total", nf.format(debitTotal).toString(), nf.format(creditTotal).toString(), 1));
+		TimeInstrument ti = profiler.stop();
+		ti.log();
 		return listTrialview;
 	}
 
