@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace ="fragments :: head"></head>
+<body>
+<div th:replace ="fragments :: navbar"></div>
+<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
+            <input type="submit" value="Sign Out" />
+        </form>
+    </div>
+    <div>
+        <h1>Balance Sheet</h1>
+    </div>
+     
+    <div>
+    	<div class=scrol_daybook>
+        <div class="col-xs-6 col-md-6" style="padding:0">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th id="center_align">Liability</th>
+                    <th id="center_align">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+               		<tr th:each="liability: ${liabilities}">
+               		 <td id="left_align" th:text ="${liability.acc}">Acc Head Name</td>
+               		 <td id="right_align" style="color:darkgreen" th:text="${liability.amt}">Debit</td>
+               		</tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="col-xs-6 col-md-6" style="padding:0">
+         <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th id="center_align">Asset</th>
+                    <th id="center_align">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+               		<tr th:each="asset: ${assets}">
+               		 <td id="left_align" th:text ="${asset.acc}">Acc Head Name</td>
+               		 <td id="right_align" style="color:darkgreen" th:text="${asset.amt}">Debit</td>
+               		</tr>
+            </tbody>
+        </table>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
