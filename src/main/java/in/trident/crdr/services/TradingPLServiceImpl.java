@@ -19,6 +19,7 @@ import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.models.CommonForm;
+import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.DaybookRepository;
@@ -59,10 +60,6 @@ public class TradingPLServiceImpl implements TradingPLService {
 		netDebit = 0d;
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		counter = 0;
-		if (tradingPLForm.isReportOrder()) { // Group == true
-
-		} else {
-			// All - false
 			List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs(uid, cid);
 			Collections.sort(tradingAccs);
 			tradingAccs.forEach((accs) -> {
@@ -175,7 +172,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 				}
 
 			});
-		}
+		
 		// Net Profit or Loss
 		TradingPLView netProfit = new TradingPLView();
 		Double netprofitvalue = netDebit - netCredit;
@@ -272,6 +269,32 @@ public class TradingPLServiceImpl implements TradingPLService {
 		LOGGER.debug("End of CalculateTradingPL method");
 		return arr;
 
+	}
+
+	@Override
+	public List<List<TplBalView>> createTradingPL2(CommonForm tradingPLForm, Long uid, Long cid) {
+		List<TradingPLView> tradingplview = createTradingPL(tradingPLForm, uid, cid);
+		List<TplBalView> expense = new LinkedList<>();
+		List<TplBalView> income = new LinkedList<>();
+		tradingplview.forEach(tplv -> {
+			if (tplv.getDebit().equals("") && tplv.getCredit().equals("")) {
+				// Intentionally left empty to remove header
+			} else if (!tplv.getDebit().equals("") && !tplv.getCredit().equals("")) {
+				expense.add(new TplBalView(tplv.getParticulars(),tplv.getDebit(),tplv.getLevel()));
+				income.add(new TplBalView(tplv.getParticulars(),tplv.getCredit(),tplv.getLevel()));	
+			} else if(tplv.getDebit().equals("")) {
+				// income
+				income.add(new TplBalView(tplv.getParticulars(),tplv.getCredit(),tplv.getLevel()));
+			}  else {
+				// expense
+				expense.add(new TplBalView(tplv.getParticulars(),tplv.getDebit(),tplv.getLevel()));
+			}
+		});
+		 List<List<TplBalView>> list = new LinkedList<>();
+		 list.add(expense);
+		 list.add(income);
+		
+		return list;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import in.trident.crdr.models.CommonForm;
+import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.BalanceSheetView;
 
 /**
@@ -21,4 +22,6 @@ public interface BalanceSheetService {
 	
 	List<BalanceSheetView> createBalSheet(CommonForm balSheetForm, Long uid, Long cid); 
 	String[] calculateLedgerBalance(Integer code, String endDate, Long uid, Long cid);
+	List<List<TplBalView>> createBalSheet2(CommonForm balSheetForm, Long uid, Long cid);
+
 }

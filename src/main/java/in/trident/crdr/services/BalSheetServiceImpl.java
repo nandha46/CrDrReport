@@ -17,6 +17,7 @@ import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.Schedule;
 import in.trident.crdr.models.CommonForm;
+import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.BalanceSheetView;
 import in.trident.crdr.repositories.CloseBalRepo;
@@ -256,6 +257,32 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		LOGGER.debug("End of CalculateBalanceSheet method");
 		return arr;
 
+	}
+
+	@Override
+	public List<List<TplBalView>> createBalSheet2(CommonForm balSheetForm, Long uid, Long cid) {
+		List<BalanceSheetView> balview = createBalSheet(balSheetForm, uid, cid);
+		List<TplBalView> asset = new LinkedList<>();
+		List<TplBalView> liability = new LinkedList<>();
+ 		balview.forEach(bv -> {
+ 			if(bv.getDebit().equals("") && bv.getCredit().equals("")) {
+ 			// Intentionally left empty to remove header
+ 			} else if (!bv.getDebit().equals("") && !bv.getCredit().equals("")) {
+ 				asset.add(new TplBalView(bv.getParticulars(),bv.getDebit(),bv.getLevel1()));
+ 				liability.add(new TplBalView(bv.getParticulars(),bv.getCredit(),bv.getLevel1()));
+ 			} else if (bv.getDebit().equals("")) {
+ 				// liability
+ 				liability.add(new TplBalView(bv.getParticulars(),bv.getCredit(),bv.getLevel1()));
+ 			} else {
+ 				// asset
+ 				asset.add(new TplBalView(bv.getParticulars(),bv.getDebit(),bv.getLevel1()));
+ 			}
+ 		});
+		
+		List<List<TplBalView>> list = new LinkedList<>();
+		list.add(liability);
+		list.add(asset);
+		return list;
 	}
 
 }
