@@ -37,6 +37,7 @@ import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
+import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
@@ -313,11 +314,23 @@ public class AppController {
 
 	@PostMapping("/tradingPL")
 	public String tradingPL(Model model, CommonForm tradingPLForm, @AuthenticationPrincipal CustomUserDetails user) {
-		List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
-		LOGGER.info("TradingPL is ready");
-		model.addAttribute("listTradingPL", listTradingPL);
-		model.addAttribute("pageTitle", "Trading - Profit & Loss");
-		return "tradingPL";
+		if (tradingPLForm.isReportOrder()) {
+			List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
+			LOGGER.info("TradingPL view  is ready");
+			model.addAttribute("listTradingPL", listTradingPL);
+			model.addAttribute("pageTitle", "Trading - Profit & Loss");
+			return "tradingPL";
+		} else {
+			List<List<TplBalView>> list = tradingPLService.createTradingPL2(tradingPLForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
+			List<TplBalView> expenses = list.get(0);
+			List<TplBalView> incomes = list.get(1);
+			LOGGER.info("TradingPL Alt view is ready");
+			model.addAttribute("expenses", expenses);
+			model.addAttribute("incomes", incomes);
+			model.addAttribute("pageTitle", "Trading - Profit & Loss");
+			return "tradingPL_alt";
+		}
+		
 	}
 
 	@GetMapping("/findBalSheet")
@@ -338,10 +351,23 @@ public class AppController {
 	@PostMapping("/BalanceSheet")
 	public String balanceSheet(Model model, CommonForm balSheetForm,
 			@AuthenticationPrincipal CustomUserDetails user) {
-		LOGGER.info("Balance Sheet Ready");
-		List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
-		model.addAttribute("listBalSheet", listBalSheet);
-		return "BalanceSheet";
+		if(balSheetForm.isReportOrder()) {
+			LOGGER.info("Balance Sheet view Ready");
+			List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
+			model.addAttribute("listBalSheet", listBalSheet);
+			model.addAttribute("pageTitle","Balance sheet");
+			return "BalanceSheet";
+		} else {
+			LOGGER.info("Balance Sheet Alt view  Ready");
+			List<List<TplBalView>> list = balanceSheetService.createBalSheet2(balSheetForm, user.getId(),csr.findCompanyIdByUserId(user.getId()));
+			List<TplBalView> liability = list.get(0);
+			List<TplBalView> asset = list.get(1);
+			model.addAttribute("assets", asset);
+			model.addAttribute("liabilities", liability);
+			model.addAttribute("pageTitle","Balance sheet");
+			return "balancesheet_alt";
+		}
+		
 	}
 
 }
