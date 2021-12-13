@@ -31,14 +31,3 @@ border: 1px solid #ddd;
   background-color: #04AA6D;
   color: white;
 }
-
-#accs option[isHeader='1']
-{
-color:red;
-font-weight:bold;
-}
-
-#accs option[isHeader='0']
-{
-font-weight:bold;
-}
