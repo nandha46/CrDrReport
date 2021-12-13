@@ -13,6 +13,9 @@ public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	@Query("Select a from AccHead a where a.userid = ?1 and a.companyid = ?2")
 	public List<AccHead> findAllAccHead(Long uid, Long cid); 
 	
+	@Query("Select a from AccHead a where a.userid = ?1 and a.companyid = ?2 and orderCode between 3 and 6")
+	public List<AccHead> findAllTradingAccs(Long uid, Long cid);
+ 	
 	@Query("select accName from AccHead a where a.userid = ?1 and a.companyid = ?2")
 	public List<String> findAccNames(Long uid, Long cid);
 	

@@ -3,6 +3,7 @@ package in.trident.crdr.controllers;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
@@ -72,6 +73,8 @@ import net.sf.jasperreports.engine.JRException;
 public class AppController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
+	
+	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Autowired
 	private UserRepository userRepo;
@@ -206,7 +209,13 @@ public class AppController {
 	}
 
 	@GetMapping("/findDaybook")
-	public String findDaybook(Model model) {
+	public String findDaybook(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		/*
+		 * find logged in user's company get from & to date
+		 */
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
+		model.addAttribute("todate", cs.getToDate().format(dateFormat));
 		model.addAttribute("formdata", new DaybookForm());
 		model.addAttribute("pageTitle", "CrDr Daybook");
 		return "findDaybook";
@@ -235,6 +244,9 @@ public class AppController {
 
 	@GetMapping("/findLedger")
 	public String findLedger(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
+		model.addAttribute("todate", cs.getToDate().format(dateFormat));
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading Ledgers...");
@@ -264,6 +276,9 @@ public class AppController {
 	public String findTrial(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		Collections.sort(accHeadList);
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
+		model.addAttribute("todate", cs.getToDate().format(dateFormat));
 		LOGGER.info("Loading Trial Balance...");
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Find Trial Balance");
@@ -283,9 +298,13 @@ public class AppController {
 
 	@GetMapping("/findTradingPL")
 	public String findTradingPl(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(),csr.findCompanyIdByUserId(user.getId()));
+		List<AccHead> accHeadList = accHeadRepo.findAllTradingAccs(user.getId(),csr.findCompanyIdByUserId(user.getId()));
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading TradingPL...");
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
+		model.addAttribute("todate", cs.getToDate().format(dateFormat));
+		model.addAttribute("closingStock", cs.getClosingStock());
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Trading - Profit and Loss");
 		model.addAttribute("tradingPLForm", new CommonForm());
@@ -303,10 +322,14 @@ public class AppController {
 
 	@GetMapping("/findBalSheet")
 	public String findBalSheet(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		List<Schedule> accsList = scheduleRepo.findAllAccounts(user.getId(),csr.findCompanyIdByUserId(user.getId()));
-		Collections.sort(accsList);
+		List<Schedule> accHeadList = scheduleRepo.findAllAccounts(user.getId(),csr.findCompanyIdByUserId(user.getId()));
+		Collections.sort(accHeadList);
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
+		model.addAttribute("todate", cs.getToDate().format(dateFormat));
+		model.addAttribute("closingStock", cs.getClosingStock());
 		LOGGER.info("Loading Balance Sheet...");
-		model.addAttribute("accsList", accsList);
+		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute("pageTitle", "Balance Sheet");
 		model.addAttribute("balSheetForm", new CommonForm());
 		return "findBalanceSheet";
