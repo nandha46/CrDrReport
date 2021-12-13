@@ -12,10 +12,40 @@
 						<legend>Select an Account</legend>
 						<div class="form-group col-xs-8">
 							<select class="form-control" th:field="*{accCode}" id="accs"
-								name="accCode" size="22" multiple disabled>
-								<option th:each="accHead : ${accHeadList}"
-									th:value="${accHead.accHeadId}" th:text="${accHead.accName}">
-									WIREFRAME</option>
+								name="accCode" size="22" multiple disabled
+								style="font-weight: bold;">
+								<th:block th:each="accHead,accStat : ${accHeadList}">
+									<th:block th:switch="${accHead.level1}">
+										<option th:case="1" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="2" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="3" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="4" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="5" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
+										<option th:case="6" th:id="${accHead.level1}"
+											th:value="${accHead.accCode}"
+											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
+											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
+											WIREFRAME</option>
 							</select>
 						</div>
 					</fieldset>
@@ -26,16 +56,15 @@
 						<div class="form-group  col-xs-10">
 							<label for="exampleFormControlSelect1">Report Order</label> <select
 								class="form-control" th:field="*{reportOrder}"
-								id="exampleFormControlSelect1">
+								id="exampleFormControlSelect1" onchange="show_level(this)">
 								<option value="false" selected>All</option>
 								<option value="true">Group</option>
 							</select>
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="inputdefault">Trial Balance as on :</label> <input
-								class="input-group date" type="date" th:filed="*{endDate}"
-								name="endDate" min="2000-01-02" max="2022-01-01"
-								value="2019-03-31">
+								class="input-group date" type="date" th:field="*{endDate}"
+								name="endDate" th:min=${fromdate} th:max=${todate} value="">
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="exampleFormControlSelect2">Accounts with Zero Balance</label> <select class="form-control"
@@ -44,10 +73,10 @@
 								<option value="true" selected>Yes</option>
 							</select>
 						</div>
-						<div class="form-group  col-xs-10">
+						<div class="form-group  col-xs-10" id="select_level" style="display:none">
 							<label for="exampleFormControlSelect3">Select Level</label> <select
 								class="form-control" th:field="*{level}"
-								id="exampleFormControlSelect3">
+								id="exampleFormControlSelect3" onchange="select_acc(this)">
 									<option value="6">6</option>
 									<option value="5">5</option>
 									<option value="4">4</option>

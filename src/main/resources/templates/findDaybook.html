@@ -12,12 +12,12 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">From Date:</label>  
                 <div class="col-sm-4">   
-			 <input type="date" class="form-control" th:filed="*{startDate}" name="startDate" min="2000-01-01" max="2022-01-01" value="2018-04-01" >
+			 <input type="date" class="form-control" th:field="*{startDate}" name="startDate" th:min=${fromdate} th:max=${todate} value="" >
             </div></div>
             <div class="form-group">
                 <label class="control-label col-sm-2">To Date:</label>
                 <div class="col-sm-4">
-                <input type="date" class="form-control" th:filed="*{endDate}" name="endDate" min="2000-01-02" max="2022-01-01" value ="2019-03-31">
+                <input type="date" class="form-control" th:field="*{endDate}" name="endDate" th:min=${fromdate} th:max=${todate} value="">
         </div> </div>
         <div class="col-sm-offset-2 col-sm-4">
         <button type="submit" class="btn btn-success">Submit </button>
@@ -25,5 +25,6 @@
 	</div>	
     </form>	
 	</div>
+	<script th:src ="@{/script/daybook.js}"></script>
 </body>
 </html>

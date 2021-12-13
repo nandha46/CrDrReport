@@ -11,16 +11,6 @@
 					<fieldset>
 						<legend>Select an Account</legend>
 						<div class="form-group col-xs-8">
-							<!-- 	<select class="form-control" th:field="*{accCode}" id="accs"
-								name="accCode" size="22" multiple disabled>
-								<option th:each="accHead : ${accHeadList}"
-									th:value="${accHead.accHeadId}" th:text="${accHead.accName}">
-									WIREFRAME</option>
-							</select>  
-						---	Second select --
-						<select class="form-control" th:field="*{accCode}" id="accs"
-								name="accCode" size="22" multiple disabled onchange=multiSelect(this)>  -->
-
 							<select class="form-control" th:field="*{accCode}" id="accs"
 								name="accCode" size="22" multiple disabled
 								style="font-weight: bold;" onchange=multiSelect(this)>
@@ -66,22 +56,20 @@
 						<div class="form-group  col-xs-10">
 							<label for="exampleFormControlSelect1">Report Order</label> <select
 								class="form-control" th:field="*{reportOrder}"
-								id="exampleFormControlSelect1">
+								id="exampleFormControlSelect1" onchange="level(this)">
 								<option value="false" selected>All</option>
 								<option value="true">Select</option>
 							</select>
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="inputdefault">From Date :</label> <input
-								class="input-group date" type="date" th:filed="*{startDate}"
-								name="startDate" min="2000-01-01" max="2022-01-01"
-								value="2018-04-01">
+								class="input-group date" type="date" th:field="*{startDate}"
+								name="startDate" th:min=${fromdate} th:max=${todate} value="">
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="inputdefault">To Date :</label> <input
-								class="input-group date" type="date" th:filed="*{endDate}"
-								name="endDate" min="2000-01-02" max="2022-01-01"
-								value="2019-03-31">
+								class="input-group date" type="date" th:field="*{endDate}"
+								name="endDate" th:min=${fromdate} th:max=${todate} value="">
 						</div>
 						<div class="form-group  col-xs-10">
 							<label for="exampleFormControlSelect2">Transacted
@@ -111,29 +99,6 @@
 			</form>
 		</div>
 	</div>
-	<script>
-	function multiSelect(obj){
-		console.log("level: "+obj.options[obj.selectedIndex].id + " count: "+obj.options[obj.selectedIndex].getAttribute('count'));
-		if (obj.options[obj.selectedIndex].value == 0){
-		second(obj, parseInt(obj.options[obj.selectedIndex].id), parseInt(obj.options[obj.selectedIndex].getAttribute('count')));
-	}
-		}
-	
-	function second (elem, level,count){
-	//	console.log(typeof level);
-			for(var i = 0; i < elem.options.length; i++){
-				if (parseInt(elem.options[i].getAttribute('count')) > count){
-					if (parseInt(elem.options[i].id) <= level){
-						return;	
-						}
-					elem.options[i].selected = true;
-					console.log("Selected:"+elem.options[i].getAttribute('count'));
-					
-				}
-			}
-	}
-	
-	</script>
-	<script th:src="@{/script/disableselect.js}"></script>
+	<script th:src="@{/script/ledger_script.js}"></script>
 </body>
 </html>
