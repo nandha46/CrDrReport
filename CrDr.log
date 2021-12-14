@@ -1140,3 +1140,439 @@ Caused by: java.lang.Error: Unresolved compilation problems:
 2021-Dec-13 23:40:32 [RMI TCP Connection(38)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
 2021-Dec-13 23:40:32 [RMI TCP Connection(38)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-5 - Shutdown initiated...
 2021-Dec-13 23:40:32 [RMI TCP Connection(38)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-5 - Shutdown completed.
+2021-Dec-13 23:44:01 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper        - Neither @ContextConfiguration nor @ContextHierarchy found for test class [in.trident.crdr.CrDrReportApplicationTests], using SpringBootContextLoader
+2021-Dec-13 23:44:01 [main] INFO  o.s.t.c.s.AbstractContextLoader                    - Could not detect default resource locations for test class [in.trident.crdr.CrDrReportApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-Dec-13 23:44:01 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils       - Could not detect default configuration classes for test class [in.trident.crdr.CrDrReportApplicationTests]: CrDrReportApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2021-Dec-13 23:44:01 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper        - Found @SpringBootConfiguration in.trident.crdr.CrDrReportApplication for test class in.trident.crdr.CrDrReportApplicationTests
+2021-Dec-13 23:44:01 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper        - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener]
+2021-Dec-13 23:44:01 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper        - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@550a1967, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2a640157, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@52851b44, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@584f54e6, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@5d8bafa9, org.springframework.test.context.support.DirtiesContextTestExecutionListener@576f63f6, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2dca0d64, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@f80945f, org.springframework.test.context.event.EventPublishingTestExecutionListener@ff684e1, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@23aa363a, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@5ef6ae06, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@55dfebeb, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@6e35bc3d, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1cdc4c27, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@77b14724, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@5d9b7a8a, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@1e8ce150]
+2021-Dec-13 23:44:02 [main] INFO  i.t.c.CrDrReportApplicationTests                   - Starting CrDrReportApplicationTests using Java 1.8.0_251 on Olympus with PID 15188 (started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-13 23:44:02 [main] INFO  i.t.c.CrDrReportApplicationTests                   - No active profile set, falling back to default profiles: default
+2021-Dec-13 23:44:03 [main] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-13 23:44:03 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-13 23:44:03 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 175 ms. Found 7 JPA repository interfaces.
+2021-Dec-13 23:44:03 [main] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-13 23:44:03 [main] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-13 23:44:04 [main] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-13 23:44:04 [main] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-13 23:44:05 [main] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-13 23:44:05 [main] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-13 23:44:06 [main] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-13 23:44:06 [main] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-13 23:44:07 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-13 23:44:07 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-13 23:44:08 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-13 23:44:09 [main] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7f94541b, org.springframework.security.web.context.SecurityContextPersistenceFilter@5e34a84b, org.springframework.security.web.header.HeaderWriterFilter@30ed2a26, org.springframework.security.web.csrf.CsrfFilter@3b1137b0, org.springframework.security.web.authentication.logout.LogoutFilter@4e26040f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@64af5454, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@6a3a56de, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@7bebad0d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7577589, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@522f0bb8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6c4d0224, org.springframework.security.web.session.SessionManagementFilter@1e406cbe, org.springframework.security.web.access.ExceptionTranslationFilter@2e057637, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@20960b51]
+2021-Dec-13 23:44:10 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-13 23:44:10 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-13 23:44:12 [main] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-13 23:44:12 [main] INFO  i.t.c.CrDrReportApplicationTests                   - Started CrDrReportApplicationTests in 10.316 seconds (JVM running for 12.311)
+2021-Dec-13 23:44:12 [SpringContextShutdownHook] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-13 23:44:12 [SpringContextShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-13 23:44:12 [SpringContextShutdownHook] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-13 23:44:12 [SpringContextShutdownHook] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-14 11:08:27 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 5740 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-14 11:08:27 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-14 11:08:27 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-14 11:08:27 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-14 11:08:28 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 11:08:28 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-14 11:08:28 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 94 ms. Found 7 JPA repository interfaces.
+2021-Dec-14 11:08:28 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-14 11:08:28 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 11:08:29 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-14 11:08:29 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 11:08:29 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-14 11:08:29 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-14 11:08:29 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-14 11:08:29 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 2231 ms
+2021-Dec-14 11:08:30 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [2EF05A8CEB7A6E127D4491BA2E5082C5]
+2021-Dec-14 11:08:30 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-14 11:08:30 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-14 11:08:30 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-14 11:08:30 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-14 11:08:31 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-14 11:08:31 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-14 11:08:32 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-14 11:08:32 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 11:08:33 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-14 11:08:33 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@743d0d92, org.springframework.security.web.context.SecurityContextPersistenceFilter@79919180, org.springframework.security.web.header.HeaderWriterFilter@67f9e308, org.springframework.security.web.csrf.CsrfFilter@46f23df2, org.springframework.security.web.authentication.logout.LogoutFilter@42edaae3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5f400f6c, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@47213793, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@43c5da72, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@33919ff7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4038ade5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@45751376, org.springframework.security.web.session.SessionManagementFilter@18750fdb, org.springframework.security.web.access.ExceptionTranslationFilter@326e8f20, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@374753f5]
+2021-Dec-14 11:08:33 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 11:08:33 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-14 11:08:34 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-14 11:08:34 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-14 11:08:34 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 11:08:34 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-14 11:08:34 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 7.615 seconds (JVM running for 9.224)
+2021-Dec-14 11:33:30 [RMI TCP Connection(33)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2021-Dec-14 11:33:30 [RMI TCP Connection(33)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 11:33:30 [RMI TCP Connection(33)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 11:33:30 [RMI TCP Connection(33)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-14 11:33:30 [RMI TCP Connection(33)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-14 21:50:13 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 15644 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-14 21:50:13 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-14 21:50:13 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-14 21:50:13 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-14 21:50:14 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 21:50:14 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-14 21:50:14 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 91 ms. Found 7 JPA repository interfaces.
+2021-Dec-14 21:50:14 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-14 21:50:14 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 21:50:15 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-14 21:50:15 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 21:50:15 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-14 21:50:15 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-14 21:50:15 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-14 21:50:15 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1962 ms
+2021-Dec-14 21:50:16 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-14 21:50:16 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-14 21:50:16 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-14 21:50:16 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-14 21:50:17 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-14 21:50:17 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-14 21:50:17 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-14 21:50:17 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 21:50:18 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-14 21:50:19 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@445a2da9, org.springframework.security.web.context.SecurityContextPersistenceFilter@6009a195, org.springframework.security.web.header.HeaderWriterFilter@14926da, org.springframework.security.web.csrf.CsrfFilter@122240bd, org.springframework.security.web.authentication.logout.LogoutFilter@afbc8b1, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@17427e25, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@87ed328, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@720d28a6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@130afe47, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3f60983f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@34e3b052, org.springframework.security.web.session.SessionManagementFilter@77e79b7c, org.springframework.security.web.access.ExceptionTranslationFilter@6e842f89, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5cc3aaac]
+2021-Dec-14 21:50:19 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 21:50:19 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-14 21:50:19 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-14 21:50:19 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-14 21:50:20 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 21:50:20 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-14 21:50:20 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 6.72 seconds (JVM running for 8.315)
+2021-Dec-14 21:50:31 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-14 21:50:31 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-14 21:50:31 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-14 21:50:35 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-14 21:50:40 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 21:50:42 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-14 21:50:43 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Balance Sheet Alt view  Ready
+2021-Dec-14 21:50:43 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   206.738 milliseconds.
+|-- Total              [TradingPLService]   206.749 milliseconds.
+
+2021-Dec-14 21:50:43 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    69.366 milliseconds.
+|-- Total              [TradingPLService]    69.368 milliseconds.
+
+2021-Dec-14 21:50:43 [http-nio-8080-exec-5] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   351.279 milliseconds.
+|-- Total           [BalSheetServiceImpl]   351.655 milliseconds.
+
+2021-Dec-14 21:50:46 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-14 21:50:51 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Balance Sheet view Ready
+2021-Dec-14 21:50:51 [http-nio-8080-exec-3] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]      2200 nanoseconds.
+|-- Total           [BalSheetServiceImpl]      3600 nanoseconds.
+
+2021-Dec-14 21:50:52 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-14 21:50:54 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 21:50:54 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-14 21:50:55 [http-nio-8080-exec-10] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    61.657 milliseconds.
+|-- Total              [TradingPLService]    61.659 milliseconds.
+
+2021-Dec-14 21:50:55 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - TradingPL Alt view is ready
+2021-Dec-14 21:50:57 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-14 21:50:59 [http-nio-8080-exec-1] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    53.109 milliseconds.
+|-- Total              [TradingPLService]    53.111 milliseconds.
+
+2021-Dec-14 21:50:59 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - TradingPL view  is ready
+2021-Dec-14 21:51:03 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-14 21:52:03 [Thread-7] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 21:52:03 [Thread-7] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 21:52:03 [Thread-7] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-14 21:52:03 [Thread-7] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-14 21:52:03 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 15644 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-14 21:52:03 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-14 21:52:04 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 43 ms. Found 7 JPA repository interfaces.
+2021-Dec-14 21:52:04 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-14 21:52:04 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 599 ms
+2021-Dec-14 21:52:04 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [89A82DEAED073DD6AD16E15883B12169]
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-14 21:52:04 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-2 - Starting...
+2021-Dec-14 21:52:04 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-2 - Start completed.
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 21:52:04 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-14 21:52:04 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@53ddaaed, org.springframework.security.web.context.SecurityContextPersistenceFilter@f69c86b, org.springframework.security.web.header.HeaderWriterFilter@2288f28f, org.springframework.security.web.csrf.CsrfFilter@58605f03, org.springframework.security.web.authentication.logout.LogoutFilter@7ff8d203, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@590d281a, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@1c29c0b2, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@695e5040, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@749ac05f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@116348c9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b579af1, org.springframework.security.web.session.SessionManagementFilter@55ab1d9a, org.springframework.security.web.access.ExceptionTranslationFilter@4d06c1d8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1bab3c16]
+2021-Dec-14 21:52:05 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 21:52:05 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-14 21:52:05 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-14 21:52:05 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-14 21:52:05 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 21:52:05 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-14 21:52:05 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 1.411 seconds (JVM running for 113.589)
+2021-Dec-14 21:52:05 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener  - Condition evaluation unchanged
+2021-Dec-14 21:52:11 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-14 21:52:11 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-14 21:52:11 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-14 21:52:12 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 21:52:13 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-14 21:52:15 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Balance Sheet Alt view  Ready
+2021-Dec-14 21:52:15 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    65.564 milliseconds.
+|-- Total              [TradingPLService]    65.570 milliseconds.
+
+2021-Dec-14 21:52:15 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    52.273 milliseconds.
+|-- Total              [TradingPLService]    52.274 milliseconds.
+
+2021-Dec-14 21:52:15 [http-nio-8080-exec-3] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   163.707 milliseconds.
+|-- Total           [BalSheetServiceImpl]   163.717 milliseconds.
+
+2021-Dec-14 21:52:16 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-14 21:52:21 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Balance Sheet view Ready
+2021-Dec-14 21:52:21 [http-nio-8080-exec-2] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    53.331 milliseconds.
+|-- Total              [TradingPLService]    53.333 milliseconds.
+
+2021-Dec-14 21:52:21 [http-nio-8080-exec-2] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    51.892 milliseconds.
+|-- Total              [TradingPLService]    51.893 milliseconds.
+
+2021-Dec-14 21:52:21 [http-nio-8080-exec-2] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   150.249 milliseconds.
+|-- Total           [BalSheetServiceImpl]   150.252 milliseconds.
+
+2021-Dec-14 21:52:25 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-14 21:57:28 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 21:57:29 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-14 21:57:32 [http-nio-8080-exec-10] WARN  i.t.c.c.AppController                              - Trial Balance Page Start
+2021-Dec-14 21:57:32 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Trial Balnce is Ready
+2021-Dec-14 21:57:35 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-14 21:57:37 [http-nio-8080-exec-2] WARN  i.t.c.c.AppController                              - Trial Balance Page Start
+2021-Dec-14 21:57:37 [http-nio-8080-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet]                - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+java.lang.NullPointerException: null
+	at in.trident.crdr.services.TrialServiceImpl.createTrialBal(TrialServiceImpl.java:76) ~[classes/:?]
+	at in.trident.crdr.controllers.AppController.trialbal(AppController.java:293) ~[classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_251]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_251]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_251]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_251]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:894) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1060) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:962) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:652) ~[tomcat-embed-core-9.0.43.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.43.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.springframework.web.servlet.resource.ResourceUrlEncodingFilter.doFilter(ResourceUrlEncodingFilter.java:67) ~[spring-webmvc-5.3.4.jar:5.3.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:105) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter.doFilterInternal(DefaultLogoutPageGeneratingFilter.java:58) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:237) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:223) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:218) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:212) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:132) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.4.5.jar:5.4.5]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93) ~[spring-boot-actuator-2.4.3.jar:2.4.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.4.jar:5.3.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:346) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:887) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1684) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [?:1.8.0_251]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_251]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.43.jar:9.0.43]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_251]
+2021-Dec-14 21:57:39 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-14 23:13:36 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 23:13:40 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Inside daybooks method
+2021-Dec-14 23:13:40 [http-nio-8080-exec-3] INFO  i.t.c.s.DaybookServiceImpl                         - 
++ Profiler [DaybookServiceImpl]
+|-- elapsed time         [DaybookService]   360.839 milliseconds.
+|-- Total            [DaybookServiceImpl]   360.852 milliseconds.
+
+2021-Dec-14 23:13:41 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 23:13:42 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-14 23:13:43 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Ledger is Ready
+2021-Dec-14 23:13:43 [http-nio-8080-exec-9] INFO  i.t.c.s.LedgerServiceImpl                          - 
++ Profiler [LedgerServiceImpl]
+|-- elapsed time          [LedgerService]    88.763 milliseconds.
+|-- Total             [LedgerServiceImpl]    88.775 milliseconds.
+
+2021-Dec-14 23:13:44 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 23:13:45 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-14 23:13:46 [http-nio-8080-exec-2] WARN  i.t.c.c.AppController                              - Trial Balance Page Start
+2021-Dec-14 23:13:46 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Trial Balnce is Ready
+2021-Dec-14 23:13:47 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 23:13:48 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-14 23:13:49 [http-nio-8080-exec-8] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    32.963 milliseconds.
+|-- Total              [TradingPLService]    32.965 milliseconds.
+
+2021-Dec-14 23:13:49 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - TradingPL Alt view is ready
+2021-Dec-14 23:13:50 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 23:13:51 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-14 23:13:51 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Balance Sheet Alt view  Ready
+2021-Dec-14 23:13:52 [http-nio-8080-exec-4] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    33.609 milliseconds.
+|-- Total              [TradingPLService]    33.610 milliseconds.
+
+2021-Dec-14 23:13:52 [http-nio-8080-exec-4] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    35.279 milliseconds.
+|-- Total              [TradingPLService]    35.281 milliseconds.
+
+2021-Dec-14 23:13:52 [http-nio-8080-exec-4] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]    95.550 milliseconds.
+|-- Total           [BalSheetServiceImpl]    95.552 milliseconds.
+
+2021-Dec-14 23:13:53 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 23:17:46 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Inside daybooks method
+2021-Dec-14 23:17:46 [http-nio-8080-exec-8] INFO  i.t.c.s.DaybookServiceImpl                         - 
++ Profiler [DaybookServiceImpl]
+|-- elapsed time         [DaybookService]   295.870 milliseconds.
+|-- Total            [DaybookServiceImpl]   295.872 milliseconds.
+
+2021-Dec-14 23:18:34 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-14 23:19:32 [Thread-15] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 23:19:32 [Thread-15] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 23:19:32 [Thread-15] INFO  c.z.h.HikariDataSource                             - HikariPool-2 - Shutdown initiated...
+2021-Dec-14 23:19:32 [Thread-15] INFO  c.z.h.HikariDataSource                             - HikariPool-2 - Shutdown completed.
+2021-Dec-14 23:19:32 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 15644 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-14 23:19:32 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-14 23:19:33 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 38 ms. Found 7 JPA repository interfaces.
+2021-Dec-14 23:19:33 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-14 23:19:33 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 523 ms
+2021-Dec-14 23:19:33 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [196819D7BAEB2F20D814C944CDE1922B]
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-14 23:19:33 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-3 - Starting...
+2021-Dec-14 23:19:33 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-3 - Start completed.
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 23:19:33 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6b976226, org.springframework.security.web.context.SecurityContextPersistenceFilter@62b2aec2, org.springframework.security.web.header.HeaderWriterFilter@9a3ef9a, org.springframework.security.web.csrf.CsrfFilter@78e11569, org.springframework.security.web.authentication.logout.LogoutFilter@70d24d26, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@16881a71, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@853e0ee, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@3f69e4be, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4918c4a6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5f512d20, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2aadc0d1, org.springframework.security.web.session.SessionManagementFilter@1288bba7, org.springframework.security.web.access.ExceptionTranslationFilter@51ff4fd5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6427270]
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 23:19:33 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-14 23:19:34 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-14 23:19:34 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-14 23:19:34 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-14 23:19:34 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-14 23:19:34 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 1.228 seconds (JVM running for 5362.315)
+2021-Dec-14 23:19:34 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener  - Condition evaluation unchanged
+2021-Dec-14 23:21:47 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-14 23:21:47 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-14 23:21:47 [http-nio-8080-exec-1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-14 23:23:03 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Inside daybooks method
+2021-Dec-14 23:23:03 [http-nio-8080-exec-3] INFO  i.t.c.s.DaybookServiceImpl                         - 
++ Profiler [DaybookServiceImpl]
+|-- elapsed time         [DaybookService]   311.554 milliseconds.
+|-- Total            [DaybookServiceImpl]   311.564 milliseconds.
+
+2021-Dec-14 23:24:37 [RMI TCP Connection(120)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2021-Dec-14 23:24:37 [RMI TCP Connection(120)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-14 23:24:37 [RMI TCP Connection(120)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-14 23:24:37 [RMI TCP Connection(120)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-3 - Shutdown initiated...
+2021-Dec-14 23:24:37 [RMI TCP Connection(120)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-3 - Shutdown completed.
