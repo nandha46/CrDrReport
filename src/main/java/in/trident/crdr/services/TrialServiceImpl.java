@@ -59,7 +59,7 @@ public class TrialServiceImpl implements TrialBalService {
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
 		List<AccHead> list = accHeadRepo.findAllAccHead(uid, cid);
 		Collections.sort(list);
-		if (trialform.isReportOrder()) { //
+		if (trialform.isReportOrder()) { // True Report order : Group
 			List<Integer> accCodes = trialform.getAccCode();
 			TrialView tv1 = new TrialView();
 			tv1.setAccName("Cash on Hand");
@@ -92,7 +92,7 @@ public class TrialServiceImpl implements TrialBalService {
 					listTrialview.add(tv);
 				}
 			});
-		} else {
+		} else { // False Report order : All
 			TrialView tv1 = new TrialView();
 			tv1.setAccName("Cash on Hand");
 			tv1.setLevel(1);

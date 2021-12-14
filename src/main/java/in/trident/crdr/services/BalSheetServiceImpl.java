@@ -62,10 +62,6 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		profiler.start("Balance Sheet");
 		List<BalanceSheetView> listBalSheet = new LinkedList<BalanceSheetView>();
 		counter = 0;
-		if (balSheetForm.isReportOrder()) {
-			// True = Group
-		} else {
-			// false = Select All
 			List<Schedule> liabilitylist = scheduleRepo.findAllLiabilityAccounts(uid, cid);
 			liabilitylist.forEach((acc) -> {
 				if (counter == 1) {
@@ -185,7 +181,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 			total.setCredit(nf.format(tcredit).toString());
 			total.setDebit(nf.format(tdebit).toString());
 			listBalSheet.add(total);
-		}
+		
 		TimeInstrument ti = profiler.stop();
 		LOGGER.info("\n" + ti.toString());
 		ti.log();
