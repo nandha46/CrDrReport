@@ -16,6 +16,17 @@ public class TradingPLView {
 	private String credit;
 	private int level;
 	
+	public TradingPLView() {
+		// Default Constructor
+	}
+	
+	public TradingPLView(String particulars, String debit, String credit, int level) {
+		this.particulars = particulars;
+		this.debit = debit;
+		this.credit = credit;
+		this.level = level;
+	}
+	
 	public String getParticulars() {
 		return particulars;
 	}
@@ -43,7 +54,7 @@ public class TradingPLView {
 	@Override
 	public String toString() {
 		return "TradingPLView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + ", level="
-				+ level + "]";
+				+ level + "]\n";
 	}
 	@Override
 	public int hashCode() {

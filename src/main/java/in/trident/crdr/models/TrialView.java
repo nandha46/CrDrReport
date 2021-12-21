@@ -56,7 +56,7 @@ public class TrialView {
 
 	@Override
 	public String toString() {
-		return "TrialView [accName=" + accName + ", debit=" + debit + ", credit=" + credit + ", level=" + level + "]";
+		return "TrialView [accName=" + accName + ", debit=" + debit + ", credit=" + credit + ", level=" + level + "]\n";
 	}
 
 	
