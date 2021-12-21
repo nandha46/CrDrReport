@@ -44,7 +44,7 @@ public class BalanceSheetView {
 	@Override
 	public String toString() {
 		return "BalanceSheetView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + ", level1="
-				+ level1 + "]";
+				+ level1 + "]\n";
 	}
 	
 
