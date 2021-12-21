@@ -19,5 +19,6 @@ public interface TrialBalService {
 
 	 List<TrialView> createTrialBal(TrialForm trialform, Long uid, Long cid);
 	 String[] calculateTrialBalance(Integer code, String endDate, Long uid, Long cid);
+	 List<TrialView> createReportGroup(List<TrialView> list, int level);
 	
 }

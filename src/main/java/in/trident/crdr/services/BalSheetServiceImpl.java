@@ -1,5 +1,6 @@
 package in.trident.crdr.services;
 
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -15,12 +16,14 @@ import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
 
+import in.trident.crdr.entities.CompanySelection;
 import in.trident.crdr.entities.Schedule;
 import in.trident.crdr.models.CommonForm;
 import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.BalanceSheetView;
 import in.trident.crdr.repositories.CloseBalRepo;
+import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.ScheduleRepo;
 
@@ -47,6 +50,9 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 	
 	@Autowired
 	private CloseBalRepo closeBalrepo;
+	
+	@Autowired
+	private CompSelectionRepo csr;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BalSheetServiceImpl.class);
 	
@@ -54,6 +60,8 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 
 	private LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
+	
+	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Override
 	public List<BalanceSheetView> createBalSheet(CommonForm balSheetForm, Long uid, Long cid) {
@@ -67,7 +75,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 				if (counter == 1) {
 					// Net Profit B/f from TradingPL
 					TradingPLView test = new TradingPLView();
-					test.setLevel(0);
+					test.setLevel(1);
 					test.setParticulars("Net Profit");
 					List<TradingPLView> listTPL = tradingPLService.createTradingPL(balSheetForm, uid, cid);
 					int index = listTPL.indexOf(test);
@@ -120,7 +128,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 					counter++;
 					// Net Profit B/f from TradingPL
 					TradingPLView test2 = new TradingPLView();
-					test2.setLevel(0);
+					test2.setLevel(2);
 					test2.setParticulars("Net Loss");
 					List<TradingPLView> listTPL = tradingPLService.createTradingPL(balSheetForm, uid, cid);
 					int index = listTPL.indexOf(test2);
@@ -191,6 +199,8 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 	@Override
 	public String[] calculateLedgerBalance(Integer code, String endDate, Long uid, Long cid) {
 		LOGGER.debug("Start of CalculateLedgerBalance method");
+		CompanySelection cs =  csr.findCompanyByUser(uid);
+		String startDate = cs.getFromDate().format(dateFormat);
 		String[] arr = { "", "" }; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
 			String[] array = { "", "Cr" };
@@ -203,7 +213,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid,cid);
+			Double tmp = daybookRepo.openBal(code, startDate, endDate, uid,cid);
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
 				// whether d2 is 0 or Somevalue Balance is Dr
@@ -226,7 +236,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid,cid);
+			Double tmp = daybookRepo.openBal(code, startDate, endDate, uid,cid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";

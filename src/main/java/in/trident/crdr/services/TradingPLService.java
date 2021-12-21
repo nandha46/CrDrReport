@@ -22,5 +22,6 @@ public interface TradingPLService {
 	List<TradingPLView> createTradingPL(CommonForm tradingPLForm, Long uid, Long cid);
 	String[] calculateTradingBalance(Integer code, String endDate, Long uid, Long cid);
 	List<List<TplBalView>> createTradingPL2(CommonForm tradingPLForm, Long uid, Long cid);
+	List<TradingPLView> createReportGroup(List<TradingPLView> list, int level);
 
 }

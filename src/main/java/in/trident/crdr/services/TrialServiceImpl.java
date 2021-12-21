@@ -1,5 +1,7 @@
 package in.trident.crdr.services;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,10 +19,12 @@ import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.AccHead;
+import in.trident.crdr.entities.CompanySelection;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
+import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 
 /**
@@ -44,11 +48,16 @@ public class TrialServiceImpl implements TrialBalService {
 
 	@Autowired
 	private CloseBalRepo closeBalRepo;
+	
+	@Autowired
+	private CompSelectionRepo csr;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TrialServiceImpl.class);
 
 	private LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
+	
+	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Override
 	public List<TrialView> createTrialBal(TrialForm trialform, Long uid, Long cid) {
@@ -59,40 +68,6 @@ public class TrialServiceImpl implements TrialBalService {
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
 		List<AccHead> list = accHeadRepo.findAllAccHead(uid, cid);
 		Collections.sort(list);
-		if (trialform.isReportOrder()) { // True Report order : Group
-			List<Integer> accCodes = trialform.getAccCode();
-			TrialView tv1 = new TrialView();
-			tv1.setAccName("Cash on Hand");
-			tv1.setLevel(1);
-			Double d = closeBalRepo.findCloseBalByDate(trialform.getEndDate(), uid, cid);
-			if (d > 0) {
-				tv1.setCredit(nf.format(Math.abs(d)).toString());
-				tv1.setDebit("");
-			} else {
-				tv1.setCredit("");
-				tv1.setDebit(nf.format(Math.abs(d)).toString());
-			}
-			listTrialview.add(tv1); 
-			accCodes.forEach((acc) -> {
-				TrialView tv = new TrialView();
-				tv.setAccName(accHeadRepo.findAccNameByAccCode(acc, uid, cid));
-				String[] arr = calculateTrialBalance(acc, trialform.getEndDate(), uid, cid);
-				if (arr[1].equals("Cr")) {
-					tv.setDebit("");
-					tv.setCredit(arr[0]);
-				} else {
-					tv.setDebit(arr[0]);
-					tv.setCredit("");
-				}
-				tv.setLevel(accHeadRepo.findLevelByAccCode(acc, uid, cid));
-				if (trialform.isZeroBal() && ((tv.getDebit().equals("0.00") && tv.getCredit().isEmpty())
-						|| (tv.getCredit().equals("0.00") && tv.getDebit().isEmpty()))) {
-					// Intentionally left empty to remove ZeroBal accounts
-				} else {
-					listTrialview.add(tv);
-				}
-			});
-		} else { // False Report order : All
 			TrialView tv1 = new TrialView();
 			tv1.setAccName("Cash on Hand");
 			tv1.setLevel(1);
@@ -124,8 +99,6 @@ public class TrialServiceImpl implements TrialBalService {
 					listTrialview.add(tv);
 				}
 			});
-		}
-		
 		Double debitTotal = listTrialview.stream().filter(x -> !x.getDebit().isEmpty())
 				.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
 		Double creditTotal = listTrialview.stream().filter(x -> !x.getCredit().isEmpty())
@@ -134,12 +107,20 @@ public class TrialServiceImpl implements TrialBalService {
 				.add(new TrialView("Total", nf.format(debitTotal).toString(), nf.format(creditTotal).toString(), 1));
 		TimeInstrument ti = profiler.stop();
 		ti.log();
-		return listTrialview;
+	//	LOGGER.info(listTrialview.toString());
+		if (trialform.isReportOrder()) {
+			List<TrialView> altList = createReportGroup(listTrialview, trialform.getLevel());
+			return altList;
+		} else {
+		return listTrialview;	
+		}
 	}
 
 	@Override
 	public String[] calculateTrialBalance(Integer code, String endDate, Long uid, Long cid) {
 		LOGGER.debug("Start of CalculateTrialBalance method");
+		CompanySelection cs =  csr.findCompanyByUser(uid);
+		String startDate = cs.getFromDate().format(dateFormat);
 		String[] arr = { "", "" }; // 0 => amount, 1=> Cr/Dr
 		if (code == 0) {
 			String[] array = { "", "Cr" };
@@ -151,7 +132,7 @@ public class TrialServiceImpl implements TrialBalService {
 		if (d1 == 0d) {
 			// Prev year Bal is Dr
 			LOGGER.debug("AccCode" + code + "Opening Debit: " + d2);
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid, cid);
+			Double tmp = daybookRepo.openBal(code, startDate, endDate, uid, cid);
 			// Null check daybook repos return value
 			if (tmp == null) {
 				// d2 is also zero, so there is no txn & no prev year bal
@@ -175,7 +156,7 @@ public class TrialServiceImpl implements TrialBalService {
 				arr[1] = "Dr";
 			}
 		} else { // then Prev year Bal is Cr
-			Double tmp = daybookRepo.openBal(code, "2018-04-01", endDate, uid, cid);
+			Double tmp = daybookRepo.openBal(code, startDate, endDate, uid, cid);
 			if (tmp == null) {
 				arr[0] = nf.format(Math.abs(d1)).toString();
 				arr[1] = "Cr";
@@ -203,4 +184,41 @@ public class TrialServiceImpl implements TrialBalService {
 		return arr;
 	}
 
+	@Override
+	public List<TrialView> createReportGroup(List<TrialView> listTrialview, int level) {
+		List<TrialView> altList = new ArrayList<>();
+		for (int i=0; i < listTrialview.size()-1; i++) {
+				Double debit = 0.0d;
+				Double credit = 0.0d;
+				String d, c ;
+				if(listTrialview.get(i+1).getLevel() > level ) {
+			//		LOGGER.info("Head name: "+listTrialview.get(i).getAccName());
+				
+					for (int j = i+1; j < listTrialview.size(); j++) {
+				//		LOGGER.info("Consumed: "+ listTrialview.get(j));
+						d = listTrialview.get(j).getDebit().replace(",", "");
+						c = listTrialview.get(j).getCredit().replace(",", "");
+						if (!d.isEmpty())
+						debit += Double.parseDouble(d);
+						
+						if(!c.isEmpty())
+						credit += Double.parseDouble(c); 
+				//		LOGGER.info("Debit: "+debit+" Credit: "+credit);
+						if (listTrialview.get(j+1).getLevel() < listTrialview.get(j).getLevel() ) {
+							altList.add(new TrialView(listTrialview.get(i).getAccName(),nf.format(debit).toString(),nf.format(credit).toString(),listTrialview.get(i).getLevel()));
+							i=j;
+					//		LOGGER.info("Break out of loop");
+							break;
+						}	
+					}
+					
+				} else {
+					altList.add(listTrialview.get(i));
+				}
+		}
+		altList.add(listTrialview.get(listTrialview.size()-1));	
+		return altList;
+	}
+
+	
 }
