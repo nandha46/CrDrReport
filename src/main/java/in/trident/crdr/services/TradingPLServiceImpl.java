@@ -207,12 +207,12 @@ public class TradingPLServiceImpl implements TradingPLService {
 		total2.setLevel(1);
 		tradingPLViewSet.add(total2);
 		List<TradingPLView> listTradingPLView = new LinkedList<TradingPLView>(tradingPLViewSet);
+		// select level
+		listTradingPLView = createReportGroup(listTradingPLView, tradingPLForm.getLevel());
 		TimeInstrument ti = profiler.stop();
 		LOGGER.info("\n" + ti.toString());
 		ti.log();
 		LOGGER.info(listTradingPLView.toString());
-		// select level
-		listTradingPLView = createReportGroup(listTradingPLView, tradingPLForm.getLevel());
 		return listTradingPLView;
 	}
 
