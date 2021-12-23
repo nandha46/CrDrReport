@@ -3,7 +3,7 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: head" />
 <body>
-	<div th:replace="fragments::index-navbar"></div>
+	<div th:replace="fragments::cs-navbar"></div>
 	<div class="container text-center">
 		<h1>Welcome to CrDr</h1>
 	</div>
@@ -13,7 +13,7 @@
 				th:object="${companySelectCriteria}" method="post">
 				<div class="col-xs-7 col-sm-6 col-lg-7">
 					<fieldset>
-						<legend>Year</legend>
+						<legend>Select Year</legend>
 						<div class="form-group col-xs-8">
 							<select class="form-control" id="years"
 								name="cid" size="10">
