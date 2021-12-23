@@ -29,7 +29,8 @@ a {
 
 .navbar {
   width: 100%;
-  background-image: linear-gradient(to right,#b92b27,#1565C0);
+ /* background-image: linear-gradient(to right,#b92b27,#1565C0); */
+  background: linear-gradient(90deg, rgba(80,76,76,1) 0%, rgba(249,249,249,1) 51%, rgba(80,76,76,1) 100%);
   overflow: auto;
 }
 
