@@ -12,10 +12,24 @@ package in.trident.crdr.models;
 
 public class BalanceSheetView {
 	
+	
+	
+	
 	private String particulars;
 	private String debit;
 	private String credit;
 	private int level1;
+	
+	public BalanceSheetView() {
+		// Default constructor
+	}
+	
+	public BalanceSheetView(String particulars, String debit, String credit, int level1) {
+		this.particulars = particulars;
+		this.debit = debit;
+		this.credit = credit;
+		this.level1 = level1;
+	}
 	
 	public String getParticulars() {
 		return particulars;

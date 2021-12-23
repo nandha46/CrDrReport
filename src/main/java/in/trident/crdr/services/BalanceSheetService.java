@@ -23,5 +23,5 @@ public interface BalanceSheetService {
 	List<BalanceSheetView> createBalSheet(CommonForm balSheetForm, Long uid, Long cid); 
 	String[] calculateLedgerBalance(Integer code, String endDate, Long uid, Long cid);
 	List<List<TplBalView>> createBalSheet2(CommonForm balSheetForm, Long uid, Long cid);
-
+	List<BalanceSheetView> createReportGroup(List<BalanceSheetView> list, int level);
 }
