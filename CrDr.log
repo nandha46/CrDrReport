@@ -1003,3 +1003,833 @@
 2021-Dec-17 15:20:12 [RMI TCP Connection(312)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
 2021-Dec-17 15:20:12 [RMI TCP Connection(312)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
 2021-Dec-17 15:20:12 [RMI TCP Connection(312)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-21 16:33:46 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 1124 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-21 16:33:46 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-21 16:33:46 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-21 16:33:46 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-21 16:33:47 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-21 16:33:47 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-21 16:33:47 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 78 ms. Found 7 JPA repository interfaces.
+2021-Dec-21 16:33:47 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-21 16:33:47 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1826 ms
+2021-Dec-21 16:33:48 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [289860D4495C197A10AC6E27199CC8DF]
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-21 16:33:48 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-21 16:33:48 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-21 16:33:49 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-21 16:33:49 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-21 16:33:50 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-21 16:33:50 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-21 16:33:51 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-21 16:33:51 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6eda06e, org.springframework.security.web.context.SecurityContextPersistenceFilter@5d93454a, org.springframework.security.web.header.HeaderWriterFilter@35314401, org.springframework.security.web.csrf.CsrfFilter@5c9aa428, org.springframework.security.web.authentication.logout.LogoutFilter@2a7396a0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@387d692, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@5f2cd152, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@5a8e3722, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ea988c0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7a3ade14, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6157d9e1, org.springframework.security.web.session.SessionManagementFilter@3ab23b65, org.springframework.security.web.access.ExceptionTranslationFilter@168aff7b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6762b688]
+2021-Dec-21 16:33:51 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-21 16:33:51 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-21 16:33:51 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-21 16:33:51 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-21 16:33:52 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-21 16:33:52 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-21 16:33:52 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 6.164 seconds (JVM running for 7.563)
+2021-Dec-21 16:33:52 [RMI TCP Connection(3)-127.0.0.1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-21 16:33:52 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-21 16:33:52 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-21 16:34:05 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-21 16:34:08 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-21 16:34:08 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-21 16:34:09 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-21 16:34:09 [http-nio-8080-exec-9] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Tue Dec 21 16:34:09 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-21 16:34:09 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-21 16:34:15 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-21 16:34:16 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Balance Sheet Alt view  Ready
+2021-Dec-21 16:34:16 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   221.859 milliseconds.
+|-- Total              [TradingPLService]   221.869 milliseconds.
+
+2021-Dec-21 16:34:16 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 16:34:16 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    78.874 milliseconds.
+|-- Total              [TradingPLService]    78.876 milliseconds.
+
+2021-Dec-21 16:34:16 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 16:34:16 [http-nio-8080-exec-9] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   373.979 milliseconds.
+|-- Total           [BalSheetServiceImpl]   374.257 milliseconds.
+
+2021-Dec-21 16:34:19 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-21 16:34:21 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Balance Sheet view Ready
+2021-Dec-21 16:34:21 [http-nio-8080-exec-8] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    68.733 milliseconds.
+|-- Total              [TradingPLService]    68.734 milliseconds.
+
+2021-Dec-21 16:34:21 [http-nio-8080-exec-8] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 16:34:21 [http-nio-8080-exec-8] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    65.005 milliseconds.
+|-- Total              [TradingPLService]    65.027 milliseconds.
+
+2021-Dec-21 16:34:21 [http-nio-8080-exec-8] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 16:34:21 [http-nio-8080-exec-8] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   184.150 milliseconds.
+|-- Total           [BalSheetServiceImpl]   184.152 milliseconds.
+
+2021-Dec-21 17:02:22 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-21 17:02:27 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Balance Sheet view Ready
+2021-Dec-21 17:02:27 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    64.663 milliseconds.
+|-- Total              [TradingPLService]    64.665 milliseconds.
+
+2021-Dec-21 17:02:27 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 17:02:28 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    62.201 milliseconds.
+|-- Total              [TradingPLService]    62.203 milliseconds.
+
+2021-Dec-21 17:02:28 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 17:02:28 [http-nio-8080-exec-9] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   176.482 milliseconds.
+|-- Total           [BalSheetServiceImpl]   176.484 milliseconds.
+
+2021-Dec-21 17:02:31 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-21 17:02:32 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-21 17:02:36 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    66.112 milliseconds.
+|-- Total              [TradingPLService]    66.113 milliseconds.
+
+2021-Dec-21 17:02:36 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 17:02:36 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - TradingPL view  is ready
+2021-Dec-21 17:03:30 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-21 17:03:31 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-21 17:03:34 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    62.869 milliseconds.
+|-- Total              [TradingPLService]    62.870 milliseconds.
+
+2021-Dec-21 17:03:34 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 17:03:34 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - TradingPL Alt view is ready
+2021-Dec-21 17:03:36 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-21 17:03:37 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-21 17:03:38 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-21 17:03:41 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Balance Sheet view Ready
+2021-Dec-21 17:03:41 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    55.374 milliseconds.
+|-- Total              [TradingPLService]    55.376 milliseconds.
+
+2021-Dec-21 17:03:41 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 17:03:41 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    51.382 milliseconds.
+|-- Total              [TradingPLService]    51.384 milliseconds.
+
+2021-Dec-21 17:03:41 [http-nio-8080-exec-3] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-21 17:03:41 [http-nio-8080-exec-3] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   147.449 milliseconds.
+|-- Total           [BalSheetServiceImpl]   147.451 milliseconds.
+
+2021-Dec-21 17:03:42 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-21 17:03:56 [RMI TCP Connection(39)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2021-Dec-21 17:03:56 [RMI TCP Connection(39)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-21 17:03:56 [RMI TCP Connection(39)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-21 17:03:56 [RMI TCP Connection(39)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-21 17:03:56 [RMI TCP Connection(39)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-23 19:15:43 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 8216 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-23 19:15:43 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-23 19:15:43 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-23 19:15:43 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-23 19:15:44 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-23 19:15:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-23 19:15:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 91 ms. Found 7 JPA repository interfaces.
+2021-Dec-23 19:15:44 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-23 19:15:44 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-23 19:15:45 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-23 19:15:45 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-23 19:15:45 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-23 19:15:45 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-23 19:15:45 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-23 19:15:45 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 2106 ms
+2021-Dec-23 19:15:46 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [2690393F9B866FAA618DBEF13C8D4603]
+2021-Dec-23 19:15:46 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-23 19:15:46 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-23 19:15:46 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-23 19:15:46 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-23 19:15:47 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-23 19:15:47 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-23 19:15:48 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-23 19:15:48 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-23 19:15:49 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-23 19:15:49 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69ff5df5, org.springframework.security.web.context.SecurityContextPersistenceFilter@10f24c52, org.springframework.security.web.header.HeaderWriterFilter@629d3684, org.springframework.security.web.csrf.CsrfFilter@b50f0e1, org.springframework.security.web.authentication.logout.LogoutFilter@6f6ef969, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@606e1952, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@5b39962d, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@7256ed02, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3216a8e7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3a03bf34, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@19cd94ab, org.springframework.security.web.session.SessionManagementFilter@bfd681f, org.springframework.security.web.access.ExceptionTranslationFilter@18a7a25f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@53701df4]
+2021-Dec-23 19:15:49 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-23 19:15:49 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-23 19:15:50 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-23 19:15:50 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-23 19:15:50 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-23 19:15:50 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-23 19:15:50 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 7.028 seconds (JVM running for 8.668)
+2021-Dec-23 19:15:51 [RMI TCP Connection(4)-127.0.0.1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-23 19:15:51 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-23 19:15:51 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 1 ms
+2021-Dec-23 19:16:03 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:16:06 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-23 19:16:06 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-23 19:16:08 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-23 19:16:08 [http-nio-8080-exec-10] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Thu Dec 23 19:16:08 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-23 19:16:09 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:16:17 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-23 19:16:19 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Balance Sheet Alt view  Ready
+2021-Dec-23 19:16:19 [http-nio-8080-exec-10] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   310.050 milliseconds.
+|-- Total              [TradingPLService]   310.062 milliseconds.
+
+2021-Dec-23 19:16:19 [http-nio-8080-exec-10] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:16:19 [http-nio-8080-exec-10] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   112.925 milliseconds.
+|-- Total              [TradingPLService]   112.927 milliseconds.
+
+2021-Dec-23 19:16:19 [http-nio-8080-exec-10] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:16:19 [http-nio-8080-exec-10] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   524.190 milliseconds.
+|-- Total           [BalSheetServiceImpl]   524.516 milliseconds.
+
+2021-Dec-23 19:16:21 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-23 19:16:26 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Balance Sheet view Ready
+2021-Dec-23 19:16:26 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   102.283 milliseconds.
+|-- Total              [TradingPLService]   102.285 milliseconds.
+
+2021-Dec-23 19:16:26 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=0.00, credit=3,86,508.00, level=1]
+, TradingPLView [particulars=Trading Expense, debit=3,74,095.00, credit=0.00, level=1]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=0.00, credit=1,250.00, level=1]
+, TradingPLView [particulars=P & L Expense, debit=27,555.50, credit=0.00, level=1]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:16:26 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    98.066 milliseconds.
+|-- Total              [TradingPLService]    98.068 milliseconds.
+
+2021-Dec-23 19:16:26 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=0.00, credit=3,86,508.00, level=1]
+, TradingPLView [particulars=Trading Expense, debit=3,74,095.00, credit=0.00, level=1]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=0.00, credit=1,250.00, level=1]
+, TradingPLView [particulars=P & L Expense, debit=27,555.50, credit=0.00, level=1]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:16:26 [http-nio-8080-exec-9] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   276.276 milliseconds.
+|-- Total           [BalSheetServiceImpl]   276.279 milliseconds.
+
+2021-Dec-23 19:22:47 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:22:48 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-23 19:22:53 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Balance Sheet view Ready
+2021-Dec-23 19:22:53 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    91.793 milliseconds.
+|-- Total              [TradingPLService]    91.794 milliseconds.
+
+2021-Dec-23 19:22:53 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:22:53 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]    90.191 milliseconds.
+|-- Total              [TradingPLService]    90.192 milliseconds.
+
+2021-Dec-23 19:22:53 [http-nio-8080-exec-5] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:22:53 [http-nio-8080-exec-5] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   249.426 milliseconds.
+|-- Total           [BalSheetServiceImpl]   249.428 milliseconds.
+
+2021-Dec-23 19:27:08 [RMI TCP Connection(23)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2021-Dec-23 19:27:08 [RMI TCP Connection(23)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-23 19:27:08 [RMI TCP Connection(23)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-23 19:27:08 [RMI TCP Connection(23)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-23 19:27:08 [RMI TCP Connection(23)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
+2021-Dec-23 19:34:43 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Starting CrDrReportApplication using Java 1.8.0_251 on Olympus with PID 9124 (C:\Users\nandh\eclipse-workspace\CrDrReport\target\classes started by nandh in C:\Users\nandh\eclipse-workspace\CrDrReport)
+2021-Dec-23 19:34:43 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - No active profile set, falling back to default profiles: default
+2021-Dec-23 19:34:43 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-Dec-23 19:34:43 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor    - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-Dec-23 19:34:44 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-23 19:34:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-Dec-23 19:34:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          - Finished Spring Data repository scanning in 82 ms. Found 7 JPA repository interfaces.
+2021-Dec-23 19:34:44 [restartedMain] TRACE o.s.b.a.s.r.ReactiveUserDetailsServiceAutoConfiguration$ReactiveUserDetailsServiceCondition - Condition ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition on org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration did not match due to AnyNestedCondition 0 matched 2 did not; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.ReactiveWebApplicationCondition did not find reactive web application classes; NestedCondition on ReactiveUserDetailsServiceAutoConfiguration.ReactiveUserDetailsServiceCondition.RSocketSecurityEnabledCondition @ConditionalOnBean (types: org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler; SearchStrategy: all) did not find any beans of type org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler
+2021-Dec-23 19:34:44 [restartedMain] TRACE o.s.b.a.s.DefaultWebSecurityCondition              - Condition DefaultWebSecurityCondition on org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration did not match due to AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter,org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' webSecurityConfig; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat initialized with port(s): 8080 (http)
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Initializing ProtocolHandler ["http-nio-8080"]
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.a.c.c.StandardService                            - Starting service [Tomcat]
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.a.c.c.StandardEngine                             - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring embedded WebApplicationContext
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext     - Root WebApplicationContext: initialization completed in 1831 ms
+2021-Dec-23 19:34:45 [restartedMain] WARN  o.a.c.c.C.[.[.[/]                                  - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [F4B0FDCCDAE407A4ECCAFB787FE6927A]
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.h.j.i.u.LogHelper                                - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-Dec-23 19:34:45 [restartedMain] INFO  o.h.Version                                        - HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-Dec-23 19:34:46 [restartedMain] INFO  o.h.a.c.Version                                    - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-Dec-23 19:34:46 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Starting...
+2021-Dec-23 19:34:46 [restartedMain] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Start completed.
+2021-Dec-23 19:34:46 [restartedMain] INFO  o.h.d.Dialect                                      - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-Dec-23 19:34:47 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator                 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-Dec-23 19:34:47 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-23 19:34:48 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-Dec-23 19:34:48 [restartedMain] INFO  o.s.s.w.DefaultSecurityFilterChain                 - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4ef8f567, org.springframework.security.web.context.SecurityContextPersistenceFilter@567a164, org.springframework.security.web.header.HeaderWriterFilter@51d0f101, org.springframework.security.web.csrf.CsrfFilter@50469bf0, org.springframework.security.web.authentication.logout.LogoutFilter@4fdb9f10, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@456047ef, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@46666344, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@565f45c6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@456092bd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1b0fb7df, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@45d3e05f, org.springframework.security.web.session.SessionManagementFilter@65e090d, org.springframework.security.web.access.ExceptionTranslationFilter@4951606e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5e2085e9]
+2021-Dec-23 19:34:48 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Initializing ExecutorService 'applicationTaskExecutor'
+2021-Dec-23 19:34:48 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping              - Adding welcome page template: index
+2021-Dec-23 19:34:49 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer                 - LiveReload server is running on port 35729
+2021-Dec-23 19:34:49 [restartedMain] INFO  o.s.b.a.e.w.EndpointLinksResolver                  - Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-Dec-23 19:34:49 [restartedMain] INFO  o.a.c.h.Http11NioProtocol                          - Starting ProtocolHandler ["http-nio-8080"]
+2021-Dec-23 19:34:49 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer                        - Tomcat started on port(s): 8080 (http) with context path ''
+2021-Dec-23 19:34:49 [restartedMain] INFO  i.t.c.CrDrReportApplication                        - Started CrDrReportApplication in 6.263 seconds (JVM running for 7.622)
+2021-Dec-23 19:34:52 [RMI TCP Connection(3)-127.0.0.1] INFO  o.a.c.c.C.[.[.[/]                                  - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-Dec-23 19:34:52 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Initializing Servlet 'dispatcherServlet'
+2021-Dec-23 19:34:52 [RMI TCP Connection(3)-127.0.0.1] INFO  o.s.w.s.DispatcherServlet                          - Completed initialization in 2 ms
+2021-Dec-23 19:34:55 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:35:37 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:35:48 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:35:50 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-23 19:35:50 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-23 19:36:10 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-23 19:36:10 [http-nio-8080-exec-2] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Thu Dec 23 19:36:10 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-23 19:36:10 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:36:15 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Profile...
+2021-Dec-23 19:36:16 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:36:35 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:36:37 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-23 19:36:37 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-23 19:36:39 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-23 19:36:39 [http-nio-8080-exec-9] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Thu Dec 23 19:36:39 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-23 19:36:39 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:37:00 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:37:03 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-23 19:37:06 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:37:09 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-23 19:37:12 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:37:13 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-23 19:37:14 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:37:15 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-23 19:37:18 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:38:36 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:38:38 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-23 19:38:40 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:38:41 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-23 19:38:56 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:38:58 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-23 19:38:59 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:39:02 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:39:07 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-23 19:39:08 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:40:18 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-23 19:40:19 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:40:32 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:40:43 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:41:24 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:43:11 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - show company accessed
+2021-Dec-23 19:43:17 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Company Name: ZODIAC ENTERPRISES
+2021-Dec-23 19:43:17 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - {1=2018-19, 2=2019-20, 5=2016-17}
+2021-Dec-23 19:43:19 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Store company accessed
+2021-Dec-23 19:43:19 [http-nio-8080-exec-7] INFO  i.t.c.s.CompanyServiceImpl                         - Overwriting existing company: --->CompanySelection [sid=9, companyId=1, userId=9, companyName=ZODIAC ENTERPRISES, year=2018-19, fromDate=2018-04-01T00:00, toDate=2019-03-31T00:00, address=#12, Main Road, Madurai - 625 001., noOfAccs=39, noOfEntries=167, uploadDate=Thu Dec 23 19:43:19 IST 2021, closingStock=45000.0, openCash=1200.0, companyType=T]
+2021-Dec-23 19:43:19 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:44:14 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:44:16 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-23 19:44:40 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:44:42 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Loading TradingPL...
+2021-Dec-23 19:44:42 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:44:44 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-23 19:44:45 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:55:30 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Loading Profile...
+2021-Dec-23 19:55:31 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:55:43 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:55:47 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-23 19:57:45 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:57:46 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Loading Balance Sheet...
+2021-Dec-23 19:57:50 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Balance Sheet Alt view  Ready
+2021-Dec-23 19:57:50 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   228.475 milliseconds.
+|-- Total              [TradingPLService]   228.487 milliseconds.
+
+2021-Dec-23 19:57:50 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:57:50 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - 
++ Profiler [TradingPLService]
+|-- elapsed time [Start TradingPL Service]   128.404 milliseconds.
+|-- Total              [TradingPLService]   128.406 milliseconds.
+
+2021-Dec-23 19:57:50 [http-nio-8080-exec-9] INFO  i.t.c.s.TradingPLServiceImpl                       - [TradingPLView [particulars=Trading Income, debit=, credit=, level=1]
+, TradingPLView [particulars=SALES: SOFT DRINKS, debit=, credit=3,86,508.00, level=2]
+, TradingPLView [particulars=Trading Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=FREIGHT INWARD EXPENSES, debit=2,675.00, credit=, level=2]
+, TradingPLView [particulars=OPENING STOCK, debit=27,000.00, credit=, level=2]
+, TradingPLView [particulars=PURCHASE: SOFT DRINKS, debit=3,44,420.00, credit=, level=2]
+, TradingPLView [particulars=Clsoing Stock, debit=, credit=45,000.00, level=1]
+, TradingPLView [particulars=Gross Profit, debit=57,413.00, credit=, level=1]
+, TradingPLView [particulars=Total, debit=4,31,508.00, credit=4,31,508.00, level=1]
+, TradingPLView [particulars=Gross Profit B/f, debit=, credit=57,413.00, level=1]
+, TradingPLView [particulars=P & L Income, debit=, credit=, level=1]
+, TradingPLView [particulars=COMMISSION RECEIPTS, debit=, credit=1,250.00, level=2]
+, TradingPLView [particulars=P & L Expense, debit=, credit=, level=1]
+, TradingPLView [particulars=BANK CHARGES, debit=200.00, credit=, level=2]
+, TradingPLView [particulars=E.B CHARGES, debit=2,750.00, credit=, level=2]
+, TradingPLView [particulars=OFFICE EXPENSES, debit=900.00, credit=, level=2]
+, TradingPLView [particulars=PETROL, DIESEL & OIL EXPENSES, debit=3,290.00, credit=, level=2]
+, TradingPLView [particulars=POSTAGE & COURIER EXPENSES, debit=745.00, credit=, level=2]
+, TradingPLView [particulars=PRINT & STATIONERY EXPENSES, debit=795.50, credit=, level=2]
+, TradingPLView [particulars=REFRESHMENT EXPENSES, debit=575.00, credit=, level=2]
+, TradingPLView [particulars=SALARY EXPENSES, debit=5,500.00, credit=, level=2]
+, TradingPLView [particulars=SHOP RENT EXPENSES, debit=9,000.00, credit=, level=2]
+, TradingPLView [particulars=TELEPHONE EXPENSES, debit=1,300.00, credit=, level=2]
+, TradingPLView [particulars=TRAVEL EXPENSES, debit=2,500.00, credit=, level=2]
+, TradingPLView [particulars=Net Profit, debit=31,107.50, credit=, level=1]
+, TradingPLView [particulars=Total., debit=58,663.00, credit=58,663.00, level=1]
+]
+2021-Dec-23 19:57:50 [http-nio-8080-exec-9] INFO  i.t.c.s.BalSheetServiceImpl                        - 
++ Profiler [BalSheetServiceImpl]
+|-- elapsed time          [Balance Sheet]   470.717 milliseconds.
+|-- Total           [BalSheetServiceImpl]   471.184 milliseconds.
+
+2021-Dec-23 19:57:52 [http-nio-8080-exec-4] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:57:54 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Inside daybooks method
+2021-Dec-23 19:57:54 [http-nio-8080-exec-5] INFO  i.t.c.s.DaybookServiceImpl                         - 
++ Profiler [DaybookServiceImpl]
+|-- elapsed time         [DaybookService]   559.846 milliseconds.
+|-- Total            [DaybookServiceImpl]   559.859 milliseconds.
+
+2021-Dec-23 19:57:57 [http-nio-8080-exec-1] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:57:58 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Ledgers...
+2021-Dec-23 19:58:00 [http-nio-8080-exec-3] INFO  i.t.c.c.AppController                              - Ledger is Ready
+2021-Dec-23 19:58:01 [http-nio-8080-exec-3] INFO  i.t.c.s.LedgerServiceImpl                          - 
++ Profiler [LedgerServiceImpl]
+|-- elapsed time          [LedgerService]   161.505 milliseconds.
+|-- Total             [LedgerServiceImpl]   161.520 milliseconds.
+
+2021-Dec-23 19:58:04 [http-nio-8080-exec-10] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 19:58:05 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-23 19:58:06 [http-nio-8080-exec-6] WARN  i.t.c.c.AppController                              - Trial Balance Page Start
+2021-Dec-23 19:58:06 [http-nio-8080-exec-6] INFO  i.t.c.c.AppController                              - Trial Balnce is Ready
+2021-Dec-23 20:01:25 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 20:01:26 [http-nio-8080-exec-7] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-23 20:01:26 [http-nio-8080-exec-5] WARN  i.t.c.c.AppController                              - Trial Balance Page Start
+2021-Dec-23 20:01:27 [http-nio-8080-exec-5] INFO  i.t.c.c.AppController                              - Trial Balnce is Ready
+2021-Dec-23 20:01:39 [http-nio-8080-exec-2] INFO  i.t.c.c.AppController                              - Reports Page loading...
+2021-Dec-23 20:01:42 [http-nio-8080-exec-9] INFO  i.t.c.c.AppController                              - Loading Trial Balance...
+2021-Dec-23 20:01:43 [http-nio-8080-exec-8] WARN  i.t.c.c.AppController                              - Trial Balance Page Start
+2021-Dec-23 20:01:43 [http-nio-8080-exec-8] INFO  i.t.c.c.AppController                              - Trial Balnce is Ready
+2021-Dec-23 20:04:48 [RMI TCP Connection(39)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2021-Dec-23 20:04:49 [RMI TCP Connection(39)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor                     - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-Dec-23 20:04:49 [RMI TCP Connection(39)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean     - Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-Dec-23 20:04:49 [RMI TCP Connection(39)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown initiated...
+2021-Dec-23 20:04:49 [RMI TCP Connection(39)-127.0.0.1] INFO  c.z.h.HikariDataSource                             - HikariPool-1 - Shutdown completed.
