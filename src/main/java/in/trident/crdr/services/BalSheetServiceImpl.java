@@ -84,6 +84,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 					TradingPLView netProfitTplview = listTPL.get(index);
 					BalanceSheetView netProfitB4 = new BalanceSheetView();
 					netProfitB4.setLevel1(2);
+					netProfitB4.setHeader(true);
 					netProfitB4.setParticulars("Net Profit B/f");
 					netProfitB4.setCredit(netProfitTplview.getDebit());
 					netProfitB4.setDebit(netProfitTplview.getCredit());
@@ -99,6 +100,11 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 			BalanceSheetView balSheetView = new BalanceSheetView();
 			balSheetView.setParticulars(acc.getAccName());
 			balSheetView.setLevel1(acc.getLevel1());
+			if(acc.getAccCode() == 0) {
+				balSheetView.setHeader(true);
+			} else {
+				balSheetView.setHeader(false);
+			}
 			String[] arr = calculateLedgerBalance(acc.getAccCode(), balSheetForm.getEndDate(), uid, cid);
 			if (arr[1].equals("Cr")) {
 				balSheetView.setDebit("");
@@ -121,6 +127,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 				// add cash on hand by closebalRepo
 				BalanceSheetView cash = new BalanceSheetView();
 				cash.setLevel1(2);
+				cash.setHeader(true);
 				cash.setParticulars("Cash on Hand");
 				Double cashOnHand = closeBalrepo.findCloseBalByDate(balSheetForm.getEndDate(), uid, cid);
 				cash.setDebit(nf.format(cashOnHand).toString());
@@ -137,6 +144,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 					TradingPLView netProfitTplview = listTPL.get(index);
 					BalanceSheetView netProfitB4 = new BalanceSheetView();
 					netProfitB4.setLevel1(2);
+					netProfitB4.setHeader(true);
 					netProfitB4.setParticulars("Net Loss B/f");
 					netProfitB4.setCredit(netProfitTplview.getDebit());
 					netProfitB4.setDebit(netProfitTplview.getCredit());
@@ -152,6 +160,11 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 			BalanceSheetView balSheetView = new BalanceSheetView();
 			balSheetView.setParticulars(acc.getAccName());
 			balSheetView.setLevel1(acc.getLevel1());
+			if(acc.getAccCode() == 0) {
+				balSheetView.setHeader(true);
+			} else {
+				balSheetView.setHeader(false);
+			}
 			String[] arr = calculateLedgerBalance(acc.getAccCode(), balSheetForm.getEndDate(), uid, cid);
 			if (arr[1].equals("Cr")) {
 				balSheetView.setDebit("");
@@ -173,6 +186,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		closingStock.setLevel1(2);
 		closingStock.setParticulars("Closing Stock");
 		closingStock.setCredit("");
+		closingStock.setHeader(true);
 		if (balSheetForm.getClosingStock() == null) {
 			closingStock.setDebit("");
 		} else {
@@ -182,6 +196,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		// Total
 		BalanceSheetView total = new BalanceSheetView();
 		total.setLevel1(1);
+		total.setHeader(true);
 		total.setParticulars("Total");
 		Double tdebit = listBalSheet.stream().filter(x -> !x.getDebit().isEmpty())
 				.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
@@ -275,14 +290,14 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 			if (bv.getDebit().equals("") && bv.getCredit().equals("")) {
 				// Intentionally left empty to remove header
 			} else if (!bv.getDebit().equals("") && !bv.getCredit().equals("")) {
-				asset.add(new TplBalView(bv.getParticulars(), bv.getDebit(), bv.getLevel1()));
-				liability.add(new TplBalView(bv.getParticulars(), bv.getCredit(), bv.getLevel1()));
+				asset.add(new TplBalView(bv.getParticulars(), bv.getDebit(), bv.getLevel1(),bv.isHeader()));
+				liability.add(new TplBalView(bv.getParticulars(), bv.getCredit(), bv.getLevel1(),bv.isHeader()));
 			} else if (bv.getDebit().equals("")) {
 				// liability
-				liability.add(new TplBalView(bv.getParticulars(), bv.getCredit(), bv.getLevel1()));
+				liability.add(new TplBalView(bv.getParticulars(), bv.getCredit(), bv.getLevel1(),bv.isHeader()));
 			} else {
 				// asset
-				asset.add(new TplBalView(bv.getParticulars(), bv.getDebit(), bv.getLevel1()));
+				asset.add(new TplBalView(bv.getParticulars(), bv.getDebit(), bv.getLevel1(),bv.isHeader()));
 			}
 		});
 
@@ -314,7 +329,7 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 					// LOGGER.info("Debit: "+debit+" Credit: "+credit);
 					if (list.get(j + 1).getLevel1() < list.get(j).getLevel1()) {
 						trimmedList.add(new BalanceSheetView(list.get(i).getParticulars(), nf.format(debit).toString(),
-								nf.format(credit).toString(), list.get(i).getLevel1()));
+								nf.format(credit).toString(), list.get(i).getLevel1(),list.get(i).isHeader()));
 						i = j;
 						// LOGGER.info("Break out of loop");
 						break;

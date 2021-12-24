@@ -28,9 +28,9 @@
                 </tr>
             </thead>
             <tbody>
-               		<tr th:each="liability: ${liabilities}">
-               		 <td id="left_align" th:text ="${liability.acc}">Acc Head Name</td>
-               		 <td id="right_align" style="color:darkgreen" th:text="${liability.amt}">Debit</td>
+               		<tr th:each="liability: ${liabilities}" >
+               		 <td id="left_align" th:text ="${liability.acc}" th:attrappend="isHeader=${liability.header}">Acc Head Name</td>
+               		 <td id="right_align" th:text="${liability.amt}" th:attrappend="isHeader=${liability.header}">Debit</td>
                		</tr>
             </tbody>
         </table>
@@ -44,9 +44,9 @@
                 </tr>
             </thead>
             <tbody>
-               		<tr th:each="asset: ${assets}">
-               		 <td id="left_align" th:text ="${asset.acc}">Acc Head Name</td>
-               		 <td id="right_align" style="color:darkgreen" th:text="${asset.amt}">Debit</td>
+               		<tr th:each="asset: ${assets}" th:attrappend="isHeader=${asset.header}">
+               		 <td id="left_align" th:text ="${asset.acc}" th:attrappend="isHeader=${asset.header}">Acc Head Name</td>
+               		 <td id="right_align" th:text="${asset.amt}" th:attrappend="isHeader=${asset.header}">Debit</td>
                		</tr>
             </tbody>
         </table>

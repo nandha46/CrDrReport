@@ -19,16 +19,18 @@ public class BalanceSheetView {
 	private String debit;
 	private String credit;
 	private int level1;
+	private boolean header;
 	
 	public BalanceSheetView() {
 		// Default constructor
 	}
 	
-	public BalanceSheetView(String particulars, String debit, String credit, int level1) {
+	public BalanceSheetView(String particulars, String debit, String credit, int level1, boolean header) {
 		this.particulars = particulars;
 		this.debit = debit;
 		this.credit = credit;
 		this.level1 = level1;
+		this.header = header;
 	}
 	
 	public String getParticulars() {
@@ -55,10 +57,18 @@ public class BalanceSheetView {
 	public void setLevel1(int level1) {
 		this.level1 = level1;
 	}
+	public boolean isHeader() {
+		return header;
+	}
+
+	public void setHeader(boolean header) {
+		this.header = header;
+	}
+
 	@Override
 	public String toString() {
 		return "BalanceSheetView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + ", level1="
-				+ level1 + "]\n";
+				+ level1 + ", header=" + header + "]";
 	}
 	
 
