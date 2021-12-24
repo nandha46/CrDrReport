@@ -9,6 +9,35 @@ body {
 	text-align: left;
 }
 
+tbody tr td[isheader=true]{
+	text-align: left;
+	color:red;
+}
+
+tbody tr td[isheader=false]{
+	text-align: left;
+}
+
+tbody tr td[id='2']{
+	padding-left:16px;
+}
+
+tbody tr td[id='3']{
+	padding-left:16px;
+}
+
+tbody tr td[id='4']{
+	padding-left:16px;
+}
+
+tbody tr td[id='5']{
+	padding-left:16px;
+}
+
+tbody tr td[id='6']{
+	padding-left:16px;
+}
+
 #right_align {
 	text-align: right;
 }
