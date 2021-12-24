@@ -49,13 +49,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
+		
+		String[] preLoginPaths = new String[] {"/register","/process_register","/","/css/**","/img/**","/script/**"};
+		String[] findPaths = new String[] {"/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet"};
+		String[] viewPaths = new String[] {"/daybooks","/ledger","/trial","/tradingPL","/BalanceSheet"};
+		String[] userPaths = new String[] {"/reports","/upload","/profile","/success","/StoreCompany","/company_selection","/companyselect"};
+		String[] adminPaths = new String[] {"/edit/**","/delete/**","/users"};
+		
 		http.authorizeRequests()
-			.antMatchers("/register","/process_register","/","/css/**","/img/**").permitAll()
-			.antMatchers("/edit/**").hasAnyAuthority("admin")
-			.antMatchers("/daybooks","/ledger","/trial").hasAnyAuthority("developer")
-			.antMatchers("/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet","/reports","/upload","/uploadExcel","/profile","/success","/companies","/company","/loadyears","/StoreCompany","/company_selection","/companyselect").hasAnyAuthority("developer")
-			.antMatchers("/users").hasAnyAuthority("developer")
-			.antMatchers("/delete/**").hasAnyAuthority("developer","client")
+			.antMatchers(preLoginPaths).permitAll()
+			.antMatchers(adminPaths).hasAnyAuthority("admin","developer")
+			.antMatchers(findPaths).hasAnyAuthority("developer","admin","user")
+			.antMatchers(viewPaths).hasAnyAuthority("developer","admin","user")
+			.antMatchers(userPaths).hasAnyAuthority("developer","admin","user")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin().usernameParameter("email").defaultSuccessUrl("/company_selection").permitAll()
