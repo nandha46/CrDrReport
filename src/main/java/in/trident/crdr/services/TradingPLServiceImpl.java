@@ -75,6 +75,11 @@ public class TradingPLServiceImpl implements TradingPLService {
 			if (accs.getOrderCode() == 3 || accs.getOrderCode() == 4) {
 				TradingPLView tplv = new TradingPLView();
 				tplv.setParticulars(accs.getAccName());
+				if(accs.getAccCode() == 0) {
+					tplv.setHeader(true);
+				} else {
+					tplv.setHeader(false);
+				}
 				String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid, cid);
 				if (arr[1].equals("Cr")) {
 					tplv.setDebit("");
@@ -97,6 +102,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 					// Closing Stock
 					TradingPLView closingStock = new TradingPLView();
 					closingStock.setParticulars("Clsoing Stock");
+					closingStock.setHeader(true);
 					closingStock.setLevel(1);
 					closingStock.setDebit("");
 					if (tradingPLForm.getClosingStock() == null) {
@@ -122,6 +128,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 						grossProfit.setParticulars("Gross Profit");
 					}
 					grossProfit.setLevel(1);
+					grossProfit.setHeader(true);
 					tradingPLViewSet.add(grossProfit);
 					// Total
 					TradingPLView total = new TradingPLView();
@@ -133,6 +140,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 					total.setDebit(nf.format(debitTotal).toString());
 					total.setCredit(nf.format(creditTotal).toString());
 					total.setLevel(1);
+					total.setHeader(true);
 					tradingPLViewSet.add(total);
 					// Gross Profit B/f
 					TradingPLView grossProfitB = new TradingPLView();
@@ -148,11 +156,17 @@ public class TradingPLServiceImpl implements TradingPLService {
 						netCredit += Math.abs(gp);
 					}
 					grossProfitB.setLevel(1);
+					grossProfitB.setHeader(true);
 					tradingPLViewSet.add(grossProfitB);
 					counter++;
 				}
 				TradingPLView tplv = new TradingPLView();
 				tplv.setParticulars(accs.getAccName());
+				if(accs.getAccCode() == 0) {
+					tplv.setHeader(true);
+				} else {
+					tplv.setHeader(false);
+				}
 				arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid, cid);
 				if (arr[1].equals("Cr")) {
 					tplv.setDebit("");
@@ -172,6 +186,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 					}
 				}
 				tplv.setLevel(accs.getLevel1());
+				
 				if (tradingPLForm.isZeroBal() && ((tplv.getDebit().equals("0.00") && tplv.getCredit().isEmpty())
 						|| (tplv.getCredit().equals("0.00") && tplv.getDebit().isEmpty()))) {
 					// Intentionally left empty to remove ZeroBal accounts
@@ -197,6 +212,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 			netProfit.setParticulars("Net Profit");
 		}
 		netProfit.setLevel(1);
+		netProfit.setHeader(true);
 		tradingPLViewSet.add(netProfit);
 
 		// Total
@@ -205,6 +221,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 		total2.setCredit(nf.format(netCredit).toString());
 		total2.setDebit(nf.format(netDebit).toString());
 		total2.setLevel(1);
+		total2.setHeader(true);
 		tradingPLViewSet.add(total2);
 		List<TradingPLView> listTradingPLView = new LinkedList<TradingPLView>(tradingPLViewSet);
 		// select level
@@ -294,14 +311,14 @@ public class TradingPLServiceImpl implements TradingPLService {
 			if (tplv.getDebit().equals("") && tplv.getCredit().equals("")) {
 				// Intentionally left empty to remove header
 			} else if (!tplv.getDebit().equals("") && !tplv.getCredit().equals("")) {
-				expense.add(new TplBalView(tplv.getParticulars(), tplv.getDebit(), tplv.getLevel()));
-				income.add(new TplBalView(tplv.getParticulars(), tplv.getCredit(), tplv.getLevel()));
+				expense.add(new TplBalView(tplv.getParticulars(), tplv.getDebit(), tplv.getLevel(),tplv.isHeader()));
+				income.add(new TplBalView(tplv.getParticulars(), tplv.getCredit(), tplv.getLevel(),tplv.isHeader()));
 			} else if (tplv.getDebit().equals("")) {
 				// income
-				income.add(new TplBalView(tplv.getParticulars(), tplv.getCredit(), tplv.getLevel()));
+				income.add(new TplBalView(tplv.getParticulars(), tplv.getCredit(), tplv.getLevel(),tplv.isHeader()));
 			} else {
 				// expense
-				expense.add(new TplBalView(tplv.getParticulars(), tplv.getDebit(), tplv.getLevel()));
+				expense.add(new TplBalView(tplv.getParticulars(), tplv.getDebit(), tplv.getLevel(),tplv.isHeader()));
 			}
 		});
 		List<List<TplBalView>> list = new LinkedList<>();
@@ -332,7 +349,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 					// LOGGER.info("Debit: "+debit+" Credit: "+credit);
 					if (list.get(j + 1).getLevel() < list.get(j).getLevel()) {
 						altList.add(new TradingPLView(list.get(i).getParticulars(), nf.format(debit).toString(),
-								nf.format(credit).toString(), list.get(i).getLevel()));
+								nf.format(credit).toString(), list.get(i).getLevel(),list.get(i).isHeader()));
 						i = j;
 						// LOGGER.info("Break out of loop");
 						break;

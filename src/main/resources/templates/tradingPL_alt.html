@@ -29,8 +29,8 @@
             </thead>
             <tbody>
                		<tr th:each="expense: ${expenses}">
-               		 <td id="left_align" th:text ="${expense.acc}">Acc Head Name</td>
-               		 <td id="right_align" style="color:darkgreen" th:text="${expense.amt}">Debit</td>
+               		 <td id="left_align" th:text ="${expense.acc}" th:attrappend="isHeader = ${expense.header}">Acc Head Name</td>
+               		 <td id="right_align" th:text="${expense.amt}" th:attrappend="isHeader = ${expense.header}">Debit</td>
                		</tr>
             </tbody>
         </table>
@@ -44,9 +44,9 @@
                 </tr>
             </thead>
             <tbody>
-               		<tr th:each="income: ${incomes}">
-               		 <td id="left_align" th:text ="${income.acc}">Acc Head Name</td>
-               		 <td id="right_align" style="color:darkgreen" th:text="${income.amt}">Debit</td>
+               		<tr th:each="income: ${incomes}" >
+               		 <td id="left_align" th:text ="${income.acc}" th:attrappend="isHeader = ${income.header}">Acc Head Name</td>
+               		 <td id="right_align" th:text="${income.amt}" th:attrappend="isHeader = ${income.header}">Debit</td>
                		</tr>
             </tbody>
         </table>

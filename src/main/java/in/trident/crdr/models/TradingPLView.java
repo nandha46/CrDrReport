@@ -15,16 +15,18 @@ public class TradingPLView {
 	private String debit;
 	private String credit;
 	private int level;
+	private boolean header;
 	
 	public TradingPLView() {
 		// Default Constructor
 	}
 	
-	public TradingPLView(String particulars, String debit, String credit, int level) {
+	public TradingPLView(String particulars, String debit, String credit, int level, boolean header) {
 		this.particulars = particulars;
 		this.debit = debit;
 		this.credit = credit;
 		this.level = level;
+		this.header = header;
 	}
 	
 	public String getParticulars() {
@@ -51,10 +53,18 @@ public class TradingPLView {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	public boolean isHeader() {
+		return header;
+	}
+
+	public void setHeader(boolean header) {
+		this.header = header;
+	}
+
 	@Override
 	public String toString() {
 		return "TradingPLView [particulars=" + particulars + ", debit=" + debit + ", credit=" + credit + ", level="
-				+ level + "]\n";
+				+ level + ", header=" + header + "]";
 	}
 	@Override
 	public int hashCode() {

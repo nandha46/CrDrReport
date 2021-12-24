@@ -13,16 +13,18 @@ public class TplBalView {
 	private String acc;
 	private String amt;
 	private int level;
+	private boolean header;
 	
 	public TplBalView() {
 		// Default constructor
 	}
 	
-	public TplBalView(String acc, String amt, int level) {
+	public TplBalView(String acc, String amt, int level, boolean header) {
 		super();
 		this.acc = acc;
 		this.amt = amt;
 		this.level = level;
+		this.header = header;
 	}
 	
 	public String getAcc() {
@@ -44,9 +46,17 @@ public class TplBalView {
 		this.level = level;
 	}
 	
+	public boolean isHeader() {
+		return header;
+	}
+
+	public void setHeader(boolean header) {
+		this.header = header;
+	}
+
 	@Override
 	public String toString() {
-		return "TplBalView [acc=" + acc + ", amt=" + amt + ", level=" + level + "]";
+		return "TplBalView [acc=" + acc + ", amt=" + amt + ", level=" + level + ", header=" + header + "]";
 	}
 	
 	
