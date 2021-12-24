@@ -58,29 +58,42 @@ public class TrialServiceImpl implements TrialBalService {
 			.precision(Precision.fixedFraction(2));
 	
 	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	
+	private static int counter = 0;
 
 	@Override
 	public List<TrialView> createTrialBal(TrialForm trialform, Long uid, Long cid) {
 		Profiler profiler = new Profiler("TrialBalService");
 		profiler.setLogger(LOGGER);
 		profiler.start("CreateTrialBal");
-		LOGGER.debug("Start TrialBal Service");
+		LOGGER.info("Start TrialBal Service");
+		counter = 0;
 		List<TrialView> listTrialview = new LinkedList<TrialView>();
 		List<AccHead> list = accHeadRepo.findAllAccHead(uid, cid);
 		Collections.sort(list);
-			TrialView tv1 = new TrialView();
-			tv1.setAccName("Cash on Hand");
-			tv1.setLevel(1);
-			Double d = closeBalRepo.findCloseBalByDate(trialform.getEndDate(), uid, cid);
-			if (d < 0) {
-				tv1.setCredit(nf.format(Math.abs(d)).toString());
-				tv1.setDebit("");
-			} else {
-				tv1.setCredit("");
-				tv1.setDebit(nf.format(Math.abs(d)).toString());
-			}
-			listTrialview.add(tv1); 
+			
 			list.forEach((acc) -> {
+				if (counter == 1) {
+					counter++;
+					TrialView tv1 = new TrialView();
+					tv1.setAccName("Cash on Hand");
+					tv1.setLevel(2);
+					tv1.setHeader(true);
+					Double d = closeBalRepo.findCloseBalByDate(trialform.getEndDate(), uid, cid);
+					if (d < 0) {
+						tv1.setCredit(nf.format(Math.abs(d)).toString());
+						tv1.setDebit("");
+					} else {
+						tv1.setCredit("");
+						tv1.setDebit(nf.format(Math.abs(d)).toString());
+					}
+					listTrialview.add(tv1); 
+				}
+				
+				if (counter == 0) {
+					counter++;
+				} 
+				
 				TrialView tv = new TrialView();
 				tv.setAccName(acc.getAccName());
 				String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate(), uid, cid);
@@ -91,7 +104,13 @@ public class TrialServiceImpl implements TrialBalService {
 					tv.setDebit(arr[0]);
 					tv.setCredit("");
 				}
+				if (acc.getAccCode() == 0) {
+					tv.setHeader(true);
+				} else {
+					tv.setHeader(false);
+				}
 				tv.setLevel(acc.getLevel1());
+				
 				if (trialform.isZeroBal() && ((tv.getDebit().equals("0.00") && tv.getCredit().isEmpty())
 						|| (tv.getCredit().equals("0.00") && tv.getDebit().isEmpty()))) {
 					// Intentionally left empty to remove ZeroBal accounts
@@ -104,7 +123,7 @@ public class TrialServiceImpl implements TrialBalService {
 		Double creditTotal = listTrialview.stream().filter(x -> !x.getCredit().isEmpty())
 				.mapToDouble(x -> Double.parseDouble(x.getCredit().replace(",", ""))).sum();
 		listTrialview
-				.add(new TrialView("Total", nf.format(debitTotal).toString(), nf.format(creditTotal).toString(), 1));
+				.add(new TrialView("Total", nf.format(debitTotal).toString(), nf.format(creditTotal).toString(), 1,true));
 		TimeInstrument ti = profiler.stop();
 		ti.log();
 	//	LOGGER.info(listTrialview.toString());
@@ -205,7 +224,7 @@ public class TrialServiceImpl implements TrialBalService {
 						credit += Double.parseDouble(c); 
 				//		LOGGER.info("Debit: "+debit+" Credit: "+credit);
 						if (listTrialview.get(j+1).getLevel() < listTrialview.get(j).getLevel() ) {
-							altList.add(new TrialView(listTrialview.get(i).getAccName(),nf.format(debit).toString(),nf.format(credit).toString(),listTrialview.get(i).getLevel()));
+							altList.add(new TrialView(listTrialview.get(i).getAccName(),nf.format(debit).toString(),nf.format(credit).toString(),listTrialview.get(i).getLevel(),listTrialview.get(i).isHeader()));
 							i=j;
 					//		LOGGER.info("Break out of loop");
 							break;

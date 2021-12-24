@@ -14,16 +14,18 @@ public class TrialView {
 	private String debit;
 	private String credit;
 	private int level;
+	private boolean header;
 	
 	public TrialView() {
 		
 	}
 	
-	public TrialView (String aName, String debit, String credit, int level ) {
+	public TrialView (String aName, String debit, String credit, int level, boolean header ) {
 		this.accName = aName;
 		this.debit = debit;
 		this.credit = credit;
 		this.level = level;
+		this.header = header;
 	}
 	
 	public String getAccName() {
@@ -54,9 +56,18 @@ public class TrialView {
 		this.level = level;
 	}
 
+	public boolean isHeader() {
+		return header;
+	}
+
+	public void setHeader(boolean header) {
+		this.header = header;
+	}
+
 	@Override
 	public String toString() {
-		return "TrialView [accName=" + accName + ", debit=" + debit + ", credit=" + credit + ", level=" + level + "]\n";
+		return "TrialView [accName=" + accName + ", debit=" + debit + ", credit=" + credit + ", level=" + level
+				+ ", header=" + header + "]";
 	}
 
 	
