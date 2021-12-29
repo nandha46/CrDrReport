@@ -16,11 +16,11 @@
                 pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
         </File>  -->
         <RollingFile name="File"
-            fileName="CrDr.log"
-            filePattern="CrDr-%d{yyyy-MM-dd}-%i.log">
+            fileName="CrDr-log4j.log"
+            filePattern="CrDr-log4j-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
             <Policies>
-                <SizeBasedTriggeringPolicy size="1024KB" />
+                <SizeBasedTriggeringPolicy size="10240KB" />
             </Policies>
             <DefaultRolloverStrategy max="5" />
         </RollingFile>
