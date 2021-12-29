@@ -7,6 +7,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +108,26 @@ public class CSVUtil {
 		catch (IOException e) {
 			throw new RuntimeException("Failed to parse CSV file: "+ e.getMessage());
 		}
+	}
+	
+	public void processAccessDatabse() {
+		Connection conn;
+		try {
+		//	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+		 conn = DriverManager.getConnection("jdbc:ucanaccess://C:/Trident/Demo/CrDr/Data/18-19.001/18-19.001","","shuttle");
+		 Statement s = conn.createStatement();
+		 String sql = "select * from DayBook";
+		 ResultSet rs = s.executeQuery(sql);
+		 while (rs.next()) {
+			LOGGER.info(rs.getString(3)+"\n");
+		 }
+		} catch (SQLException e) {
+			LOGGER.error("SQL Error in mdb file",e);
+		} 
+		//catch (ClassNotFoundException e) {
+	//		LOGGER.info("Class not found" + e);
+		//}
+		
 	}
 }
 
