@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Logs ###
+/tomcat/work/
+
 ### STS ###
 .apt_generated
 .classpath
