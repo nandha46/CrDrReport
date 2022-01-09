@@ -1,6 +1,7 @@
 package in.trident.crdr.models;
 
 import org.springframework.web.multipart.MultipartFile;
+
 /**
  * 
  * @author Nandhakumar Subramanian
@@ -11,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class CSVUploadModel {
 
-	private MultipartFile file1,file2,file3,file4;
+	private MultipartFile file1, file2, file3, file4;
 
 	public MultipartFile getFile1() {
 		return file1;
@@ -50,7 +51,4 @@ public class CSVUploadModel {
 		return "CSVUploadModel [file1=" + file1 + ", file2=" + file2 + ", file3=" + file3 + ", file4=" + file4 + "]";
 	}
 
-	
-		
-	
 }
