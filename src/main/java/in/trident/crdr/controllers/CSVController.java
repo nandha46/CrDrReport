@@ -25,7 +25,7 @@ public class CSVController {
 	
 	private static final Logger LOGGER =LoggerFactory.getLogger(CSVController.class);
 	
-	@GetMapping("/upload")
+	@GetMapping("/uploadcsv")
 	public String uploadCSV(Model model) {
 		model.addAttribute("pageTitle", "Upload CSV File");
 		model.addAttribute("csvUploadModel", new CSVUploadModel());
@@ -33,7 +33,7 @@ public class CSVController {
 	}
 	
 	
-	@PostMapping("/uploaded")
+	@PostMapping("/csvuploaded")
 	public String success(@AuthenticationPrincipal CustomUserDetails user, Model model, CSVUploadModel csvUploadModel) {
 		StringBuffer sbr = new StringBuffer();
 		MultipartFile file1 = csvUploadModel.getFile1();
