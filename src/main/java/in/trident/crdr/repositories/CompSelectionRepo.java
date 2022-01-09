@@ -11,11 +11,11 @@ public interface CompSelectionRepo extends JpaRepository<CompanySelection, Long>
 
 	@Query("select c from CompanySelection c where c.companyId = ?1")
 	public CompanySelection findCompanyByCompanyid(Long cid);
-	
+
 	@Query("select companyId from CompanySelection c where c.userId = ?1")
 	public Long findCompanyIdByUserId(Long uid);
-	
+
 	@Query("select c from CompanySelection c where c.userId = ?1")
 	public CompanySelection findCompanyByUser(Long uid);
-	
+
 }
