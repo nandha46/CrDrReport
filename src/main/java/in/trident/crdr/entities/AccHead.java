@@ -18,6 +18,54 @@ import javax.persistence.Table;
 @Table(name="acchead")
 public class AccHead implements Comparable<AccHead> {
 
+	public AccHead() {
+		super();
+	}
+	
+	/**
+	 * @param accCode
+	 * @param accName
+	 * @param accType
+	 * @param drAmt
+	 * @param crAmt
+	 * @param sNo
+	 * @param level1
+	 * @param orderCode
+	 * @param shortName
+	 * @param budgetDrAmt
+	 * @param budgetCrAmt
+	 * @param userStatus
+	 * @param stkNeeded
+	 * @param stkOpen
+	 * @param stkStatus
+	 * @param userid
+	 * @param companyid
+	 */
+	public AccHead(int accCode, String accName, String accType, double drAmt, double crAmt, int sNo, int level1,
+			int orderCode, String shortName, double budgetDrAmt, double budgetCrAmt, boolean userStatus,
+			boolean stkNeeded, double stkOpen, String stkStatus, Long userid, Long companyid) {
+		super();
+		this.accCode = accCode;
+		this.accName = accName;
+		this.accType = accType;
+		this.drAmt = drAmt;
+		this.crAmt = crAmt;
+		this.sNo = sNo;
+		this.level1 = level1;
+		this.orderCode = orderCode;
+		this.shortName = shortName;
+		this.budgetDrAmt = budgetDrAmt;
+		this.budgetCrAmt = budgetCrAmt;
+		this.userStatus = userStatus;
+		this.stkNeeded = stkNeeded;
+		this.stkOpen = stkOpen;
+		this.stkStatus = stkStatus;
+		this.userid = userid;
+		this.companyid = companyid;
+	}
+
+
+
 	@Id
 	@Column(name="accheadid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
