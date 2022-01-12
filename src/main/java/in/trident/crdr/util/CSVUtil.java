@@ -72,7 +72,7 @@ public class CSVUtil {
 						Double.parseDouble(record.get("dramt")),
 						Double.parseDouble(record.get("cramt")),
 						Integer.parseInt(record.get("stkvalue")),
-						userid
+						userid,0l
 						);
 				daybooks.add(daybook);
 			}
@@ -99,7 +99,7 @@ public class CSVUtil {
 						Double.parseDouble(record.get("dramt")),
 						Double.parseDouble(record.get("cramt")),
 						Integer.parseInt(record.get("stkvalue")),
-						user.getId()
+						user.getId(),0l
 						);
 				daybooks.add(daybook);
 			}
