@@ -10,14 +10,12 @@ import java.nio.file.StandardCopyOption;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import in.trident.crdr.repositories.CompSelectionRepo;
 
 /**
  * 
@@ -47,10 +45,10 @@ public class FileStorageServiceImpl implements FileStorageService {
 	}
 
 	@Override
-	public Path save(MultipartFile file, Long uid, Long cid, String uname) {
+	public Path save(MultipartFile file, Long uid, String checksum, String uname) {
 
 		Path filename = this.root
-				.resolve(uid.toString() + "_" + cid + "_" + file.getOriginalFilename() + "_" + uname + ".mdb");
+				.resolve(uid.toString() + "_" + checksum + "_" + file.getOriginalFilename() + "_" + uname + ".mdb");
 		try {
 			Files.copy(file.getInputStream(), filename, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {

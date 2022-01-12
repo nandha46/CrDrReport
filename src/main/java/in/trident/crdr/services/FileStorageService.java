@@ -9,7 +9,7 @@ public interface FileStorageService {
 
 	public void init();
 
-	public Path save(MultipartFile file, Long uid, Long cid, String uname);
+	public Path save(MultipartFile file, Long uid, String checksum, String uname);
 
 	public Resource load(String filename);
 

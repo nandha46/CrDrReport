@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		String[] findPaths = new String[] {"/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet"};
 		String[] viewPaths = new String[] {"/daybooks","/ledger","/trial","/tradingPL","/BalanceSheet"};
 		String[] userPaths = new String[] {"/reports","/upload","/profile","/success","/StoreCompany","/company_selection","/companyselect"};
-		String[] adminPaths = new String[] {"/edit/**","/delete/**","/users"};
+		String[] adminPaths = new String[] {"/edit/**","/delete/**","/users","/create_user"};
 		
 		http.authorizeRequests()
 			.antMatchers(preLoginPaths).permitAll()
