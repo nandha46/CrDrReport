@@ -16,41 +16,70 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="schedule")
-public class Schedule implements Comparable<Schedule>{
+@Table(name = "schedule")
+public class Schedule implements Comparable<Schedule> {
 
+	public Schedule() {
+		
+	}
+	
 	@Id
-	@Column(name="sno")
+	@Column(name = "sno")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer sNo;
-	
-	@Column(name="acc_code")
+
+	@Column(name = "acc_code")
 	private int accCode;
-	
-	@Column(name="acc_name")
+
+	/**
+	 * @param accCode
+	 * @param accName
+	 * @param crAmt
+	 * @param drAmt
+	 * @param level1
+	 * @param orderCode
+	 * @param accType
+	 * @param userid
+	 * @param companyid
+	 */
+	public Schedule(int accCode, String accName, Double crAmt, Double drAmt, int level1, int orderCode, String accType,
+			Long userid, Long companyid) {
+		super();
+		this.accCode = accCode;
+		this.accName = accName;
+		this.crAmt = crAmt;
+		this.drAmt = drAmt;
+		this.level1 = level1;
+		this.orderCode = orderCode;
+		this.accType = accType;
+		this.userid = userid;
+		this.companyid = companyid;
+	}
+
+	@Column(name = "acc_name")
 	private String accName;
-	
-	@Column(name="cr_amt")
+
+	@Column(name = "cr_amt")
 	private Double crAmt;
 
-	@Column(name="dr_amt")
+	@Column(name = "dr_amt")
 	private Double drAmt;
-	
-	@Column(name="level1")
+
+	@Column(name = "level1")
 	private int level1;
 
-	@Column(name="order_code")
+	@Column(name = "order_code")
 	private int orderCode;
-	
-	@Column(name="acc_type")
+
+	@Column(name = "acc_type")
 	private String accType;
 
-	@Column(name="userid", nullable = false)
+	@Column(name = "userid", nullable = false)
 	private Long userid;
-	
-	@Column(name="companyid", nullable = false)
+
+	@Column(name = "companyid", nullable = false)
 	private Long companyid;
-	
+
 	public Integer getsNo() {
 		return sNo;
 	}
@@ -143,6 +172,4 @@ public class Schedule implements Comparable<Schedule>{
 				+ ", userid=" + userid + ", companyid=" + companyid + "]";
 	}
 
-	
-	
 }

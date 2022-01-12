@@ -129,7 +129,124 @@ public class Company implements Comparable<Company> {
 	@Column(name = "GraphicPrint")
 	private boolean graphicPrint;
 
-	
+	public Company() {
+
+	}
+
+	/**
+	 * @param userid
+	 * @param compName
+	 * @param compYear
+	 * @param shortName
+	 * @param prodID
+	 * @param rcNo
+	 * @param compType
+	 * @param compFormat
+	 * @param fromDate
+	 * @param toDate
+	 * @param address1
+	 * @param address2
+	 * @param city
+	 * @param pincode
+	 * @param state
+	 * @param phone1
+	 * @param phone2
+	 * @param fax
+	 * @param email
+	 * @param quantity
+	 * @param qtyWidth
+	 * @param qtyDecimal
+	 * @param qtyTotal
+	 * @param allBDate
+	 * @param localBDate
+	 * @param bNoofAc
+	 * @param bNoofEntries
+	 * @param bLastTransDate
+	 * @param allBMedium
+	 * @param localBMedium
+	 * @param allBUser
+	 * @param localBUser
+	 * @param restoreDate
+	 * @param restoreMedium
+	 * @param restoreUser
+	 * @param cNoofAc
+	 * @param cNoofEntries
+	 * @param cLastTransDate
+	 * @param currUser
+	 * @param lastUser
+	 * @param currLogin
+	 * @param lastLogin
+	 * @param logOut
+	 * @param lockDate
+	 * @param closeStk
+	 * @param openCash
+	 * @param openDiffDr
+	 * @param openDiffCr
+	 * @param hide
+	 * @param graphicPrint
+	 */
+	public Company(Long userid, String compName, String compYear, String shortName, String prodID, String rcNo,
+			String compType, boolean compFormat, LocalDateTime fromDate, LocalDateTime toDate, String address1,
+			String address2, String city, String pincode, String state, String phone1, String phone2, String fax,
+			String email, boolean quantity, String qtyWidth, String qtyDecimal, boolean qtyTotal,
+			LocalDateTime allBDate, LocalDateTime localBDate, int bNoofAc, int bNoofEntries,
+			LocalDateTime bLastTransDate, String allBMedium, String localBMedium, String allBUser, String localBUser,
+			LocalDateTime restoreDate, String restoreMedium, String restoreUser, int cNoofAc, int cNoofEntries,
+			LocalDateTime cLastTransDate, String currUser, String lastUser, LocalDateTime currLogin,
+			LocalDateTime lastLogin, Date logOut, LocalDateTime lockDate, Double closeStk, Double openCash,
+			Double openDiffDr, Double openDiffCr, boolean hide, boolean graphicPrint) {
+		super();
+		this.userid = userid;
+		this.compName = compName;
+		this.compYear = compYear;
+		this.shortName = shortName;
+		this.prodID = prodID;
+		this.rcNo = rcNo;
+		this.compType = compType;
+		this.compFormat = compFormat;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.city = city;
+		this.pincode = pincode;
+		this.state = state;
+		this.phone1 = phone1;
+		this.phone2 = phone2;
+		this.fax = fax;
+		this.email = email;
+		this.quantity = quantity;
+		this.qtyWidth = qtyWidth;
+		this.qtyDecimal = qtyDecimal;
+		this.qtyTotal = qtyTotal;
+		this.allBDate = allBDate;
+		this.localBDate = localBDate;
+		this.bNoofAc = bNoofAc;
+		this.bNoofEntries = bNoofEntries;
+		this.bLastTransDate = bLastTransDate;
+		this.allBMedium = allBMedium;
+		this.localBMedium = localBMedium;
+		this.allBUser = allBUser;
+		this.localBUser = localBUser;
+		this.restoreDate = restoreDate;
+		this.restoreMedium = restoreMedium;
+		this.restoreUser = restoreUser;
+		this.cNoofAc = cNoofAc;
+		this.cNoofEntries = cNoofEntries;
+		this.cLastTransDate = cLastTransDate;
+		this.currUser = currUser;
+		this.lastUser = lastUser;
+		this.currLogin = currLogin;
+		this.lastLogin = lastLogin;
+		this.logOut = logOut;
+		this.lockDate = lockDate;
+		this.closeStk = closeStk;
+		this.openCash = openCash;
+		this.openDiffDr = openDiffDr;
+		this.openDiffCr = openDiffCr;
+		this.hide = hide;
+		this.graphicPrint = graphicPrint;
+	}
 
 	public Long getCompanyid() {
 		return companyid;

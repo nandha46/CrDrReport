@@ -35,6 +35,28 @@ public class CloseBal {
 	@Column(name="companyid", nullable = false)
 	private Long companyid;
 
+	public CloseBal() {
+		
+	}
+	
+	/**
+	 * @param date
+	 * @param drTot
+	 * @param crTot
+	 * @param closeBal
+	 * @param userid
+	 * @param companyid
+	 */
+	public CloseBal(String date, double drTot, double crTot, double closeBal, Long userid, Long companyid) {
+		super();
+		this.date = date;
+		this.drTot = drTot;
+		this.crTot = crTot;
+		this.closeBal = closeBal;
+		this.userid = userid;
+		this.companyid = companyid;
+	}
+
 	public long getId() {
 		return id;
 	}
