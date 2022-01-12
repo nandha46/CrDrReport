@@ -187,7 +187,7 @@ public class AppController {
 		return "reports";
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/create_user")
 	public String showRegistrationForm(Model model) {
 		model.addAttribute("user", new User());
 		return "signup_form";
@@ -197,12 +197,12 @@ public class AppController {
 	public String processRegister(User user) {
 		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
 		String encodedPass = passEncoder.encode(user.getPassword());
-		System.out.println("Password is : " + user.getPassword());
+		LOGGER.info("Password is : " + user.getPassword());
 		user.setPassword(encodedPass);
 		Set<Role> roles = new HashSet<Role>();
 		Role role = new Role();
 		// TODO Add another field in User object named role or pass it using JS
-		role.setRoleName("");
+		role.setRoleName("user");
 		roles.add(role);
 		user.setRoles(roles);
 		userRepo.save(user);

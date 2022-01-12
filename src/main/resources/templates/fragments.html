@@ -33,6 +33,10 @@
 				CHANGE COMPANY</a>
 			<a th:href="@{/upload}"><i class="fa fa-sign-in" aria-hidden="true"></i>
 				CSV UPLOAD</a>
+				<sec:authorize="hasAnyRole('admin','developer')">
+			<a  th:href="@{/create_user}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				CREATE NEW USER</a>	
+				</sec:authorize>
 			<a th:href="@{/profile}"><i class="fa fa-sign-in" aria-hidden="true"></i>
 				PROFILE</a>	
 			<a th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -51,6 +55,8 @@
 	<div th:fragment="cs-navbar">
 		<div class="navbar">
 			<a class="active" href="./"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
+			<a th:href="@{/upload}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+				UPLOAD COMPANY</a>
 			 <a th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i>
 				LOGOUT</a>
 		</div>
