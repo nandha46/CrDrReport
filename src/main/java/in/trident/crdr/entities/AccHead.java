@@ -25,12 +25,12 @@ public class AccHead implements Comparable<AccHead> {
 	/**
 	 * @param accCode
 	 * @param accName
-	 * @param accType
-	 * @param drAmt
+	 * @param accType Account type
+	 * @param drAmt Debit Amount
 	 * @param crAmt
-	 * @param sNo
-	 * @param level1
-	 * @param orderCode
+	 * @param sNo serial number
+	 * @param level1 level
+	 * @param orderCode 
 	 * @param shortName
 	 * @param budgetDrAmt
 	 * @param budgetCrAmt

@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import in.trident.crdr.customExceptions.FileTypeException;
 import in.trident.crdr.models.MDBUploadModel;
 import in.trident.crdr.services.CustomUserDetails;
-import in.trident.crdr.services.MDBService;
+import in.trident.crdr.services.DatabaseService;
 
 /**
  * 
@@ -30,7 +30,7 @@ import in.trident.crdr.services.MDBService;
 public class DBUploadController {
 
 	@Autowired
-	private MDBService mdbService;
+	private DatabaseService mdbService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DBUploadController.class);
 
