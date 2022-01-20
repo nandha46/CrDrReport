@@ -124,7 +124,7 @@ public class AppController {
 		CSVUtil csv = new CSVUtil();
 		csv.processAccessDatabse();
 	}
-	
+
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle", "CrDr Home");
@@ -185,36 +185,6 @@ public class AppController {
 		model.addAttribute("companyName", cs.getCompanyName());
 		LOGGER.info("Reports Page loading...");
 		return "reports";
-	}
-
-	@GetMapping("/create_user")
-	public String showRegistrationForm(Model model) {
-		model.addAttribute("user", new User());
-		return "signup_form";
-	}
-
-	@PostMapping("/process_register")
-	public String processRegister(User user) {
-		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-		String encodedPass = passEncoder.encode(user.getPassword());
-		LOGGER.info("Password is : " + user.getPassword());
-		user.setPassword(encodedPass);
-		Set<Role> roles = new HashSet<Role>();
-		Role role = new Role();
-		// TODO Add another field in User object named role or pass it using JS
-		role.setRoleName("user");
-		roles.add(role);
-		user.setRoles(roles);
-		userRepo.save(user);
-		// TODO Check if user already exists by email id
-		return "register_success";
-	}
-
-	@GetMapping("/users")
-	public String listUsers(Model model) {
-		List<User> userList = userRepo.findAll();
-		model.addAttribute("userList", userList);
-		return "users";
 	}
 
 	@GetMapping("/findDaybook")
