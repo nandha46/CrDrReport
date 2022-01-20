@@ -2,13 +2,14 @@ package in.trident.crdr.util;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,6 +57,12 @@ public class DatabaseUtil {
 		}
 	}
 
+	/**
+	 * Shows detail about list of Tables
+	 * 
+	 * @param Connection c
+	 * @throws SQLException
+	 */
 	public void databaseDetails(Connection c) throws SQLException {
 		DatabaseMetaData metaData = c.getMetaData();
 		// getTableTypes(metaData);
@@ -68,6 +75,12 @@ public class DatabaseUtil {
 		LOGGER.info("------------------------");
 	}
 
+	/**
+	 * Shows Details about a table's Column and datatype
+	 * 
+	 * @param ResultSet rs
+	 * @throws SQLException
+	 */
 	public void showTableDetails(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmdata = rs.getMetaData();
 		LOGGER.info("Table Name: " + rsmdata.getTableName(1));
@@ -79,6 +92,58 @@ public class DatabaseUtil {
 		}
 		LOGGER.info("------------------");
 	}
+	/**
+	 * This method takes Java.sql.Date object and returns LocalDateTime
+	 * 
+	 * @param Java.sql.Date
+	 * @return LocalDateTime
+	 */
+	private static LocalDateTime convert(Date date) {
+		if (date == null)
+			return null;
+		return new Timestamp(date.getTime()).toLocalDateTime();
+	}
+
+	public List<Company> storeTableCompany(Statement s, Long uid) throws SQLException {
+		String sql = "select * from Company";
+		ResultSet rs = s.executeQuery(sql);
+		// Display table details
+		showTableDetails(rs);
+		LOGGER.info("===Company===");
+		List<Company> companies = new LinkedList<>();
+
+		while (rs.next()) {
+
+			LOGGER.info(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getBoolean(4) + " "
+					+ rs.getDate(5) + " " + rs.getDate(6) + " " + rs.getString(7) + " " + rs.getString(8) + " "
+					+ rs.getString(9) + " " + rs.getString(10) + " " + rs.getString(11) + " " + rs.getString(12) + " "
+					+ rs.getString(13) + " " + rs.getString(14) + " " + rs.getString(15) + " " + rs.getBoolean(16) + " "
+					+ rs.getString(17) + " " + rs.getString(18) + " " + rs.getBoolean(19) + " " + rs.getDate(20) + " "
+					+ rs.getDate(21) + " " + rs.getInt(22) + " " + rs.getInt(23) + " " + rs.getDate(24) + " "
+					+ rs.getString(25) + " " + rs.getString(26) + " " + rs.getString(27) + " " + rs.getString(28) + " "
+					+ rs.getDate(29) + " " + rs.getString(30) + " " + rs.getString(31) + " " + rs.getInt(32) + " "
+					+ rs.getInt(33) + " " + rs.getDate(34) + " " + rs.getString(35) + " " + rs.getString(36) + " "
+					+ rs.getDate(37) + " " + rs.getDate(38) + " " + rs.getDate(39) + " " + rs.getDate(40) + " "
+					+ rs.getDouble(41) + " " + rs.getDouble(42) + " " + rs.getDouble(43) + " " + rs.getDouble(44) + " "
+					+ rs.getBoolean(45) + " " + rs.getString(46) + " " + rs.getBoolean(47) + " " + rs.getString(48)
+					+ " " + rs.getString(49));
+
+			companies.add(new Company(uid, rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4),
+					convert(rs.getDate(5)), convert(rs.getDate(6)), rs.getString(7), rs.getString(8), rs.getString(9),
+					rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14),
+					rs.getString(15), rs.getBoolean(16), rs.getString(17), rs.getString(18), rs.getBoolean(19),
+					convert(rs.getDate(20)), convert(rs.getDate(21)), rs.getInt(22), rs.getInt(23),
+					convert(rs.getDate(24)), rs.getString(25), rs.getString(26), rs.getString(27), rs.getString(28),
+					convert(rs.getDate(29)), rs.getString(30), rs.getString(31), rs.getInt(32), rs.getInt(33),
+					convert(rs.getDate(34)), rs.getString(35), rs.getString(36), convert(rs.getDate(37)),
+					convert(rs.getDate(38)), convert(rs.getDate(39)), convert(rs.getDate(40)), rs.getDouble(41),
+					rs.getDouble(42), rs.getDouble(43), rs.getDouble(44), rs.getBoolean(45), rs.getString(46),
+					rs.getBoolean(47), rs.getString(48), rs.getString(49)));
+
+		}
+		LOGGER.info(companies.toString());
+		return companyRepo.saveAll(companies);
+	}
 
 	public void storeTableAccHead(Statement s, Long uid, Long cid) throws SQLException {
 		String sql = "select * from AccHead";
@@ -87,7 +152,6 @@ public class DatabaseUtil {
 		showTableDetails(rs);
 		LOGGER.info("===AccHead===");
 		List<AccHead> accHeads = new LinkedList<>();
-		// TODO verify rs record order and constructor insert order
 		while (rs.next()) {
 			accHeads.add(new AccHead(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5),
 					rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getDouble(10), rs.getDouble(11),
@@ -116,7 +180,7 @@ public class DatabaseUtil {
 	}
 
 	public void storeTableCloseBal(Statement s, Long uid, Long cid) throws SQLException {
-		String sql = "select * from CloseBal";
+		String sql = "select * from CloseBl";
 		ResultSet rs = s.executeQuery(sql);
 		// Display table details
 		showTableDetails(rs);
@@ -132,41 +196,6 @@ public class DatabaseUtil {
 		LOGGER.info(closeBals.toString());
 	}
 
-	public List<Company> storeTableCompany(Statement s, Long uid) throws SQLException {
-		String sql = "select * from Company";
-		ResultSet rs = s.executeQuery(sql);
-		// Display table details
-		showTableDetails(rs);
-		LOGGER.info("===Company===");
-		List<Company> companies = new LinkedList<>();
-
-		LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.of("Asia/Kolkata"));
-
-		while (rs.next()) {
-			companies.add(new Company(uid, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(47),
-					rs.getString(49), rs.getString(4), rs.getBoolean(5),
-					LocalDateTime.ofInstant(rs.getDate(6).toInstant(), ZoneId.of("Asia/Kolkata")),
-					LocalDateTime.ofInstant(rs.getDate(7).toInstant(), ZoneId.of("Asia/Kolkata")), rs.getString(8),
-					rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13),
-					rs.getString(14), rs.getString(15), rs.getString(16), rs.getBoolean(17), rs.getString(18),
-					rs.getString(19), rs.getBoolean(20),
-					LocalDateTime.ofInstant(rs.getDate(21).toInstant(), ZoneId.of("Asia/Kolkata")),
-					LocalDateTime.ofInstant(rs.getDate(22).toInstant(), ZoneId.of("Asia/Kolkata")), rs.getInt(23),
-					rs.getInt(24), LocalDateTime.ofInstant(rs.getDate(25).toInstant(), ZoneId.of("Asia/Kolkata")),
-					rs.getString(26), rs.getString(27), rs.getString(28), rs.getString(29),
-					LocalDateTime.ofInstant(rs.getDate(30).toInstant(), ZoneId.of("Asia/Kolkata")), rs.getString(31),
-					rs.getString(32), rs.getInt(33), rs.getInt(34),
-					LocalDateTime.ofInstant(rs.getDate(35).toInstant(), ZoneId.of("Asia/Kolkata")), rs.getString(36),
-					rs.getString(37), LocalDateTime.ofInstant(rs.getDate(38).toInstant(), ZoneId.of("Asia/Kolkata")),
-					LocalDateTime.ofInstant(rs.getDate(39).toInstant(), ZoneId.of("Asia/Kolkata")), rs.getDate(40),
-					LocalDateTime.ofInstant(rs.getDate(41).toInstant(), ZoneId.of("Asia/Kolkata")), rs.getDouble(42),
-					rs.getDouble(43), rs.getDouble(44), rs.getDouble(45), rs.getBoolean(46), rs.getBoolean(48)));
-
-		}
-		LOGGER.info(companies.toString());
-		return companyRepo.saveAll(companies);
-	}
-
 	public void storeTableSchedule(Statement s, Long uid, Long cid) throws SQLException {
 		String sql = "select * from Schedule";
 		ResultSet rs = s.executeQuery(sql);
@@ -176,8 +205,8 @@ public class DatabaseUtil {
 		List<Schedule> schedules = new LinkedList<>();
 
 		while (rs.next()) {
-			schedules.add(new Schedule(rs.getInt(1), rs.getString(2), rs.getDouble(4), rs.getDouble(5), rs.getInt(7),
-					rs.getInt(8), rs.getString(3), uid, cid));
+			schedules.add(new Schedule(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5),
+					rs.getInt(7), rs.getInt(8), uid, cid));
 
 		}
 		scheduleRepo.saveAll(schedules);

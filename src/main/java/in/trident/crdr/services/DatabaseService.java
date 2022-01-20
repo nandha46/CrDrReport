@@ -60,7 +60,7 @@ public class DatabaseService {
 
 			List<Company> companies = dbutil.storeTableCompany(s, uid);
 			Long cid = companies.get(0).getCompanyid();
-
+			
 			dbutil.storeTableAccHead(s, uid, cid);
 			dbutil.storeTableCloseBal(s, uid, cid);
 			dbutil.storeTableDaybook(s, uid, cid);

@@ -1,7 +1,6 @@
 package in.trident.crdr.entities;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,17 +28,10 @@ public class Company implements Comparable<Company> {
 
 	@Column(name = "userid")
 	private Long userid;
-
 	@Column(name = "CompName", length = 50)
 	private String compName;
 	@Column(name = "CompYear", length = 7)
 	private String compYear;
-	@Column(name = "ShortName", length = 3)
-	private String shortName;
-	@Column(name = "ProdID", length = 10)
-	private String prodID;
-	@Column(name = "RcNo", length = 50)
-	private String rcNo;
 	@Column(name = "CompType", length = 1)
 	private String compType;
 	@Column(name = "CompFormat")
@@ -113,7 +105,7 @@ public class Company implements Comparable<Company> {
 	@Column(name = "LastLogin")
 	private LocalDateTime lastLogin;
 	@Column(name = "LogOut")
-	private Date logOut;
+	private LocalDateTime logOut;
 	@Column(name = "LockDate")
 	private LocalDateTime lockDate;
 	@Column(name = "CloseStk")
@@ -126,8 +118,14 @@ public class Company implements Comparable<Company> {
 	private Double openDiffCr;
 	@Column(name = "Hide")
 	private boolean hide;
+	@Column(name = "ProdID", length = 10)
+	private String prodID;
 	@Column(name = "GraphicPrint")
 	private boolean graphicPrint;
+	@Column(name = "RcNo", length = 50)
+	private String rcNo;
+	@Column(name = "ShortName", length = 3)
+	private String shortName;
 
 	public Company() {
 
@@ -137,9 +135,6 @@ public class Company implements Comparable<Company> {
 	 * @param userid
 	 * @param compName
 	 * @param compYear
-	 * @param shortName
-	 * @param prodID
-	 * @param rcNo
 	 * @param compType
 	 * @param compFormat
 	 * @param fromDate
@@ -183,25 +178,25 @@ public class Company implements Comparable<Company> {
 	 * @param openDiffDr
 	 * @param openDiffCr
 	 * @param hide
+	 * @param prodID
 	 * @param graphicPrint
+	 * @param rcNo
+	 * @param shortName
 	 */
-	public Company(Long userid, String compName, String compYear, String shortName, String prodID, String rcNo,
-			String compType, boolean compFormat, LocalDateTime fromDate, LocalDateTime toDate, String address1,
-			String address2, String city, String pincode, String state, String phone1, String phone2, String fax,
-			String email, boolean quantity, String qtyWidth, String qtyDecimal, boolean qtyTotal,
-			LocalDateTime allBDate, LocalDateTime localBDate, int bNoofAc, int bNoofEntries,
-			LocalDateTime bLastTransDate, String allBMedium, String localBMedium, String allBUser, String localBUser,
-			LocalDateTime restoreDate, String restoreMedium, String restoreUser, int cNoofAc, int cNoofEntries,
-			LocalDateTime cLastTransDate, String currUser, String lastUser, LocalDateTime currLogin,
-			LocalDateTime lastLogin, Date logOut, LocalDateTime lockDate, Double closeStk, Double openCash,
-			Double openDiffDr, Double openDiffCr, boolean hide, boolean graphicPrint) {
+	public Company(Long userid, String compName, String compYear, String compType, boolean compFormat,
+			LocalDateTime fromDate, LocalDateTime toDate, String address1, String address2, String city, String pincode,
+			String state, String phone1, String phone2, String fax, String email, boolean quantity, String qtyWidth,
+			String qtyDecimal, boolean qtyTotal, LocalDateTime allBDate, LocalDateTime localBDate, int bNoofAc,
+			int bNoofEntries, LocalDateTime bLastTransDate, String allBMedium, String localBMedium, String allBUser,
+			String localBUser, LocalDateTime restoreDate, String restoreMedium, String restoreUser, int cNoofAc,
+			int cNoofEntries, LocalDateTime cLastTransDate, String currUser, String lastUser, LocalDateTime currLogin,
+			LocalDateTime lastLogin, LocalDateTime logOut, LocalDateTime lockDate, Double closeStk, Double openCash,
+			Double openDiffDr, Double openDiffCr, boolean hide, String prodID, boolean graphicPrint, String rcNo,
+			String shortName) {
 		super();
 		this.userid = userid;
 		this.compName = compName;
 		this.compYear = compYear;
-		this.shortName = shortName;
-		this.prodID = prodID;
-		this.rcNo = rcNo;
 		this.compType = compType;
 		this.compFormat = compFormat;
 		this.fromDate = fromDate;
@@ -245,7 +240,10 @@ public class Company implements Comparable<Company> {
 		this.openDiffDr = openDiffDr;
 		this.openDiffCr = openDiffCr;
 		this.hide = hide;
+		this.prodID = prodID;
 		this.graphicPrint = graphicPrint;
+		this.rcNo = rcNo;
+		this.shortName = shortName;
 	}
 
 	public Long getCompanyid() {
@@ -592,11 +590,11 @@ public class Company implements Comparable<Company> {
 		this.lastLogin = lastLogin;
 	}
 
-	public Date getLogOut() {
+	public LocalDateTime getLogOut() {
 		return logOut;
 	}
 
-	public void setLogOut(Date logOut) {
+	public void setLogOut(LocalDateTime logOut) {
 		this.logOut = logOut;
 	}
 
