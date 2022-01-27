@@ -211,7 +211,7 @@ public class TradingPLServiceImpl implements TradingPLService {
 			netDebit += Math.abs(netprofitvalue);
 			netProfit.setParticulars("Net Profit");
 		}
-		netProfit.setLevel(1);
+		netProfit.setLevel(2);
 		netProfit.setHeader(true);
 		tradingPLViewSet.add(netProfit);
 
