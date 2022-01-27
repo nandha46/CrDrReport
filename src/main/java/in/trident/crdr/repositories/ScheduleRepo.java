@@ -3,6 +3,7 @@ package in.trident.crdr.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import in.trident.crdr.entities.Schedule;
@@ -23,5 +24,13 @@ public interface ScheduleRepo extends JpaRepository<Schedule, Integer>{
 	
 	@Query("select crAmt from Schedule a where a.accCode = ?1 and a.userid = ?2 and a.companyid = ?3")
 	public Double findCrAmt(Integer code, Long uid, Long cid);
+
+	@Modifying
+	@Query("delete Schedule s where s.userid = ?1")
+	public void deleteAllByUserId(Long uid);
+
+	@Modifying
+	@Query("delete Schedule s where s.companyid = ?1")
+	public void deleteAllByCompanyId(Long companyId);
 	
 }

@@ -3,6 +3,7 @@ package in.trident.crdr.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -45,4 +46,13 @@ public interface AccHeadRepo extends JpaRepository<AccHead, Long> {
 	
 	@Query(value = "select a from AccHead a where a.userid = ?1 and a.companyid = ?2 and a.orderCode between 3 and 6")
 	public List<AccHead> findTradingPLAccs(Long uid, Long cid);
+
+	@Modifying
+	@Query("delete AccHead a where a.userid = ?1")
+	public void deleteAllByUserId(Long uid);
+
+	@Modifying
+	@Query("delete AccHead a where a.companyid = ?1")
+	public void deleteAllByCompanyId(Long companyId);
+	
 }

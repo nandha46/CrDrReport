@@ -4,6 +4,7 @@ package in.trident.crdr.repositories;
 import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import in.trident.crdr.entities.CloseBal;
@@ -21,4 +22,12 @@ public interface CloseBalRepo extends JpaRepository<CloseBal, Long> {
 	
 	@Query("select drTot from CloseBal c where c.date = ?1 and c.userid = ?2 and c.companyid = ?3")
 	public Double findDebitTotal(String date, Long uid, Long cid);
+
+	@Modifying
+	@Query("delete CloseBal c where c.userid = ?1")
+	public void deleteAllByUserId(Long uid);
+
+	@Modifying
+	@Query("delete CloseBal c where c.companyid = ?1")
+	public void deleteAllByCompanyId(Long companyId);
 }

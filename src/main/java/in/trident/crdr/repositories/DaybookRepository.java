@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -43,4 +44,12 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 
 	@Query("select sum(crAmt)-sum(drAmt) as bal from Daybook d where d.acccode = ?1 and d.date between ?2 and ?3 and d.userid = ?4 and d.companyid = ?5")
 	public Double openBal(int acccode, String d1, String d2, Long uid, Long cid);
+
+	@Modifying
+	@Query("delete Daybook d where d.userid = ?1")
+	public void deleteAllByUserId(long uid);
+
+	@Modifying
+	@Query("delete Daybook d where d.companyid = ?1")
+	public void deleteAllByCompanyId(Long companyid);
 }

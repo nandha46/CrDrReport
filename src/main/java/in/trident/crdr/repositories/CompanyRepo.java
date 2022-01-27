@@ -3,6 +3,7 @@ package in.trident.crdr.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +23,9 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
 	
 	@Query("select c from Company c where c.companyid = ?1")
 	public Company findCompanyById(Long cid);
+
+	@Modifying
+	@Query("delete Company c where c.userid = ?1")
+	public void deleteAllByUserId(Long uid); 
 	
 }
