@@ -6,11 +6,9 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +28,7 @@ import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.CompanySelection;
-import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.Schedule;
-import in.trident.crdr.entities.User;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
@@ -50,7 +45,6 @@ import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.ScheduleRepo;
-import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.BalanceSheetService;
 import in.trident.crdr.services.CompanyService;
 import in.trident.crdr.services.CustomUserDetails;
@@ -77,9 +71,6 @@ public class AppController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
 
 	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	@Autowired
-	private UserRepository userRepo;
 
 	@Autowired
 	private AccHeadRepo accHeadRepo;
@@ -182,6 +173,9 @@ public class AppController {
 	public String showReports(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		model.addAttribute("pageTitle", "Reports");
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		if (cs == null) {
+			return "redirect:/company_selection";
+		}
 		model.addAttribute("companyName", cs.getCompanyName());
 		LOGGER.info("Reports Page loading...");
 		return "reports";

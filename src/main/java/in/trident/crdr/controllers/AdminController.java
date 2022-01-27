@@ -7,15 +7,25 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import in.trident.crdr.entities.Company;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
+import in.trident.crdr.models.AdminForm;
+import in.trident.crdr.repositories.AccHeadRepo;
+import in.trident.crdr.repositories.CloseBalRepo;
+import in.trident.crdr.repositories.CompSelectionRepo;
+import in.trident.crdr.repositories.CompanyRepo;
+import in.trident.crdr.repositories.DaybookRepository;
+import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
+import in.trident.crdr.services.CustomUserDetails;
 
 /**
  * 
@@ -34,6 +44,18 @@ public class AdminController {
 
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private DaybookRepository daybookRepo;
+	@Autowired
+	private AccHeadRepo accHeadRepo;
+	@Autowired
+	private CloseBalRepo closeBalRepo;
+	@Autowired
+	private CompanyRepo companyRepo;
+	@Autowired
+	private CompSelectionRepo csRepo;
+	@Autowired
+	private ScheduleRepo scheduleRepo;
 
 	@GetMapping("/create_user")
 	public String showRegistrationForm(Model model) {
@@ -60,9 +82,19 @@ public class AdminController {
 
 	@GetMapping("/users")
 	public String listUsers(Model model) {
+		model.addAttribute("pageTitle", "List of Users");
 		List<User> userList = userRepo.findAll();
 		model.addAttribute("userList", userList);
 		return "users";
+	}
+
+	@GetMapping("/delete_user")
+	public String deleteUser(Model model) {
+		model.addAttribute("pageTitle", "Delete User");
+		List<User> userList = userRepo.findAll();
+		model.addAttribute("userList", userList);
+		model.addAttribute("adminForm", new AdminForm());
+		return "delete_users";
 	}
 
 	/**
@@ -70,11 +102,23 @@ public class AdminController {
 	 * 
 	 * @return Sucess or failure page
 	 */
-	@PostMapping("/delete_user")
-	public String deleteUser(Long uid, Model model) {
+	@PostMapping("/process_delete_user")
+	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user, AdminForm formdata, Model model) {
+		Long uid = formdata.getUserId();
+		if (uid == user.getId() || uid == 9d) {
+			model.addAttribute("pageTitle", "Error");
+			model.addAttribute("message", "Can not delete own or Developer Accounts");
+			return "success";
+		}
 		if (uid != null) {
 			if (userRepo.existsById(uid)) {
 				userRepo.deleteById(uid);
+				daybookRepo.deleteAllByUserId(uid);
+				accHeadRepo.deleteAllByUserId(uid);
+				closeBalRepo.deleteAllByUserId(uid);
+				companyRepo.deleteAllByUserId(uid);
+				csRepo.deleteAllByUserId(uid);
+				scheduleRepo.deleteAllByUserId(uid);
 				model.addAttribute("pageTitle", "Success");
 				model.addAttribute("message", "User and Companies deleted Successfully");
 				return "success";
@@ -90,14 +134,34 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping("/disable_user")
-	public String disableUser() {
-
-		return "disable_user";
+	@GetMapping("/delete_company")
+	public String deleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		model.addAttribute("pageTitle", "Delete Company");
+		List<Company> companies = companyRepo.findCompaniesByUser(user.getId());
+		model.addAttribute("companies", companies);
+		model.addAttribute("adminForm", new AdminForm());
+		return "delete_company";
 	}
 
-	@PostMapping("/delete_company")
-	public String deleteCompany() {
-		return "delete_company";
+	@PostMapping("/process_delete_company")
+	public String processDeleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model,
+			AdminForm adminForm) {
+		if (companyRepo.existsById(adminForm.getCompanyId())) {
+			companyRepo.deleteById(adminForm.getCompanyId());
+			if (csRepo.findCompanyByCompanyid(adminForm.getCompanyId()) != null) {
+				csRepo.deleteAllByUserId(user.getId());
+			}
+			daybookRepo.deleteAllByCompanyId(adminForm.getCompanyId());
+			accHeadRepo.deleteAllByCompanyId(adminForm.getCompanyId());
+			closeBalRepo.deleteAllByCompanyId(adminForm.getCompanyId());
+			scheduleRepo.deleteAllByCompanyId(adminForm.getCompanyId());
+			model.addAttribute("pageTitle", "Company Deleted..");
+			model.addAttribute("message", "Company Deleted Sucessfully");
+			return "success";
+		} else {
+			model.addAttribute("pageTitle", "Error");
+			model.addAttribute("message", "Company ID does not exist");
+			return "success";
+		}
 	}
 }
