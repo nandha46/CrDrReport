@@ -15,7 +15,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
-*.log
+CrDr-log4j.log
 
 ### IntelliJ IDEA ###
 .idea
