@@ -51,8 +51,6 @@ public class LedgerServiceImpl implements LedgerService {
 	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
 
-	// TODO finish complete function before moving on
-
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm, Long uid, Long cid) {
 		Profiler profiler = new Profiler("LedgerServiceImpl");
@@ -64,7 +62,7 @@ public class LedgerServiceImpl implements LedgerService {
 			Set<Integer> accCodes = new LinkedHashSet<>(accCode);
 			accCodes.remove(0);
 			accCodes.forEach(code -> {
-				LedgerView ledgerView = createLedgerView(code, ledgerForm, uid,cid);
+				LedgerView ledgerView = createLedgerView(code, ledgerForm, uid, cid);
 				if (ledgerView == null) {
 					LOGGER.trace("--Ledger is Empty--");
 				} else {
@@ -72,10 +70,10 @@ public class LedgerServiceImpl implements LedgerService {
 				}
 			});
 		} else { // False - Report order : All
-			Set<Integer> accCodes = new LinkedHashSet<Integer>(accHeadRepo.findAccCodes(uid,cid));
+			Set<Integer> accCodes = new LinkedHashSet<Integer>(accHeadRepo.findAccCodes(uid, cid));
 			accCodes.remove(0);
 			accCodes.forEach(code -> {
-				LedgerView ledgerView = createLedgerView(code, ledgerForm, uid,cid);
+				LedgerView ledgerView = createLedgerView(code, ledgerForm, uid, cid);
 				if (ledgerView == null) {
 					LOGGER.trace("--Ledger is Empty--");
 				} else {
@@ -92,8 +90,9 @@ public class LedgerServiceImpl implements LedgerService {
 	@Override
 	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm, Long uid, Long cid) {
 		LedgerView ledgerview = new LedgerView();
-		ledgerview.setAccheadName(accHeadRepo.findAccNameByAccCode(code,uid,cid));
-		String arr[] = findOpeningBal(code, ledgerForm, uid,cid);
+		ledgerview.setAccheadName(accHeadRepo.findAccNameByAccCode(code, uid, cid));
+		LOGGER.debug("Code: " + code);
+		String arr[] = findOpeningBal(code, ledgerForm, uid, cid);
 		Date date1 = new Date();
 		try {
 			date1 = insdf.parse(ledgerForm.getStartDate());
@@ -109,17 +108,18 @@ public class LedgerServiceImpl implements LedgerService {
 		} else {
 			ledgerview.setOpeningBal(nf.format(bal).toString());
 		}
-		List<Dailybooks> dailybooklist = createDailybooks(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(),
-				bal, uid,cid);
+		List<Dailybooks> dailybooklist = createDailybooks(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(), bal,
+				uid, cid);
 		if (dailybooklist.isEmpty() && ledgerForm.isTransactedAccOnly()) {
 			LOGGER.trace("---No Transactions on Dailybooks-----");
 			return null;
 		}
 		/*
-		 * Double debitTotal = listTrialview.stream().filter(x -> !x.getDebit().isEmpty())
-				.mapToDouble(x -> Double.parseDouble(x.getDebit().replace(",", ""))).sum();
-		 * */
-		
+		 * Double debitTotal = listTrialview.stream().filter(x ->
+		 * !x.getDebit().isEmpty()) .mapToDouble(x ->
+		 * Double.parseDouble(x.getDebit().replace(",", ""))).sum();
+		 */
+
 		Double crT = dailybooklist.stream().filter(d -> !d.getCreditAmt().isEmpty())
 				.collect(Collectors.summingDouble(d -> Double.parseDouble(d.getCreditAmt().replace(",", ""))));
 		Double drT = dailybooklist.stream().filter(d -> !d.getDebitAmt().isEmpty())
@@ -149,9 +149,10 @@ public class LedgerServiceImpl implements LedgerService {
 	}
 
 	@Override
-	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate, Double bal, Long userid, Long cid) {
+	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate, Double bal, Long userid,
+			Long cid) {
 		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
-		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate, userid,cid);
+		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate, userid, cid);
 		for (int i = 0; i < daybooks.size(); i++) {
 			String arr2[] = { "", "" };
 			if (daybooks.get(i).getDrAmt() == 0) {
@@ -184,8 +185,8 @@ public class LedgerServiceImpl implements LedgerService {
 	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm, Long uid, Long cid) {
 		String arr[] = { "", "" };
 		if (ledgerForm.getStartDate().equals("2018-04-01")) {
-			Double d1 = accHeadRepo.findCrAmt(code,uid,cid);
-			Double d2 = accHeadRepo.findDrAmt(code,uid,cid);
+			Double d1 = accHeadRepo.findCrAmt(code, uid, cid);
+			Double d2 = accHeadRepo.findDrAmt(code, uid, cid);
 			if (d1 == 0d) {
 				arr[0] = d2.toString();
 				arr[1] = "Dr";
@@ -195,11 +196,14 @@ public class LedgerServiceImpl implements LedgerService {
 			}
 
 		} else {
-			Double d1 = accHeadRepo.findCrAmt(code,uid,cid);
-			Double d2 = accHeadRepo.findDrAmt(code,uid,cid);
+			Double d1 = accHeadRepo.findCrAmt(code, uid, cid);
+			Double d2 = accHeadRepo.findDrAmt(code, uid, cid);
 			if (d1 == 0d) {
-				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(), uid,cid);
+				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(), uid, cid);
 				// If tmp is +ve Dr else Cr
+				if (tmp == null) {
+					tmp = 0d;
+				}
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d2 + tmp;
 					arr[0] = tmp.toString();
@@ -216,8 +220,11 @@ public class LedgerServiceImpl implements LedgerService {
 					}
 				}
 			} else {
-				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(), uid,cid);
+				Double tmp = daybookRepo.openBal(code, ledgerForm.getStartDate(), ledgerForm.getEndDate(), uid, cid);
 				// If tmp is +ve Cr else Dr
+				if (tmp == null) {
+					tmp = 0d;
+				}
 				if (tmp > 0d || tmp == 0d) {
 					tmp = d1 + tmp;
 					arr[0] = tmp.toString();
