@@ -36,3 +36,4 @@ build/
 ### VS Code ###
 .vscode/
 CrDr-log4j.log
+*.log

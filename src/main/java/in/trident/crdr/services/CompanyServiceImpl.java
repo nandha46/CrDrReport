@@ -48,9 +48,9 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Map<Long, String> listYears(String cname) {
+	public Map<Long, String> listYears(String cname, Long uid) {
 		Map<Long, String> map = new TreeMap<>();
-		List<Company> companies = companyRepo.findCompanyYearsByName(cname);
+		List<Company> companies = companyRepo.findCompanyYearsByName(cname,uid);
 		companies.forEach(c->{
 			map.put(c.getCompanyid(), "20"+c.getCompYear());
 		});
