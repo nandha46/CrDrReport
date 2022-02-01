@@ -7,12 +7,12 @@
 <body>
 	<div th:replace="fragments::navbar"></div>
 	<h2 style="text-align:center">Company Profile</h2>
-
+<div class="container">
 <div class="card">
-  <img th:src="@{/img/logo.png}" alt="Trident" style="width:100%">
-  <h1>Trident Software</h1>
-  <p class="title">Software For Small Business</p>
-  <p>Dindigul, TN</p>
+  <img th:src="@{/img/logo.png}" alt="CompanyName" style="width:100%">
+  <h1>[[${company_name}]]</h1>
+  <p class="title">[[${year}]]</p>
+  <p>[[${address}]]</p>
   <div style="margin: 24px 0;">
     <a href="#"><i class="fa fa-dribbble"></i></a> 
     <a href="#"><i class="fa fa-twitter"></i></a>  
@@ -20,6 +20,15 @@
     <a href="#"><i class="fa fa-facebook"></i></a> 
   </div>
   <p><button>Contact</button></p>
+</div>
+
+<div class="card">
+  <p class="details">No of Accs: [[${company.noOfAccs}]] </p>
+  <p class="details">No of Entries: [[${company.noOfEntries}]] </p>
+  <p class="details">Closing Stock: [[${company.closingStock}]] </p>
+  <p class="details">Opening Cash: [[${company.openCash}]] </p>
+  <p class="details">Company Type: [[${company.companyType}]] </p>
+</div>
 </div>
 </body>
 </html>

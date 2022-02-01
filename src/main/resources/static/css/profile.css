@@ -11,6 +11,11 @@
   font-size: 18px;
 }
 
+.details {
+  color: grey;
+  font-size: 18px;
+}
+
 button {
   border: none;
   outline: 0;

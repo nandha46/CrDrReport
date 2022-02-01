@@ -59,7 +59,11 @@ a {
 .navbar {
   width: 100%;
  /* background-image: linear-gradient(to right,#b92b27,#1565C0); */
-  background: linear-gradient(90deg, rgba(80,76,76,1) 0%, rgba(249,249,249,1) 51%, rgba(80,76,76,1) 100%);
+/*  background: linear-gradient(90deg, rgba(80,76,76,1) 0%, rgba(249,249,249,1) 51%, rgba(80,76,76,1) 100%); */
+  
+ background: rgb(107,103,103);
+background: linear-gradient(90deg, rgba(107,103,103,1) 0%, rgba(80,76,76,1) 49%, rgba(105,99,99,1) 100%);
+  
   overflow: auto;
 }
 

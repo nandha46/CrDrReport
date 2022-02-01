@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- <link rel="stylesheet" th:href="@{/css/index.css}" />
+<link rel="stylesheet" th:href="@{/css/index.css}" />
 <link rel="stylesheet" th:href="@{/css/main.css}" />
 <link rel="stylesheet" th:href="@{/css/ledger.css}" />
 </head>
@@ -22,60 +22,57 @@
 <body>
 	<div th:fragment="navbar">
 		<div class="navbar">
-			<a th:href="@{/reports}"><i class="fa fa-book" aria-hidden="true"></i> REPORTS</a> 
-				<a href="#" th:inline="text" id="nav-username"><i class="fa fa-fw fa-user" aria-hidden="true"> </i> [[${#request.userPrincipal.principal.name}]] </a>
+			<a th:href="@{/reports}"><i class="fa fa-book" aria-hidden="true"></i>
+				REPORTS</a> <a href="#" th:inline="text" id="nav-username"><i
+				class="fa fa-fw fa-user" aria-hidden="true"> </i>
+				[[${#request.userPrincipal.principal.name}]] </a>
 		</div>
 	</div>
-	
+
 	<div th:fragment="reports-navbar">
 		<div class="navbar">
-			<a th:href="@{/company_selection}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				CHANGE COMPANY</a>
-			<a th:href="@{/upload}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				CSV UPLOAD</a>
-				<sec:authorize="hasAnyRole('admin','developer')">
-			<a  th:href="@{/create_user}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				CREATE NEW USER</a>	
-				</sec:authorize>
-			<a th:href="@{/profile}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				PROFILE</a>	
-			<a th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				LOGOUT</a>
+			<a th:href="@{/company_selection}"><i class="fa fa-sign-in" aria-hidden="true"></i> CHANGE COMPANY</a> 
+				<a th:href="@{/upload}"><i class="fa fa-sign-in" aria-hidden="true"></i> CSV UPLOAD</a>
+				<a th:href="@{/delete_company}"><i class="fa fa-sign-in" aria-hidden="true"></i> DELETE COMPANY</a> 
+				<a sec:authorize="hasAnyAuthority('developer','admin')" th:href="@{/create_user}"><i class="fa fa-sign-in" aria-hidden="true"></i> CREATE NEW USER</a>
+				<a sec:authorize="hasAnyAuthority('developer','admin')" th:href="@{/delete_user}"><i class="fa fa-sign-in" aria-hidden="true"></i> DELETE A USER</a> 
+				<a th:href="@{/profile}"><i class="fa fa-sign-in" aria-hidden="true"></i> PROFILE</a> 
+				<a th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i> LOGOUT</a>
 		</div>
 	</div>
-	
+
 	<div th:fragment="index-navbar">
 		<div class="navbar">
-			<a class="active" href="./"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
-			 <a th:href="@{/login}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				LOGIN</a>
+			<a class="active" href="./"><i class="fa fa-home"
+				aria-hidden="true"></i> HOME</a> <a th:href="@{/login}"><i
+				class="fa fa-sign-in" aria-hidden="true"></i> LOGIN</a>
 		</div>
 	</div>
-	
+
 	<div th:fragment="cs-navbar">
 		<div class="navbar">
-			<a class="active" href="./"><i class="fa fa-home" aria-hidden="true"></i> HOME</a>
-			<a th:href="@{/upload}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				UPLOAD COMPANY</a>
-			 <a th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+			<a class="active" href="./"><i class="fa fa-home"
+				aria-hidden="true"></i> HOME</a> <a th:href="@{/upload}"><i
+				class="fa fa-sign-in" aria-hidden="true"></i> UPLOAD COMPANY</a> <a
+				th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i>
 				LOGOUT</a>
 		</div>
 	</div>
-	
+
 	<div th:fragment="profile">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>[[${pageTitle}]]</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" th:href="@{/css/main.css}" />
-<link rel="stylesheet" th:href="@{/css/profile.css}" />
-</div>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>[[${pageTitle}]]</title>
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" th:href="@{/css/main.css}" />
+		<link rel="stylesheet" th:href="@{/css/profile.css}" />
+	</div>
 </body>
 </html>
