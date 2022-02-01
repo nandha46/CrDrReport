@@ -144,9 +144,9 @@ public class AppController {
 	}
 
 	@PostMapping("/companyselect")
-	public String showYears(Model model, YearCriteria yearCriteria) {
+	public String showYears(Model model, YearCriteria yearCriteria, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Company Name: " + yearCriteria.getCompanyName());
-		Map<Long, String> years = companyService.listYears(yearCriteria.getCompanyName());
+		Map<Long, String> years = companyService.listYears(yearCriteria.getCompanyName(), user.getId());
 		LOGGER.info(years.toString());
 		model.addAttribute("pageTitle", "Select Year");
 		model.addAttribute("years", years);
@@ -163,8 +163,13 @@ public class AppController {
 	}
 
 	@GetMapping("/profile")
-	public String showProfile(Model model) {
+	public String showProfile(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		model.addAttribute("pageTitle", "Company Profile");
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute("company_name",cs.getCompanyName());
+		model.addAttribute("address",cs.getAddress());
+		model.addAttribute("year",cs.getYear());
+		model.addAttribute("company",cs);
 		LOGGER.info("Loading Profile...");
 		return "profile";
 	}

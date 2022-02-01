@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,6 +103,7 @@ public class AdminController {
 	 * 
 	 * @return Sucess or failure page
 	 */
+	@Transactional
 	@PostMapping("/process_delete_user")
 	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user, AdminForm formdata, Model model) {
 		Long uid = formdata.getUserId();
@@ -143,6 +145,7 @@ public class AdminController {
 		return "delete_company";
 	}
 
+	@Transactional
 	@PostMapping("/process_delete_company")
 	public String processDeleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model,
 			AdminForm adminForm) {
