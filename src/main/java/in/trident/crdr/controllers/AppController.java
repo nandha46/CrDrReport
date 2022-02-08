@@ -146,6 +146,9 @@ public class AppController {
 	@PostMapping("/companyselect")
 	public String showYears(Model model, YearCriteria yearCriteria, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Company Name: " + yearCriteria.getCompanyName());
+		if (yearCriteria.getCompanyName() == null) {
+			return "redirect:/company_selection";
+		}
 		Map<Long, String> years = companyService.listYears(yearCriteria.getCompanyName(), user.getId());
 		LOGGER.info(years.toString());
 		model.addAttribute("pageTitle", "Select Year");
