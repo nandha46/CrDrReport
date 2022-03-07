@@ -48,7 +48,7 @@ public class DatabaseUtil {
 	private ScheduleRepo scheduleRepo;
 
 	public Boolean hasMdbFormat(MultipartFile file) {
-		LOGGER.info("Filetype: " + file.getContentType());
+		LOGGER.info("Filetype: {}" , file.getContentType());
 		if (FILE_TYPE.equals(file.getContentType())) {
 			return true;
 		} else {
@@ -69,7 +69,7 @@ public class DatabaseUtil {
 		ResultSet tables = metaData.getTables(null, null, "%", types);
 		LOGGER.info("---------Table List------");
 		while (tables.next()) {
-			LOGGER.info("Table name: " + tables.getString("TABLE_NAME"));
+			LOGGER.info("Table name: {}" , tables.getString("TABLE_NAME"));
 		}
 		LOGGER.info("------------------------");
 	}
@@ -82,12 +82,12 @@ public class DatabaseUtil {
 	 */
 	public void showTableDetails(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmdata = rs.getMetaData();
-		LOGGER.info("Table Name: " + rsmdata.getTableName(1));
+		LOGGER.info("Table Name: {}" , rsmdata.getTableName(1));
 
 		int count = rsmdata.getColumnCount();
 		LOGGER.info("---Column List---");
 		for (int i = 1; i <= count; i++) {
-			LOGGER.info("Column " + i + ": " + rsmdata.getColumnLabel(i) + " \"" + rsmdata.getColumnTypeName(i) + "\"");
+			LOGGER.info("Column {}:  {}  \" {}\"" ,i,rsmdata.getColumnLabel(i),rsmdata.getColumnTypeName(i));
 		}
 		LOGGER.info("------------------");
 	}

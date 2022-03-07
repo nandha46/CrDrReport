@@ -2,6 +2,7 @@ package in.trident.crdr.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -29,6 +30,14 @@ import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.CustomUserDetails;
 
 /**
+ * The class AdminController contains controller mappings related to the url
+ * passed by admin level users.
+ * 
+ * <p>
+ * The methods here contains mappings related to creation, deletion, listing of
+ * users and companies.
+ * </p>
+ * 
  * 
  * @author Nandhakumar Subramanina
  * 
@@ -42,6 +51,10 @@ import in.trident.crdr.services.CustomUserDetails;
 public class AdminController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+	private static final String PAGE_TITLE = "pageTitle";
+	private static final String ERROR = "Error";
+	private static final String SUCCESS = "success";
+	private static final String MESSAGE = "message";
 
 	@Autowired
 	private UserRepository userRepo;
@@ -58,19 +71,31 @@ public class AdminController {
 	@Autowired
 	private ScheduleRepo scheduleRepo;
 
+	/**
+	 * Controller mapping of create user workflow
+	 * 
+	 * @param model Model object of MVC pattern
+	 * @return returns name of the html page to be sent to view resolver
+	 */
 	@GetMapping("/create_user")
 	public String showRegistrationForm(Model model) {
 		model.addAttribute("user", new User());
 		return "signup_form";
 	}
 
+	/**
+	 * Controller mapping of register user
+	 * 
+	 * @param user user object from html form/body
+	 * @return returns page registration sucess
+	 */
 	@PostMapping("/process_register")
 	public String processRegister(User user) {
 		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
 		String encodedPass = passEncoder.encode(user.getPassword());
-		LOGGER.info("Password is : " + user.getPassword());
+		LOGGER.info("Password is {}", user.getPassword());
 		user.setPassword(encodedPass);
-		Set<Role> roles = new HashSet<Role>();
+		Set<Role> roles = new HashSet<>();
 		Role role = new Role();
 		// TODO Add another field in User object named role or pass it using JS
 		role.setRoleName("user");
@@ -81,17 +106,29 @@ public class AdminController {
 		return "register_success";
 	}
 
+	/**
+	 * Controller mapping to display list of users
+	 * 
+	 * @param model Model object of MVC pattern
+	 * @return returns name of the list of users page to be sent to view resolver
+	 */
 	@GetMapping("/users")
 	public String listUsers(Model model) {
-		model.addAttribute("pageTitle", "List of Users");
+		model.addAttribute(PAGE_TITLE, "List of Users");
 		List<User> userList = userRepo.findAll();
 		model.addAttribute("userList", userList);
 		return "users";
 	}
 
+	/**
+	 * Controller mapping for delete user
+	 * 
+	 * @param model Model object of MVC pattern
+	 * @return returns user deleted suceess page
+	 */
 	@GetMapping("/delete_user")
 	public String deleteUser(Model model) {
-		model.addAttribute("pageTitle", "Delete User");
+		model.addAttribute(PAGE_TITLE, "Delete User");
 		List<User> userList = userRepo.findAll();
 		model.addAttribute("userList", userList);
 		model.addAttribute("adminForm", new AdminForm());
@@ -99,20 +136,29 @@ public class AdminController {
 	}
 
 	/**
-	 * Delete Specific user and their companies and Data
+	 * Controller mapping to delete Specific user and their companies and Data
 	 * 
-	 * @return Sucess or failure page
+	 * @param user     user object from Spring security Authentication pricipal
+	 * @param formdata data object from html form
+	 * @param model    Model object of MVC pattern
+	 * 
+	 * @return success or failure page
 	 */
 	@Transactional
 	@PostMapping("/process_delete_user")
 	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user, AdminForm formdata, Model model) {
 		Long uid = formdata.getUserId();
-		if (uid == user.getId() || uid == 9d) {
-			model.addAttribute("pageTitle", "Error");
-			model.addAttribute("message", "Can not delete own or Developer Accounts");
-			return "success";
+		if (uid.equals(user.getId()) || uid.equals(9l)) {
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "Can not delete own or Developer Accounts");
+			return SUCCESS;
 		}
-		if (uid != null) {
+		else if (uid == 0l) {
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "User Id must not be null");
+			return SUCCESS;
+		} else {
+			
 			if (userRepo.existsById(uid)) {
 				userRepo.deleteById(uid);
 				daybookRepo.deleteAllByUserId(uid);
@@ -121,30 +167,44 @@ public class AdminController {
 				companyRepo.deleteAllByUserId(uid);
 				csRepo.deleteAllByUserId(uid);
 				scheduleRepo.deleteAllByUserId(uid);
-				model.addAttribute("pageTitle", "Success");
-				model.addAttribute("message", "User and Companies deleted Successfully");
-				return "success";
+				model.addAttribute(PAGE_TITLE, "Success");
+				model.addAttribute(MESSAGE, "User and Companies deleted Successfully");
+				return SUCCESS;
 			} else {
-				model.addAttribute("pageTitle", "Error");
-				model.addAttribute("message", "User Id does not exist");
-				return "success";
+				model.addAttribute(PAGE_TITLE, ERROR);
+				model.addAttribute(MESSAGE, "User Id does not exist");
+				return SUCCESS;
 			}
-		} else {
-			model.addAttribute("pageTitle", "Error");
-			model.addAttribute("message", "User Id must not be null");
-			return "success";
+			
+			
 		}
 	}
 
+	/**
+	 * Controller mapping to show delete company page
+	 * 
+	 * @param user  user object from Spring security Authentication pricipal
+	 * @param model Model object of MVC pattern
+	 * @return success or failure page
+	 */
+
 	@GetMapping("/delete_company")
 	public String deleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model) {
-		model.addAttribute("pageTitle", "Delete Company");
+		model.addAttribute(PAGE_TITLE, "Delete Company");
 		List<Company> companies = companyRepo.findCompaniesByUser(user.getId());
 		model.addAttribute("companies", companies);
 		model.addAttribute("adminForm", new AdminForm());
 		return "delete_company";
 	}
 
+	/**
+	 * Controller mapping to process delete company
+	 * 
+	 * @param user      user object from Spring security Authentication pricipal
+	 * @param model     Model object of MVC pattern
+	 * @param adminForm data from html form
+	 * @return success or failure page
+	 */
 	@Transactional
 	@PostMapping("/process_delete_company")
 	public String processDeleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model,
@@ -158,13 +218,13 @@ public class AdminController {
 			accHeadRepo.deleteAllByCompanyId(adminForm.getCompanyId());
 			closeBalRepo.deleteAllByCompanyId(adminForm.getCompanyId());
 			scheduleRepo.deleteAllByCompanyId(adminForm.getCompanyId());
-			model.addAttribute("pageTitle", "Company Deleted..");
-			model.addAttribute("message", "Company Deleted Sucessfully");
-			return "success";
+			model.addAttribute(PAGE_TITLE, "Company Deleted..");
+			model.addAttribute(MESSAGE, "Company Deleted Sucessfully");
+			return SUCCESS;
 		} else {
-			model.addAttribute("pageTitle", "Error");
-			model.addAttribute("message", "Company ID does not exist");
-			return "success";
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "Company ID does not exist");
+			return SUCCESS;
 		}
 	}
 }

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * Entity Class of AccHead Table
  * 
  * @author Nandhakumar Subramanian
  *
@@ -15,22 +16,22 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="acchead")
+@Table(name = "acchead")
 public class AccHead implements Comparable<AccHead> {
 
 	public AccHead() {
 		super();
 	}
-	
+
 	/**
 	 * @param accCode
 	 * @param accName
-	 * @param accType Account type
-	 * @param drAmt Debit Amount
+	 * @param accType     Account type
+	 * @param drAmt       Debit Amount
 	 * @param crAmt
-	 * @param sNo serial number
-	 * @param level1 level
-	 * @param orderCode 
+	 * @param sNo         serial number
+	 * @param level1      level
+	 * @param orderCode
 	 * @param shortName
 	 * @param budgetDrAmt
 	 * @param budgetCrAmt
@@ -64,82 +65,63 @@ public class AccHead implements Comparable<AccHead> {
 		this.companyid = companyid;
 	}
 
-
-
+	//TODO BigDecimal for currency
+	
 	@Id
-	@Column(name="accheadid")
+	@Column(name = "accheadid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accHeadId;
-	
-	@Column(name="acc_code", nullable= false)
+
+	@Column(name = "acc_code", nullable = false)
 	private int accCode;
-	
-	@Column(name="acc_name", nullable= false)
+
+	@Column(name = "acc_name", nullable = false)
 	private String accName;
-	
-	@Column(name="acc_type", nullable= false)
+
+	@Column(name = "acc_type", nullable = false)
 	private String accType;
-	
-	@Column(name="dr_amt", nullable= false)
+
+	@Column(name = "dr_amt", nullable = false)
 	private double drAmt;
-	
-	@Column(name="cr_amt", nullable= false)
+
+	@Column(name = "cr_amt", nullable = false)
 	private double crAmt;
-	
-	@Column(name="sno", nullable= false)
+
+	@Column(name = "sno", nullable = false)
 	private int sNo;
-	
-	@Column(name="level_1", nullable= false)
+
+	@Column(name = "level_1", nullable = false)
 	private int level1;
-	
-	@Column(name="order_code", nullable= false)
+
+	@Column(name = "order_code", nullable = false)
 	private int orderCode;
-	
-	@Column(name="short_name")
+
+	@Column(name = "short_name")
 	private String shortName;
-	
-	@Column(name="budget_dramt", nullable= false)
+
+	@Column(name = "budget_dramt", nullable = false)
 	private double budgetDrAmt;
-	
-	@Column(name="budget_cramt", nullable= false)
+
+	@Column(name = "budget_cramt", nullable = false)
 	private double budgetCrAmt;
-	
-	@Column(name="user_status", nullable= false)
+
+	@Column(name = "user_status", nullable = false)
 	private boolean userStatus;
-	
-	@Column(name="stk_need", nullable= false)
+
+	@Column(name = "stk_need", nullable = false)
 	private boolean stkNeeded;
-	
-	@Column(name="stk_open", nullable= false)
+
+	@Column(name = "stk_open", nullable = false)
 	private double stkOpen;
-	
-	@Column(name="stk_status")
+
+	@Column(name = "stk_status")
 	private String stkStatus;
-	
-	@Column(name="userid", nullable = false)
+
+	@Column(name = "userid", nullable = false)
 	private Long userid;
-	
-	@Column(name="companyid", nullable = false)
+
+	@Column(name = "companyid", nullable = false)
 	private Long companyid;
-	
-	@Override
-	public int compareTo(AccHead o) {
-		return Integer.compare(this.sNo, o.sNo);
-	}
-
-	
-
-	@Override
-	public String toString() {
-		return "AccHead [accHeadId=" + accHeadId + ", accCode=" + accCode + ", accName=" + accName + ", accType="
-				+ accType + ", drAmt=" + drAmt + ", crAmt=" + crAmt + ", sNo=" + sNo + ", level1=" + level1
-				+ ", orderCode=" + orderCode + ", shortName=" + shortName + ", budgetDrAmt=" + budgetDrAmt
-				+ ", budgetCrAmt=" + budgetCrAmt + ", userStatus=" + userStatus + ", stkNeeded=" + stkNeeded
-				+ ", stkOpen=" + stkOpen + ", stkStatus=" + stkStatus + ", userid=" + userid + ", companyid="
-				+ companyid + "]";
-	}
-
-
 
 	public Long getAccHeadId() {
 		return accHeadId;
@@ -277,16 +259,128 @@ public class AccHead implements Comparable<AccHead> {
 		this.userid = userid;
 	}
 
-
-
 	public Long getCompanyid() {
 		return companyid;
 	}
-
-
 
 	public void setCompanyid(Long companyid) {
 		this.companyid = companyid;
 	}
 
+	@Override
+	public int compareTo(AccHead o) {
+		return Integer.compare(this.sNo, o.sNo);
+	}
+
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + accCode;
+		result = prime * result + ((accHeadId == null) ? 0 : accHeadId.hashCode());
+		result = prime * result + ((accName == null) ? 0 : accName.hashCode());
+		result = prime * result + ((accType == null) ? 0 : accType.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(budgetCrAmt);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(budgetDrAmt);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((companyid == null) ? 0 : companyid.hashCode());
+		temp = Double.doubleToLongBits(crAmt);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(drAmt);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + level1;
+		result = prime * result + orderCode;
+		result = prime * result + sNo;
+		result = prime * result + ((shortName == null) ? 0 : shortName.hashCode());
+		result = prime * result + (stkNeeded ? 1231 : 1237);
+		temp = Double.doubleToLongBits(stkOpen);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((stkStatus == null) ? 0 : stkStatus.hashCode());
+		result = prime * result + (userStatus ? 1231 : 1237);
+		result = prime * result + ((userid == null) ? 0 : userid.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AccHead other = (AccHead) obj;
+		if (accCode != other.accCode)
+			return false;
+		if (accHeadId == null) {
+			if (other.accHeadId != null)
+				return false;
+		} else if (!accHeadId.equals(other.accHeadId))
+			return false;
+		if (accName == null) {
+			if (other.accName != null)
+				return false;
+		} else if (!accName.equals(other.accName))
+			return false;
+		if (accType == null) {
+			if (other.accType != null)
+				return false;
+		} else if (!accType.equals(other.accType))
+			return false;
+		if (Double.doubleToLongBits(budgetCrAmt) != Double.doubleToLongBits(other.budgetCrAmt))
+			return false;
+		if (Double.doubleToLongBits(budgetDrAmt) != Double.doubleToLongBits(other.budgetDrAmt))
+			return false;
+		if (companyid == null) {
+			if (other.companyid != null)
+				return false;
+		} else if (!companyid.equals(other.companyid))
+			return false;
+		if (Double.doubleToLongBits(crAmt) != Double.doubleToLongBits(other.crAmt))
+			return false;
+		if (Double.doubleToLongBits(drAmt) != Double.doubleToLongBits(other.drAmt))
+			return false;
+		if (level1 != other.level1)
+			return false;
+		if (orderCode != other.orderCode)
+			return false;
+		if (sNo != other.sNo)
+			return false;
+		if (shortName == null) {
+			if (other.shortName != null)
+				return false;
+		} else if (!shortName.equals(other.shortName))
+			return false;
+		if (stkNeeded != other.stkNeeded)
+			return false;
+		if (Double.doubleToLongBits(stkOpen) != Double.doubleToLongBits(other.stkOpen))
+			return false;
+		if (stkStatus == null) {
+			if (other.stkStatus != null)
+				return false;
+		} else if (!stkStatus.equals(other.stkStatus))
+			return false;
+		if (userStatus != other.userStatus)
+			return false;
+		if (userid == null) {
+			if (other.userid != null)
+				return false;
+		} else if (!userid.equals(other.userid))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AccHead [accHeadId=" + accHeadId + ", accCode=" + accCode + ", accName=" + accName + ", accType="
+				+ accType + ", drAmt=" + drAmt + ", crAmt=" + crAmt + ", sNo=" + sNo + ", level1=" + level1
+				+ ", orderCode=" + orderCode + ", shortName=" + shortName + ", budgetDrAmt=" + budgetDrAmt
+				+ ", budgetCrAmt=" + budgetCrAmt + ", userStatus=" + userStatus + ", stkNeeded=" + stkNeeded
+				+ ", stkOpen=" + stkOpen + ", stkStatus=" + stkStatus + ", userid=" + userid + ", companyid="
+				+ companyid + "]";
+	}
 }

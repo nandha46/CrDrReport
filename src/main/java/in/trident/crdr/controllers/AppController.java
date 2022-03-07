@@ -71,6 +71,7 @@ public class AppController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
 
 	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private static final String PAGE_TITLE = "pageTitle";
 
 	@Autowired
 	private AccHeadRepo accHeadRepo;
@@ -118,7 +119,7 @@ public class AppController {
 
 	@GetMapping("/")
 	public String showHomePage(Model model) {
-		model.addAttribute("pageTitle", "CrDr Home");
+		model.addAttribute(PAGE_TITLE, "CrDr Home");
 		return "index";
 	}
 
@@ -137,7 +138,7 @@ public class AppController {
 	@GetMapping("/company_selection")
 	public String showCompanies(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("show company accessed");
-		model.addAttribute("pageTitle", "Select Company");
+		model.addAttribute(PAGE_TITLE, "Select Company");
 		model.addAttribute("companies", companyService.listCompanies(user.getId()));
 		model.addAttribute("yearCriteria", new YearCriteria());
 		return "company_select";
@@ -145,13 +146,13 @@ public class AppController {
 
 	@PostMapping("/companyselect")
 	public String showYears(Model model, YearCriteria yearCriteria, @AuthenticationPrincipal CustomUserDetails user) {
-		LOGGER.info("Company Name: " + yearCriteria.getCompanyName());
+		LOGGER.info("Company Name: {}" , yearCriteria.getCompanyName());
 		if (yearCriteria.getCompanyName() == null) {
 			return "redirect:/company_selection";
 		}
 		Map<Long, String> years = companyService.listYears(yearCriteria.getCompanyName(), user.getId());
 		LOGGER.info(years.toString());
-		model.addAttribute("pageTitle", "Select Year");
+		model.addAttribute(PAGE_TITLE, "Select Year");
 		model.addAttribute("years", years);
 		model.addAttribute("companySelectCriteria", new CompanySelectCriteria());
 		return "year_select";
@@ -167,7 +168,7 @@ public class AppController {
 
 	@GetMapping("/profile")
 	public String showProfile(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		model.addAttribute("pageTitle", "Company Profile");
+		model.addAttribute(PAGE_TITLE, "Company Profile");
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		model.addAttribute("company_name",cs.getCompanyName());
 		model.addAttribute("address",cs.getAddress());
@@ -179,7 +180,7 @@ public class AppController {
 
 	@GetMapping("/reports")
 	public String showReports(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		model.addAttribute("pageTitle", "Reports");
+		model.addAttribute(PAGE_TITLE, "Reports");
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
 			return "redirect:/company_selection";
@@ -198,7 +199,7 @@ public class AppController {
 		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
 		model.addAttribute("todate", cs.getToDate().format(dateFormat));
 		model.addAttribute("formdata", new DaybookForm());
-		model.addAttribute("pageTitle", "CrDr Daybook");
+		model.addAttribute(PAGE_TITLE, "CrDr Daybook");
 		return "findDaybook";
 	}
 
@@ -224,7 +225,7 @@ public class AppController {
 		} catch (NullPointerException e) {
 			LOGGER.error("No Close balance in databse", e);
 		}
-		model.addAttribute("pageTitle", "Daybook View");
+		model.addAttribute(PAGE_TITLE, "Daybook View");
 		return "daybooks";
 	}
 
@@ -237,7 +238,7 @@ public class AppController {
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading Ledgers...");
 		model.addAttribute("accHeadList", accHeadList);
-		model.addAttribute("pageTitle", "CrDr Ledger");
+		model.addAttribute(PAGE_TITLE, "CrDr Ledger");
 		model.addAttribute("formdata", new LedgerForm());
 		return "findLedger";
 	}
@@ -248,7 +249,7 @@ public class AppController {
 		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId(),
 				csr.findCompanyIdByUserId(user.getId()));
 		model.addAttribute("listLedger", listLedger);
-		model.addAttribute("pageTitle", "CrDr Ledger");
+		model.addAttribute(PAGE_TITLE, "CrDr Ledger");
 		return "ledger";
 	}
 
@@ -269,7 +270,7 @@ public class AppController {
 		model.addAttribute("todate", cs.getToDate().format(dateFormat));
 		LOGGER.info("Loading Trial Balance...");
 		model.addAttribute("accHeadList", accHeadList);
-		model.addAttribute("pageTitle", "Find Trial Balance");
+		model.addAttribute(PAGE_TITLE, "Find Trial Balance");
 		model.addAttribute("trialform", new TrialForm());
 		return "findTrialBal";
 	}
@@ -281,7 +282,7 @@ public class AppController {
 				csr.findCompanyIdByUserId(user.getId()));
 		LOGGER.info("Trial Balnce is Ready");
 		model.addAttribute("listTrailView", listTrailView);
-		model.addAttribute("pageTitle", "Trial Balance");
+		model.addAttribute(PAGE_TITLE, "Trial Balance");
 		return "trialBal";
 	}
 
@@ -296,7 +297,7 @@ public class AppController {
 		model.addAttribute("todate", cs.getToDate().format(dateFormat));
 		model.addAttribute("closingStock", cs.getClosingStock());
 		model.addAttribute("accHeadList", accHeadList);
-		model.addAttribute("pageTitle", "Trading - Profit and Loss");
+		model.addAttribute(PAGE_TITLE, "Trading - Profit and Loss");
 		model.addAttribute("tradingPLForm", new CommonForm());
 		return "findTradingPL";
 	}
@@ -308,7 +309,7 @@ public class AppController {
 					csr.findCompanyIdByUserId(user.getId()));
 			LOGGER.info("TradingPL view  is ready");
 			model.addAttribute("listTradingPL", listTradingPL);
-			model.addAttribute("pageTitle", "Trading - Profit & Loss");
+			model.addAttribute(PAGE_TITLE, "Trading - Profit & Loss");
 			return "tradingPL";
 		} else {
 			List<List<TplBalView>> list = tradingPLService.createTradingPL2(tradingPLForm, user.getId(),
@@ -318,7 +319,7 @@ public class AppController {
 			LOGGER.info("TradingPL Alt view is ready");
 			model.addAttribute("expenses", expenses);
 			model.addAttribute("incomes", incomes);
-			model.addAttribute("pageTitle", "Trading - Profit & Loss");
+			model.addAttribute(PAGE_TITLE, "Trading - Profit & Loss");
 			return "tradingPL_alt";
 		}
 
@@ -335,7 +336,7 @@ public class AppController {
 		model.addAttribute("closingStock", cs.getClosingStock());
 		LOGGER.info("Loading Balance Sheet...");
 		model.addAttribute("accHeadList", accHeadList);
-		model.addAttribute("pageTitle", "Balance Sheet");
+		model.addAttribute(PAGE_TITLE, "Balance Sheet");
 		model.addAttribute("balSheetForm", new CommonForm());
 		return "findBalanceSheet";
 	}
@@ -347,7 +348,7 @@ public class AppController {
 			List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId(),
 					csr.findCompanyIdByUserId(user.getId()));
 			model.addAttribute("listBalSheet", listBalSheet);
-			model.addAttribute("pageTitle", "Balance sheet");
+			model.addAttribute(PAGE_TITLE, "Balance sheet");
 			return "BalanceSheet";
 		} else {
 			LOGGER.info("Balance Sheet Alt view  Ready");
@@ -357,7 +358,7 @@ public class AppController {
 			List<TplBalView> asset = list.get(1);
 			model.addAttribute("assets", asset);
 			model.addAttribute("liabilities", liability);
-			model.addAttribute("pageTitle", "Balance sheet");
+			model.addAttribute(PAGE_TITLE, "Balance sheet");
 			return "balancesheet_alt";
 		}
 
