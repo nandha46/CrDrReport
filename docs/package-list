@@ -1,0 +1,9 @@
+in.trident.crdr
+in.trident.crdr.controllers
+in.trident.crdr.customExceptions
+in.trident.crdr.entities
+in.trident.crdr.models
+in.trident.crdr.repositories
+in.trident.crdr.security
+in.trident.crdr.services
+in.trident.crdr.util
