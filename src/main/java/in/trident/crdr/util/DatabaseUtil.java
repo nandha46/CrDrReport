@@ -49,11 +49,7 @@ public class DatabaseUtil {
 
 	public Boolean hasMdbFormat(MultipartFile file) {
 		LOGGER.info("Filetype: {}" , file.getContentType());
-		if (FILE_TYPE.equals(file.getContentType())) {
-			return true;
-		} else {
-			return false;
-		}
+		return FILE_TYPE.equals(file.getContentType());
 	}
 
 	/**
@@ -113,7 +109,7 @@ public class DatabaseUtil {
 
 		while (rs.next()) {
 
-			LOGGER.info(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getBoolean(4) + " "
+			String log = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getBoolean(4) + " "
 					+ rs.getDate(5) + " " + rs.getDate(6) + " " + rs.getString(7) + " " + rs.getString(8) + " "
 					+ rs.getString(9) + " " + rs.getString(10) + " " + rs.getString(11) + " " + rs.getString(12) + " "
 					+ rs.getString(13) + " " + rs.getString(14) + " " + rs.getString(15) + " " + rs.getBoolean(16) + " "
@@ -125,7 +121,9 @@ public class DatabaseUtil {
 					+ rs.getDate(37) + " " + rs.getDate(38) + " " + rs.getDate(39) + " " + rs.getDate(40) + " "
 					+ rs.getDouble(41) + " " + rs.getDouble(42) + " " + rs.getDouble(43) + " " + rs.getDouble(44) + " "
 					+ rs.getBoolean(45) + " " + rs.getString(46) + " " + rs.getBoolean(47) + " " + rs.getString(48)
-					+ " " + rs.getString(49));
+					+ " " + rs.getString(49);
+			
+			LOGGER.info(log);
 
 			companies.add(new Company(uid, rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4),
 					convert(rs.getDate(5)), convert(rs.getDate(6)), rs.getString(7), rs.getString(8), rs.getString(9),
@@ -140,7 +138,9 @@ public class DatabaseUtil {
 					rs.getBoolean(47), rs.getString(48), rs.getString(49)));
 
 		}
-		LOGGER.info(companies.toString());
+		String log = companies.toString();
+		
+		LOGGER.info(log);
 		return companyRepo.saveAll(companies);
 	}
 
