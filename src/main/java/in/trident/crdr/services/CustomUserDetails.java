@@ -18,22 +18,20 @@ import in.trident.crdr.entities.User;
 
 public class CustomUserDetails implements UserDetails {
 
-
 	private static final long serialVersionUID = 1L;
-
 	private User user;
-	
+
 	public CustomUserDetails(User user) {
 		this.user = user;
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<Role> roles = user.getRoles();
-		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-			for (Role role : roles) {
-				authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-			}
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+		}
 		return authorities;
 	}
 
@@ -67,15 +65,16 @@ public class CustomUserDetails implements UserDetails {
 		return user.isEnabled();
 	}
 
-	public String getFullName () {
-		return user.getFirstName()+" "+user.getLastName();
+	public String getFullName() {
+		return user.getFirstName() + " " + user.getLastName();
 	}
-	
+
 	public String getName() {
 		return user.getFirstName();
 	}
-	
+
 	public Long getId() {
 		return user.getId();
 	}
+
 }
