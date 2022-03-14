@@ -55,7 +55,7 @@ public class DatabaseUtil {
 	/**
 	 * Shows detail about list of Tables
 	 * 
-	 * @param Connection c
+	 * @param c c
 	 * @throws SQLException
 	 */
 	public void databaseDetails(Connection c) throws SQLException {
@@ -73,7 +73,7 @@ public class DatabaseUtil {
 	/**
 	 * Shows Details about a table's Column and datatype
 	 * 
-	 * @param ResultSet rs
+	 * @param rs rs
 	 * @throws SQLException
 	 */
 	public void showTableDetails(ResultSet rs) throws SQLException {
@@ -90,7 +90,7 @@ public class DatabaseUtil {
 	/**
 	 * This method takes Java.sql.Date object and returns LocalDateTime
 	 * 
-	 * @param Java.sql.Date
+	 * @param date
 	 * @return LocalDateTime
 	 */
 	private static LocalDateTime convert(Date date) {
