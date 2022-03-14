@@ -42,7 +42,8 @@ public class PdfService {
 		parameters.put("LedgerListParam", datasource);
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters , new JREmptyDataSource());
-		JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\nandh\\OneDrive\\Desktop\\Pdfs\\ledger_"+Calendar.getInstance().getTime()+".pdf");
+		String filepath = new File("").getAbsolutePath()+"/pdf/"+Calendar.getInstance().getTime()+".pdf";
+		JasperExportManager.exportReportToPdfFile(jasperPrint,filepath);
 		return "Report generated";
 	}
 }

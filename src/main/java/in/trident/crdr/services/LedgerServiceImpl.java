@@ -21,6 +21,7 @@ import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
 
+import in.trident.crdr.annotations.TrackExecutionTime;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.models.Dailybooks;
 import in.trident.crdr.models.LedgerForm;
@@ -46,17 +47,17 @@ public class LedgerServiceImpl implements LedgerService {
 	@Autowired
 	private DaybookRepository daybookRepo;
 
-	SimpleDateFormat outsdf = new SimpleDateFormat("dd-MM-yyyy");
-	SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
-	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
+	private final SimpleDateFormat outsdf = new SimpleDateFormat("dd-MM-yyyy");
+	private final SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
+	private final LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
-
+	@TrackExecutionTime
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm, Long uid, Long cid) {
 		Profiler profiler = new Profiler("LedgerServiceImpl");
 		profiler.setLogger(LOGGER);
 		profiler.start("LedgerService");
-		List<LedgerView> ledgerList = new LinkedList<LedgerView>();
+		List<LedgerView> ledgerList = new LinkedList<>();
 		if (ledgerForm.isReportOrder()) { // True - Report order :Select
 			List<Integer> accCode = ledgerForm.getAccCode();
 			Set<Integer> accCodes = new LinkedHashSet<>(accCode);
@@ -70,7 +71,7 @@ public class LedgerServiceImpl implements LedgerService {
 				}
 			});
 		} else { // False - Report order : All
-			Set<Integer> accCodes = new LinkedHashSet<Integer>(accHeadRepo.findAccCodes(uid, cid));
+			Set<Integer> accCodes = new LinkedHashSet<>(accHeadRepo.findAccCodes(uid, cid));
 			accCodes.remove(0);
 			accCodes.forEach(code -> {
 				LedgerView ledgerView = createLedgerView(code, ledgerForm, uid, cid);
@@ -83,16 +84,16 @@ public class LedgerServiceImpl implements LedgerService {
 		}
 		LOGGER.debug("Ledger Created");
 		TimeInstrument ti = profiler.stop();
-		LOGGER.info("\n" + ti.toString());
+		LOGGER.info("\n {}", ti.toString());
 		return ledgerList;
 	}
-
+	@TrackExecutionTime
 	@Override
 	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm, Long uid, Long cid) {
 		LedgerView ledgerview = new LedgerView();
 		ledgerview.setAccheadName(accHeadRepo.findAccNameByAccCode(code, uid, cid));
-		LOGGER.debug("Code: " + code);
-		String arr[] = findOpeningBal(code, ledgerForm, uid, cid);
+		LOGGER.debug("Code: {}", code);
+		String[] arr = findOpeningBal(code, ledgerForm, uid, cid);
 		Date date1 = new Date();
 		try {
 			date1 = insdf.parse(ledgerForm.getStartDate());
@@ -114,11 +115,6 @@ public class LedgerServiceImpl implements LedgerService {
 			LOGGER.trace("---No Transactions on Dailybooks-----");
 			return null;
 		}
-		/*
-		 * Double debitTotal = listTrialview.stream().filter(x ->
-		 * !x.getDebit().isEmpty()) .mapToDouble(x ->
-		 * Double.parseDouble(x.getDebit().replace(",", ""))).sum();
-		 */
 
 		Double crT = dailybooklist.stream().filter(d -> !d.getCreditAmt().isEmpty())
 				.collect(Collectors.summingDouble(d -> Double.parseDouble(d.getCreditAmt().replace(",", ""))));
@@ -151,10 +147,10 @@ public class LedgerServiceImpl implements LedgerService {
 	@Override
 	public List<Dailybooks> createDailybooks(Integer code, String startDate, String endDate, Double bal, Long userid,
 			Long cid) {
-		List<Dailybooks> dailybooklist = new LinkedList<Dailybooks>();
+		List<Dailybooks> dailybooklist = new LinkedList<>();
 		List<Daybook> daybooks = daybookRepo.findDaybookByAccCodeAndDate(code, startDate, endDate, userid, cid);
 		for (int i = 0; i < daybooks.size(); i++) {
-			String arr2[] = { "", "" };
+			String[] arr2 = { "", "" };
 			if (daybooks.get(i).getDrAmt() == 0) {
 				bal -= daybooks.get(i).getCrAmt();
 				if (bal > 0d) {
@@ -183,7 +179,7 @@ public class LedgerServiceImpl implements LedgerService {
 	}
 
 	private String[] findOpeningBal(Integer code, LedgerForm ledgerForm, Long uid, Long cid) {
-		String arr[] = { "", "" };
+		String[] arr = { "", "" };
 		if (ledgerForm.getStartDate().equals("2018-04-01")) {
 			Double d1 = accHeadRepo.findCrAmt(code, uid, cid);
 			Double d2 = accHeadRepo.findDrAmt(code, uid, cid);

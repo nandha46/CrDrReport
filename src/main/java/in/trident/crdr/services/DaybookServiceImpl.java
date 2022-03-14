@@ -24,7 +24,7 @@ import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
 
-import in.trident.crdr.annotations.ExcecutionTimeTracker;
+import in.trident.crdr.annotations.TrackExecutionTime;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.Transactions;
@@ -52,7 +52,7 @@ public class DaybookServiceImpl implements DaybookService {
 	@Autowired
 	private AccHeadRepo accHeadRepo;
 
-	@ExcecutionTimeTracker
+	@TrackExecutionTime
 	@Override
 	public List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid, Long cid) {
 		Profiler profiler = new Profiler("DaybookServiceImpl");
@@ -84,7 +84,7 @@ public class DaybookServiceImpl implements DaybookService {
 		LOGGER.info("\n" + ti.toString());
 		return daybooks;
 	}
-
+	@TrackExecutionTime
 	@Override
 	public DaybookView createDaybook(String date, int day, Long uid, Long cid) {
 		Map<Integer, String> dayList = new HashMap<>(7);

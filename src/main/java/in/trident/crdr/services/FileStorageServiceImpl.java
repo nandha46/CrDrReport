@@ -55,7 +55,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 			LOGGER.error("Could not store the file", e);
 			throw new RuntimeException("Could not store the file!");
 		}
-		LOGGER.info("Absolute Filename: " + filename);
+		LOGGER.info("Absolute Filename: {}", filename);
 		return filename;
 	}
 
