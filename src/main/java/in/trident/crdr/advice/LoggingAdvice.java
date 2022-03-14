@@ -3,14 +3,16 @@
  */
 package in.trident.crdr.advice;
 
+import java.util.Arrays;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Aspectj advice class to provide centralized logging to all methods
@@ -23,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @since 08 mar 2022
  *
  */
+@Component
 @Aspect
 public class LoggingAdvice {
 
@@ -37,16 +40,15 @@ public class LoggingAdvice {
 	public Object appLogger(ProceedingJoinPoint pjp) {
 		String methodName = pjp.getSignature().getName();
 		String className = pjp.getTarget().getClass().toString();
-		ObjectMapper mapper = new ObjectMapper();
 		Object[] array = pjp.getArgs();
 		Object obj = null;
 		String args = null;
 		try {
-		 args = mapper.writeValueAsString(array);
+		 args = Arrays.toString(array);
 
 		LOGGER.info(" Method Entry: {}, ClassName: {}, Args: {} ", methodName, className, args);
 		 obj = pjp.proceed();
-			args = mapper.writeValueAsString(obj);
+			args = obj.toString();
 		} catch (Throwable e) {
 			LOGGER.error("Error caught from Method",e);
 		} 
