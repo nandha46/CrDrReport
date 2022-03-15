@@ -48,7 +48,7 @@ public class DatabaseUtil {
 	private ScheduleRepo scheduleRepo;
 
 	public Boolean hasMdbFormat(MultipartFile file) {
-		LOGGER.info("Filetype: {}" , file.getContentType());
+		LOGGER.info("Filetype: {}", file.getContentType());
 		return FILE_TYPE.equals(file.getContentType());
 	}
 
@@ -65,7 +65,7 @@ public class DatabaseUtil {
 		ResultSet tables = metaData.getTables(null, null, "%", types);
 		LOGGER.info("---------Table List------");
 		while (tables.next()) {
-			LOGGER.info("Table name: {}" , tables.getString("TABLE_NAME"));
+			LOGGER.info("Table name: {}", tables.getString("TABLE_NAME"));
 		}
 		LOGGER.info("------------------------");
 	}
@@ -78,15 +78,16 @@ public class DatabaseUtil {
 	 */
 	public void showTableDetails(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmdata = rs.getMetaData();
-		LOGGER.info("Table Name: {}" , rsmdata.getTableName(1));
+		LOGGER.info("Table Name: {}", rsmdata.getTableName(1));
 
 		int count = rsmdata.getColumnCount();
 		LOGGER.info("---Column List---");
 		for (int i = 1; i <= count; i++) {
-			LOGGER.info("Column {}:  {}  \" {}\"" ,i,rsmdata.getColumnLabel(i),rsmdata.getColumnTypeName(i));
+			LOGGER.info("Column {}:  {}  \" {}\"", i, rsmdata.getColumnLabel(i), rsmdata.getColumnTypeName(i));
 		}
 		LOGGER.info("------------------");
 	}
+
 	/**
 	 * This method takes Java.sql.Date object and returns LocalDateTime
 	 * 
@@ -109,22 +110,6 @@ public class DatabaseUtil {
 
 		while (rs.next()) {
 
-			String log = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getBoolean(4) + " "
-					+ rs.getDate(5) + " " + rs.getDate(6) + " " + rs.getString(7) + " " + rs.getString(8) + " "
-					+ rs.getString(9) + " " + rs.getString(10) + " " + rs.getString(11) + " " + rs.getString(12) + " "
-					+ rs.getString(13) + " " + rs.getString(14) + " " + rs.getString(15) + " " + rs.getBoolean(16) + " "
-					+ rs.getString(17) + " " + rs.getString(18) + " " + rs.getBoolean(19) + " " + rs.getDate(20) + " "
-					+ rs.getDate(21) + " " + rs.getInt(22) + " " + rs.getInt(23) + " " + rs.getDate(24) + " "
-					+ rs.getString(25) + " " + rs.getString(26) + " " + rs.getString(27) + " " + rs.getString(28) + " "
-					+ rs.getDate(29) + " " + rs.getString(30) + " " + rs.getString(31) + " " + rs.getInt(32) + " "
-					+ rs.getInt(33) + " " + rs.getDate(34) + " " + rs.getString(35) + " " + rs.getString(36) + " "
-					+ rs.getDate(37) + " " + rs.getDate(38) + " " + rs.getDate(39) + " " + rs.getDate(40) + " "
-					+ rs.getDouble(41) + " " + rs.getDouble(42) + " " + rs.getDouble(43) + " " + rs.getDouble(44) + " "
-					+ rs.getBoolean(45) + " " + rs.getString(46) + " " + rs.getBoolean(47) + " " + rs.getString(48)
-					+ " " + rs.getString(49);
-			
-			LOGGER.info(log);
-
 			companies.add(new Company(uid, rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4),
 					convert(rs.getDate(5)), convert(rs.getDate(6)), rs.getString(7), rs.getString(8), rs.getString(9),
 					rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14),
@@ -139,7 +124,7 @@ public class DatabaseUtil {
 
 		}
 		String log = companies.toString();
-		
+
 		LOGGER.info(log);
 		return companyRepo.saveAll(companies);
 	}
