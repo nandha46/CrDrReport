@@ -153,5 +153,11 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 		</profile>
+		<profile>
+			<id>deploy</id>
+			<properties>
+				<activatedProperties>deploy</activatedProperties>
+			</properties>
+		</profile>
 	</profiles>
 </project>
