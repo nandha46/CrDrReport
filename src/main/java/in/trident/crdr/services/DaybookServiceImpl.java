@@ -15,8 +15,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.profiler.Profiler;
-import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,12 +53,10 @@ public class DaybookServiceImpl implements DaybookService {
 	@TrackExecutionTime
 	@Override
 	public List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid, Long cid) {
-		Profiler profiler = new Profiler("DaybookServiceImpl");
-		profiler.setLogger(LOGGER);
-		profiler.start("DaybookService");
 		int days = dbRepo.findDaysBetween(endDate, startDate);
 		if (days == 0)
 			days = 1;
+		// days = days==0?1:days;
 		Calendar calendar = Calendar.getInstance();
 		List<DaybookView> daybooks = new LinkedList<>();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -76,15 +72,13 @@ public class DaybookServiceImpl implements DaybookService {
 			if (dbv != null) {
 				daybooks.add(dbv);
 			} else {
-				LOGGER.trace("Daybook for that date is null");
+				LOGGER.info("Daybook for that date is null");
 			}
 			calendar.add(Calendar.DATE, 1);
 		}
-		TimeInstrument ti = profiler.stop();
-		LOGGER.info("\n" + ti.toString());
 		return daybooks;
 	}
-	@TrackExecutionTime
+
 	@Override
 	public DaybookView createDaybook(String date, int day, Long uid, Long cid) {
 		Map<Integer, String> dayList = new HashMap<>(7);
@@ -105,7 +99,6 @@ public class DaybookServiceImpl implements DaybookService {
 			Daybook db = daybook.get(0);
 			SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date1 = new Date();
-			// TODO Replace with reversed date string
 			try {
 				date1 = insdf.parse(db.getDate());
 			} catch (ParseException e) {
@@ -114,8 +107,6 @@ public class DaybookServiceImpl implements DaybookService {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			daybookView.setDate(sdf.format(date1));
 			daybookView.setDayOfWeek(dbRepo.findDayOfWeek(date));
-			// daybookView.setDayOfWeek(dayList.get(day));
-
 			Calendar ca = Calendar.getInstance();
 			ca.setTime(date1);
 			ca.add(Calendar.DAY_OF_MONTH, -1);

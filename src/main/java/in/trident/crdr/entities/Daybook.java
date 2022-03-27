@@ -56,7 +56,6 @@ public class Daybook implements Comparable<Daybook> {
 
 	@Column(name = "TDate", nullable = false)
 	private String date;
-	// TODO @Temporal Type date
 
 	@Column(name = "Narration", nullable = false)
 	private String narration;
@@ -96,11 +95,9 @@ public class Daybook implements Comparable<Daybook> {
 	}
 
 	public String getDate() {
-		/*
-		 * SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd"); Date d =
-		 * sdf.parse(date); sdf.applyPattern("dd-MM-yyyy"); date = sdf.format(d);
-		 */
-		date = date.substring(0, date.length() - 9);
+		if (date.length() > 12) {
+			date = date.substring(0, date.length() - 9);
+		}
 		return date;
 	}
 

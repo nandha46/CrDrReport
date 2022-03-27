@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.profiler.Profiler;
-import org.slf4j.profiler.TimeInstrument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,12 +49,10 @@ public class LedgerServiceImpl implements LedgerService {
 	private final SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
 	private final LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
+
 	@TrackExecutionTime
 	@Override
 	public List<LedgerView> createLedgerViewList(LedgerForm ledgerForm, Long uid, Long cid) {
-		Profiler profiler = new Profiler("LedgerServiceImpl");
-		profiler.setLogger(LOGGER);
-		profiler.start("LedgerService");
 		List<LedgerView> ledgerList = new LinkedList<>();
 		if (ledgerForm.isReportOrder()) { // True - Report order :Select
 			List<Integer> accCode = ledgerForm.getAccCode();
@@ -82,12 +78,9 @@ public class LedgerServiceImpl implements LedgerService {
 				}
 			});
 		}
-		LOGGER.debug("Ledger Created");
-		TimeInstrument ti = profiler.stop();
-		LOGGER.info("\n {}", ti.toString());
 		return ledgerList;
 	}
-	@TrackExecutionTime
+
 	@Override
 	public LedgerView createLedgerView(Integer code, LedgerForm ledgerForm, Long uid, Long cid) {
 		LedgerView ledgerview = new LedgerView();

@@ -20,25 +20,33 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
 	private CompanyRepo companyRepo;
-	
+
 	@Autowired
 	private CompSelectionRepo csr;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompanyServiceImpl.class);
-	
-	public void storeSelection(Long uid ,Long cid){
+
+	public void storeSelection(final Long uid, final Long cid) {
 		CompanySelection cs0 = csr.findCompanyByUser(uid);
 		if (cs0 == null) {
 			Company c = companyRepo.findCompanyById(cid);
-			  cs0 = new CompanySelection(c.getCompanyid(), c.getUserid(), c.getCompName(), "20"+c.getCompYear(), c.getFromDate(), c.getToDate(), c.getAddress1()+c.getAddress2()+c.getCity(), c.getcNoofAc(), c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(), c.getCompType());
-			 LOGGER.info("Selecting new company: --->"+cs0.toString());
-			 csr.save(cs0); 
+			cs0 = new CompanySelection(c.getCompanyid(), c.getUserid(), c.getCompName(), "20" + c.getCompYear(),
+					c.getFromDate(), c.getToDate(), c.getAddress1() + c.getAddress2() + c.getCity(), c.getcNoofAc(),
+					c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(),
+					c.getCompType());
+			String companyName = cs0.toString();
+			LOGGER.info("Selecting new company: ---> {}", companyName);
+			csr.save(cs0);
 		} else {
-		Long sid = cs0.getSid();
-		Company c = companyRepo.findCompanyById(cid);
-		 cs0 = new CompanySelection(sid, c.getCompanyid(), c.getUserid(), c.getCompName(), "20"+c.getCompYear(), c.getFromDate(), c.getToDate(), c.getAddress1()+c.getAddress2()+c.getCity(), c.getcNoofAc(), c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(), c.getCompType());
-		 LOGGER.info("Overwriting existing company: --->"+cs0.toString());
-		 csr.save(cs0);
+			Long sid = cs0.getSid();
+			Company c = companyRepo.findCompanyById(cid);
+			cs0 = new CompanySelection(sid, c.getCompanyid(), c.getUserid(), c.getCompName(), "20" + c.getCompYear(),
+					c.getFromDate(), c.getToDate(), c.getAddress1() + c.getAddress2() + c.getCity(), c.getcNoofAc(),
+					c.getcNoofEntries(), Calendar.getInstance().getTime(), c.getCloseStk(), c.getOpenCash(),
+					c.getCompType());
+			String companyName = cs0.toString();
+			LOGGER.info("Overwriting existing company: ---> {}", companyName);
+			csr.save(cs0);
 		}
 	}
 
@@ -50,13 +58,11 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<Long, String> listYears(String cname, Long uid) {
 		Map<Long, String> map = new TreeMap<>();
-		List<Company> companies = companyRepo.findCompanyYearsByName(cname,uid);
-		companies.forEach(c->{
-			map.put(c.getCompanyid(), "20"+c.getCompYear());
+		List<Company> companies = companyRepo.findCompanyYearsByName(cname, uid);
+		companies.forEach(c -> {
+			map.put(c.getCompanyid(), "20" + c.getCompYear());
 		});
 		return map;
 	}
-	
-	
-	
+
 }

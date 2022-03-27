@@ -24,6 +24,7 @@ import in.trident.crdr.services.CustomUserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Override
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new CustomUserDetailsService();
@@ -50,6 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		
+		final String ADMIN = "admin";
+		final String DEVELOPER = "developer";
+		final String USER = "user";
+		
 		String[] preLoginPaths = new String[] {"/register","/process_register","/","/css/**","/img/**","/script/**"};
 		String[] findPaths = new String[] {"/findDaybook","/findLedger","/findTrialBal","/findTradingPL","/findBalSheet"};
 		String[] viewPaths = new String[] {"/daybooks","/ledger","/trial","/tradingPL","/BalanceSheet"};
@@ -58,10 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 			.antMatchers(preLoginPaths).permitAll()
-			.antMatchers(adminPaths).hasAnyAuthority("admin","developer")
-			.antMatchers(findPaths).hasAnyAuthority("developer","admin","user")
-			.antMatchers(viewPaths).hasAnyAuthority("developer","admin","user")
-			.antMatchers(userPaths).hasAnyAuthority("developer","admin","user")
+			.antMatchers(adminPaths).hasAnyAuthority(ADMIN,DEVELOPER)
+			.antMatchers(findPaths).hasAnyAuthority(DEVELOPER,ADMIN,USER)
+			.antMatchers(viewPaths).hasAnyAuthority(DEVELOPER,ADMIN,USER)
+			.antMatchers(userPaths).hasAnyAuthority(DEVELOPER,ADMIN,USER)
 			.anyRequest().authenticated()
 			.and()
 			.formLogin().usernameParameter("email").defaultSuccessUrl("/company_selection").permitAll()
