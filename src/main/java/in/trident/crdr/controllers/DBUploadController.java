@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.trident.crdr.customExceptions.FileTypeException;
-import in.trident.crdr.models.MDBUploadModel;
 import in.trident.crdr.services.CustomUserDetails;
 import in.trident.crdr.services.DatabaseService;
 
@@ -37,31 +37,28 @@ public class DBUploadController {
 	@GetMapping("/upload")
 	public String uploadMDB(Model model) {
 		model.addAttribute("pageTitle", "Upload Access Databse");
-		model.addAttribute("mdbUploadModel", new MDBUploadModel());
 		return "upload_db";
 	}
 
 	@PostMapping("/uploaded")
 	public String uploadSuccess(@AuthenticationPrincipal CustomUserDetails user, Model model,
-			MDBUploadModel mdbUploadModel) {
-		MultipartFile file = mdbUploadModel.getFile();
-
+			@RequestParam(value = "file") MultipartFile uploadedFile) {
 		try {
-			mdbService.saveToStorage(file, user.getId(), user.getUsername());
+			mdbService.saveToStorage(uploadedFile, user.getId(), user.getUsername());
 		} catch (SQLException e) {
 			LOGGER.error("SQL Error", e);
-			model.addAttribute("message","SQL Error: Contact Admin");
-			model.addAttribute("pageTitle","SQL Error");
+			model.addAttribute("message", "SQL Error: Contact Admin");
+			model.addAttribute("pageTitle", "SQL Error");
 			return "success";
 		} catch (FileTypeException e) {
 			LOGGER.error(e.getMessage());
-			model.addAttribute("message","Incorrect Filetype!. Please Check the file type.");
-			model.addAttribute("pageTitle","Error");
+			model.addAttribute("message", "Incorrect Filetype!. Please Check the file type.");
+			model.addAttribute("pageTitle", "Error");
 			return "success";
 		}
-		LOGGER.info("Uploaded the file successfully: " + file.getOriginalFilename() + "\n");
-		model.addAttribute("message","File uploaded successfully! ");
-		model.addAttribute("pageTitle","Success! ");
+		LOGGER.info("Uploaded the file successfully: {} \n", uploadedFile.getOriginalFilename());
+		model.addAttribute("message", "File uploaded successfully! ");
+		model.addAttribute("pageTitle", "Success! ");
 		return "success";
 	}
 

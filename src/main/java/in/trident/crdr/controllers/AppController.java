@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ibm.icu.number.LocalizedNumberFormatter;
 import com.ibm.icu.number.NumberFormatter;
@@ -36,10 +40,8 @@ import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
-import in.trident.crdr.models.YearCriteria;
 import in.trident.crdr.models.CommonForm;
 import in.trident.crdr.models.BalanceSheetView;
-import in.trident.crdr.models.CompanySelectCriteria;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
@@ -71,6 +73,7 @@ public class AppController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
 
 	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 	private static final String PAGE_TITLE = "pageTitle";
 
 	@Autowired
@@ -109,8 +112,6 @@ public class AppController {
 	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
 			.precision(Precision.fixedFraction(2));
 
-	// TODO need to implement user specific table data and filtering system
-
 	@GetMapping("/access")
 	public void runDB() {
 		CSVUtil csv = new CSVUtil();
@@ -137,32 +138,37 @@ public class AppController {
 
 	@GetMapping("/company_selection")
 	public String showCompanies(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		LOGGER.info("show company accessed");
 		model.addAttribute(PAGE_TITLE, "Select Company");
 		model.addAttribute("companies", companyService.listCompanies(user.getId()));
-		model.addAttribute("yearCriteria", new YearCriteria());
 		return "company_select";
 	}
 
 	@PostMapping("/companyselect")
-	public String showYears(Model model, YearCriteria yearCriteria, @AuthenticationPrincipal CustomUserDetails user) {
-		LOGGER.info("Company Name: {}" , yearCriteria.getCompanyName());
-		if (yearCriteria.getCompanyName() == null) {
+	public String showYears(@RequestParam(value = "companyName") String companyName, Model model,
+			@AuthenticationPrincipal CustomUserDetails user, HttpServletResponse response) {
+		LOGGER.info("Company Name: {}", companyName);
+		if (companyName == null) {
 			return "redirect:/company_selection";
 		}
-		Map<Long, String> years = companyService.listYears(yearCriteria.getCompanyName(), user.getId());
-		LOGGER.info(years.toString());
+		// Setting cookie
+		Cookie cookie = new Cookie("companyName", companyName.replace(" ", "_"));
+		cookie.setPath("/");
+		cookie.setMaxAge(2 * 60 * 60);
+		cookie.setHttpOnly(true);
+		cookie.setComment("Currently selected Company name of the user");
+		response.addCookie(cookie);
+
+		Map<Long, String> years = companyService.listYears(companyName, user.getId());
 		model.addAttribute(PAGE_TITLE, "Select Year");
 		model.addAttribute("years", years);
-		model.addAttribute("companySelectCriteria", new CompanySelectCriteria());
 		return "year_select";
 	}
 
 	@PostMapping("/StoreCompany")
-	public String processCompany(Model model, CompanySelectCriteria csc,
+	public String processCompany(Model model, @RequestParam(value = "cid") Long cid,
 			@AuthenticationPrincipal CustomUserDetails user) {
-		LOGGER.info("Store company accessed");
-		companyService.storeSelection(user.getId(), csc.getCid());
+
+		companyService.storeSelection(user.getId(), cid);
 		return "redirect:/reports";
 	}
 
@@ -170,10 +176,10 @@ public class AppController {
 	public String showProfile(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		model.addAttribute(PAGE_TITLE, "Company Profile");
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
-		model.addAttribute("company_name",cs.getCompanyName());
-		model.addAttribute("address",cs.getAddress());
-		model.addAttribute("year",cs.getYear());
-		model.addAttribute("company",cs);
+		model.addAttribute("company_name", cs.getCompanyName());
+		model.addAttribute("address", cs.getAddress());
+		model.addAttribute("year", cs.getYear());
+		model.addAttribute("company", cs);
 		LOGGER.info("Loading Profile...");
 		return "profile";
 	}
@@ -205,9 +211,11 @@ public class AppController {
 
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model, DaybookForm formdata, @AuthenticationPrincipal CustomUserDetails user) {
-		LOGGER.info("Inside daybooks method");
 		List<DaybookView> daybookViewObj = daybookService.daybookViewRange(formdata.getStartDate(),
 				formdata.getEndDate(), user.getId(), csr.findCompanyIdByUserId(user.getId()));
+		if (daybookViewObj == null) 
+			LOGGER.info("===========Null value======");
+		
 		model.addAttribute("daybookViewObj", daybookViewObj);
 		Calendar cal = Calendar.getInstance();
 		try {

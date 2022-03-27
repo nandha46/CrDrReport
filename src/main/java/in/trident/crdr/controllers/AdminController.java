@@ -2,7 +2,6 @@ package in.trident.crdr.controllers;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -15,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import in.trident.crdr.entities.Company;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
-import in.trident.crdr.models.AdminForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.CompSelectionRepo;
@@ -97,12 +96,10 @@ public class AdminController {
 		user.setPassword(encodedPass);
 		Set<Role> roles = new HashSet<>();
 		Role role = new Role();
-		// TODO Add another field in User object named role or pass it using JS
 		role.setRoleName("user");
 		roles.add(role);
 		user.setRoles(roles);
 		userRepo.save(user);
-		// TODO Check if user already exists by email id
 		return "register_success";
 	}
 
@@ -131,7 +128,6 @@ public class AdminController {
 		model.addAttribute(PAGE_TITLE, "Delete User");
 		List<User> userList = userRepo.findAll();
 		model.addAttribute("userList", userList);
-		model.addAttribute("adminForm", new AdminForm());
 		return "delete_users";
 	}
 
@@ -146,19 +142,18 @@ public class AdminController {
 	 */
 	@Transactional
 	@PostMapping("/process_delete_user")
-	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user, AdminForm formdata, Model model) {
-		Long uid = formdata.getUserId();
+	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user,
+			@RequestParam(value = "uid") Long uid, Model model) {
 		if (uid.equals(user.getId()) || uid.equals(9l)) {
 			model.addAttribute(PAGE_TITLE, ERROR);
 			model.addAttribute(MESSAGE, "Can not delete own or Developer Accounts");
 			return SUCCESS;
-		}
-		else if (uid == 0l) {
+		} else if (uid == 0l) {
 			model.addAttribute(PAGE_TITLE, ERROR);
 			model.addAttribute(MESSAGE, "User Id must not be null");
 			return SUCCESS;
 		} else {
-			
+
 			if (userRepo.existsById(uid)) {
 				userRepo.deleteById(uid);
 				daybookRepo.deleteAllByUserId(uid);
@@ -175,8 +170,7 @@ public class AdminController {
 				model.addAttribute(MESSAGE, "User Id does not exist");
 				return SUCCESS;
 			}
-			
-			
+
 		}
 	}
 
@@ -193,7 +187,6 @@ public class AdminController {
 		model.addAttribute(PAGE_TITLE, "Delete Company");
 		List<Company> companies = companyRepo.findCompaniesByUser(user.getId());
 		model.addAttribute("companies", companies);
-		model.addAttribute("adminForm", new AdminForm());
 		return "delete_company";
 	}
 
@@ -208,16 +201,16 @@ public class AdminController {
 	@Transactional
 	@PostMapping("/process_delete_company")
 	public String processDeleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model,
-			AdminForm adminForm) {
-		if (companyRepo.existsById(adminForm.getCompanyId())) {
-			companyRepo.deleteById(adminForm.getCompanyId());
-			if (csRepo.findCompanyByCompanyid(adminForm.getCompanyId()) != null) {
+			@RequestParam(value = "cid") Long cid) {
+		if (companyRepo.existsById(cid)) {
+			companyRepo.deleteById(cid);
+			if (csRepo.findCompanyByCompanyid(cid) != null) {
 				csRepo.deleteAllByUserId(user.getId());
 			}
-			daybookRepo.deleteAllByCompanyId(adminForm.getCompanyId());
-			accHeadRepo.deleteAllByCompanyId(adminForm.getCompanyId());
-			closeBalRepo.deleteAllByCompanyId(adminForm.getCompanyId());
-			scheduleRepo.deleteAllByCompanyId(adminForm.getCompanyId());
+			daybookRepo.deleteAllByCompanyId(cid);
+			accHeadRepo.deleteAllByCompanyId(cid);
+			closeBalRepo.deleteAllByCompanyId(cid);
+			scheduleRepo.deleteAllByCompanyId(cid);
 			model.addAttribute(PAGE_TITLE, "Company Deleted..");
 			model.addAttribute(MESSAGE, "Company Deleted Sucessfully");
 			return SUCCESS;
