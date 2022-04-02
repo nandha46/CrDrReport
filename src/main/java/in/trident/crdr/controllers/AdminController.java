@@ -82,6 +82,7 @@ public class AdminController {
 		return "signup_form";
 	}
 
+	
 	/**
 	 * Controller mapping of register user
 	 * 
