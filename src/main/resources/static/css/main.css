@@ -5,37 +5,44 @@ body {
 	background-color: #f1f4f8;
 }
 
+.theader {
+	background: linear-gradient(180deg, rgba(0, 0, 0, .5) 0,
+		rgba(0, 0, 0, .4) 20%, rgba(0, 0, 0, .3) 40%, rgba(0, 0, 0, .2) 60%,
+		rgba(0, 0, 0, .1) 80%, transparent);
+	margin-bottom: -57px;
+}
+
 #left_align {
 	text-align: left;
 }
 
-tbody tr td[isheader=true]{
+tbody tr td[isheader=true] {
 	text-align: left;
-	color:red;
+	color: red;
 }
 
-tbody tr td[isheader=false]{
+tbody tr td[isheader=false] {
 	text-align: left;
 }
 
-tbody tr td[id='2']{
-	padding-left:16px;
+tbody tr td[id='2'] {
+	padding-left: 16px;
 }
 
-tbody tr td[id='3']{
-	padding-left:16px;
+tbody tr td[id='3'] {
+	padding-left: 16px;
 }
 
-tbody tr td[id='4']{
-	padding-left:16px;
+tbody tr td[id='4'] {
+	padding-left: 16px;
 }
 
-tbody tr td[id='5']{
-	padding-left:16px;
+tbody tr td[id='5'] {
+	padding-left: 16px;
 }
 
-tbody tr td[id='6']{
-	padding-left:16px;
+tbody tr td[id='6'] {
+	padding-left: 16px;
 }
 
 #right_align {
@@ -46,7 +53,7 @@ tbody tr td[id='6']{
 	text-align: center;
 }
 
-#nav-username{
+#nav-username {
 	float: right;
 	padding-right: 24px;
 	background: transparent;
@@ -57,14 +64,13 @@ a {
 }
 
 .navbar {
-  width: 100%;
- /* background-image: linear-gradient(to right,#b92b27,#1565C0); */
-/*  background: linear-gradient(90deg, rgba(80,76,76,1) 0%, rgba(249,249,249,1) 51%, rgba(80,76,76,1) 100%); */
-  
- background: rgb(107,103,103);
-background: linear-gradient(90deg, rgba(107,103,103,1) 0%, rgba(80,76,76,1) 49%, rgba(105,99,99,1) 100%);
-  
-  overflow: auto;
+	width: 100%;
+	/* background-image: linear-gradient(to right,#b92b27,#1565C0); */
+	/*  background: linear-gradient(90deg, rgba(80,76,76,1) 0%, rgba(249,249,249,1) 51%, rgba(80,76,76,1) 100%); */
+	background: rgb(107, 103, 103);
+	background: linear-gradient(90deg, rgba(107, 103, 103, 1) 0%,
+		rgba(80, 76, 76, 1) 49%, rgba(105, 99, 99, 1) 100%);
+	overflow: auto;
 }
 
 table {
@@ -76,8 +82,8 @@ table {
 }
 
 .table-scroll {
-    height: 650px;
-	overflow-y: scroll;	
+	height: 650px;
+	overflow-y: scroll;
 }
 
 .navbar a {
@@ -103,13 +109,11 @@ table {
 	}
 }
 
-#accs option[isHeader='1']
-{
-color:red;
-font-weight:bold;
+#accs option[isHeader='1'] {
+	color: red;
+	font-weight: bold;
 }
 
-#accs option[isHeader='0']
-{
-font-weight:bold;
+#accs option[isHeader='0'] {
+	font-weight: bold;
 }

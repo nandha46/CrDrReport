@@ -72,8 +72,8 @@ public class FileStorageServiceImpl implements FileStorageService {
 			}
 		} catch (MalformedURLException e) {
 			LOGGER.error("Malformed URL", e);
-			throw new RuntimeException("Error: " + e.getMessage());
 		}
+		return null;
 	}
 
 	@Override
@@ -83,7 +83,6 @@ public class FileStorageServiceImpl implements FileStorageService {
 			Files.delete(file);
 		} catch (IOException e) {
 			LOGGER.error("Error deleting the file", e);
-			throw new RuntimeException("Error deleting the file" + e.getMessage());
 		}
 	}
 
