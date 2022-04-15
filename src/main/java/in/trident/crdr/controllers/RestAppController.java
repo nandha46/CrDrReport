@@ -8,9 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +29,6 @@ import in.trident.crdr.services.CustomUserDetails;
 public class RestAppController {
 	
 	private CompanyService companyService;
-	private static final Logger LOGGER = LoggerFactory.getLogger(RestAppController.class);
 	
 	public RestAppController(CompanyService companyService) {
 		this.companyService = companyService;
@@ -54,6 +52,17 @@ public class RestAppController {
 	public String test2(@CookieValue(value = "companyName",defaultValue = "defaultName") Cookie cookie ,HttpServletRequest request) {
 		
 		return cookie.getName()+ " Expires after/on: " + cookie.getMaxAge();
+	}
+	
+	@GetMapping("/setCookie")
+	public void setCookie(HttpServletResponse response) {
+		// Setting cookie
+				Cookie cookie = new Cookie("companyName", "Trident's Software");
+				cookie.setPath("/");
+				cookie.setMaxAge(2 * 60 * 60);
+				cookie.setHttpOnly(true);
+				cookie.setComment("Currently selected Company name of the user");
+				response.addCookie(cookie);
 	}
 	
 	@GetMapping("/years")

@@ -90,7 +90,7 @@ public class AdminController {
 	 * @return returns page registration sucess
 	 */
 	@PostMapping("/process_register")
-	public String processRegister(User user) {
+	public String processRegister(User user, Model model) {
 		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
 		String encodedPass = passEncoder.encode(user.getPassword());
 		LOGGER.info("Password is {}", user.getPassword());
@@ -101,6 +101,9 @@ public class AdminController {
 		roles.add(role);
 		user.setRoles(roles);
 		userRepo.save(user);
+		model.addAttribute(PAGE_TITLE, "");
+		model.addAttribute(MESSAGE, "New User created Successfully");
+		model.addAttribute(PAGE_TITLE, "Registration Success");
 		return "register_success";
 	}
 
@@ -144,17 +147,14 @@ public class AdminController {
 	@Transactional
 	@PostMapping("/process_delete_user")
 	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user,
-			@RequestParam(value = "uid") Long uid, Model model) {
+			@RequestParam(value = "userId") Long uid, Model model) {
 		if (uid.equals(user.getId()) || uid.equals(9l)) {
 			model.addAttribute(PAGE_TITLE, ERROR);
 			model.addAttribute(MESSAGE, "Can not delete own or Developer Accounts");
-			return SUCCESS;
 		} else if (uid == 0l) {
 			model.addAttribute(PAGE_TITLE, ERROR);
 			model.addAttribute(MESSAGE, "User Id must not be null");
-			return SUCCESS;
 		} else {
-
 			if (userRepo.existsById(uid)) {
 				userRepo.deleteById(uid);
 				daybookRepo.deleteAllByUserId(uid);
@@ -165,14 +165,12 @@ public class AdminController {
 				scheduleRepo.deleteAllByUserId(uid);
 				model.addAttribute(PAGE_TITLE, "Success");
 				model.addAttribute(MESSAGE, "User and Companies deleted Successfully");
-				return SUCCESS;
 			} else {
 				model.addAttribute(PAGE_TITLE, ERROR);
 				model.addAttribute(MESSAGE, "User Id does not exist");
-				return SUCCESS;
 			}
-
 		}
+		return SUCCESS;
 	}
 
 	/**
@@ -202,7 +200,7 @@ public class AdminController {
 	@Transactional
 	@PostMapping("/process_delete_company")
 	public String processDeleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model,
-			@RequestParam(value = "cid") Long cid) {
+			@RequestParam(value = "companyId") Long cid) {
 		if (companyRepo.existsById(cid)) {
 			companyRepo.deleteById(cid);
 			if (csRepo.findCompanyByCompanyid(cid) != null) {
@@ -214,11 +212,10 @@ public class AdminController {
 			scheduleRepo.deleteAllByCompanyId(cid);
 			model.addAttribute(PAGE_TITLE, "Company Deleted..");
 			model.addAttribute(MESSAGE, "Company Deleted Sucessfully");
-			return SUCCESS;
 		} else {
 			model.addAttribute(PAGE_TITLE, ERROR);
 			model.addAttribute(MESSAGE, "Company ID does not exist");
-			return SUCCESS;
 		}
+		return SUCCESS;
 	}
 }
