@@ -79,7 +79,7 @@ public class AdminController {
 	@GetMapping("/create_user")
 	public String showRegistrationForm(Model model) {
 		model.addAttribute("user", new User());
-		return "signup_form";
+		return "registration";
 	}
 
 	
@@ -100,6 +100,7 @@ public class AdminController {
 		role.setRoleName("user");
 		roles.add(role);
 		user.setRoles(roles);
+		user.setEnabled(true);
 		userRepo.save(user);
 		model.addAttribute(PAGE_TITLE, "");
 		model.addAttribute(MESSAGE, "New User created Successfully");
