@@ -128,6 +128,7 @@ public class AppController {
 			LOGGER.info("Anonymous user");
 			return "login";
 		}
+		LOGGER.info("Already logged in");
 		return REDIRECT_COMPANY_SELECTION;
 	}
 
