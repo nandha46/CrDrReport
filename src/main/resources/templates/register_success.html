@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Registration Success</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-</head>
+<head th:replace="fragments :: head" />
 <body>
-    <div class="container text-center">
-        <h3>You have signed up successfully!</h3>
-        <h4><a th:href="@{/login}">Click here to Login</a></h4>
-    </div>
-     
+	<div th:replace="fragments::navbar"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<blockquote class="blockquote text-center">
+					<h2 class="mb-0">[[${message}]]</h2>
+					<div>
+						<button type="submit" class="btn btn-success"
+							onclick="window.location='/create_user'">New User</button>
+						<button type="submit" class="btn btn-success"
+							onclick="window.location='/reports'">Reports</button>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

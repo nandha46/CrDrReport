@@ -8,10 +8,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +71,7 @@ public class AppController {
 	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	private static final String PAGE_TITLE = "pageTitle";
+	private static final String REDIRECT_COMPANY_SELECTION = "redirect:/company_selection";
 
 	@Autowired
 	private AccHeadRepo accHeadRepo;
@@ -127,13 +124,12 @@ public class AppController {
 	@GetMapping("/login")
 	public String showlogin(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		LOGGER.info("Inside login controller");
 		if (auth == null || auth instanceof AnonymousAuthenticationToken) {
 			LOGGER.info("Anonymous user");
 			return "login";
 		}
-		LOGGER.info("Redirection");
-		return "redirect:/company_selection";
+		LOGGER.info("Already logged in");
+		return REDIRECT_COMPANY_SELECTION;
 	}
 
 	@GetMapping("/company_selection")
@@ -143,31 +139,13 @@ public class AppController {
 		return "company_select";
 	}
 
-	@PostMapping("/companyselect")
-	public String showYears(@RequestParam(value = "companyName") String companyName, Model model,
-			@AuthenticationPrincipal CustomUserDetails user, HttpServletResponse response) {
+	@PostMapping("/StoreCompany")
+	public String processCompany(Model model, @RequestParam(value = "companyName") String companyName, @RequestParam(value = "year") Long cid,
+			@AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Company Name: {}", companyName);
 		if (companyName == null) {
-			return "redirect:/company_selection";
+			return REDIRECT_COMPANY_SELECTION;
 		}
-		// Setting cookie
-		Cookie cookie = new Cookie("companyName", companyName.replace(" ", "_"));
-		cookie.setPath("/");
-		cookie.setMaxAge(2 * 60 * 60);
-		cookie.setHttpOnly(true);
-		cookie.setComment("Currently selected Company name of the user");
-		response.addCookie(cookie);
-
-		Map<Long, String> years = companyService.listYears(companyName, user.getId());
-		model.addAttribute(PAGE_TITLE, "Select Year");
-		model.addAttribute("years", years);
-		return "year_select";
-	}
-
-	@PostMapping("/StoreCompany")
-	public String processCompany(Model model, @RequestParam(value = "cid") Long cid,
-			@AuthenticationPrincipal CustomUserDetails user) {
-
 		companyService.storeSelection(user.getId(), cid);
 		return "redirect:/reports";
 	}
@@ -189,7 +167,7 @@ public class AppController {
 		model.addAttribute(PAGE_TITLE, "Reports");
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
-			return "redirect:/company_selection";
+			return REDIRECT_COMPANY_SELECTION;
 		}
 		model.addAttribute("companyName", cs.getCompanyName());
 		LOGGER.info("Reports Page loading...");
@@ -213,9 +191,9 @@ public class AppController {
 	public String listDaybook(Model model, DaybookForm formdata, @AuthenticationPrincipal CustomUserDetails user) {
 		List<DaybookView> daybookViewObj = daybookService.daybookViewRange(formdata.getStartDate(),
 				formdata.getEndDate(), user.getId(), csr.findCompanyIdByUserId(user.getId()));
-		if (daybookViewObj == null) 
+		if (daybookViewObj == null)
 			LOGGER.info("===========Null value======");
-		
+
 		model.addAttribute("daybookViewObj", daybookViewObj);
 		Calendar cal = Calendar.getInstance();
 		try {

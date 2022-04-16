@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-
- <PatternLayout pattern="%d %t %level %c %msg %n" />
-
- -->
- <Configuration>
-    <Appenders >
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout
-                pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
-        </Console>
-<!--  
-        <File name="File" fileName="CrDr.log" >
-            <PatternLayout
-                pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
-        </File>  -->
-        <RollingFile name="File"
-            fileName="CrDr-log4j.log"
-            filePattern="CrDr-log4j-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
-            <Policies>
-                <SizeBasedTriggeringPolicy size="10240KB" />
-            </Policies>
-            <DefaultRolloverStrategy max="5" />
-        </RollingFile>
-        
-    </Appenders>
- 
-    <Loggers>
-        <Root level="info">
-            <AppenderRef ref="Console" />
-            <AppenderRef ref="File" />
-        </Root>
-    </Loggers>
-    
+<Configuration>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
+		</Console>
+		<RollingFile name="File" fileName="./logs/CrDr-log4j.log"
+			filePattern="./logs/CrDr-log4j-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout
+				pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %-50c{1.} - %msg%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10240KB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+	</Loggers>
 </Configuration>

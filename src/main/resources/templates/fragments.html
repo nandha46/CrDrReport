@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,42 +22,86 @@
 
 <body>
 	<div th:fragment="navbar">
-		<div class="navbar">
-			<a th:href="@{/reports}"><i class="fa fa-book" aria-hidden="true"></i>
-				REPORTS</a> <a href="#" th:inline="text" id="nav-username"><i
-				class="fa fa-fw fa-user" aria-hidden="true"> </i>
-				[[${#request.userPrincipal.principal.name}]] </a>
-		</div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">CrDr Report</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/reports}"><i class="fa fa-book"
+							aria-hidden="true"></i> REPORTS</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" th:inline="text" id="nav-username"><i
+							class="fa fa-fw fa-user" aria-hidden="true"> </i>
+							[[${#request.userPrincipal.principal.name}]] </a></li>
+				</ul>
+			</div>
+		</nav>
 	</div>
 
 	<div th:fragment="reports-navbar">
-		<div class="navbar">
-			<a th:href="@{/company_selection}"><i class="fa fa-sign-in" aria-hidden="true"></i> CHANGE COMPANY</a> 
-				<a th:href="@{/upload}"><i class="fa fa-sign-in" aria-hidden="true"></i> CSV UPLOAD</a>
-				<a th:href="@{/delete_company}"><i class="fa fa-sign-in" aria-hidden="true"></i> DELETE COMPANY</a> 
-				<a sec:authorize="hasAnyAuthority('developer','admin')" th:href="@{/create_user}"><i class="fa fa-sign-in" aria-hidden="true"></i> CREATE NEW USER</a>
-				<a sec:authorize="hasAnyAuthority('developer','admin')" th:href="@{/delete_user}"><i class="fa fa-sign-in" aria-hidden="true"></i> DELETE A USER</a> 
-				<a th:href="@{/profile}"><i class="fa fa-sign-in" aria-hidden="true"></i> PROFILE</a> 
-				<a th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i> LOGOUT</a>
-		</div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">CrDr Report</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/company_selection}"><i
+							class="fa fa-sign-in" aria-hidden="true"></i> CHANGE COMPANY</a></li>
+					<li><a th:href="@{/upload}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> CSV UPLOAD</a></li>
+					<li><a th:href="@{/delete_company}"><i
+							class="fa fa-sign-in" aria-hidden="true"></i> DELETE COMPANY</a></li>
+					<li><a sec:authorize="hasAnyAuthority('developer','admin')"
+						th:href="@{/create_user}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> CREATE NEW USER</a></li>
+					<li><a sec:authorize="hasAnyAuthority('developer','admin')"
+						th:href="@{/delete_user}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> DELETE A USER</a></li>
+					<li><a th:href="@{/profile}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> PROFILE</a></li>
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:href="@{/logout}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> LOGOUT</a></li>
+				</ul>
+			</div>
+		</nav>
 	</div>
 
 	<div th:fragment="index-navbar">
-		<div class="navbar">
-			<a class="active" href="./"><i class="fa fa-home"
-				aria-hidden="true"></i> HOME</a> <a th:href="@{/login}"><i
-				class="fa fa-sign-in" aria-hidden="true"></i> LOGIN</a>
-		</div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">CrDr Report</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:href="@{/login}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> LOGIN</a></li>
+				</ul>
+
+			</div>
+		</nav>
 	</div>
 
 	<div th:fragment="cs-navbar">
-		<div class="navbar">
-			<a class="active" href="./"><i class="fa fa-home"
-				aria-hidden="true"></i> HOME</a> <a th:href="@{/upload}"><i
-				class="fa fa-sign-in" aria-hidden="true"></i> UPLOAD COMPANY</a> <a
-				th:href="@{/logout}"><i class="fa fa-sign-in" aria-hidden="true"></i>
-				LOGOUT</a>
-		</div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">CrDr Report</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/upload}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> UPLOAD COMPANY</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:href="@{/logout}"><i class="fa fa-sign-in"
+							aria-hidden="true"></i> LOGOUT</a></li>
+				</ul>
+			</div>
+		</nav>
 	</div>
 
 	<div th:fragment="profile">

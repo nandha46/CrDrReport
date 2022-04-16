@@ -31,22 +31,21 @@
 				</div>
 			</div>
 			<div class="col-sm-2">
-			<span></span><span></span><span></span>
-				<form th:action="@{/process_delete_company}" th:object="${adminForm}"
-							method="post">
-							<div class="form-group">
-								<label for="companyId" class="col-4 col-form-label">Company
-									ID: </label>
-								<div class="col-8">
-									<input type="number" th:field="*{companyId}" class="form-control" placeholder="Enter CompanyID.."
-										required min="2" max="10000"/>
-								</div>
-							</div>
+				<span></span><span></span><span></span>
+				<form th:action="@{/process_delete_company}" method="post">
+					<div class="form-group">
+						<label for="companyId" class="col-4 col-form-label">Company
+							ID: </label>
+						<div class="col-8">
+							<input type="number" class="form-control" name="companyId"
+								placeholder="Enter CompanyID.." required min="2" max="10000" />
+						</div>
+					</div>
 
-							<div>
-								<button type="submit" class="btn btn-primary">Submit</button>
-							</div>
-						</form>
+					<div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
