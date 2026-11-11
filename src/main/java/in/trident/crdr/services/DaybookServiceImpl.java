@@ -1,26 +1,15 @@
 package in.trident.crdr.services;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ibm.icu.number.LocalizedNumberFormatter;
-import com.ibm.icu.number.NumberFormatter;
-import com.ibm.icu.number.Precision;
 
 import in.trident.crdr.annotations.TrackExecutionTime;
 import in.trident.crdr.entities.Daybook;
@@ -29,12 +18,13 @@ import in.trident.crdr.models.Transactions;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.DaybookRepository;
+import in.trident.crdr.util.FormatUtil;
 
 /**
  * 
  * @author Nandhakumar Subramanian
  *
- * @version 0.0.4
+ * @version 0.0.9e
  */
 @Service
 public class DaybookServiceImpl implements DaybookService {
@@ -53,88 +43,62 @@ public class DaybookServiceImpl implements DaybookService {
 	@TrackExecutionTime
 	@Override
 	public List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid, Long cid) {
-		int days = dbRepo.findDaysBetween(endDate, startDate);
-		if (days == 0)
-			days = 1;
-		// days = days==0?1:days;
-		Calendar calendar = Calendar.getInstance();
-		List<DaybookView> daybooks = new LinkedList<>();
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			calendar.setTime(df.parse(startDate));
-		} catch (ParseException e) {
-			LOGGER.error("Calendar Parsing Exception at DaybookServiceImpl Class");
-			e.printStackTrace();
+		LocalDate start = FormatUtil.parseIsoDate(startDate);
+		LocalDate end = FormatUtil.parseIsoDate(endDate);
+		if (end.isBefore(start)) {
+			throw new IllegalArgumentException("End date must not be before start date.");
 		}
-		for (int i = 0; i <= days; i++) {
-			DaybookView dbv = createDaybook(df.format(calendar.getTime()), calendar.get(Calendar.DAY_OF_WEEK), userid,
-					cid);
+
+		List<DaybookView> daybooks = new LinkedList<>();
+		for (LocalDate current = start; !current.isAfter(end); current = current.plusDays(1)) {
+			String isoDate = current.format(FormatUtil.ISO_DATE);
+			DaybookView dbv = createDaybook(isoDate, current.getDayOfWeek().getValue(), userid, cid);
 			if (dbv != null) {
 				daybooks.add(dbv);
 			} else {
-				LOGGER.info("Daybook for that date is null");
+				LOGGER.debug("No daybook entries found for date {}", isoDate);
 			}
-			calendar.add(Calendar.DATE, 1);
 		}
 		return daybooks;
 	}
 
 	@Override
 	public DaybookView createDaybook(String date, int day, Long uid, Long cid) {
-		Map<Integer, String> dayList = new HashMap<>(7);
-		dayList.put(1, "SUNDAY");
-		dayList.put(2, "MONDAY");
-		dayList.put(3, "TUESDAY");
-		dayList.put(4, "WEDNESDAY");
-		dayList.put(5, "THURSDAY");
-		dayList.put(6, "FRIDAY");
-		dayList.put(7, "SATURDAY");
-		LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
-				.precision(Precision.fixedFraction(2));
-		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(date, uid, cid);
-		DaybookView daybookView = new DaybookView();
+		LocalDate parsedDate = FormatUtil.parseIsoDate(date);
+		String isoDate = parsedDate.format(FormatUtil.ISO_DATE);
+		ArrayList<Daybook> daybook = dbRepo.findDaybookByDate(isoDate, uid, cid);
 		if (daybook.isEmpty()) {
 			return null;
-		} else {
-			Daybook db = daybook.get(0);
-			SimpleDateFormat insdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date date1 = new Date();
-			try {
-				date1 = insdf.parse(db.getDate());
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-			daybookView.setDate(sdf.format(date1));
-			daybookView.setDayOfWeek(dbRepo.findDayOfWeek(date));
-			Calendar ca = Calendar.getInstance();
-			ca.setTime(date1);
-			ca.add(Calendar.DAY_OF_MONTH, -1);
-			// changes
-			Double prevClose = closeBalRepo.findCloseBalByDate(insdf.format(ca.getTime()), uid, cid);
-			if (prevClose > 0) {
-				// add to credit
-				daybookView.setDebitTot(nf.format(closeBalRepo.findDebitTotal(date, uid, cid)).toString());
-				daybookView
-						.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date, uid, cid) + prevClose).toString());
-			} else {
-				daybookView.setDebitTot(
-						nf.format(closeBalRepo.findDebitTotal(date, uid, cid) + Math.abs(prevClose)).toString());
-				daybookView.setCreditTot(nf.format(closeBalRepo.findCreditTotal(date, uid, cid)).toString());
-			}
-			daybookView.setClosingBal(nf.format(closeBalRepo.findCloseBalByDate(date, uid, cid)).toString());
-			List<Transactions> trans = new ArrayList<>();
-			daybook.forEach(transaction -> {
-				String temp = accHeadRepo.findShortNameByAccHead(transaction.getAcccode(), uid, cid);
-				Transactions txns = new Transactions(transaction.getsNo(), transaction.getCrAmt(),
-						transaction.getDrAmt(), transaction.getNarration(), transaction.getSktValue(), temp);
-				trans.add(txns);
-			});
-			Collections.sort(trans);
-			daybookView.setTransList(trans);
-
 		}
+
+		DaybookView daybookView = new DaybookView();
+		Daybook firstEntry = daybook.get(0);
+		daybookView.setDate(FormatUtil.formatDisplayDate(firstEntry.getDate()));
+		daybookView.setDayOfWeek(parsedDate.getDayOfWeek().name());
+
+		String prevDate = parsedDate.minusDays(1).format(FormatUtil.ISO_DATE);
+		double prevClose = FormatUtil.nvlDouble(closeBalRepo.findCloseBalByDate(prevDate, uid, cid));
+		double debitTotal = FormatUtil.nvlDouble(closeBalRepo.findDebitTotal(isoDate, uid, cid));
+		double creditTotal = FormatUtil.nvlDouble(closeBalRepo.findCreditTotal(isoDate, uid, cid));
+		double closingBal = FormatUtil.nvlDouble(closeBalRepo.findCloseBalByDate(isoDate, uid, cid));
+
+		if (prevClose > 0) {
+			daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal));
+			daybookView.setCreditTot(FormatUtil.formatAmount(creditTotal + prevClose));
+		} else {
+			daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal + Math.abs(prevClose)));
+			daybookView.setCreditTot(FormatUtil.formatAmount(creditTotal));
+		}
+		daybookView.setClosingBal(FormatUtil.formatAmount(closingBal));
+
+		List<Transactions> trans = new ArrayList<>();
+		for (Daybook transaction : daybook) {
+			String shortName = accHeadRepo.findShortNameByAccHead(transaction.getAcccode(), uid, cid);
+			trans.add(new Transactions(transaction.getsNo(), transaction.getCrAmt(),
+					transaction.getDrAmt(), transaction.getNarration(), transaction.getSktValue(), shortName));
+		}
+		Collections.sort(trans);
+		daybookView.setTransList(trans);
 		return daybookView;
 	}
-
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments :: head" />
+
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h2>Upload CSV Files</h2>
+				<form th:action="@{/csvuploaded}" th:object="${csvUploadModel}" enctype="multipart/form-data" method="post">
+					<div class="form-group">
+						<label for="file1">Daybook CSV File 1</label>
+						<input type="file" class="form-control-file" id="file1" th:field="*{file1}" accept=".csv,text/csv">
+					</div>
+					<div class="form-group">
+						<label for="file2">Daybook CSV File 2 (Optional)</label>
+						<input type="file" class="form-control-file" id="file2" th:field="*{file2}" accept=".csv,text/csv">
+					</div>
+					<div class="form-group">
+						<label for="file3">Daybook CSV File 3 (Optional)</label>
+						<input type="file" class="form-control-file" id="file3" th:field="*{file3}" accept=".csv,text/csv">
+					</div>
+					<div class="form-group">
+						<label for="file4">Daybook CSV File 4 (Optional)</label>
+						<input type="file" class="form-control-file" id="file4" th:field="*{file4}" accept=".csv,text/csv">
+					</div>
+					<button type="submit" class="btn btn-success">Upload CSV</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

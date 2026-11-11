@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.trident.crdr.entities.Daybook;
@@ -13,17 +14,22 @@ import in.trident.crdr.util.CSVUtil;
 
 @Service
 public class CSVService {
-	
+
 	@Autowired
 	private DaybookRepository daybookRepo;
-	
-	public void save(Long userid ,MultipartFile file) {
+
+	@Transactional
+	public void save(Long userid, MultipartFile file) {
+		save(userid, 0L, file);
+	}
+
+	@Transactional
+	public void save(Long userid, Long companyId, MultipartFile file) {
 		try {
-			List<Daybook> daybooks = CSVUtil.csvToDaybook(userid, file.getInputStream());
+			List<Daybook> daybooks = CSVUtil.csvToDaybook(userid, companyId, file.getInputStream());
 			daybookRepo.saveAll(daybooks);
-		} 
-		catch (IOException e) {
-			throw new RuntimeException("Failed to store CSV data: "+e.getMessage());
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to store CSV data: " + e.getMessage(), e);
 		}
 	}
 }

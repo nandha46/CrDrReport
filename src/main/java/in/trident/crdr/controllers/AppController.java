@@ -1,13 +1,9 @@
 package in.trident.crdr.controllers;
 
-import java.io.FileNotFoundException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ibm.icu.number.LocalizedNumberFormatter;
-import com.ibm.icu.number.NumberFormatter;
-import com.ibm.icu.number.Precision;
-
 import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.entities.CompanySelection;
 import in.trident.crdr.entities.Schedule;
+import in.trident.crdr.models.BalanceSheetView;
+import in.trident.crdr.models.CommonForm;
+import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
@@ -36,9 +31,6 @@ import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
-import in.trident.crdr.models.CommonForm;
-import in.trident.crdr.models.BalanceSheetView;
-import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.CompSelectionRepo;
@@ -51,24 +43,20 @@ import in.trident.crdr.services.LedgerService;
 import in.trident.crdr.services.PdfService;
 import in.trident.crdr.services.TradingPLService;
 import in.trident.crdr.services.TrialBalService;
-import in.trident.crdr.util.CSVUtil;
+import in.trident.crdr.util.FormatUtil;
 import net.sf.jasperreports.engine.JRException;
 
 /**
  * 
- * 
  * @author Nandhakumar Subramanian
  * 
  * @since day 1
- * @version 0.0.1
+ * @version 0.0.9e
  */
-
 @Controller
 public class AppController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
-
-	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	private static final String PAGE_TITLE = "pageTitle";
 	private static final String REDIRECT_COMPANY_SELECTION = "redirect:/company_selection";
@@ -106,19 +94,16 @@ public class AppController {
 	@Autowired
 	private PdfService pdfService;
 
-	LocalizedNumberFormatter nf = NumberFormatter.withLocale(new Locale("en", "in"))
-			.precision(Precision.fixedFraction(2));
-
-	@GetMapping("/access")
-	public void runDB() {
-		CSVUtil csv = new CSVUtil();
-		csv.processAccessDatabse();
-	}
-
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute(PAGE_TITLE, "CrDr Home");
 		return "index";
+	}
+
+	@GetMapping("/403")
+	public String accessDenied(Model model) {
+		model.addAttribute(PAGE_TITLE, "Access Denied");
+		return "error/403";
 	}
 
 	@GetMapping("/login")
@@ -140,10 +125,10 @@ public class AppController {
 	}
 
 	@PostMapping("/StoreCompany")
-	public String processCompany(Model model, @RequestParam(value = "companyName") String companyName, @RequestParam(value = "year") Long cid,
-			@AuthenticationPrincipal CustomUserDetails user) {
+	public String processCompany(Model model, @RequestParam(value = "companyName") String companyName,
+			@RequestParam(value = "year") Long cid, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Company Name: {}", companyName);
-		if (companyName == null) {
+		if (companyName == null || companyName.trim().isEmpty()) {
 			return REDIRECT_COMPANY_SELECTION;
 		}
 		companyService.storeSelection(user.getId(), cid);
@@ -152,8 +137,11 @@ public class AppController {
 
 	@GetMapping("/profile")
 	public String showProfile(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		model.addAttribute(PAGE_TITLE, "Company Profile");
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		if (cs == null) {
+			return REDIRECT_COMPANY_SELECTION;
+		}
+		model.addAttribute(PAGE_TITLE, "Company Profile");
 		model.addAttribute("company_name", cs.getCompanyName());
 		model.addAttribute("address", cs.getAddress());
 		model.addAttribute("year", cs.getYear());
@@ -176,12 +164,11 @@ public class AppController {
 
 	@GetMapping("/findDaybook")
 	public String findDaybook(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		/*
-		 * find logged in user's company get from & to date
-		 */
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
-		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
-		model.addAttribute("todate", cs.getToDate().format(dateFormat));
+		if (cs == null) {
+			return REDIRECT_COMPANY_SELECTION;
+		}
+		populateDateBounds(model, cs);
 		model.addAttribute("formdata", new DaybookForm());
 		model.addAttribute(PAGE_TITLE, "CrDr Daybook");
 		return "findDaybook";
@@ -189,28 +176,15 @@ public class AppController {
 
 	@PostMapping("/daybooks")
 	public String listDaybook(Model model, DaybookForm formdata, @AuthenticationPrincipal CustomUserDetails user) {
+		Long cid = requireCompanyId(user.getId());
 		List<DaybookView> daybookViewObj = daybookService.daybookViewRange(formdata.getStartDate(),
-				formdata.getEndDate(), user.getId(), csr.findCompanyIdByUserId(user.getId()));
-		if (daybookViewObj == null)
-			LOGGER.info("===========Null value======");
+				formdata.getEndDate(), user.getId(), cid);
 
 		model.addAttribute("daybookViewObj", daybookViewObj);
-		Calendar cal = Calendar.getInstance();
-		try {
-			cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(formdata.getStartDate()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-			LOGGER.info("Calendar Parsing Exception: Daybook Start date");
-		}
-		cal.add(Calendar.DAY_OF_MONTH, -1);
-		try {
-			model.addAttribute("openingBal",
-					nf.format(closeBalRepo.findCloseBalByDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()),
-							user.getId(), csr.findCompanyIdByUserId(user.getId()))))
-					.toString();
-		} catch (NullPointerException e) {
-			LOGGER.error("No Close balance in databse", e);
-		}
+		LocalDate startDate = FormatUtil.parseIsoDate(formdata.getStartDate());
+		String prevDate = startDate.minusDays(1).format(FormatUtil.ISO_DATE);
+		Double openingBal = closeBalRepo.findCloseBalByDate(prevDate, user.getId(), cid);
+		model.addAttribute("openingBal", FormatUtil.formatAmount(FormatUtil.nvlDouble(openingBal)));
 		model.addAttribute(PAGE_TITLE, "Daybook View");
 		return "daybooks";
 	}
@@ -218,9 +192,11 @@ public class AppController {
 	@GetMapping("/findLedger")
 	public String findLedger(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
-		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
-		model.addAttribute("todate", cs.getToDate().format(dateFormat));
-		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(), csr.findCompanyIdByUserId(user.getId()));
+		if (cs == null) {
+			return REDIRECT_COMPANY_SELECTION;
+		}
+		populateDateBounds(model, cs);
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(), cs.getCompanyId());
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading Ledgers...");
 		model.addAttribute("accHeadList", accHeadList);
@@ -231,9 +207,9 @@ public class AppController {
 
 	@PostMapping("/ledger")
 	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) {
+		Long cid = requireCompanyId(user.getId());
 		LOGGER.info("Ledger is Ready");
-		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId(),
-				csr.findCompanyIdByUserId(user.getId()));
+		List<LedgerView> listLedger = ledgerService.createLedgerViewList(ledgerForm, user.getId(), cid);
 		model.addAttribute("listLedger", listLedger);
 		model.addAttribute(PAGE_TITLE, "CrDr Ledger");
 		return "ledger";
@@ -241,19 +217,24 @@ public class AppController {
 
 	@PostMapping("/pdfLedger")
 	public String ledgerPdf(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user)
-			throws FileNotFoundException, JRException {
+			throws IOException, JRException {
+		Long cid = requireCompanyId(user.getId());
 		LOGGER.info("---Printing Ledger to PDF--");
-		pdfService.exportPdf(ledgerForm, user.getId(), csr.findCompanyIdByUserId(user.getId()));
+		String outputPath = pdfService.exportPdf(ledgerForm, user.getId(), cid);
+		model.addAttribute(PAGE_TITLE, "PDF Generated");
+		model.addAttribute("message", "Ledger PDF generated at: " + outputPath);
 		return "success";
 	}
 
 	@GetMapping("/findTrialBal")
 	public String findTrial(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(), csr.findCompanyIdByUserId(user.getId()));
-		Collections.sort(accHeadList);
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
-		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
-		model.addAttribute("todate", cs.getToDate().format(dateFormat));
+		if (cs == null) {
+			return REDIRECT_COMPANY_SELECTION;
+		}
+		List<AccHead> accHeadList = accHeadRepo.findAllAccHead(user.getId(), cs.getCompanyId());
+		Collections.sort(accHeadList);
+		populateDateBounds(model, cs);
 		LOGGER.info("Loading Trial Balance...");
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute(PAGE_TITLE, "Find Trial Balance");
@@ -263,10 +244,10 @@ public class AppController {
 
 	@PostMapping("/trial")
 	public String trialbal(Model model, TrialForm trialform, @AuthenticationPrincipal CustomUserDetails user) {
+		Long cid = requireCompanyId(user.getId());
 		LOGGER.warn("Trial Balance Page Start");
-		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform, user.getId(),
-				csr.findCompanyIdByUserId(user.getId()));
-		LOGGER.info("Trial Balnce is Ready");
+		List<TrialView> listTrailView = trialBalService.createTrialBal(trialform, user.getId(), cid);
+		LOGGER.info("Trial Balance is Ready");
 		model.addAttribute("listTrailView", listTrailView);
 		model.addAttribute(PAGE_TITLE, "Trial Balance");
 		return "trialBal";
@@ -274,13 +255,14 @@ public class AppController {
 
 	@GetMapping("/findTradingPL")
 	public String findTradingPl(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		List<AccHead> accHeadList = accHeadRepo.findAllTradingAccs(user.getId(),
-				csr.findCompanyIdByUserId(user.getId()));
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		if (cs == null) {
+			return REDIRECT_COMPANY_SELECTION;
+		}
+		List<AccHead> accHeadList = accHeadRepo.findAllTradingAccs(user.getId(), cs.getCompanyId());
 		Collections.sort(accHeadList);
 		LOGGER.info("Loading TradingPL...");
-		CompanySelection cs = csr.findCompanyByUser(user.getId());
-		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
-		model.addAttribute("todate", cs.getToDate().format(dateFormat));
+		populateDateBounds(model, cs);
 		model.addAttribute("closingStock", cs.getClosingStock());
 		model.addAttribute("accHeadList", accHeadList);
 		model.addAttribute(PAGE_TITLE, "Trading - Profit and Loss");
@@ -290,35 +272,32 @@ public class AppController {
 
 	@PostMapping("/tradingPL")
 	public String tradingPL(Model model, CommonForm tradingPLForm, @AuthenticationPrincipal CustomUserDetails user) {
+		Long cid = requireCompanyId(user.getId());
 		if (tradingPLForm.isReportOrder()) {
-			List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId(),
-					csr.findCompanyIdByUserId(user.getId()));
-			LOGGER.info("TradingPL view  is ready");
+			List<TradingPLView> listTradingPL = tradingPLService.createTradingPL(tradingPLForm, user.getId(), cid);
+			LOGGER.info("TradingPL view is ready");
 			model.addAttribute("listTradingPL", listTradingPL);
 			model.addAttribute(PAGE_TITLE, "Trading - Profit & Loss");
 			return "tradingPL";
 		} else {
-			List<List<TplBalView>> list = tradingPLService.createTradingPL2(tradingPLForm, user.getId(),
-					csr.findCompanyIdByUserId(user.getId()));
-			List<TplBalView> expenses = list.get(0);
-			List<TplBalView> incomes = list.get(1);
+			List<List<TplBalView>> list = tradingPLService.createTradingPL2(tradingPLForm, user.getId(), cid);
+			model.addAttribute("expenses", list.get(0));
+			model.addAttribute("incomes", list.get(1));
 			LOGGER.info("TradingPL Alt view is ready");
-			model.addAttribute("expenses", expenses);
-			model.addAttribute("incomes", incomes);
 			model.addAttribute(PAGE_TITLE, "Trading - Profit & Loss");
 			return "tradingPL_alt";
 		}
-
 	}
 
 	@GetMapping("/findBalSheet")
 	public String findBalSheet(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-		List<Schedule> accHeadList = scheduleRepo.findAllAccounts(user.getId(),
-				csr.findCompanyIdByUserId(user.getId()));
-		Collections.sort(accHeadList);
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
-		model.addAttribute("fromdate", cs.getFromDate().format(dateFormat));
-		model.addAttribute("todate", cs.getToDate().format(dateFormat));
+		if (cs == null) {
+			return REDIRECT_COMPANY_SELECTION;
+		}
+		List<Schedule> accHeadList = scheduleRepo.findAllAccounts(user.getId(), cs.getCompanyId());
+		Collections.sort(accHeadList);
+		populateDateBounds(model, cs);
 		model.addAttribute("closingStock", cs.getClosingStock());
 		LOGGER.info("Loading Balance Sheet...");
 		model.addAttribute("accHeadList", accHeadList);
@@ -329,25 +308,37 @@ public class AppController {
 
 	@PostMapping("/BalanceSheet")
 	public String balanceSheet(Model model, CommonForm balSheetForm, @AuthenticationPrincipal CustomUserDetails user) {
+		Long cid = requireCompanyId(user.getId());
 		if (balSheetForm.isReportOrder()) {
 			LOGGER.info("Balance Sheet view Ready");
-			List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId(),
-					csr.findCompanyIdByUserId(user.getId()));
+			List<BalanceSheetView> listBalSheet = balanceSheetService.createBalSheet(balSheetForm, user.getId(), cid);
 			model.addAttribute("listBalSheet", listBalSheet);
 			model.addAttribute(PAGE_TITLE, "Balance sheet");
 			return "BalanceSheet";
 		} else {
-			LOGGER.info("Balance Sheet Alt view  Ready");
-			List<List<TplBalView>> list = balanceSheetService.createBalSheet2(balSheetForm, user.getId(),
-					csr.findCompanyIdByUserId(user.getId()));
-			List<TplBalView> liability = list.get(0);
-			List<TplBalView> asset = list.get(1);
-			model.addAttribute("assets", asset);
-			model.addAttribute("liabilities", liability);
+			LOGGER.info("Balance Sheet Alt view Ready");
+			List<List<TplBalView>> list = balanceSheetService.createBalSheet2(balSheetForm, user.getId(), cid);
+			model.addAttribute("liabilities", list.get(0));
+			model.addAttribute("assets", list.get(1));
 			model.addAttribute(PAGE_TITLE, "Balance sheet");
 			return "balancesheet_alt";
 		}
-
 	}
 
+	private void populateDateBounds(Model model, CompanySelection cs) {
+		if (cs.getFromDate() != null) {
+			model.addAttribute("fromdate", cs.getFromDate().format(FormatUtil.ISO_DATE));
+		}
+		if (cs.getToDate() != null) {
+			model.addAttribute("todate", cs.getToDate().format(FormatUtil.ISO_DATE));
+		}
+	}
+
+	private Long requireCompanyId(Long userId) {
+		Long cid = csr.findCompanyIdByUserId(userId);
+		if (cid == null) {
+			throw new IllegalArgumentException("Please select a company before generating reports.");
+		}
+		return cid;
+	}
 }

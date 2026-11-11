@@ -24,6 +24,7 @@ import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.CompanyRepo;
 import in.trident.crdr.repositories.DaybookRepository;
+import in.trident.crdr.repositories.RoleRepository;
 import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.CustomUserDetails;
@@ -38,9 +39,9 @@ import in.trident.crdr.services.CustomUserDetails;
  * </p>
  * 
  * 
- * @author Nandhakumar Subramanina
+ * @author Nandhakumar Subramanian
  * 
- * @version 0.0.9d
+ * @version 0.0.9e
  * 
  * @since 17 jan 2022
  *
@@ -54,9 +55,14 @@ public class AdminController {
 	private static final String ERROR = "Error";
 	private static final String SUCCESS = "success";
 	private static final String MESSAGE = "message";
+	private static final String DEFAULT_ROLE = "user";
 
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private RoleRepository roleRepo;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private DaybookRepository daybookRepo;
 	@Autowired
@@ -82,27 +88,47 @@ public class AdminController {
 		return "registration";
 	}
 
-	
 	/**
 	 * Controller mapping of register user
 	 * 
 	 * @param user user object from html form/body
-	 * @return returns page registration sucess
+	 * @return returns page registration success or error
 	 */
+	@Transactional
 	@PostMapping("/process_register")
 	public String processRegister(User user, Model model) {
-		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-		String encodedPass = passEncoder.encode(user.getPassword());
-		LOGGER.info("Password is {}", user.getPassword());
-		user.setPassword(encodedPass);
+		if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "Email address is required.");
+			return SUCCESS;
+		}
+		String email = user.getEmail().trim().toLowerCase();
+		if (userRepo.findByEmail(email) != null) {
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "An account with this email already exists.");
+			return SUCCESS;
+		}
+		if (user.getPassword() == null || user.getPassword().length() < 8) {
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "Password must be at least 8 characters long.");
+			return SUCCESS;
+		}
+
+		user.setEmail(email);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+		Role role = roleRepo.findByRoleName(DEFAULT_ROLE).orElseGet(() -> {
+			Role created = new Role();
+			created.setRoleName(DEFAULT_ROLE);
+			return roleRepo.save(created);
+		});
 		Set<Role> roles = new HashSet<>();
-		Role role = new Role();
-		role.setRoleName("user");
 		roles.add(role);
 		user.setRoles(roles);
 		user.setEnabled(true);
 		userRepo.save(user);
-		model.addAttribute(PAGE_TITLE, "");
+
+		LOGGER.info("Created new user account for {}", email);
 		model.addAttribute(MESSAGE, "New User created Successfully");
 		model.addAttribute(PAGE_TITLE, "Registration Success");
 		return "register_success";
@@ -126,7 +152,7 @@ public class AdminController {
 	 * Controller mapping for delete user
 	 * 
 	 * @param model Model object of MVC pattern
-	 * @return returns user deleted suceess page
+	 * @return returns user deleted success page
 	 */
 	@GetMapping("/delete_user")
 	public String deleteUser(Model model) {
@@ -139,9 +165,9 @@ public class AdminController {
 	/**
 	 * Controller mapping to delete Specific user and their companies and Data
 	 * 
-	 * @param user     user object from Spring security Authentication pricipal
-	 * @param formdata data object from html form
-	 * @param model    Model object of MVC pattern
+	 * @param user  user object from Spring security Authentication principal
+	 * @param uid   user id to delete
+	 * @param model Model object of MVC pattern
 	 * 
 	 * @return success or failure page
 	 */
@@ -149,12 +175,12 @@ public class AdminController {
 	@PostMapping("/process_delete_user")
 	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user,
 			@RequestParam(value = "userId") Long uid, Model model) {
-		if (uid.equals(user.getId()) || uid.equals(9l)) {
-			model.addAttribute(PAGE_TITLE, ERROR);
-			model.addAttribute(MESSAGE, "Can not delete own or Developer Accounts");
-		} else if (uid == 0l) {
+		if (uid == null || uid.equals(0L)) {
 			model.addAttribute(PAGE_TITLE, ERROR);
 			model.addAttribute(MESSAGE, "User Id must not be null");
+		} else if (uid.equals(user.getId()) || uid.equals(9L)) {
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "Can not delete own or Developer Accounts");
 		} else {
 			if (userRepo.existsById(uid)) {
 				userRepo.deleteById(uid);
@@ -177,11 +203,10 @@ public class AdminController {
 	/**
 	 * Controller mapping to show delete company page
 	 * 
-	 * @param user  user object from Spring security Authentication pricipal
+	 * @param user  user object from Spring security Authentication principal
 	 * @param model Model object of MVC pattern
 	 * @return success or failure page
 	 */
-
 	@GetMapping("/delete_company")
 	public String deleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model) {
 		model.addAttribute(PAGE_TITLE, "Delete Company");
@@ -193,15 +218,20 @@ public class AdminController {
 	/**
 	 * Controller mapping to process delete company
 	 * 
-	 * @param user      user object from Spring security Authentication pricipal
-	 * @param model     Model object of MVC pattern
-	 * @param adminForm data from html form
+	 * @param user  user object from Spring security Authentication principal
+	 * @param model Model object of MVC pattern
+	 * @param cid   company id to delete
 	 * @return success or failure page
 	 */
 	@Transactional
 	@PostMapping("/process_delete_company")
 	public String processDeleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model,
 			@RequestParam(value = "companyId") Long cid) {
+		if (cid == null) {
+			model.addAttribute(PAGE_TITLE, ERROR);
+			model.addAttribute(MESSAGE, "Company ID must not be null");
+			return SUCCESS;
+		}
 		if (companyRepo.existsById(cid)) {
 			companyRepo.deleteById(cid);
 			if (csRepo.findCompanyByCompanyid(cid) != null) {

@@ -1,40 +1,31 @@
 package in.trident.crdr;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.annotation.Rollback;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import in.trident.crdr.entities.CloseBal;
 import in.trident.crdr.repositories.CloseBalRepo;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@Rollback(false)
+@ActiveProfiles("test")
 public class CloseBalTests {
 
 	@Autowired
 	private CloseBalRepo closeBalRepo;
-	
-	@Autowired
-	JdbcTemplate jdbc;
-	
+
+	@Test
 	public void testGetCloseBal() {
-		System.out.println("-----------Close Balance Test Start----------");
-		
-		String date = "2020-04-01";
-		Double closeBal = closeBalRepo.findCloseBalByDate(date,9L,1L);
-		System.out.println(closeBal);
-		
-		System.out.println("-----------Close Balance Test End----------");
+		closeBalRepo.save(new CloseBal("2020-04-01", 1500.0, 500.0, 1000.0, 9L, 1L));
+		Double closeBal = closeBalRepo.findCloseBalByDate("2020-04-01", 9L, 1L);
+		Double debitTot = closeBalRepo.findDebitTotal("2020-04-01", 9L, 1L);
+		Double creditTot = closeBalRepo.findCreditTotal("2020-04-01", 9L, 1L);
+
+		assertThat(closeBal).isEqualTo(1000.0);
+		assertThat(debitTot).isEqualTo(1500.0);
+		assertThat(creditTot).isEqualTo(500.0);
 	}
-	
-	@SuppressWarnings("deprecation")
-	public void testDay() {
-	//	List<Integer> in = jdbc.query("select datediff(?,?)",(rs,rn)-> rs.getInt(0),new Object[] {"2020-04-01","2020-05-06"});
-		String num = jdbc.queryForObject("select dayname(?)", new Object[] {"2020-04-01"},String.class);
-		System.out.println(num);
-	}
-	
 }
