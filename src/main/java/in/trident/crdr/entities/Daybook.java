@@ -95,8 +95,8 @@ public class Daybook implements Comparable<Daybook> {
 	}
 
 	public String getDate() {
-		if (date.length() > 12) {
-			date = date.substring(0, date.length() - 9);
+		if (date != null && date.length() > 12) {
+			return date.substring(0, date.length() - 9);
 		}
 		return date;
 	}

@@ -11,22 +11,22 @@ package in.trident.crdr.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import in.trident.crdr.services.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
 
-	@Override
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new CustomUserDetailsService();
@@ -45,34 +45,48 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authProvider());
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		final String ADMIN = "admin";
 		final String DEVELOPER = "developer";
 		final String USER = "user";
 
-		String[] preLoginPaths = new String[] { "/register", "/process_register", "/", "/css/**", "/img/**",
-				"/script/**" };
+		String[] preLoginPaths = new String[] { "/", "/login", "/403", "/error", "/css/**", "/img/**", "/script/**" };
 		String[] findPaths = new String[] { "/findDaybook", "/findLedger", "/findTrialBal", "/findTradingPL",
 				"/findBalSheet" };
-		String[] viewPaths = new String[] { "/daybooks", "/ledger", "/trial", "/tradingPL", "/BalanceSheet" };
-		String[] userPaths = new String[] { "/reports", "/upload", "/profile", "/success", "/StoreCompany",
-				"/company_selection", "/companyselect", "/delete_company" };
-		String[] adminPaths = new String[] { "/delete_user", "/disable_user", "/users", "/create_user" };
+		String[] viewPaths = new String[] { "/daybooks", "/ledger", "/pdfLedger", "/trial", "/tradingPL",
+				"/BalanceSheet" };
+		String[] userPaths = new String[] { "/reports", "/upload", "/uploaded", "/uploadcsv", "/csvuploaded",
+				"/profile", "/success", "/StoreCompany", "/company_selection", "/companyselect", "/delete_company",
+				"/process_delete_company", "/api/v1/years" };
+		String[] adminPaths = new String[] { "/delete_user", "/process_delete_user", "/disable_user", "/users",
+				"/create_user", "/process_register", "/actuator/**", "/api/v1/**" };
 
-		http.authorizeRequests().antMatchers(preLoginPaths).permitAll().antMatchers(adminPaths)
-				.hasAnyAuthority(ADMIN, DEVELOPER).antMatchers(findPaths).hasAnyAuthority(DEVELOPER, ADMIN, USER)
-				.antMatchers(viewPaths).hasAnyAuthority(DEVELOPER, ADMIN, USER).antMatchers(userPaths)
-				.hasAnyAuthority(DEVELOPER, ADMIN, USER).anyRequest().authenticated().and().formLogin()
+		http.authenticationProvider(authProvider())
+				.authorizeRequests()
+				.antMatchers(preLoginPaths).permitAll()
+				.antMatchers("/actuator/health", "/actuator/info").permitAll()
+				.antMatchers(adminPaths).hasAnyAuthority(ADMIN, DEVELOPER)
+				.antMatchers(findPaths).hasAnyAuthority(DEVELOPER, ADMIN, USER)
+				.antMatchers(viewPaths).hasAnyAuthority(DEVELOPER, ADMIN, USER)
+				.antMatchers(userPaths).hasAnyAuthority(DEVELOPER, ADMIN, USER)
+				.anyRequest().authenticated()
+				.and()
+				.formLogin()
 				.loginPage("/login").usernameParameter("email").passwordParameter("pass")
-				.loginProcessingUrl("/processLogin").defaultSuccessUrl("/company_selection").permitAll().and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll().and()
+				.loginProcessingUrl("/processLogin").defaultSuccessUrl("/company_selection").permitAll()
+				.and()
+				.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll()
+				.and()
 				.exceptionHandling().accessDeniedPage("/403");
+
+		return http.build();
 	}
 }

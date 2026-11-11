@@ -1,18 +1,22 @@
 package in.trident.crdr.services;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Calendar;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
+
+import in.trident.crdr.entities.CompanySelection;
 import in.trident.crdr.models.LedgerForm;
 import in.trident.crdr.models.LedgerView;
+import in.trident.crdr.repositories.CompSelectionRepo;
+import in.trident.crdr.util.FormatUtil;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -26,24 +30,39 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 @Service
 public class PdfService {
-	
+
 	@Autowired
 	private LedgerService ledgerService;
-	
-	public String exportPdf(LedgerForm ledgerForm, Long uid, Long cid) throws FileNotFoundException, JRException {
-		List<LedgerView> ledgers = ledgerService.createLedgerViewList(ledgerForm, uid,cid);
-		File file = ResourceUtils.getFile("classpath:Blank_A4.jrxml");
-		JasperDesign jd = JRXmlLoader.load(new FileInputStream(file));
-		JasperReport jasperReport = JasperCompileManager.compileReport(jd);
-		JRBeanCollectionDataSource datasource = new JRBeanCollectionDataSource(ledgers);
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("CompanyName", "ZODIAC ENTERPRISES (2018-19)");
-		parameters.put("Address", "#12, Main Road, Madurai - 625 001.");
-		parameters.put("LedgerListParam", datasource);
-		
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters , new JREmptyDataSource());
-		String filepath = new File("").getAbsolutePath()+"/pdf/"+Calendar.getInstance().getTime()+".pdf";
-		JasperExportManager.exportReportToPdfFile(jasperPrint,filepath);
-		return "Report generated";
+
+	@Autowired
+	private CompSelectionRepo compSelectionRepo;
+
+	public String exportPdf(LedgerForm ledgerForm, Long uid, Long cid) throws IOException, JRException {
+		List<LedgerView> ledgers = ledgerService.createLedgerViewList(ledgerForm, uid, cid);
+		ClassPathResource template = new ClassPathResource("Blank_A4.jrxml");
+		try (InputStream templateStream = template.getInputStream()) {
+			JasperDesign jd = JRXmlLoader.load(templateStream);
+			JasperReport jasperReport = JasperCompileManager.compileReport(jd);
+			JRBeanCollectionDataSource datasource = new JRBeanCollectionDataSource(ledgers);
+
+			CompanySelection cs = compSelectionRepo.findCompanyByUser(uid);
+			String companyName = cs != null && cs.getCompanyName() != null ? cs.getCompanyName() : "CrDr Report";
+			String address = cs != null && cs.getAddress() != null ? cs.getAddress() : "";
+
+			Map<String, Object> parameters = new HashMap<>();
+			parameters.put("CompanyName", companyName);
+			parameters.put("Address", address);
+			parameters.put("LedgerListParam", datasource);
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+			File pdfDir = new File("pdf");
+			if (!pdfDir.exists() && !pdfDir.mkdirs()) {
+				throw new IOException("Unable to create output directory: " + pdfDir.getAbsolutePath());
+			}
+			String filename = "ledger_" + LocalDateTime.now().format(FormatUtil.TIMESTAMP_SAFE) + ".pdf";
+			File outputFile = new File(pdfDir, filename);
+			JasperExportManager.exportReportToPdfFile(jasperPrint, outputFile.getAbsolutePath());
+			return outputFile.getAbsolutePath();
+		}
 	}
 }

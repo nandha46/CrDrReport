@@ -1,7 +1,5 @@
 package in.trident.crdr.controllers;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.trident.crdr.models.CSVUploadModel;
+import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.services.CSVService;
 import in.trident.crdr.services.CustomUserDetails;
 import in.trident.crdr.util.CSVUtil;
@@ -20,64 +19,59 @@ import in.trident.crdr.util.CSVUtil;
 @Controller
 public class CSVController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(CSVController.class);
+
 	@Autowired
 	private CSVService csvService;
-	
-	private static final Logger LOGGER =LoggerFactory.getLogger(CSVController.class);
-	
+
+	@Autowired
+	private CompSelectionRepo compSelectionRepo;
+
 	@GetMapping("/uploadcsv")
 	public String uploadCSV(Model model) {
 		model.addAttribute("pageTitle", "Upload CSV File");
 		model.addAttribute("csvUploadModel", new CSVUploadModel());
 		return "uploadCSV";
 	}
-	
-	
+
 	@PostMapping("/csvuploaded")
 	public String success(@AuthenticationPrincipal CustomUserDetails user, Model model, CSVUploadModel csvUploadModel) {
-		StringBuffer sbr = new StringBuffer();
-		MultipartFile file1 = csvUploadModel.getFile1();
-		if (CSVUtil.hasCSVFormat(file1)) {
+		Long companyId = compSelectionRepo.findCompanyIdByUserId(user.getId());
+		if (companyId == null) {
+			companyId = 0L;
+		}
+		StringBuilder result = new StringBuilder();
+		MultipartFile[] files = { csvUploadModel.getFile1(), csvUploadModel.getFile2(), csvUploadModel.getFile3(),
+				csvUploadModel.getFile4() };
+
+		boolean anyProcessed = false;
+		for (MultipartFile file : files) {
+			if (file == null || file.isEmpty()) {
+				continue;
+			}
+			anyProcessed = true;
+			if (!CSVUtil.hasCSVFormat(file)) {
+				result.append("Unsupported file format (expected .csv): ")
+						.append(file.getOriginalFilename()).append('\n');
+				continue;
+			}
 			try {
-				csvService.save(user.getId(), file1);
-				sbr.append("Uploaded the file successfully: " + file1.getOriginalFilename()+"\n");
+				csvService.save(user.getId(), companyId, file);
+				result.append("Uploaded the file successfully: ").append(file.getOriginalFilename()).append('\n');
 			} catch (Exception e) {
-				sbr.append("Could not upload the file: "+file1.getOriginalFilename()+"\n");
+				LOGGER.error("Failed to upload CSV file {}", file.getOriginalFilename(), e);
+				result.append("Could not upload the file: ").append(file.getOriginalFilename())
+						.append(" (").append(e.getMessage()).append(")\n");
 			}
 		}
-		LOGGER.info(sbr.toString());
-		MultipartFile file2 = csvUploadModel.getFile2();
-		if (CSVUtil.hasCSVFormat(file2)) {
-			try {
-				csvService.save(user.getId(),file2);
-				sbr.append("Uploaded the file successfully: " + file2.getOriginalFilename()+"\n");
-			} catch (Exception e) {
-				sbr.append("Could not upload the file: "+file2.getOriginalFilename()+"\n");
-			}
+
+		if (!anyProcessed) {
+			result.append("Please select at least one CSV file to upload.");
 		}
-		LOGGER.info(sbr.toString());
-		MultipartFile file3 = csvUploadModel.getFile3();
-		if (CSVUtil.hasCSVFormat(file3)) {
-			try {
-				csvService.save(user.getId(),file3);
-				sbr.append("Uploaded the file successfully: " + file3.getOriginalFilename()+"\n");
-			} catch (Exception e) {
-				sbr.append("Could not upload the file: "+file3.getOriginalFilename()+"\n");
-			}
-		}
-		LOGGER.info(sbr.toString());
-		MultipartFile file4 = csvUploadModel.getFile4();
-		if (CSVUtil.hasCSVFormat(file4)) {
-			try {
-				csvService.save(user.getId(),file4);
-		        sbr.append("Uploaded the file successfully: " + file4.getOriginalFilename()+"\n");
-			} catch (Exception e) {
-				sbr.append("Could not upload the file: "+file4.getOriginalFilename()+"\n");
-			}
-		}
-		model.addAttribute("message",sbr.toString());
-		LOGGER.info(sbr.toString());
+		String message = result.toString().trim();
+		model.addAttribute("pageTitle", "CSV Upload Status");
+		model.addAttribute("message", message);
+		LOGGER.info("CSV upload summary for user {}: {}", user.getId(), message);
 		return "success";
 	}
-	
 }

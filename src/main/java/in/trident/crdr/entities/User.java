@@ -42,7 +42,7 @@ public class User{
 	@Column(name="enabled")
 	private boolean enabled;
 	
-	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name="users_roles", 
 	joinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"), 
 	inverseJoinColumns = @JoinColumn(name="role_id",referencedColumnName = "role_id"))
@@ -93,7 +93,7 @@ public class User{
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", enabled=" + enabled + ", roles=" + roles + "]";
 	}
 	

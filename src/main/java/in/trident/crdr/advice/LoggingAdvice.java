@@ -1,6 +1,3 @@
-/**
- * 
- */
 package in.trident.crdr.advice;
 
 import java.util.Arrays;
@@ -16,13 +13,9 @@ import org.springframework.stereotype.Component;
 /**
  * Aspectj advice class to provide centralized logging to all methods
  * 
- * 
  * @author Nandhakumar Subramanian
- * 
- * @version 0.0.9d
- * 
+ * @version 0.0.9e
  * @since 08 mar 2022
- *
  */
 @Component
 @Aspect
@@ -36,24 +29,17 @@ public class LoggingAdvice {
 	}
 
 	@Around("myPointcut()")
-	public Object appLogger(ProceedingJoinPoint pjp) {
+	public Object appLogger(ProceedingJoinPoint pjp) throws Throwable {
 		String methodName = pjp.getSignature().getName();
-		String className = pjp.getTarget().getClass().toString();
-		Object[] array = pjp.getArgs();
-		Object obj = null;
-		String args = null;
-		String errorName = "Error caught from " + methodName;
+		String className = pjp.getTarget() != null ? pjp.getTarget().getClass().getName() : "unknown";
+		LOGGER.debug("METHOD_ENTRY: \"{}\", \"{}\", Args: {}", methodName, className, Arrays.toString(pjp.getArgs()));
 		try {
-			args = Arrays.toString(array);
-
-			LOGGER.info("METHOD_ENTRY: \"{}\", \"{}\", Args: {} ", methodName, className, args);
-			obj = pjp.proceed();
-			args = obj == null ? "null" : obj.toString();
+			Object result = pjp.proceed();
+			LOGGER.debug("METHOD_EXIT: \"{}\", \"{}\", Result: {}", methodName, className, result);
+			return result;
 		} catch (Throwable e) {
-			LOGGER.error(errorName, e);
+			LOGGER.error("Error caught from {}.{}", className, methodName, e);
+			throw e;
 		}
-		LOGGER.info("METHOD_EXIT: \"{}\", \"{}\", Args: {} ", methodName, className, args);
-		return obj;
-
 	}
 }

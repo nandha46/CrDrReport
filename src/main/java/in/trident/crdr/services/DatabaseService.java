@@ -31,46 +31,41 @@ public class DatabaseService {
 	@Autowired
 	private DatabaseUtil dbutil;
 
-	private static Connection conn = null;
-
 	public void saveToStorage(MultipartFile file, Long uid, String username) throws SQLException, FileTypeException {
 		fileStorage.init();
-		if (file == null) {
-			LOGGER.error("file is null");
+		if (file == null || file.isEmpty()) {
+			throw new FileTypeException("Please select an Access database (.mdb) file to upload.");
 		}
 
-		if (dbutil.hasMdbFormat(file)) {
+		if (!dbutil.hasMdbFormat(file)) {
+			LOGGER.error("Incorrect file format uploaded: {}", file.getOriginalFilename());
+			throw new FileTypeException("Incorrect File type uploaded");
+		}
 
-			MessageDigest digest = null;
-			try {
-				digest = MessageDigest.getInstance("MD5");
-			} catch (NoSuchAlgorithmException e) {
-				LOGGER.error("Error getting MD5 Instance", e);
-			}
-			String checksum = "";
-			try {
-				checksum = MD5Checksum.checksum(digest, file);
-			} catch (IOException e) {
-				LOGGER.error("Error generating checksum", e);
-			}
-			Path filename = fileStorage.save(file, uid, checksum, username);
-			conn = AccessConnectionService.getConnection("jdbc:ucanaccess://" + filename);
+		String checksum = computeMd5Checksum(file);
+		Path filename = fileStorage.save(file, uid, checksum, username);
+		try (Connection conn = AccessConnectionService.getConnection("jdbc:ucanaccess://" + filename);
+				Statement s = conn.createStatement()) {
 			dbutil.databaseDetails(conn);
-			Statement s = conn.createStatement();
-
 			List<Company> companies = dbutil.storeTableCompany(s, uid);
+			if (companies == null || companies.isEmpty()) {
+				throw new SQLException("No company metadata found in uploaded Access database.");
+			}
 			Long cid = companies.get(0).getCompanyid();
-			
 			dbutil.storeTableAccHead(s, uid, cid);
 			dbutil.storeTableCloseBal(s, uid, cid);
 			dbutil.storeTableDaybook(s, uid, cid);
 			dbutil.storeTableSchedule(s, uid, cid);
-
-		} else {
-			LOGGER.error("Incorrect file format");
-			throw new FileTypeException("Incorrect File type uploaded");
 		}
-
 	}
 
+	private String computeMd5Checksum(MultipartFile file) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			return MD5Checksum.checksum(digest, file);
+		} catch (NoSuchAlgorithmException | IOException e) {
+			LOGGER.error("Error computing MD5 checksum", e);
+			return "";
+		}
+	}
 }
