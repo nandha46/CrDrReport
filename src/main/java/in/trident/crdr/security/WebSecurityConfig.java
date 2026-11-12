@@ -66,9 +66,13 @@ public class WebSecurityConfig {
 				"/profile", "/success", "/StoreCompany", "/company_selection", "/companyselect", "/delete_company",
 				"/process_delete_company", "/api/v1/years" };
 		String[] adminPaths = new String[] { "/delete_user", "/process_delete_user", "/disable_user", "/users",
-				"/create_user", "/process_register", "/actuator/**", "/api/v1/**" };
+				"/create_user", "/process_register", "/actuator/**", "/api/v1/**", "/h2-console/**" };
 
 		http.authenticationProvider(authProvider())
+				.csrf().ignoringAntMatchers("/h2-console/**")
+				.and()
+				.headers().frameOptions().sameOrigin()
+				.and()
 				.authorizeRequests()
 				.antMatchers(preLoginPaths).permitAll()
 				.antMatchers("/actuator/health", "/actuator/info").permitAll()

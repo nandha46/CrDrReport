@@ -8,6 +8,7 @@ target/
 /tomcat/
 /uploads/
 /pdf/
+/data/
 logs/
 ### STS ###
 .apt_generated

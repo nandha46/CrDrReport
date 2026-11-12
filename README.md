@@ -62,18 +62,31 @@ Use the included Maven Wrapper (`mvnw.cmd` on Windows, `./mvnw` on Linux/macOS):
 
 ## Start & Run
 
-1. Ensure MySQL is running and set your database credentials:
+1. **Default H2 Database (Zero External Setup):**
+   By default, the application uses a persistent file-based H2 database in MySQL compatibility mode (`./data/crdr.mv.db`), seeds the initial schema/data, and enables the H2 Console at `/h2-console` (`admin`/`developer` roles).
+
+   Configurable via environment variables:
+   - `DB_URL` (default: `jdbc:h2:file:./data/crdr;MODE=MySQL;NON_KEYWORDS=YEAR;AUTO_SERVER=TRUE`)
+   - `DB_USERNAME` (default: `sa`)
+   - `DB_PASSWORD` (default: empty)
+   - `DB_DDL_AUTO` (default: `update`)
+   - `SQL_INIT_MODE` (default: `always`)
+   - `H2_CONSOLE_ENABLED` (default: `true`; set `false` in production)
+
+2. **Optional MySQL Override:**
+   Activate the `mysql` profile (`--spring.profiles.active=mysql`) or set your MySQL environment variables:
    ```powershell
    $env:DB_URL = "jdbc:mysql://localhost:3306/crdr2"
    $env:DB_USERNAME = "your_user"
    $env:DB_PASSWORD = "your_password"
+   $env:DB_DDL_AUTO = "none"
    ```
-2. Start the application using either the packaged JAR or Maven:
+3. Start the application using either the packaged JAR or Maven:
    ```powershell
    java -jar target/CrDrReport-0.0.9e-SNAPSHOT.jar
    ```
    *(or `.\mvnw.cmd spring-boot:run`)*
-3. Open `http://localhost:8080` in your browser (port `5000` when running the `aws` profile unless `PORT` is set).
+4. Open `http://localhost:8080` in your browser (port `5000` when running the `aws` profile unless `PORT` is set).
 
 ---
 
