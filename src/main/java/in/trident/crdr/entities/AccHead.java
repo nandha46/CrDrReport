@@ -65,7 +65,7 @@ public class AccHead implements Comparable<AccHead> {
 		this.companyid = companyid;
 	}
 
-	//TODO BigDecimal for currency
+	// Stored as double for existing MySQL schema compatibility; report math uses BigDecimal in AccountBalanceService.
 	
 	@Id
 	@Column(name = "accheadid")

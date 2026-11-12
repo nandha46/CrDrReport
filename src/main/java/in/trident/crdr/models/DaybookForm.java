@@ -10,25 +10,7 @@ public class DaybookForm {
 
 	private String startDate;
 	private String endDate;
-	
-	
-	/** 
-	* Deprecated method. Better alternative found
-	*	
-	* public int findDays(String d1,String d2) {
-	*	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	*	long diff=0l;
-	*	try {
-	*		diff = df.parse(d2).getTime() - df.parse(d1).getTime();
-	*		diff /= 1000*60*60*24;
-	*	} catch (ParseException e) {
-	*		e.printStackTrace();
-	*	}
-	*	return (int)diff;
-	*  }
-	*
-	*/
-	
+
 	public String getStartDate() {
 		return startDate;
 	}

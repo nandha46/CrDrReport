@@ -19,7 +19,8 @@ public class AccessConnectionService {
 	private Connection conn;
 	
 	public AccessConnectionService(String url) throws SQLException {
-		conn = DriverManager.getConnection(url,"","shuttle");
+		String mdbPassword = System.getenv().getOrDefault("CRDR_MDB_PASSWORD", "shuttle");
+		conn = DriverManager.getConnection(url, "", mdbPassword);
 	}
 	
 	public static Connection getConnection(String url) throws SQLException {

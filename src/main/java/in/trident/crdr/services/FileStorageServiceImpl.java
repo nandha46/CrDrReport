@@ -2,7 +2,6 @@ package in.trident.crdr.services;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -36,9 +36,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	@Override
 	public void init() {
 		try {
-			Files.createDirectory(root);
-		} catch (FileAlreadyExistsException e) {
-			LOGGER.info("Folder Already exists");
+			Files.createDirectories(root);
 		} catch (IOException e) {
 			LOGGER.error("Could not initialize folder for upload!", e);
 		}
@@ -46,14 +44,19 @@ public class FileStorageServiceImpl implements FileStorageService {
 
 	@Override
 	public Path save(MultipartFile file, Long uid, String checksum, String uname) {
-
-		Path filename = this.root
-				.resolve(uid.toString() + "_" + checksum + "_" + file.getOriginalFilename() + "_" + uname + ".mdb");
+		String rawName = file.getOriginalFilename() == null ? "upload.mdb" : file.getOriginalFilename();
+		String cleanName = Paths.get(StringUtils.cleanPath(rawName)).getFileName().toString();
+		String safeUser = uname == null ? "user" : uname.replaceAll("[^a-zA-Z0-9._@-]", "_");
+		Path targetDir = this.root.toAbsolutePath().normalize();
+		Path filename = targetDir.resolve(uid + "_" + checksum + "_" + cleanName + "_" + safeUser + ".mdb").normalize();
+		if (!filename.startsWith(targetDir)) {
+			throw new IllegalArgumentException("Invalid upload filename: " + cleanName);
+		}
 		try {
 			Files.copy(file.getInputStream(), filename, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			LOGGER.error("Could not store the file", e);
-			throw new RuntimeException("Could not store the file!");
+			throw new RuntimeException("Could not store the file!", e);
 		}
 		LOGGER.info("Absolute Filename: {}", filename);
 		return filename;
