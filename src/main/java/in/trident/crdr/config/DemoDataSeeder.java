@@ -106,29 +106,35 @@ public class DemoDataSeeder implements ApplicationRunner {
 		c = companyRepo.save(c);
 		Long cid = c.getCompanyid();
 
+		double bankOpen = Math.round(240000.0 * scale);
+		double arOpen = Math.round(95000.0 * scale);
+		double apOpen = Math.round(62000.0 * scale);
+		double capitalOpen = openCash + bankOpen + arOpen - apOpen;
+
 		List<AccHead> heads = new ArrayList<>();
-		heads.add(new AccHead(101, "Cash in Hand", "A", openCash, 0.0, 1, 1, 10, "CASH", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(102, "Horizon Current Bank", "A", 240000.0 * scale, 0.0, 2, 1, 20, "BANK", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(103, "Accounts Receivable", "A", 95000.0 * scale, 0.0, 3, 1, 30, "AR", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(201, "Share Capital", "L", 0.0, 450000.0, 4, 1, 40, "CAP", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(202, "Accounts Payable", "L", 0.0, 62000.0 * scale, 5, 1, 50, "AP", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(401, "Product Sales Revenue", "I", 0.0, 0.0, 6, 1, 60, "SALE", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(402, "Consulting Income", "I", 0.0, 0.0, 7, 1, 70, "CONS", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(501, "Cost of Goods Sold", "E", 0.0, 0.0, 8, 1, 80, "COGS", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(502, "Office Rent & Ops", "E", 0.0, 0.0, 9, 1, 90, "RENT", 0, 0, true, false, 0, "N", uid, cid));
-		heads.add(new AccHead(503, "Payroll & Benefits", "E", 0.0, 0.0, 10, 1, 100, "PAY", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(101, "Cash in Hand", "A", 0.0, 0.0, 1, 1, 10, "CASH", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(102, "Horizon Current Bank", "A", bankOpen, 0.0, 2, 1, 20, "BANK", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(103, "Accounts Receivable", "A", arOpen, 0.0, 3, 1, 30, "AR", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(201, "Share Capital", "L", 0.0, capitalOpen, 4, 1, 40, "CAP", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(202, "Accounts Payable", "L", 0.0, apOpen, 5, 1, 50, "AP", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(401, "Product Sales Revenue", "I", 0.0, 0.0, 6, 3, 60, "SALE", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(402, "Consulting Income", "I", 0.0, 0.0, 7, 3, 70, "CONS", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(501, "Cost of Goods Sold", "E", 0.0, 0.0, 8, 3, 80, "COGS", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(502, "Office Rent & Ops", "E", 0.0, 0.0, 9, 5, 90, "RENT", 0, 0, true, false, 0, "N", uid, cid));
+		heads.add(new AccHead(503, "Payroll & Benefits", "E", 0.0, 0.0, 10, 5, 100, "PAY", 0, 0, true, false, 0, "N", uid, cid));
 		accHeadRepo.saveAll(heads);
 
 		List<Schedule> schedules = new ArrayList<>();
-		schedules.add(new Schedule(101, "Cash in Hand", "A", openCash, 0.0, 1, 10, uid, cid));
-		schedules.add(new Schedule(102, "Horizon Current Bank", "A", 240000.0 * scale, 0.0, 1, 20, uid, cid));
-		schedules.add(new Schedule(201, "Share Capital", "L", 0.0, 450000.0, 1, 40, uid, cid));
+		schedules.add(new Schedule(102, "Horizon Current Bank", "A", bankOpen, 0.0, 2, 20, uid, cid));
+		schedules.add(new Schedule(103, "Accounts Receivable", "A", arOpen, 0.0, 2, 30, uid, cid));
+		schedules.add(new Schedule(201, "Share Capital", "L", 0.0, capitalOpen, 2, 40, uid, cid));
+		schedules.add(new Schedule(202, "Accounts Payable", "L", 0.0, apOpen, 2, 50, uid, cid));
 		scheduleRepo.saveAll(schedules);
 
 		List<Daybook> entries = new ArrayList<>();
 		List<CloseBal> closeBals = new ArrayList<>();
+		closeBals.add(new CloseBal(String.format("%04d-04-01", startYear), 0.0, 0.0, openCash, uid, cid));
 		int sno = 1;
-		double runningBal = openCash;
 		for (int m = 0; m < 12; m++) {
 			int month = ((3 + m) % 12) + 1;
 			int yr = month >= 4 ? startYear : startYear + 1;
@@ -139,11 +145,9 @@ public class DemoDataSeeder implements ApplicationRunner {
 			double expense = Math.round((46000.0 + m * 2800.0) * scale);
 
 			entries.add(new Daybook(sno++, d1, "Invoice Settlement - Enterprise Client", 401, 0.0, sale, 0, uid, cid));
+			entries.add(new Daybook(sno++, d1, "Bank Receipt - Enterprise Client", 102, sale, 0.0, 0, uid, cid));
 			entries.add(new Daybook(sno++, d2, "Monthly Payroll, Cloud & Supplier Payout", 503, expense, 0.0, 0, uid, cid));
-
-			runningBal = runningBal + sale - expense;
-			closeBals.add(new CloseBal(d1, 0.0, sale, runningBal + expense, uid, cid));
-			closeBals.add(new CloseBal(d2, expense, 0.0, runningBal, uid, cid));
+			entries.add(new Daybook(sno++, d2, "Bank Payment - Monthly Payroll & Ops", 102, 0.0, expense, 0, uid, cid));
 		}
 		daybookRepo.saveAll(entries);
 		closeBalRepo.saveAll(closeBals);

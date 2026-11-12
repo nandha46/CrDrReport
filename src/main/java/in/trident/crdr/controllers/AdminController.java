@@ -24,6 +24,7 @@ import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.CompanyRepo;
 import in.trident.crdr.repositories.DaybookRepository;
+import in.trident.crdr.repositories.PagePerformanceMetricRepo;
 import in.trident.crdr.repositories.RoleRepository;
 import in.trident.crdr.repositories.ScheduleRepo;
 import in.trident.crdr.repositories.UserRepository;
@@ -75,6 +76,8 @@ public class AdminController {
 	private CompSelectionRepo csRepo;
 	@Autowired
 	private ScheduleRepo scheduleRepo;
+	@Autowired
+	private PagePerformanceMetricRepo performanceMetricRepo;
 
 	/**
 	 * Controller mapping of create user workflow
@@ -248,5 +251,13 @@ public class AdminController {
 			model.addAttribute(MESSAGE, "Company ID does not exist");
 		}
 		return SUCCESS;
+	}
+
+	@GetMapping("/admin/performance")
+	public String viewPerformanceMetrics(Model model) {
+		model.addAttribute(PAGE_TITLE, "Page Speed Metrics");
+		model.addAttribute("summaryRows", performanceMetricRepo.summarizeByPathAndTag());
+		model.addAttribute("recentMetrics", performanceMetricRepo.findTop50ByOrderByRecordedAtDesc());
+		return "performance";
 	}
 }

@@ -3,12 +3,17 @@ package in.trident.crdr.services;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import in.trident.crdr.entities.CompanySelection;
 import in.trident.crdr.repositories.AccHeadRepo;
+import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.DaybookRepository;
 import in.trident.crdr.repositories.ScheduleRepo;
@@ -31,6 +36,9 @@ public class AccountBalanceService {
 
 	@Autowired
 	private CompSelectionRepo compSelectionRepo;
+
+	@Autowired
+	private CloseBalRepo closeBalRepo;
 
 	public static final class BalanceResult {
 		private final BigDecimal amount;
@@ -67,6 +75,43 @@ public class AccountBalanceService {
 		}
 		int year = referenceDate.getMonthValue() >= 4 ? referenceDate.getYear() : referenceDate.getYear() - 1;
 		return LocalDate.of(year, 4, 1);
+	}
+
+	public double resolveCashOnHand(String endDate, Long uid, Long cid) {
+		Double exact = closeBalRepo.findCloseBalByDate(endDate, uid, cid);
+		if (exact != null) {
+			return exact;
+		}
+		List<Double> prior = closeBalRepo.findCloseBalsOnOrBefore(endDate, uid, cid);
+		if (prior != null && !prior.isEmpty() && prior.get(0) != null) {
+			return prior.get(0);
+		}
+		return 0.0;
+	}
+
+	public Map<Integer, BigDecimal> loadNetDeltasByAccCode(String startDate, String endDate, Long uid, Long cid) {
+		List<Object[]> rows = daybookRepo.sumNetCrMinusDrByAccCode(startDate, endDate, uid, cid);
+		if (rows == null || rows.isEmpty()) {
+			return Collections.emptyMap();
+		}
+		Map<Integer, BigDecimal> map = new HashMap<>(rows.size() * 2);
+		for (Object[] row : rows) {
+			if (row[0] != null) {
+				Integer code = ((Number) row[0]).intValue();
+				BigDecimal delta = row[1] == null ? BigDecimal.ZERO : BigDecimal.valueOf(((Number) row[1]).doubleValue());
+				map.put(code, delta);
+			}
+		}
+		return map;
+	}
+
+	public BalanceResult resolveFromOpeningAndDeltaMap(double openingCr, double openingDr, Integer code,
+			Map<Integer, BigDecimal> deltaMap) {
+		if (code == null || code == 0) {
+			return new BalanceResult(BigDecimal.ZERO, "Cr");
+		}
+		BigDecimal delta = deltaMap != null ? deltaMap.getOrDefault(code, BigDecimal.ZERO) : BigDecimal.ZERO;
+		return resolveBalance(BigDecimal.valueOf(openingCr), BigDecimal.valueOf(openingDr), delta);
 	}
 
 	public String[] calculateAccHeadBalance(Integer code, String endDate, Long uid, Long cid) {

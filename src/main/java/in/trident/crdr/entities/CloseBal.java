@@ -6,10 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="closebl")
+@Table(name="closebl", indexes = {
+		@Index(name = "idx_closebl_uid_cid_date", columnList = "userid, companyid, CDate")
+})
 public class CloseBal {
 	
 	@Id

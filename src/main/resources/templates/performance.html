@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments :: navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-gauge-high"></i> Page Speed Metrics</h1>
+				<p class="crdr-page-subtitle">Server-side request and view-render duration persisted in the database for comparing optimization tags.</p>
+			</div>
+			<div class="crdr-btn-row">
+				<a th:href="@{/analytics}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-chart-line"></i> Analytics</a>
+				<a th:href="@{/settings}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-gear"></i> Settings</a>
+			</div>
+		</div>
+
+		<section class="crdr-card crdr-mb-4">
+			<h2 class="crdr-card-title"><i class="fa-solid fa-table"></i> Summary by Route &amp; Optimization Tag</h2>
+			<div class="crdr-table-wrap">
+				<table class="crdr-table">
+					<thead>
+						<tr>
+							<th>Path</th>
+							<th>Method</th>
+							<th>Tag</th>
+							<th class="text-right">Hits</th>
+							<th class="text-right">Avg (ms)</th>
+							<th class="text-right">Min (ms)</th>
+							<th class="text-right">Max (ms)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${#lists.isEmpty(summaryRows)}">
+							<td colspan="7" class="text-center">No page speed metrics recorded yet.</td>
+						</tr>
+						<tr th:each="row : ${summaryRows}">
+							<td><code th:text="${row[0]}">/analytics</code></td>
+							<td th:text="${row[1]}">GET</td>
+							<td><span class="crdr-badge" th:text="${row[2]}">tag</span></td>
+							<td class="text-right" th:text="${row[3]}">0</td>
+							<td class="text-right" th:text="${#numbers.formatDecimal(row[4], 1, 2)}">0.00</td>
+							<td class="text-right" th:text="${row[5]}">0</td>
+							<td class="text-right" th:text="${row[6]}">0</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="crdr-card">
+			<h2 class="crdr-card-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent 50 Requests</h2>
+			<div class="crdr-table-wrap">
+				<table class="crdr-table">
+					<thead>
+						<tr>
+							<th>Recorded At</th>
+							<th>Path</th>
+							<th>Method</th>
+							<th>Status</th>
+							<th class="text-right">Duration (ms)</th>
+							<th>Tag</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${#lists.isEmpty(recentMetrics)}">
+							<td colspan="6" class="text-center">No recent requests recorded yet.</td>
+						</tr>
+						<tr th:each="m : ${recentMetrics}">
+							<td th:text="${#temporals.format(m.recordedAt, 'yyyy-MM-dd HH:mm:ss')}">2026-01-01 00:00:00</td>
+							<td><code th:text="${m.requestPath}">/analytics</code></td>
+							<td th:text="${m.httpMethod}">GET</td>
+							<td th:text="${m.statusCode}">200</td>
+							<td class="text-right" th:text="${m.durationMs}">0</td>
+							<td><span class="crdr-badge" th:text="${m.optimizationTag}">tag</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>

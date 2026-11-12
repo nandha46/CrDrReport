@@ -190,5 +190,16 @@ public class AccountBalanceAndReportServiceTests {
 		List<BalanceSheetView> bs2 = balanceSheetService.createBalSheet(form, UID, CID);
 		assertThat(bs1).hasSize(bs2.size());
 		assertThat(bs1).extracting(BalanceSheetView::getParticulars).contains("Cash on Hand", "Closing Stock", "Total");
+
+		// Verify Cash on Hand resolves latest prior CloseBal on non-transaction dates,
+		// and Net Profit B/f is carried forward from Trading & P&L into Balance Sheet
+		CommonForm nonTxDateForm = new CommonForm();
+		nonTxDateForm.setEndDate("2020-04-12");
+		nonTxDateForm.setLevel(5);
+		nonTxDateForm.setClosingStock(500.0);
+		nonTxDateForm.setReportOrder(true);
+		List<BalanceSheetView> bsNonTx = balanceSheetService.createBalSheet(nonTxDateForm, UID, CID);
+		assertThat(bsNonTx).extracting(BalanceSheetView::getParticulars).contains("Net Profit B/f", "Cash on Hand");
+		assertThat(accountBalanceService.resolveCashOnHand("2020-04-12", UID, CID)).isEqualTo(1350.0);
 	}
 }

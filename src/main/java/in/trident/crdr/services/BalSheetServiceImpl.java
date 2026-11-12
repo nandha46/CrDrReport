@@ -1,10 +1,12 @@
 package in.trident.crdr.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.ScheduleRepo;
+import in.trident.crdr.services.AccountBalanceService.BalanceResult;
 import in.trident.crdr.util.FormatUtil;
 
 /**
@@ -55,71 +58,47 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		profiler.start("Balance Sheet");
 
 		List<BalanceSheetView> listBalSheet = new LinkedList<>();
-		List<TradingPLView> tradingPLViews = null;
+		List<TradingPLView> tradingPLViews = tradingPLService.createTradingPL(balSheetForm, uid, cid);
+
+		LocalDate end = FormatUtil.parseIsoDate(balSheetForm.getEndDate());
+		String fyStart = accountBalanceService.resolveFinancialYearStart(uid, end).format(FormatUtil.ISO_DATE);
+		Map<Integer, BigDecimal> deltaMap = accountBalanceService.loadNetDeltasByAccCode(fyStart,
+				balSheetForm.getEndDate(), uid, cid);
 
 		List<Schedule> liabilityList = scheduleRepo.findAllLiabilityAccounts(uid, cid);
+		boolean netProfitInserted = false;
 		for (int i = 0; i < liabilityList.size(); i++) {
-			if (i == 1) {
-				tradingPLViews = tradingPLService.createTradingPL(balSheetForm, uid, cid);
-				TradingPLView netProfitKey = new TradingPLView();
-				netProfitKey.setLevel(1);
-				netProfitKey.setParticulars("Net Profit");
-				int index = tradingPLViews.indexOf(netProfitKey);
-				if (index != -1) {
-					TradingPLView netProfitTplview = tradingPLViews.get(index);
-					BalanceSheetView netProfitB4 = new BalanceSheetView();
-					netProfitB4.setLevel1(2);
-					netProfitB4.setHeader(true);
-					netProfitB4.setParticulars("Net Profit B/f");
-					netProfitB4.setCredit(netProfitTplview.getDebit());
-					netProfitB4.setDebit(netProfitTplview.getCredit());
-					listBalSheet.add(netProfitB4);
-				}
+			if (i == 1 && !netProfitInserted) {
+				addNetProfitIfPresent(listBalSheet, tradingPLViews);
+				netProfitInserted = true;
 			}
 
 			Schedule acc = liabilityList.get(i);
-			BalanceSheetView balSheetView = toBalanceSheetView(acc, balSheetForm.getEndDate(), uid, cid);
+			BalanceSheetView balSheetView = toBalanceSheetView(acc, deltaMap);
 			if (!isZeroRowSkipped(balSheetForm, balSheetView)) {
 				listBalSheet.add(balSheetView);
 			}
 		}
+		if (!netProfitInserted) {
+			addNetProfitIfPresent(listBalSheet, tradingPLViews);
+		}
 
 		List<Schedule> assetList = scheduleRepo.findAllAssetAccounts(uid, cid);
+		boolean assetExtrasInserted = false;
 		for (int i = 0; i < assetList.size(); i++) {
-			if (i == 1) {
-				BalanceSheetView cash = new BalanceSheetView();
-				cash.setLevel1(2);
-				cash.setHeader(true);
-				cash.setParticulars("Cash on Hand");
-				double cashOnHand = FormatUtil.nvlDouble(closeBalrepo.findCloseBalByDate(balSheetForm.getEndDate(), uid, cid));
-				cash.setDebit(FormatUtil.formatAmount(cashOnHand));
-				cash.setCredit("");
-				listBalSheet.add(cash);
-
-				if (tradingPLViews == null) {
-					tradingPLViews = tradingPLService.createTradingPL(balSheetForm, uid, cid);
-				}
-				TradingPLView netLossKey = new TradingPLView();
-				netLossKey.setLevel(2);
-				netLossKey.setParticulars("Net Loss");
-				int index = tradingPLViews.indexOf(netLossKey);
-				if (index != -1) {
-					TradingPLView netLossTplview = tradingPLViews.get(index);
-					BalanceSheetView netLossB4 = new BalanceSheetView();
-					netLossB4.setLevel1(2);
-					netLossB4.setHeader(true);
-					netLossB4.setParticulars("Net Loss B/f");
-					netLossB4.setCredit(netLossTplview.getDebit());
-					netLossB4.setDebit(netLossTplview.getCredit());
-					listBalSheet.add(netLossB4);
-				}
+			if (i == 1 && !assetExtrasInserted) {
+				addAssetExtras(listBalSheet, balSheetForm, tradingPLViews, uid, cid);
+				assetExtrasInserted = true;
 			}
 
 			Schedule acc = assetList.get(i);
-			BalanceSheetView balSheetView = toBalanceSheetView(acc, balSheetForm.getEndDate(), uid, cid);
+			BalanceSheetView balSheetView = toBalanceSheetView(acc, deltaMap);
 			if (!isZeroRowSkipped(balSheetForm, balSheetView)) {
 				listBalSheet.add(balSheetView);
 			}
+		}
+		if (!assetExtrasInserted) {
+			addAssetExtras(listBalSheet, balSheetForm, tradingPLViews, uid, cid);
 		}
 
 		BalanceSheetView closingStock = new BalanceSheetView();
@@ -149,6 +128,85 @@ public class BalSheetServiceImpl implements BalanceSheetService {
 		TimeInstrument ti = profiler.stop();
 		ti.log();
 		return listBalsheetViews;
+	}
+
+	private void addNetProfitIfPresent(List<BalanceSheetView> listBalSheet, List<TradingPLView> tradingPLViews) {
+		TradingPLView netProfitTplview = findTradingPlRow(tradingPLViews, "Net Profit");
+		if (netProfitTplview != null) {
+			BalanceSheetView netProfitB4 = new BalanceSheetView();
+			netProfitB4.setLevel1(2);
+			netProfitB4.setHeader(true);
+			netProfitB4.setParticulars("Net Profit B/f");
+			netProfitB4.setCredit(netProfitTplview.getDebit());
+			netProfitB4.setDebit(netProfitTplview.getCredit());
+			listBalSheet.add(netProfitB4);
+		}
+	}
+
+	private void addAssetExtras(List<BalanceSheetView> listBalSheet, CommonForm balSheetForm,
+			List<TradingPLView> tradingPLViews, Long uid, Long cid) {
+		double cashOnHand = accountBalanceService.resolveCashOnHand(balSheetForm.getEndDate(), uid, cid);
+		if (!(balSheetForm.isZeroBal() && cashOnHand == 0.0)) {
+			BalanceSheetView cash = new BalanceSheetView();
+			cash.setLevel1(2);
+			cash.setHeader(true);
+			cash.setParticulars("Cash on Hand");
+			if (cashOnHand < 0) {
+				cash.setDebit("");
+				cash.setCredit(FormatUtil.formatAmount(Math.abs(cashOnHand)));
+			} else {
+				cash.setDebit(FormatUtil.formatAmount(cashOnHand));
+				cash.setCredit("");
+			}
+			listBalSheet.add(cash);
+		}
+
+		TradingPLView netLossTplview = findTradingPlRow(tradingPLViews, "Net Loss");
+		if (netLossTplview != null) {
+			BalanceSheetView netLossB4 = new BalanceSheetView();
+			netLossB4.setLevel1(2);
+			netLossB4.setHeader(true);
+			netLossB4.setParticulars("Net Loss B/f");
+			netLossB4.setCredit(netLossTplview.getDebit());
+			netLossB4.setDebit(netLossTplview.getCredit());
+			listBalSheet.add(netLossB4);
+		}
+	}
+
+	private TradingPLView findTradingPlRow(List<TradingPLView> rows, String particulars) {
+		if (rows == null) {
+			return null;
+		}
+		for (TradingPLView row : rows) {
+			if (particulars.equals(row.getParticulars())) {
+				return row;
+			}
+		}
+		return null;
+	}
+
+	private BalanceSheetView toBalanceSheetView(Schedule acc, Map<Integer, BigDecimal> deltaMap) {
+		BalanceSheetView balSheetView = new BalanceSheetView();
+		balSheetView.setParticulars(acc.getAccName());
+		balSheetView.setHeader(acc.getAccCode() == 0);
+		balSheetView.setLevel1(acc.getLevel1());
+		if (acc.getAccCode() == 0) {
+			balSheetView.setDebit("");
+			balSheetView.setCredit("");
+			return balSheetView;
+		}
+		double openCr = FormatUtil.nvlDouble(acc.getCrAmt());
+		double openDr = FormatUtil.nvlDouble(acc.getDrAmt());
+		BalanceResult bal = accountBalanceService.resolveFromOpeningAndDeltaMap(openCr, openDr, acc.getAccCode(),
+				deltaMap);
+		if ("Cr".equals(bal.getSide())) {
+			balSheetView.setDebit("");
+			balSheetView.setCredit(bal.getFormattedAmount());
+		} else {
+			balSheetView.setDebit(bal.getFormattedAmount());
+			balSheetView.setCredit("");
+		}
+		return balSheetView;
 	}
 
 	private BalanceSheetView toBalanceSheetView(Schedule acc, String endDate, Long uid, Long cid) {

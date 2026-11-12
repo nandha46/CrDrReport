@@ -45,6 +45,12 @@ public interface DaybookRepository extends JpaRepository<Daybook, Long> {
 	@Query("select sum(crAmt)-sum(drAmt) as bal from Daybook d where d.acccode = ?1 and d.date between ?2 and ?3 and d.userid = ?4 and d.companyid = ?5")
 	public Double openBal(int acccode, String d1, String d2, Long uid, Long cid);
 
+	@Query("select d.acccode, sum(d.crAmt) - sum(d.drAmt) from Daybook d where d.date between ?1 and ?2 and d.userid = ?3 and d.companyid = ?4 group by d.acccode")
+	public List<Object[]> sumNetCrMinusDrByAccCode(String d1, String d2, Long uid, Long cid);
+
+	@Query("select d.companyid, sum(d.drAmt), sum(d.crAmt) from Daybook d where d.userid = ?1 and d.companyid in ?2 group by d.companyid")
+	public List<Object[]> sumTotalsByCompanyIds(Long uid, List<Long> companyIds);
+
 	@Modifying
 	@Query("delete Daybook d where d.userid = ?1")
 	public void deleteAllByUserId(long uid);

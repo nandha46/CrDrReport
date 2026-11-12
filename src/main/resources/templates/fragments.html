@@ -139,6 +139,10 @@
 					<i class="fa-solid fa-gear"></i>
 					<span class="crdr-sidebar-text">Settings</span>
 				</a>
+				<a class="crdr-sidebar-link" th:href="@{/admin/performance}">
+					<i class="fa-solid fa-gauge-high"></i>
+					<span class="crdr-sidebar-text">Page Speed Metrics</span>
+				</a>
 			</div>
 
 			<div class="crdr-nav-group-label">Resources</div>
@@ -224,7 +228,7 @@
 
 	<footer th:fragment="footer" class="crdr-footer">
 		<div class="crdr-footer-inner">
-			<span><i class="fa-solid fa-scale-balanced"></i> CrDr Report &middot; v0.0.12-SNAPSHOT</span>
+			<span><i class="fa-solid fa-scale-balanced"></i> CrDr Report &middot; v0.0.14-SNAPSHOT</span>
 			<div class="crdr-footer-links">
 				<a th:href="@{/}">Home</a>
 				<a th:href="@{/docs}">Documentation</a>

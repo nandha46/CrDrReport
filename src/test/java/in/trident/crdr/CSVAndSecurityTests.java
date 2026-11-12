@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.entities.Role;
 import in.trident.crdr.entities.User;
+import in.trident.crdr.repositories.PagePerformanceMetricRepo;
 import in.trident.crdr.repositories.RoleRepository;
 import in.trident.crdr.repositories.UserRepository;
 import in.trident.crdr.services.CustomUserDetails;
@@ -46,6 +47,9 @@ public class CSVAndSecurityTests {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private PagePerformanceMetricRepo pagePerformanceMetricRepo;
 
 	private CustomUserDetails buildPrincipal(String roleName, Long id) {
 		Role role = new Role();
@@ -140,5 +144,21 @@ public class CSVAndSecurityTests {
 				.param("password", "AnotherPass123"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("success"));
+	}
+
+	@Test
+	public void performanceMetricsAreRecordedAndAdminOnly() throws Exception {
+		CustomUserDetails standardUser = buildPrincipal("user", 2L);
+		CustomUserDetails admin = buildPrincipal("admin", 1L);
+
+		mockMvc.perform(get("/faq")).andExpect(status().isOk());
+		mockMvc.perform(get("/docs")).andExpect(status().isOk());
+
+		assertThat(pagePerformanceMetricRepo.count()).isGreaterThanOrEqualTo(2L);
+
+		mockMvc.perform(get("/admin/performance").with(user(standardUser))).andExpect(status().isForbidden());
+		mockMvc.perform(get("/admin/performance").with(user(admin)))
+				.andExpect(status().isOk())
+				.andExpect(view().name("performance"));
 	}
 }

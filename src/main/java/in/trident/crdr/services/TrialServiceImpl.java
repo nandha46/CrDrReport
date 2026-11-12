@@ -1,10 +1,12 @@
 package in.trident.crdr.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,7 @@ import in.trident.crdr.entities.AccHead;
 import in.trident.crdr.models.TrialForm;
 import in.trident.crdr.models.TrialView;
 import in.trident.crdr.repositories.AccHeadRepo;
-import in.trident.crdr.repositories.CloseBalRepo;
+import in.trident.crdr.services.AccountBalanceService.BalanceResult;
 import in.trident.crdr.util.FormatUtil;
 
 /**
@@ -36,9 +38,6 @@ public class TrialServiceImpl implements TrialBalService {
 	private AccHeadRepo accHeadRepo;
 
 	@Autowired
-	private CloseBalRepo closeBalRepo;
-
-	@Autowired
 	private AccountBalanceService accountBalanceService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TrialServiceImpl.class);
@@ -54,32 +53,35 @@ public class TrialServiceImpl implements TrialBalService {
 		List<AccHead> list = accHeadRepo.findAllAccHead(uid, cid);
 		Collections.sort(list);
 
+		LocalDate end = FormatUtil.parseIsoDate(trialform.getEndDate());
+		String fyStart = accountBalanceService.resolveFinancialYearStart(uid, end).format(FormatUtil.ISO_DATE);
+		Map<Integer, BigDecimal> deltaMap = accountBalanceService.loadNetDeltasByAccCode(fyStart,
+				trialform.getEndDate(), uid, cid);
+
+		BigDecimal debitTotal = BigDecimal.ZERO;
+		BigDecimal creditTotal = BigDecimal.ZERO;
+		boolean cashInserted = false;
 		for (int i = 0; i < list.size(); i++) {
-			if (i == 1) {
-				TrialView cashOnHand = new TrialView();
-				cashOnHand.setAccName("Cash on Hand");
-				cashOnHand.setLevel(2);
-				cashOnHand.setHeader(true);
-				double cashVal = FormatUtil.nvlDouble(closeBalRepo.findCloseBalByDate(trialform.getEndDate(), uid, cid));
-				if (cashVal < 0) {
-					cashOnHand.setCredit(FormatUtil.formatAmount(Math.abs(cashVal)));
-					cashOnHand.setDebit("");
-				} else {
-					cashOnHand.setCredit("");
-					cashOnHand.setDebit(FormatUtil.formatAmount(Math.abs(cashVal)));
-				}
-				listTrialview.add(cashOnHand);
+			if (i == 1 && !cashInserted) {
+				BigDecimal[] cashSums = addCashOnHandRow(listTrialview, trialform, uid, cid);
+				debitTotal = debitTotal.add(cashSums[0]);
+				creditTotal = creditTotal.add(cashSums[1]);
+				cashInserted = true;
 			}
 
 			AccHead acc = list.get(i);
 			TrialView tv = new TrialView();
 			tv.setAccName(acc.getAccName());
-			String[] arr = calculateTrialBalance(acc.getAccCode(), trialform.getEndDate(), uid, cid);
-			if ("Cr".equals(arr[1])) {
+			BalanceResult bal = accountBalanceService.resolveFromOpeningAndDeltaMap(acc.getCrAmt(), acc.getDrAmt(),
+					acc.getAccCode(), deltaMap);
+			if (acc.getAccCode() == 0) {
 				tv.setDebit("");
-				tv.setCredit(arr[0]);
+				tv.setCredit("");
+			} else if ("Cr".equals(bal.getSide())) {
+				tv.setDebit("");
+				tv.setCredit(bal.getFormattedAmount());
 			} else {
-				tv.setDebit(arr[0]);
+				tv.setDebit(bal.getFormattedAmount());
 				tv.setCredit("");
 			}
 			tv.setHeader(acc.getAccCode() == 0);
@@ -89,15 +91,21 @@ public class TrialServiceImpl implements TrialBalService {
 					|| ("0.00".equals(tv.getCredit()) && tv.getDebit().isEmpty()))) {
 				continue;
 			}
+			if (acc.getAccCode() != 0) {
+				if ("Cr".equals(bal.getSide())) {
+					creditTotal = creditTotal.add(bal.getAmount());
+				} else {
+					debitTotal = debitTotal.add(bal.getAmount());
+				}
+			}
 			listTrialview.add(tv);
 		}
-
-		BigDecimal debitTotal = BigDecimal.ZERO;
-		BigDecimal creditTotal = BigDecimal.ZERO;
-		for (TrialView tv : listTrialview) {
-			debitTotal = debitTotal.add(FormatUtil.parseFormattedAmount(tv.getDebit()));
-			creditTotal = creditTotal.add(FormatUtil.parseFormattedAmount(tv.getCredit()));
+		if (!cashInserted) {
+			BigDecimal[] cashSums = addCashOnHandRow(listTrialview, trialform, uid, cid);
+			debitTotal = debitTotal.add(cashSums[0]);
+			creditTotal = creditTotal.add(cashSums[1]);
 		}
+
 		listTrialview.add(new TrialView("Total", FormatUtil.formatAmount(debitTotal),
 				FormatUtil.formatAmount(creditTotal), 1, true));
 
@@ -107,6 +115,29 @@ public class TrialServiceImpl implements TrialBalService {
 			return createReportGroup(listTrialview, trialform.getLevel());
 		}
 		return listTrialview;
+	}
+
+	private BigDecimal[] addCashOnHandRow(List<TrialView> listTrialview, TrialForm trialform, Long uid, Long cid) {
+		double cashVal = accountBalanceService.resolveCashOnHand(trialform.getEndDate(), uid, cid);
+		if (trialform.isZeroBal() && cashVal == 0.0) {
+			return new BigDecimal[] { BigDecimal.ZERO, BigDecimal.ZERO };
+		}
+		TrialView cashOnHand = new TrialView();
+		cashOnHand.setAccName("Cash on Hand");
+		cashOnHand.setLevel(2);
+		cashOnHand.setHeader(true);
+		BigDecimal absCash = BigDecimal.valueOf(Math.abs(cashVal));
+		if (cashVal < 0) {
+			cashOnHand.setCredit(FormatUtil.formatAmount(absCash));
+			cashOnHand.setDebit("");
+			listTrialview.add(cashOnHand);
+			return new BigDecimal[] { BigDecimal.ZERO, absCash };
+		} else {
+			cashOnHand.setCredit("");
+			cashOnHand.setDebit(FormatUtil.formatAmount(absCash));
+			listTrialview.add(cashOnHand);
+			return new BigDecimal[] { absCash, BigDecimal.ZERO };
+		}
 	}
 
 	@Override

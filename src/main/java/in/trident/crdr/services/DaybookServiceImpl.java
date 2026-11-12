@@ -3,8 +3,11 @@ package in.trident.crdr.services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import in.trident.crdr.annotations.TrackExecutionTime;
+import in.trident.crdr.entities.AccHead;
+import in.trident.crdr.entities.CloseBal;
 import in.trident.crdr.entities.Daybook;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.Transactions;
@@ -40,6 +45,9 @@ public class DaybookServiceImpl implements DaybookService {
 	@Autowired
 	private AccHeadRepo accHeadRepo;
 
+	@Autowired
+	private AccountBalanceService accountBalanceService;
+
 	@TrackExecutionTime
 	@Override
 	public List<DaybookView> daybookViewRange(String startDate, String endDate, Long userid, Long cid) {
@@ -49,15 +57,77 @@ public class DaybookServiceImpl implements DaybookService {
 			throw new IllegalArgumentException("End date must not be before start date.");
 		}
 
-		List<DaybookView> daybooks = new LinkedList<>();
-		for (LocalDate current = start; !current.isAfter(end); current = current.plusDays(1)) {
-			String isoDate = current.format(FormatUtil.ISO_DATE);
-			DaybookView dbv = createDaybook(isoDate, current.getDayOfWeek().getValue(), userid, cid);
-			if (dbv != null) {
-				daybooks.add(dbv);
-			} else {
-				LOGGER.debug("No daybook entries found for date {}", isoDate);
+		String startIso = start.format(FormatUtil.ISO_DATE);
+		String endIso = end.format(FormatUtil.ISO_DATE);
+		List<Daybook> rangeEntries = dbRepo.findDaybookRange(startIso, endIso, userid, cid);
+		if (rangeEntries == null || rangeEntries.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Map<String, List<Daybook>> byDate = new TreeMap<>();
+		for (Daybook d : rangeEntries) {
+			String iso = FormatUtil.parseIsoDate(d.getDate()).format(FormatUtil.ISO_DATE);
+			byDate.computeIfAbsent(iso, k -> new ArrayList<>()).add(d);
+		}
+
+		Map<String, CloseBal> closeBalByDate = new HashMap<>();
+		List<CloseBal> closeBals = closeBalRepo.findCloseBalList(start.minusDays(1).format(FormatUtil.ISO_DATE), endIso,
+				userid, cid);
+		if (closeBals != null) {
+			for (CloseBal cb : closeBals) {
+				if (cb.getDate() != null) {
+					closeBalByDate.put(FormatUtil.parseIsoDate(cb.getDate()).format(FormatUtil.ISO_DATE), cb);
+				}
 			}
+		}
+
+		Map<Integer, String> shortNames = new HashMap<>();
+		List<AccHead> accHeads = accHeadRepo.findAllAccHead(userid, cid);
+		if (accHeads != null) {
+			for (AccHead ah : accHeads) {
+				shortNames.put(ah.getAccCode(), ah.getShortName());
+			}
+		}
+
+		List<DaybookView> daybooks = new LinkedList<>();
+		double runningClose = accountBalanceService.resolveCashOnHand(start.minusDays(1).format(FormatUtil.ISO_DATE),
+				userid, cid);
+
+		for (Map.Entry<String, List<Daybook>> entry : byDate.entrySet()) {
+			String isoDate = entry.getKey();
+			LocalDate parsedDate = FormatUtil.parseIsoDate(isoDate);
+			List<Daybook> dayEntries = entry.getValue();
+
+			DaybookView daybookView = new DaybookView();
+			daybookView.setDate(FormatUtil.formatDisplayDate(isoDate));
+			daybookView.setDayOfWeek(parsedDate.getDayOfWeek().name());
+
+			CloseBal prevCb = closeBalByDate.get(parsedDate.minusDays(1).format(FormatUtil.ISO_DATE));
+			double prevClose = prevCb != null ? prevCb.getCloseBal() : runningClose;
+			CloseBal currCb = closeBalByDate.get(isoDate);
+			double debitTotal = currCb != null ? currCb.getDrTot() : 0.0;
+			double creditTotal = currCb != null ? currCb.getCrTot() : 0.0;
+			double closingBal = currCb != null ? currCb.getCloseBal() : prevClose;
+			runningClose = closingBal;
+
+			if (prevClose >= 0) {
+				daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal + prevClose));
+				daybookView.setCreditTot(FormatUtil.formatAmount(creditTotal));
+			} else {
+				daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal));
+				daybookView.setCreditTot(FormatUtil.formatAmount(creditTotal + Math.abs(prevClose)));
+			}
+			daybookView.setClosingBal(FormatUtil.formatAmount(closingBal));
+
+			List<Transactions> trans = new ArrayList<>(dayEntries.size());
+			for (Daybook transaction : dayEntries) {
+				String shortName = shortNames.get(transaction.getAcccode());
+				trans.add(new Transactions(transaction.getsNo(), transaction.getCrAmt(), transaction.getDrAmt(),
+						transaction.getNarration(), transaction.getSktValue(), shortName));
+			}
+			Collections.sort(trans);
+			daybookView.setTransList(trans);
+			daybooks.add(daybookView);
 		}
 		return daybooks;
 	}
@@ -77,17 +147,17 @@ public class DaybookServiceImpl implements DaybookService {
 		daybookView.setDayOfWeek(parsedDate.getDayOfWeek().name());
 
 		String prevDate = parsedDate.minusDays(1).format(FormatUtil.ISO_DATE);
-		double prevClose = FormatUtil.nvlDouble(closeBalRepo.findCloseBalByDate(prevDate, uid, cid));
+		double prevClose = accountBalanceService.resolveCashOnHand(prevDate, uid, cid);
 		double debitTotal = FormatUtil.nvlDouble(closeBalRepo.findDebitTotal(isoDate, uid, cid));
 		double creditTotal = FormatUtil.nvlDouble(closeBalRepo.findCreditTotal(isoDate, uid, cid));
-		double closingBal = FormatUtil.nvlDouble(closeBalRepo.findCloseBalByDate(isoDate, uid, cid));
+		double closingBal = accountBalanceService.resolveCashOnHand(isoDate, uid, cid);
 
-		if (prevClose > 0) {
-			daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal));
-			daybookView.setCreditTot(FormatUtil.formatAmount(creditTotal + prevClose));
-		} else {
-			daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal + Math.abs(prevClose)));
+		if (prevClose >= 0) {
+			daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal + prevClose));
 			daybookView.setCreditTot(FormatUtil.formatAmount(creditTotal));
+		} else {
+			daybookView.setDebitTot(FormatUtil.formatAmount(debitTotal));
+			daybookView.setCreditTot(FormatUtil.formatAmount(creditTotal + Math.abs(prevClose)));
 		}
 		daybookView.setClosingBal(FormatUtil.formatAmount(closingBal));
 

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 /**
@@ -16,7 +17,9 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "acchead")
+@Table(name = "acchead", indexes = {
+		@Index(name = "idx_acchead_uid_cid", columnList = "userid, companyid")
+})
 public class AccHead implements Comparable<AccHead> {
 
 	public AccHead() {

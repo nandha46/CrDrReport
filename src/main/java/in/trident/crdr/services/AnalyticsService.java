@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -86,27 +87,33 @@ public class AnalyticsService {
 
 		List<Company> years = companyRepo.findCompanyYearsByName(cs.getCompanyName(), uid);
 		years.sort(Comparator.comparing(c -> c.getCompYear() != null ? c.getCompYear() : ""));
-		List<String> yLabels = new ArrayList<>();
-		List<Double> yDebits = new ArrayList<>();
-		List<Double> yCredits = new ArrayList<>();
-
+		List<Long> companyIds = new ArrayList<>(years.size());
 		for (Company c : years) {
-			String yf = c.getFromDate() != null ? c.getFromDate().toLocalDate().format(FormatUtil.ISO_DATE)
-					: "1900-01-01";
-			String yt = c.getToDate() != null ? c.getToDate().toLocalDate().format(FormatUtil.ISO_DATE)
-					: "2999-12-31";
-			List<Daybook> yEntries = daybookRepo.findDaybookRange(yf, yt, uid, c.getCompanyid());
-			double yd = 0.0;
-			double yc = 0.0;
-			if (yEntries != null) {
-				for (Daybook d : yEntries) {
-					yd += FormatUtil.nvlDouble(d.getDrAmt());
-					yc += FormatUtil.nvlDouble(d.getCrAmt());
+			companyIds.add(c.getCompanyid());
+		}
+		Map<Long, double[]> totalsByCid = new HashMap<>();
+		if (!companyIds.isEmpty()) {
+			List<Object[]> aggRows = daybookRepo.sumTotalsByCompanyIds(uid, companyIds);
+			if (aggRows != null) {
+				for (Object[] row : aggRows) {
+					if (row[0] != null) {
+						Long cidKey = ((Number) row[0]).longValue();
+						double drSum = row[1] != null ? ((Number) row[1]).doubleValue() : 0.0;
+						double crSum = row[2] != null ? ((Number) row[2]).doubleValue() : 0.0;
+						totalsByCid.put(cidKey, new double[] { drSum, crSum });
+					}
 				}
 			}
+		}
+		List<String> yLabels = new ArrayList<>(years.size());
+		List<Double> yDebits = new ArrayList<>(years.size());
+		List<Double> yCredits = new ArrayList<>(years.size());
+
+		for (Company c : years) {
+			double[] sums = totalsByCid.getOrDefault(c.getCompanyid(), new double[] { 0.0, 0.0 });
 			yLabels.add(c.getCompYear() != null ? c.getCompYear() : String.valueOf(c.getCompanyid()));
-			yDebits.add(yd);
-			yCredits.add(yc);
+			yDebits.add(sums[0]);
+			yCredits.add(sums[1]);
 		}
 		dto.setYearLabels(yLabels);
 		dto.setYearDebits(yDebits);

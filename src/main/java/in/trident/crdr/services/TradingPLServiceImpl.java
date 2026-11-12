@@ -1,11 +1,13 @@
 package in.trident.crdr.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import in.trident.crdr.models.CommonForm;
 import in.trident.crdr.models.TplBalView;
 import in.trident.crdr.models.TradingPLView;
 import in.trident.crdr.repositories.AccHeadRepo;
+import in.trident.crdr.services.AccountBalanceService.BalanceResult;
 import in.trident.crdr.util.FormatUtil;
 
 /**
@@ -48,72 +51,81 @@ public class TradingPLServiceImpl implements TradingPLService {
 
 		BigDecimal netCredit = BigDecimal.ZERO;
 		BigDecimal netDebit = BigDecimal.ZERO;
+		BigDecimal tradingDebit = BigDecimal.ZERO;
+		BigDecimal tradingCredit = BigDecimal.ZERO;
 		LinkedHashSet<TradingPLView> tradingPLViewSet = new LinkedHashSet<>();
 		boolean grossProfitInserted = false;
 
 		List<AccHead> tradingAccs = accHeadRepo.findTradingPLAccs(uid, cid);
 		Collections.sort(tradingAccs);
 
+		LocalDate end = FormatUtil.parseIsoDate(tradingPLForm.getEndDate());
+		String fyStart = accountBalanceService.resolveFinancialYearStart(uid, end).format(FormatUtil.ISO_DATE);
+		Map<Integer, BigDecimal> deltaMap = accountBalanceService.loadNetDeltasByAccCode(fyStart,
+				tradingPLForm.getEndDate(), uid, cid);
+
 		for (AccHead accs : tradingAccs) {
 			if (accs.getOrderCode() == 3 || accs.getOrderCode() == 4) {
 				TradingPLView tplv = new TradingPLView();
 				tplv.setParticulars(accs.getAccName());
 				tplv.setHeader(accs.getAccCode() == 0);
-				String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid, cid);
-				if ("Cr".equals(arr[1])) {
+				BalanceResult bal = accountBalanceService.resolveFromOpeningAndDeltaMap(accs.getCrAmt(),
+						accs.getDrAmt(), accs.getAccCode(), deltaMap);
+				if (accs.getAccCode() == 0) {
 					tplv.setDebit("");
-					tplv.setCredit(arr[0]);
+					tplv.setCredit("");
+				} else if ("Cr".equals(bal.getSide())) {
+					tplv.setDebit("");
+					tplv.setCredit(bal.getFormattedAmount());
 				} else {
-					tplv.setDebit(arr[0]);
+					tplv.setDebit(bal.getFormattedAmount());
 					tplv.setCredit("");
 				}
 				tplv.setLevel(accs.getLevel1());
 				if (!(tradingPLForm.isZeroBal() && (("0.00".equals(tplv.getDebit()) && tplv.getCredit().isEmpty())
 						|| ("0.00".equals(tplv.getCredit()) && tplv.getDebit().isEmpty())))) {
+					if (accs.getAccCode() != 0) {
+						if ("Cr".equals(bal.getSide())) {
+							tradingCredit = tradingCredit.add(bal.getAmount());
+						} else {
+							tradingDebit = tradingDebit.add(bal.getAmount());
+						}
+					}
 					tradingPLViewSet.add(tplv);
 				}
 			} else {
 				if (!grossProfitInserted) {
+					BigDecimal closeStk = BigDecimal.valueOf(FormatUtil.nvlDouble(tradingPLForm.getClosingStock()));
 					TradingPLView closingStock = new TradingPLView();
 					closingStock.setParticulars("Closing Stock");
 					closingStock.setHeader(true);
 					closingStock.setLevel(1);
 					closingStock.setDebit("");
-					closingStock.setCredit(FormatUtil.formatAmount(FormatUtil.nvlDouble(tradingPLForm.getClosingStock())));
+					closingStock.setCredit(FormatUtil.formatAmount(closeStk));
 					tradingPLViewSet.add(closingStock);
+					tradingCredit = tradingCredit.add(closeStk);
 
-					BigDecimal debitTotal = BigDecimal.ZERO;
-					BigDecimal creditTotal = BigDecimal.ZERO;
-					for (TradingPLView row : tradingPLViewSet) {
-						debitTotal = debitTotal.add(FormatUtil.parseFormattedAmount(row.getDebit()));
-						creditTotal = creditTotal.add(FormatUtil.parseFormattedAmount(row.getCredit()));
-					}
-
-					BigDecimal gp = debitTotal.subtract(creditTotal);
+					BigDecimal gp = tradingDebit.subtract(tradingCredit);
 					TradingPLView grossProfit = new TradingPLView();
 					if (gp.compareTo(BigDecimal.ZERO) > 0) {
 						grossProfit.setDebit("");
 						grossProfit.setCredit(FormatUtil.formatAmount(gp.abs()));
 						grossProfit.setParticulars("Gross Loss");
+						tradingCredit = tradingCredit.add(gp.abs());
 					} else {
 						grossProfit.setDebit(FormatUtil.formatAmount(gp.abs()));
 						grossProfit.setCredit("");
 						grossProfit.setParticulars("Gross Profit");
+						tradingDebit = tradingDebit.add(gp.abs());
 					}
 					grossProfit.setLevel(1);
 					grossProfit.setHeader(true);
 					tradingPLViewSet.add(grossProfit);
 
-					BigDecimal tradingDebitTotal = BigDecimal.ZERO;
-					BigDecimal tradingCreditTotal = BigDecimal.ZERO;
-					for (TradingPLView row : tradingPLViewSet) {
-						tradingDebitTotal = tradingDebitTotal.add(FormatUtil.parseFormattedAmount(row.getDebit()));
-						tradingCreditTotal = tradingCreditTotal.add(FormatUtil.parseFormattedAmount(row.getCredit()));
-					}
 					TradingPLView total = new TradingPLView();
 					total.setParticulars("Total");
-					total.setDebit(FormatUtil.formatAmount(tradingDebitTotal));
-					total.setCredit(FormatUtil.formatAmount(tradingCreditTotal));
+					total.setDebit(FormatUtil.formatAmount(tradingDebit));
+					total.setCredit(FormatUtil.formatAmount(tradingCredit));
 					total.setLevel(1);
 					total.setHeader(true);
 					tradingPLViewSet.add(total);
@@ -139,15 +151,19 @@ public class TradingPLServiceImpl implements TradingPLService {
 				TradingPLView tplv = new TradingPLView();
 				tplv.setParticulars(accs.getAccName());
 				tplv.setHeader(accs.getAccCode() == 0);
-				String[] arr = calculateTradingBalance(accs.getAccCode(), tradingPLForm.getEndDate(), uid, cid);
-				if ("Cr".equals(arr[1])) {
+				BalanceResult bal = accountBalanceService.resolveFromOpeningAndDeltaMap(accs.getCrAmt(),
+						accs.getDrAmt(), accs.getAccCode(), deltaMap);
+				if (accs.getAccCode() == 0) {
 					tplv.setDebit("");
-					tplv.setCredit(arr[0]);
-					netCredit = netCredit.add(FormatUtil.parseFormattedAmount(arr[0]));
-				} else {
-					tplv.setDebit(arr[0]);
 					tplv.setCredit("");
-					netDebit = netDebit.add(FormatUtil.parseFormattedAmount(arr[0]));
+				} else if ("Cr".equals(bal.getSide())) {
+					tplv.setDebit("");
+					tplv.setCredit(bal.getFormattedAmount());
+					netCredit = netCredit.add(bal.getAmount());
+				} else {
+					tplv.setDebit(bal.getFormattedAmount());
+					tplv.setCredit("");
+					netDebit = netDebit.add(bal.getAmount());
 				}
 				tplv.setLevel(accs.getLevel1());
 				if (!(tradingPLForm.isZeroBal() && (("0.00".equals(tplv.getDebit()) && tplv.getCredit().isEmpty())
