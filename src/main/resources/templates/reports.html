@@ -1,56 +1,100 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace = "fragments :: head" />
+<head th:replace="fragments :: head" />
 <body>
-  	<div th:replace = "fragments::reports-navbar"> </div>  
-	<div class="container text-center">
-	<h1>Welcome to [[${companyName}]]</h1>
-	</div>
-	<div class="flex-container">
-<!-- 
-  <div class="zoom"><a th:href="@{/findDaybook}">Daybook</a></div>
-  <div class="zoom"><a th:href="@{/findLedger}">Ledger</a></div>
-  <div class="zoom"><a th:href="@{/findTrialBal}">Trial Balance</a></div>
-  <div class="zoom"><a th:href="@{/findTradingPL}">Trading P&amp;L</a></div>
-  <div class="zoom"><a th:href="@{/findBalSheet}">Balance Sheet</a></div>   -->
-  
-   <a class="zoom" th:href="@{/findDaybook}">
-        <div class="title">
-            <div>
-                <span>Daybook</span>
-            </div>
-        </div>
-    </a>
-    <a class="zoom" th:href="@{/findLedger}">
-        <div class="title">
-            <div>
-                <span>Ledger</span>
-            </div>
-        </div>
-    </a>
-    <a class="zoom" th:href="@{/findTrialBal}">
-        <div class="title">
-            <div>
-                <span>Trial Balance</span>
-            </div>
-        </div>
-    </a>
-    <a class="zoom" th:href="@{/findTradingPL}">
-        <div class="title">
-            <div>
-                <span>Trading P&amp;L</span>
-            </div>
-        </div>
-    </a>
-    <a class="zoom" th:href="@{/findBalSheet}">
-        <div class="title">
-            <div>
-                <span>Balance Sheet</span>
-            </div>
-        </div>
-    </a>
-  
-	</div>
+	<div th:replace="fragments :: reports-navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1>Financial Reports Dashboard</h1>
+				<p class="crdr-page-subtitle">Select a statement or ledger view for
+					your active company.</p>
+			</div>
+			<div class="crdr-btn-row">
+				<span class="crdr-company-pill"><i class="fa-solid fa-building"></i>
+					[[${companyName}]]</span>
+				<a th:href="@{/companies/select}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-arrows-rotate"></i> Switch Company</a>
+			</div>
+		</div>
+
+		<section class="crdr-grid crdr-grid-5">
+			<a class="crdr-card" th:href="@{/reports/daybook}">
+				<span class="crdr-icon-box crdr-icon-blue"><i
+					class="fa-solid fa-book-open"></i></span>
+				<h3 class="crdr-card-title">
+					Daybook <i class="fa-solid fa-arrow-right"></i>
+				</h3>
+				<p class="crdr-card-desc">View daily debit and credit journal
+					entries filtered by date range.</p>
+				<span class="crdr-card-link">Open Daybook <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/reports/ledger}">
+				<span class="crdr-icon-box crdr-icon-emerald"><i
+					class="fa-solid fa-file-invoice-dollar"></i></span>
+				<h3 class="crdr-card-title">
+					Ledger <i class="fa-solid fa-arrow-right"></i>
+				</h3>
+				<p class="crdr-card-desc">Inspect account-wise transactions,
+					opening balances, and export PDF.</p>
+				<span class="crdr-card-link">Open Ledger <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/reports/trial-balance}">
+				<span class="crdr-icon-box crdr-icon-violet"><i
+					class="fa-solid fa-scale-balanced"></i></span>
+				<h3 class="crdr-card-title">
+					Trial Balance <i class="fa-solid fa-arrow-right"></i>
+				</h3>
+				<p class="crdr-card-desc">Verify debit and credit closing
+					balances across all account heads.</p>
+				<span class="crdr-card-link">Open Trial Balance <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/reports/trading-pl}">
+				<span class="crdr-icon-box crdr-icon-amber"><i
+					class="fa-solid fa-chart-line"></i></span>
+				<h3 class="crdr-card-title">
+					Trading &amp; P&amp;L <i class="fa-solid fa-arrow-right"></i>
+				</h3>
+				<p class="crdr-card-desc">Review gross profit, operating
+					expenses, and net profit or loss.</p>
+				<span class="crdr-card-link">Open Trading &amp; P&amp;L <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/reports/balance-sheet}">
+				<span class="crdr-icon-box crdr-icon-cyan"><i
+					class="fa-solid fa-landmark"></i></span>
+				<h3 class="crdr-card-title">
+					Balance Sheet <i class="fa-solid fa-arrow-right"></i>
+				</h3>
+				<p class="crdr-card-desc">Examine assets, liabilities, and
+					schedule-wise capital structure.</p>
+				<span class="crdr-card-link">Open Balance Sheet <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/csv/upload}">
+				<span class="crdr-icon-box crdr-icon-rose"><i
+					class="fa-solid fa-file-csv"></i></span>
+				<h3 class="crdr-card-title">
+					Upload CSV / .mdb <i class="fa-solid fa-arrow-right"></i>
+				</h3>
+				<p class="crdr-card-desc">Import new Daybook CSV entries for the
+					selected company.</p>
+				<span class="crdr-card-link">Import Data <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 </body>
 </html>

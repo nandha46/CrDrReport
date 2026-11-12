@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: head" />
-
 <body>
-	<div th:replace="fragments::navbar"></div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-4"></div>
-			<div class="col-lg-4">
-		<form th:action="@{/uploaded}" enctype="multipart/form-data" method="post">
-			<div class="form-group">
-				<label for="exampleFormControlFile1">Select Database file</label>
-				<input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
-			</div>
-			<button type="submit" class="btn btn-success">Upload</button>
-		</form>
-		</div>
-		<div class="col-lg-4"></div>
-		</div>
-	</div>
-</body>
+	<div th:replace="fragments :: navbar"></div>
 
+	<main class="crdr-main">
+		<div style="max-width: 580px; margin: 16px auto;">
+			<div class="crdr-card" style="padding: 28px;">
+				<span class="crdr-icon-box crdr-icon-emerald"><i
+					class="fa-solid fa-database"></i></span>
+				<h1 style="font-size: 22px; font-weight: 800; margin: 4px 0 6px;">Import MS Access Database (.mdb)</h1>
+				<p class="crdr-card-desc">Upload a CrDr <code>.mdb</code> database file to import company details, account heads, balances, and daybook entries.</p>
+
+				<form th:action="@{/companies/upload}" enctype="multipart/form-data" method="post" style="margin-top: 12px;">
+					<div class="form-group">
+						<label for="exampleFormControlFile1">Select <code>.mdb</code> Database File</label>
+						<input type="file" class="form-control" id="exampleFormControlFile1" name="file" accept=".mdb" required />
+					</div>
+					<div class="crdr-btn-row" style="margin-top: 16px;">
+						<button type="submit" class="crdr-btn crdr-btn-primary"><i
+							class="fa-solid fa-cloud-arrow-up"></i> Upload &amp; Import</button>
+						<button type="button" class="crdr-btn crdr-btn-outline" onclick="window.history.back()">Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+</body>
 </html>

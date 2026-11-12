@@ -80,6 +80,8 @@ public class CSVAndSecurityTests {
 	@Test
 	public void publicAndProtectedRoutesEnforceSecurityRules() throws Exception {
 		mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("index"));
+		mockMvc.perform(get("/faq")).andExpect(status().isOk()).andExpect(view().name("faq"));
+		mockMvc.perform(get("/docs")).andExpect(status().isOk()).andExpect(view().name("docs"));
 		mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("login"));
 		mockMvc.perform(get("/actuator/health")).andExpect(status().isOk());
 
@@ -89,10 +91,16 @@ public class CSVAndSecurityTests {
 		mockMvc.perform(get("/create_user")).andExpect(status().is3xxRedirection())
 				.andExpect(redirectedUrlPattern("**/login"));
 
-		// Plain user is allowed on /uploadcsv and /company_selection, but forbidden on /create_user & /process_register
+		// Plain user is allowed on standard /csv/upload, /settings, and legacy /uploadcsv,
+		// but forbidden on /admin/users/new & /create_user & /process_register
 		CustomUserDetails standardUser = buildPrincipal("user", 2L);
+		mockMvc.perform(get("/csv/upload").with(user(standardUser))).andExpect(status().isOk())
+				.andExpect(view().name("uploadCSV"));
 		mockMvc.perform(get("/uploadcsv").with(user(standardUser))).andExpect(status().isOk())
 				.andExpect(view().name("uploadCSV"));
+		mockMvc.perform(get("/settings").with(user(standardUser))).andExpect(status().isOk())
+				.andExpect(view().name("settings"));
+		mockMvc.perform(get("/admin/users/new").with(user(standardUser))).andExpect(status().isForbidden());
 		mockMvc.perform(get("/create_user").with(user(standardUser))).andExpect(status().isForbidden());
 		mockMvc.perform(post("/process_register").with(user(standardUser)).with(csrf()))
 				.andExpect(status().isForbidden());

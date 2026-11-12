@@ -1,81 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
-<link rel="stylesheet" id="roboto-subset.css-css" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/mdb5/fonts/roboto-subset.css?ver=3.9.0-update.5" type="text/css" media="all">
-<link rel="stylesheet" th:href="@{/css/login.css}" />
-<title>Login</title>
-
-</head>
+<head th:replace="fragments :: head" />
 <body>
-	<div>
-		<section class="h-100 gradient-form" style="background-color: #eee;">
-			<div class="container py-5 h-100">
-				<div
-					class="row d-flex justify-content-center align-items-center h-100">
-					<div class="col-xl-10">
-						<div class="card rounded-3 text-black">
-							<div class="row g-0">
-								<div class="col-lg-6">
-									<div class="card-body p-md-5 mx-md-4">
+	<div th:replace="fragments :: index-navbar"></div>
 
-										<div class="text-center">
-											<img
-												src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-												style="width: 185px;" alt="logo">
-											<h4 class="mt-1 mb-5 pb-1">CrDr Report</h4>
-										</div>
+	<main class="crdr-main">
+		<div style="max-width: 460px; margin: 24px auto;">
+			<div class="crdr-card" style="padding: 28px;">
+				<div style="text-align: center; margin-bottom: 16px;">
+					<span class="crdr-icon-box crdr-icon-blue"
+						style="width: 56px; height: 56px; font-size: 24px; margin: 0 auto 12px;">
+						<i class="fa-solid fa-scale-balanced"></i>
+					</span>
+					<h1 style="font-size: 24px; font-weight: 800; margin: 0 0 6px;">Sign in to CrDr Report</h1>
+					<p class="crdr-page-subtitle" style="margin: 0;">Access your company ledgers and financial statements</p>
+				</div>
 
-										<form th:action="@{/processLogin}" method="post">
-											<p>Please login to your account</p>
+				<div th:if="${param.error}" class="alert alert-danger" role="alert">
+					<i class="fa-solid fa-circle-exclamation"></i> Invalid email or password.
+				</div>
+				<div th:if="${param.logout}" class="alert alert-success" role="alert">
+					<i class="fa-solid fa-circle-check"></i> You have been signed out.
+				</div>
 
-											<div class="form-outline mb-4">
-												<input style="border:solid 1px" type="email" id="form2Example11" class="form-control"
-													placeholder="Email add" name="email" />
-											</div>
-
-											<div class="form-outline mb-4">
-												<input style="border:solid 1px" type="password" id="form2Example22"
-													class="form-control" placeholder="Password" name="pass" /> 
-											</div>
-
-											<div class="text-center pt-1 mb-5 pb-1">
-												<button
-													class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-													type="submit">Log in</button>
-												<a class="text-muted" href="#!">Forgot password?</a>
-											</div>
-
-											<div
-												class="d-flex align-items-center justify-content-center pb-4">
-												<p class="mb-0 me-2">Don't have an account?</p>
-												<button type="button" class="btn btn-outline-danger">Contact
-													Trident</button>
-											</div>
-
-										</form>
-
-									</div>
-								</div>
-								<div
-									class="col-lg-6 d-flex align-items-center gradient-custom-2">
-									<div class="text-white px-3 py-4 p-md-5 mx-md-4">
-										<h4 class="mb-4">CrDr Financial Accounting &amp; Reporting</h4>
-										<p class="small mb-0">Upload your company Access (.mdb) or CSV
-											ledgers and review Daybook, Ledger, Trial Balance,
-											Trading &amp; P&amp;L, and Balance Sheet reports securely from anywhere.</p>
-									</div>
-								</div>
-							</div>
-						</div>
+				<form th:action="@{/processLogin}" method="post">
+					<div class="form-group">
+						<label for="login-email">Email address</label>
+						<input type="email" id="login-email" name="email" class="form-control"
+							placeholder="you@company.com" required autofocus style="height: 44px;" />
 					</div>
+					<div class="form-group">
+						<label for="login-pass">Password</label>
+						<input type="password" id="login-pass" name="pass" class="form-control"
+							placeholder="Enter your password" required style="height: 44px;" />
+					</div>
+					<button type="submit" class="crdr-btn crdr-btn-primary" style="width: 100%; margin-top: 8px;">
+						<i class="fa-solid fa-right-to-bracket"></i> Sign In
+					</button>
+				</form>
+
+				<div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--crdr-border); text-align: center; font-size: 13px; color: var(--crdr-muted);">
+					Need help? Check the <a th:href="@{/faq}">FAQ</a> or <a th:href="@{/docs}">Documentation</a>.
 				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 </body>
 </html>

@@ -3,21 +3,24 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: head" />
 <body>
-	<div th:replace="fragments::navbar"></div>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<blockquote class="blockquote text-center">
-					<h2 class="mb-0">[[${message}]]</h2>
-					<div>
-						<button type="submit" class="btn btn-success"
-							onclick="window.location='/create_user'">New User</button>
-						<button type="submit" class="btn btn-success"
-							onclick="window.location='/reports'">Reports</button>
-					</div>
-				</blockquote>
+	<div th:replace="fragments :: navbar"></div>
+
+	<main class="crdr-main">
+		<div style="max-width: 540px; margin: 24px auto;">
+			<div class="crdr-card" style="padding: 28px; text-align: center;">
+				<span class="crdr-icon-box crdr-icon-emerald" style="margin: 0 auto;"><i
+					class="fa-solid fa-circle-check"></i></span>
+				<h2 style="font-size: 22px; font-weight: 800; margin: 8px 0;">[[${message}]]</h2>
+				<div class="crdr-btn-row" style="justify-content: center; margin-top: 14px;">
+					<a th:href="@{/admin/users/new}" class="crdr-btn crdr-btn-primary"><i
+						class="fa-solid fa-user-plus"></i> New User</a>
+					<a th:href="@{/reports}" class="crdr-btn crdr-btn-outline"><i
+						class="fa-solid fa-chart-pie"></i> Reports</a>
+				</div>
 			</div>
 		</div>
-	</div>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 </body>
 </html>

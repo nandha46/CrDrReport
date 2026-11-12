@@ -5,6 +5,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>[[${pageTitle}]]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -12,98 +16,187 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" th:href="@{/css/index.css}" />
 <link rel="stylesheet" th:href="@{/css/main.css}" />
 <link rel="stylesheet" th:href="@{/css/ledger.css}" />
+<link rel="stylesheet" th:href="@{/css/modern.css}" />
 </head>
 
-
-
 <body>
-	<div th:fragment="navbar">
-		<nav class="navbar navbar-inverse">
+	<!-- Combined Top Navbar + Collapsible Industry-Grouped Sidebar Shell -->
+	<div th:fragment="app-shell">
+		<nav class="navbar navbar-inverse crdr-navbar">
 			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">CrDr Report</a>
+				<div class="navbar-header" style="display: flex; align-items: center;">
+					<button type="button" id="crdrSidebarToggle" class="crdr-sidebar-toggle-btn"
+						aria-label="Toggle sidebar">
+						<i class="fa-solid fa-bars"></i>
+					</button>
+					<a class="navbar-brand" th:href="@{/dashboard}">
+						<span class="crdr-brand-badge"><i class="fa-solid fa-scale-balanced"></i></span>
+						<span>CrDr Report</span>
+					</a>
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#crdr-nav-shell"
+						aria-expanded="false" style="margin-left: auto;">
+						<span class="sr-only">Toggle top menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
 				</div>
-				<ul class="nav navbar-nav">
-					<li><a th:href="@{/reports}"><i class="fa fa-book"
-							aria-hidden="true"></i> REPORTS</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li sec:authorize="isAuthenticated()"><a href="#" th:inline="text" id="nav-username"><i
-							class="fa fa-fw fa-user" aria-hidden="true"> </i>
-							<span sec:authentication="principal.name">User</span> </a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fa fa-sign-out"
-							aria-hidden="true"></i> LOGOUT</a></li>
-					<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> LOGIN</a></li>
-				</ul>
+				<div class="collapse navbar-collapse" id="crdr-nav-shell">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a th:href="@{/companies/select}"><i
+								class="fa-solid fa-building"></i> Switch Company</a></li>
+						<li><a th:href="@{/settings}"><i
+								class="fa-solid fa-gear"></i> Settings</a></li>
+						<li sec:authorize="isAuthenticated()"><a th:href="@{/profile}"
+							id="nav-username"><i class="fa-solid fa-circle-user"></i> <span
+								sec:authentication="principal.name">User</span></a></li>
+						<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i
+								class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+						<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}"
+							class="crdr-nav-cta"><i class="fa-solid fa-right-to-bracket"></i> Login</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
+
+		<div id="crdrSidebarBackdrop" class="crdr-sidebar-backdrop"></div>
+
+		<aside id="crdrSidebar" class="crdr-sidebar" aria-label="Primary Sidebar Navigation">
+			<div class="crdr-nav-group-label">Overview</div>
+			<a class="crdr-sidebar-link" th:href="@{/dashboard}">
+				<i class="fa-solid fa-chart-line"></i>
+				<span class="crdr-sidebar-text">Analytics Dashboard</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/reports/menu}">
+				<i class="fa-solid fa-grip"></i>
+				<span class="crdr-sidebar-text">Reports Hub</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/profile}">
+				<i class="fa-solid fa-circle-user"></i>
+				<span class="crdr-sidebar-text">Profile</span>
+			</a>
+
+			<div class="crdr-nav-group-label">Financial Reports</div>
+			<a class="crdr-sidebar-link" th:href="@{/reports/daybook}">
+				<i class="fa-solid fa-book-open"></i>
+				<span class="crdr-sidebar-text">Daybook</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/reports/ledger}">
+				<i class="fa-solid fa-file-invoice-dollar"></i>
+				<span class="crdr-sidebar-text">Ledger &amp; PDF</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/reports/trial-balance}">
+				<i class="fa-solid fa-scale-balanced"></i>
+				<span class="crdr-sidebar-text">Trial Balance</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/reports/trading-pl}">
+				<i class="fa-solid fa-chart-column"></i>
+				<span class="crdr-sidebar-text">Trading &amp; P&amp;L</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/reports/balance-sheet}">
+				<i class="fa-solid fa-landmark"></i>
+				<span class="crdr-sidebar-text">Balance Sheet</span>
+			</a>
+
+			<div class="crdr-nav-group-label">Data &amp; Companies</div>
+			<a class="crdr-sidebar-link" th:href="@{/companies/select}">
+				<i class="fa-solid fa-building"></i>
+				<span class="crdr-sidebar-text">Select Company</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/companies/upload}">
+				<i class="fa-solid fa-database"></i>
+				<span class="crdr-sidebar-text">Import .mdb</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/csv/upload}">
+				<i class="fa-solid fa-file-csv"></i>
+				<span class="crdr-sidebar-text">Upload CSV</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/companies/delete}">
+				<i class="fa-solid fa-trash-can"></i>
+				<span class="crdr-sidebar-text">Delete Company</span>
+			</a>
+
+			<div sec:authorize="hasAnyAuthority('developer','admin')">
+				<div class="crdr-nav-group-label">Administration</div>
+				<a class="crdr-sidebar-link" th:href="@{/admin/users}">
+					<i class="fa-solid fa-users"></i>
+					<span class="crdr-sidebar-text">Users</span>
+				</a>
+				<a class="crdr-sidebar-link" th:href="@{/admin/users/new}">
+					<i class="fa-solid fa-user-plus"></i>
+					<span class="crdr-sidebar-text">Create User</span>
+				</a>
+				<a class="crdr-sidebar-link" th:href="@{/admin/users/delete}">
+					<i class="fa-solid fa-user-minus"></i>
+					<span class="crdr-sidebar-text">Delete User</span>
+				</a>
+				<a class="crdr-sidebar-link" th:href="@{/settings}">
+					<i class="fa-solid fa-gear"></i>
+					<span class="crdr-sidebar-text">Settings</span>
+				</a>
+			</div>
+
+			<div class="crdr-nav-group-label">Resources</div>
+			<a class="crdr-sidebar-link" th:href="@{/docs}">
+				<i class="fa-solid fa-book"></i>
+				<span class="crdr-sidebar-text">Documentation</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/faq}">
+				<i class="fa-solid fa-circle-question"></i>
+				<span class="crdr-sidebar-text">FAQ</span>
+			</a>
+		</aside>
+	</div>
+
+	<div th:fragment="navbar">
+		<div th:replace="fragments :: app-shell"></div>
 	</div>
 
 	<div th:fragment="reports-navbar">
-		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">CrDr Report</a>
-				</div>
-				<ul class="nav navbar-nav">
-					<li><a th:href="@{/company_selection}"><i
-							class="fa fa-sign-in" aria-hidden="true"></i> CHANGE COMPANY</a></li>
-					<li><a th:href="@{/upload}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> CSV UPLOAD</a></li>
-					<li><a th:href="@{/delete_company}"><i
-							class="fa fa-sign-in" aria-hidden="true"></i> DELETE COMPANY</a></li>
-					<li><a sec:authorize="hasAnyAuthority('developer','admin')"
-						th:href="@{/create_user}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> CREATE NEW USER</a></li>
-					<li><a sec:authorize="hasAnyAuthority('developer','admin')"
-						th:href="@{/delete_user}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> DELETE A USER</a></li>
-					<li><a th:href="@{/profile}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> PROFILE</a></li>
-
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/logout}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> LOGOUT</a></li>
-				</ul>
-			</div>
-		</nav>
-	</div>
-
-	<div th:fragment="index-navbar">
-		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">CrDr Report</a>
-				</div>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/login}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> LOGIN</a></li>
-				</ul>
-
-			</div>
-		</nav>
+		<div th:replace="fragments :: app-shell"></div>
 	</div>
 
 	<div th:fragment="cs-navbar">
-		<nav class="navbar navbar-inverse">
+		<div th:replace="fragments :: app-shell"></div>
+	</div>
+
+	<div th:fragment="index-navbar">
+		<nav class="navbar navbar-inverse crdr-navbar">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/">CrDr Report</a>
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#crdr-nav-index"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/}">
+						<span class="crdr-brand-badge"><i class="fa-solid fa-scale-balanced"></i></span>
+						<span>CrDr Report</span>
+					</a>
 				</div>
-				<ul class="nav navbar-nav">
-					<li><a th:href="@{/upload}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> UPLOAD COMPANY</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/logout}"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> LOGOUT</a></li>
-				</ul>
+				<div class="collapse navbar-collapse" id="crdr-nav-index">
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{/}"><i class="fa-solid fa-house"></i> Home</a></li>
+						<li><a th:href="@{/docs}"><i class="fa-solid fa-book"></i> Documentation</a></li>
+						<li><a th:href="@{/faq}"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li sec:authorize="isAuthenticated()"><a th:href="@{/dashboard}"
+							class="crdr-nav-cta"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+						<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i
+								class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+						<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}"
+							class="crdr-nav-cta"><i class="fa-solid fa-right-to-bracket"></i> Login</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	</div>
@@ -112,6 +205,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>[[${pageTitle}]]</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 		<link rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<script
@@ -119,9 +216,25 @@
 		<script
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<link rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 		<link rel="stylesheet" th:href="@{/css/main.css}" />
 		<link rel="stylesheet" th:href="@{/css/profile.css}" />
+		<link rel="stylesheet" th:href="@{/css/modern.css}" />
 	</div>
+
+	<footer th:fragment="footer" class="crdr-footer">
+		<div class="crdr-footer-inner">
+			<span><i class="fa-solid fa-scale-balanced"></i> CrDr Report &middot; v0.0.12-SNAPSHOT</span>
+			<div class="crdr-footer-links">
+				<a th:href="@{/}">Home</a>
+				<a th:href="@{/docs}">Documentation</a>
+				<a th:href="@{/faq}">FAQ</a>
+				<a sec:authorize="isAuthenticated()" th:href="@{/dashboard}">Dashboard</a>
+				<a sec:authorize="isAuthenticated()" th:href="@{/settings}">Settings</a>
+				<a sec:authorize="!isAuthenticated()" th:href="@{/login}">Sign In</a>
+			</div>
+		</div>
+		<script th:src="@{/script/shell.js}"></script>
+	</footer>
 </body>
 </html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments :: index-navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-circle-question"></i> Frequently Asked Questions</h1>
+				<p class="crdr-page-subtitle">Answers to common questions about
+					data imports, reports, database setup, and user roles.</p>
+			</div>
+			<a th:href="@{/docs}" class="crdr-btn crdr-btn-outline"><i
+				class="fa-solid fa-book"></i> View Documentation</a>
+		</div>
+
+		<section class="crdr-faq-list">
+			<details class="crdr-faq-item" open>
+				<summary>What database does CrDr Report use by default?</summary>
+				<div class="crdr-faq-body">
+					By default, CrDr Report runs with an embedded, persistent file-based
+					<strong>H2</strong> database in MySQL compatibility mode (stored at
+					<code>./data/crdr.mv.db</code>). No external MySQL server is
+					required to start using the application. You can switch to MySQL at
+					any time using <code>--spring.profiles.active=mysql</code> or by
+					overriding <code>DB_URL</code>, <code>DB_USERNAME</code>, and
+					<code>DB_PASSWORD</code>.
+				</div>
+			</details>
+
+			<details class="crdr-faq-item">
+				<summary>How do I import an existing Microsoft Access (.mdb) accounting file?</summary>
+				<div class="crdr-faq-body">
+					Sign in, open <strong>Upload Company (.mdb)</strong> from the
+					Company Selection page (<code>/upload</code>), and select your
+					<code>.mdb</code> file. CrDr Report uses UCanAccess in-process to
+					read companies, account heads, opening/closing balances, daybook
+					entries, and schedules—no Microsoft Access installation is needed.
+					If your <code>.mdb</code> file is password-protected, configure the
+					<code>CRDR_MDB_PASSWORD</code> environment variable.
+				</div>
+			</details>
+
+			<details class="crdr-faq-item">
+				<summary>What columns are required for Daybook CSV uploads?</summary>
+				<div class="crdr-faq-body">
+					Your CSV file must include a header row with these exact column
+					names: <code>Sno,TDate,Narration,acccode,dramt,cramt,stkvalue</code>.
+					Ensure you have selected an active company first on
+					<code>/company_selection</code> before uploading on
+					<code>/uploadcsv</code>.
+				</div>
+			</details>
+
+			<details class="crdr-faq-item">
+				<summary>How do I export a Ledger report to PDF?</summary>
+				<div class="crdr-faq-body">
+					Open <strong>Ledger</strong> from the Reports Dashboard
+					(<code>/findLedger</code>), choose the account head and date range,
+					and generate the report. On the Ledger view, click the PDF export
+					action (<code>/pdfLedger</code>) to generate a formatted
+					JasperReports PDF under the <code>pdf/</code> directory.
+				</div>
+			</details>
+
+			<details class="crdr-faq-item">
+				<summary>What is the difference between user, admin, and developer roles?</summary>
+				<div class="crdr-faq-body">
+					<ul>
+						<li><strong>user:</strong> Can upload companies/CSVs, switch
+							between their own companies, and generate all financial reports.</li>
+						<li><strong>admin / developer:</strong> Has all user
+							capabilities plus user management (<code>/create_user</code>,
+							<code>/users</code>, <code>/delete_user</code>), full Actuator
+							endpoints, and H2 Console access (when enabled).</li>
+					</ul>
+				</div>
+			</details>
+
+			<details class="crdr-faq-item">
+				<summary>Are financial numbers formatted in Indian Rupee grouping?</summary>
+				<div class="crdr-faq-body">
+					Yes. Amounts use <code>en-IN</code> locale formatting (e.g.,
+					<code>1,25,000.00</code>) and <code>BigDecimal</code> precision for
+					Ledger, Trial Balance, Trading &amp; P&amp;L, and Balance Sheet
+					calculations.
+				</div>
+			</details>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>

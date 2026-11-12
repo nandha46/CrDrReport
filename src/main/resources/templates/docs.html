@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments :: index-navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-book"></i> Documentation</h1>
+				<p class="crdr-page-subtitle">Setup, configuration, data import
+					formats, and reporting workflows for CrDr Report v0.0.12-SNAPSHOT.</p>
+			</div>
+			<a th:href="@{/faq}" class="crdr-btn crdr-btn-outline"><i
+				class="fa-solid fa-circle-question"></i> View FAQ</a>
+		</div>
+
+		<div class="crdr-docs-layout">
+			<aside class="crdr-docs-nav">
+				<a href="#quickstart"><i class="fa-solid fa-rocket"></i> Quick Start</a>
+				<a href="#database"><i class="fa-solid fa-database"></i> Database Config</a>
+				<a href="#csv-format"><i class="fa-solid fa-file-csv"></i> CSV Format</a>
+				<a href="#reports-guide"><i class="fa-solid fa-chart-pie"></i> Financial Reports</a>
+				<a href="#security"><i class="fa-solid fa-shield-halved"></i> Security &amp; Roles</a>
+			</aside>
+
+			<div>
+				<section id="quickstart" class="crdr-docs-section">
+					<h2><i class="fa-solid fa-rocket"></i> Quick Start</h2>
+					<p>CrDr Report runs on Java 8+ with Spring Boot 2.7.18 and requires
+						zero external database setup out of the box.</p>
+					<pre class="crdr-code">.\mvnw.cmd clean package
+java -jar target/CrDrReport-0.0.12-SNAPSHOT.jar</pre>
+					<p>Open <code>http://localhost:8080</code> in any desktop or
+						mobile browser and sign in via <code>/login</code>.</p>
+				</section>
+
+				<section id="database" class="crdr-docs-section">
+					<h2><i class="fa-solid fa-database"></i> Database Configuration</h2>
+					<p>By default, CrDr uses file-based H2 in MySQL mode. Override
+						any setting with environment variables or activate the
+						<code>mysql</code> profile:</p>
+					<div class="crdr-table-wrap">
+						<table class="crdr-table-clean">
+							<thead>
+								<tr>
+									<th>Variable</th>
+									<th>Default</th>
+									<th>Purpose</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>DB_URL</code></td>
+									<td><code>jdbc:h2:file:./data/crdr;MODE=MySQL;NON_KEYWORDS=YEAR;AUTO_SERVER=TRUE</code></td>
+									<td>JDBC connection string (H2 or MySQL)</td>
+								</tr>
+								<tr>
+									<td><code>DB_USERNAME</code></td>
+									<td><code>sa</code></td>
+									<td>Database username</td>
+								</tr>
+								<tr>
+									<td><code>DB_PASSWORD</code></td>
+									<td><em>(empty)</em></td>
+									<td>Database password</td>
+								</tr>
+								<tr>
+									<td><code>DB_DDL_AUTO</code></td>
+									<td><code>update</code></td>
+									<td>Hibernate schema strategy (<code>none</code>, <code>validate</code>, <code>update</code>)</td>
+								</tr>
+								<tr>
+									<td><code>H2_CONSOLE_ENABLED</code></td>
+									<td><code>true</code></td>
+									<td>Enable/disable <code>/h2-console</code> (set <code>false</code> in prod)</td>
+								</tr>
+								<tr>
+									<td><code>CRDR_MDB_PASSWORD</code></td>
+									<td><em>(empty)</em></td>
+									<td>Password for encrypted <code>.mdb</code> Access uploads</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section id="csv-format" class="crdr-docs-section">
+					<h2><i class="fa-solid fa-file-csv"></i> Daybook CSV Specification</h2>
+					<p>Upload Daybook CSV files via <code>/uploadcsv</code> after
+						selecting your active company:</p>
+					<pre class="crdr-code">Sno,TDate,Narration,acccode,dramt,cramt,stkvalue
+1,2024-04-01,Opening Cash Receipt,101,15000.00,0,0
+2,2024-04-01,Office Rent Paid,205,0,4500.00,0</pre>
+				</section>
+
+				<section id="reports-guide" class="crdr-docs-section">
+					<h2><i class="fa-solid fa-chart-pie"></i> Financial Reports</h2>
+					<ul>
+						<li><strong>Daybook (<code>/findDaybook</code>):</strong> Daily voucher listing by date range.</li>
+						<li><strong>Ledger (<code>/findLedger</code>):</strong> Account-level transactions with opening balance and JasperReports PDF export (<code>/pdfLedger</code>).</li>
+						<li><strong>Trial Balance (<code>/findTrialBal</code>):</strong> Consolidated debit and credit balances across all accounts.</li>
+						<li><strong>Trading &amp; P&amp;L (<code>/findTradingPL</code>):</strong> Gross and net profit/loss calculation.</li>
+						<li><strong>Balance Sheet (<code>/findBalSheet</code>):</strong> Schedule-grouped assets and liabilities.</li>
+					</ul>
+				</section>
+
+				<section id="security" class="crdr-docs-section">
+					<h2><i class="fa-solid fa-shield-halved"></i> Security &amp; Roles</h2>
+					<p>All report and upload endpoints require authentication. User
+						creation uses BCrypt hashing with a minimum 8-character password
+						policy. Administrative routes (<code>/create_user</code>,
+						<code>/delete_user</code>, <code>/users</code>,
+						<code>/h2-console/**</code>, <code>/actuator/**</code>) are
+						restricted to <code>admin</code> and <code>developer</code> roles.</p>
+				</section>
+			</div>
+		</div>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>

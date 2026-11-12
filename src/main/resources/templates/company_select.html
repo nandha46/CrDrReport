@@ -3,43 +3,48 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: head" />
 <body>
-	<div th:replace="fragments::cs-navbar"></div>
-	<div class="container text-center">
-		<h1>CrDr - Trident's Software</h1>
-	</div>
-	<div class="container">
-		<div class="row">
-			<form id="formid" th:action="@{/StoreCompany}" method="post">
-				<div class="col-xs-6 col-sm-6 col-lg-6">
-					<fieldset>
-						<legend>Open Company</legend>
-						<div class="form-group col-xs-6">
-							<select class="form-control" id="companies" name="companyName"
-								size="10" required>
-								<option th:each="company : ${companies}" th:value="${company}"
-									th:text="${company}">WIREFRAME</option>
-							</select>
-						</div>
-					</fieldset>
-				</div>
-				<div class="col-xs-6 col-sm-6 col-lg-6">
-					<fieldset>
-						<legend>Select Year</legend>
-						<div class="form-group col-xs-6">
-							<select class="form-control" id="years" name="year" size="10" required>
-								<option id="yearholder"></option>
-							</select>
-						</div>
-					</fieldset>
-				</div>
-				<div class="form-group  col-xs-10">
-					<button class="btn btn-success" type="submit">Submit</button>
-					<button class="btn btn-danger" type="button"
-						onclick="window.history.back()" value="Close">Close</button>
-				</div>
-			</form>
+	<div th:replace="fragments :: cs-navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-building"></i> Select Company &amp; Year</h1>
+				<p class="crdr-page-subtitle">Choose an imported company and financial year to open its reporting workspace.</p>
+			</div>
+			<a th:href="@{/companies/upload}" class="crdr-btn crdr-btn-outline"><i
+				class="fa-solid fa-cloud-arrow-up"></i> Upload .mdb</a>
 		</div>
-	</div>
+
+		<form id="formid" th:action="@{/companies/store}" method="post">
+			<div class="crdr-grid">
+				<div class="crdr-card">
+					<h3 class="crdr-card-title"><i class="fa-solid fa-city"></i> 1. Open Company</h3>
+					<select class="form-control" id="companies" name="companyName" size="10" required
+						style="min-height: 240px;">
+						<option th:each="company : ${companies}" th:value="${company}"
+							th:text="${company}">Company</option>
+					</select>
+				</div>
+
+				<div class="crdr-card">
+					<h3 class="crdr-card-title"><i class="fa-solid fa-calendar-days"></i> 2. Select Financial Year</h3>
+					<select class="form-control" id="years" name="year" size="10" required
+						style="min-height: 240px;">
+						<option id="yearholder"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="crdr-btn-row" style="margin-top: 20px;">
+				<button class="crdr-btn crdr-btn-primary" type="submit"><i
+					class="fa-solid fa-check"></i> Open Workspace</button>
+				<button class="crdr-btn crdr-btn-outline" type="button"
+					onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+			</div>
+		</form>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 	<script th:src="@{/script/company-select.js}"></script>
 </body>
 </html>

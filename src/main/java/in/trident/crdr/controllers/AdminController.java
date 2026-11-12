@@ -82,7 +82,7 @@ public class AdminController {
 	 * @param model Model object of MVC pattern
 	 * @return returns name of the html page to be sent to view resolver
 	 */
-	@GetMapping("/create_user")
+	@GetMapping({ "/admin/users/new", "/create_user" })
 	public String showRegistrationForm(Model model) {
 		model.addAttribute("user", new User());
 		return "registration";
@@ -95,7 +95,7 @@ public class AdminController {
 	 * @return returns page registration success or error
 	 */
 	@Transactional
-	@PostMapping("/process_register")
+	@PostMapping({ "/admin/users/new", "/process_register" })
 	public String processRegister(User user, Model model) {
 		if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
 			model.addAttribute(PAGE_TITLE, ERROR);
@@ -140,7 +140,7 @@ public class AdminController {
 	 * @param model Model object of MVC pattern
 	 * @return returns name of the list of users page to be sent to view resolver
 	 */
-	@GetMapping("/users")
+	@GetMapping({ "/admin/users", "/users" })
 	public String listUsers(Model model) {
 		model.addAttribute(PAGE_TITLE, "List of Users");
 		List<User> userList = userRepo.findAll();
@@ -154,7 +154,7 @@ public class AdminController {
 	 * @param model Model object of MVC pattern
 	 * @return returns user deleted success page
 	 */
-	@GetMapping("/delete_user")
+	@GetMapping({ "/admin/users/delete", "/delete_user" })
 	public String deleteUser(Model model) {
 		model.addAttribute(PAGE_TITLE, "Delete User");
 		List<User> userList = userRepo.findAll();
@@ -172,7 +172,7 @@ public class AdminController {
 	 * @return success or failure page
 	 */
 	@Transactional
-	@PostMapping("/process_delete_user")
+	@PostMapping({ "/admin/users/delete", "/process_delete_user" })
 	public String processDeleteUser(@AuthenticationPrincipal CustomUserDetails user,
 			@RequestParam(value = "userId") Long uid, Model model) {
 		if (uid == null || uid.equals(0L)) {
@@ -207,7 +207,7 @@ public class AdminController {
 	 * @param model Model object of MVC pattern
 	 * @return success or failure page
 	 */
-	@GetMapping("/delete_company")
+	@GetMapping({ "/companies/delete", "/delete_company" })
 	public String deleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model) {
 		model.addAttribute(PAGE_TITLE, "Delete Company");
 		List<Company> companies = companyRepo.findCompaniesByUser(user.getId());
@@ -224,7 +224,7 @@ public class AdminController {
 	 * @return success or failure page
 	 */
 	@Transactional
-	@PostMapping("/process_delete_company")
+	@PostMapping({ "/companies/delete", "/process_delete_company" })
 	public String processDeleteCompany(@AuthenticationPrincipal CustomUserDetails user, Model model,
 			@RequestParam(value = "companyId") Long cid) {
 		if (cid == null) {

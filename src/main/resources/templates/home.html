@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace = "fragments :: head" />
+<head th:replace="fragments :: head" />
 <body>
-  	<div th:replace = "fragments::index-navbar"> </div>  
-	<div class="container text-center">
-	<h1>Welcome to CrDr</h1>
-	</div>
-	<div class="flex-container">
-  <div class="zoom"><a th:href="@{/profile}">Profile</a></div>
-  <div class="zoom"><a th:href="@{/reports}">Reports</a></div>
-  <div class="zoom"><a th:href="@{/upload}">CSV Upload</a></div>
-	</div>
+	<div th:replace="fragments :: navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1>Welcome to CrDr Workspace</h1>
+				<p class="crdr-page-subtitle">Quick access to reports, company
+					uploads, and account settings.</p>
+			</div>
+			<a th:href="@{/companies/select}" class="crdr-btn crdr-btn-primary"><i
+				class="fa-solid fa-building"></i> Select Company</a>
+		</div>
+
+		<section class="crdr-grid crdr-grid-3">
+			<a class="crdr-card" th:href="@{/reports}">
+				<span class="crdr-icon-box crdr-icon-blue"><i
+					class="fa-solid fa-chart-pie"></i></span>
+				<h3 class="crdr-card-title">Reports Dashboard</h3>
+				<p class="crdr-card-desc">Open Daybook, Ledger, Trial Balance,
+					Trading &amp; P&amp;L, and Balance Sheet.</p>
+				<span class="crdr-card-link">Go to Reports <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/companies/upload}">
+				<span class="crdr-icon-box crdr-icon-emerald"><i
+					class="fa-solid fa-database"></i></span>
+				<h3 class="crdr-card-title">Import Company (.mdb)</h3>
+				<p class="crdr-card-desc">Upload a Microsoft Access accounting
+					database to create a new company workspace.</p>
+				<span class="crdr-card-link">Upload .mdb <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/csv/upload}">
+				<span class="crdr-icon-box crdr-icon-amber"><i
+					class="fa-solid fa-file-csv"></i></span>
+				<h3 class="crdr-card-title">CSV Upload</h3>
+				<p class="crdr-card-desc">Import Daybook voucher rows from a CSV
+					file into your selected company.</p>
+				<span class="crdr-card-link">Upload CSV <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+
+			<a class="crdr-card" th:href="@{/profile}">
+				<span class="crdr-icon-box crdr-icon-violet"><i
+					class="fa-solid fa-circle-user"></i></span>
+				<h3 class="crdr-card-title">User Profile</h3>
+				<p class="crdr-card-desc">View your account details, roles, and
+					active session status.</p>
+				<span class="crdr-card-link">View Profile <i
+					class="fa-solid fa-chevron-right"></i></span>
+			</a>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 </body>
 </html>

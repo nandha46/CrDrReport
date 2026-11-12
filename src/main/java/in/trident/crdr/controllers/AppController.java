@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +24,7 @@ import in.trident.crdr.entities.CompanySelection;
 import in.trident.crdr.entities.Schedule;
 import in.trident.crdr.models.BalanceSheetView;
 import in.trident.crdr.models.CommonForm;
+import in.trident.crdr.models.DashboardAnalytics;
 import in.trident.crdr.models.DaybookForm;
 import in.trident.crdr.models.DaybookView;
 import in.trident.crdr.models.LedgerForm;
@@ -35,6 +37,7 @@ import in.trident.crdr.repositories.AccHeadRepo;
 import in.trident.crdr.repositories.CloseBalRepo;
 import in.trident.crdr.repositories.CompSelectionRepo;
 import in.trident.crdr.repositories.ScheduleRepo;
+import in.trident.crdr.services.AnalyticsService;
 import in.trident.crdr.services.BalanceSheetService;
 import in.trident.crdr.services.CompanyService;
 import in.trident.crdr.services.CustomUserDetails;
@@ -59,7 +62,10 @@ public class AppController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
 
 	private static final String PAGE_TITLE = "pageTitle";
-	private static final String REDIRECT_COMPANY_SELECTION = "redirect:/company_selection";
+	private static final String REDIRECT_COMPANY_SELECTION = "redirect:/companies/select";
+
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	private AccHeadRepo accHeadRepo;
@@ -94,10 +100,25 @@ public class AppController {
 	@Autowired
 	private PdfService pdfService;
 
+	@Autowired
+	private AnalyticsService analyticsService;
+
 	@GetMapping("/")
 	public String showHomePage(Model model) {
 		model.addAttribute(PAGE_TITLE, "CrDr Home");
 		return "index";
+	}
+
+	@GetMapping("/faq")
+	public String showFaqPage(Model model) {
+		model.addAttribute(PAGE_TITLE, "CrDr FAQ");
+		return "faq";
+	}
+
+	@GetMapping("/docs")
+	public String showDocsPage(Model model) {
+		model.addAttribute(PAGE_TITLE, "CrDr Documentation");
+		return "docs";
 	}
 
 	@GetMapping("/403")
@@ -117,14 +138,14 @@ public class AppController {
 		return REDIRECT_COMPANY_SELECTION;
 	}
 
-	@GetMapping("/company_selection")
+	@GetMapping({ "/companies/select", "/company_selection" })
 	public String showCompanies(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		model.addAttribute(PAGE_TITLE, "Select Company");
 		model.addAttribute("companies", companyService.listCompanies(user.getId()));
 		return "company_select";
 	}
 
-	@PostMapping("/StoreCompany")
+	@PostMapping({ "/companies/store", "/StoreCompany" })
 	public String processCompany(Model model, @RequestParam(value = "companyName") String companyName,
 			@RequestParam(value = "year") Long cid, @AuthenticationPrincipal CustomUserDetails user) {
 		LOGGER.info("Company Name: {}", companyName);
@@ -132,7 +153,7 @@ public class AppController {
 			return REDIRECT_COMPANY_SELECTION;
 		}
 		companyService.storeSelection(user.getId(), cid);
-		return "redirect:/reports";
+		return "redirect:/dashboard";
 	}
 
 	@GetMapping("/profile")
@@ -141,7 +162,10 @@ public class AppController {
 		if (cs == null) {
 			return REDIRECT_COMPANY_SELECTION;
 		}
-		model.addAttribute(PAGE_TITLE, "Company Profile");
+		model.addAttribute(PAGE_TITLE, "Profile");
+		model.addAttribute("userName", user.getName());
+		model.addAttribute("userEmail", user.getUsername());
+		model.addAttribute("userRoles", user.getAuthorities());
 		model.addAttribute("company_name", cs.getCompanyName());
 		model.addAttribute("address", cs.getAddress());
 		model.addAttribute("year", cs.getYear());
@@ -150,19 +174,50 @@ public class AppController {
 		return "profile";
 	}
 
-	@GetMapping("/reports")
-	public String showReports(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+	@GetMapping("/settings")
+	public String showSettings(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		model.addAttribute(PAGE_TITLE, "Workspace Settings");
+		model.addAttribute("userName", user.getName());
+		model.addAttribute("userEmail", user.getUsername());
+		model.addAttribute("activeCompany", cs != null ? cs.getCompanyName() : "None selected");
+		model.addAttribute("activeYear", cs != null ? cs.getYear() : "—");
+		String[] profiles = env.getActiveProfiles();
+		model.addAttribute("activeProfiles", profiles.length > 0 ? String.join(", ", profiles) : "default");
+		String dsUrl = env.getProperty("spring.datasource.url", "");
+		model.addAttribute("dbMode", dsUrl.contains(":h2:") ? "H2 Embedded (MySQL Mode)" : "MySQL");
+		model.addAttribute("ddlAuto", env.getProperty("spring.jpa.hibernate.ddl-auto", "update"));
+		model.addAttribute("h2ConsoleEnabled", env.getProperty("spring.h2.console.enabled", "false"));
+		model.addAttribute("h2ConsolePath", env.getProperty("spring.h2.console.path", "/h2-console"));
+		return "settings";
+	}
+
+	@GetMapping({ "/dashboard", "/reports" })
+	public String showDashboard(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		CompanySelection cs = csr.findCompanyByUser(user.getId());
+		if (cs == null) {
+			return REDIRECT_COMPANY_SELECTION;
+		}
+		DashboardAnalytics analytics = analyticsService.buildDashboardAnalytics(user.getId(), cs);
+		model.addAttribute(PAGE_TITLE, "Analytics Dashboard");
+		model.addAttribute("companyName", cs.getCompanyName());
+		model.addAttribute("analytics", analytics);
+		LOGGER.info("Analytics Dashboard loading...");
+		return "dashboard";
+	}
+
+	@GetMapping("/reports/menu")
+	public String showReportsMenu(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		model.addAttribute(PAGE_TITLE, "Reports");
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
 			return REDIRECT_COMPANY_SELECTION;
 		}
 		model.addAttribute("companyName", cs.getCompanyName());
-		LOGGER.info("Reports Page loading...");
 		return "reports";
 	}
 
-	@GetMapping("/findDaybook")
+	@GetMapping({ "/reports/daybook", "/findDaybook" })
 	public String findDaybook(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
@@ -174,7 +229,7 @@ public class AppController {
 		return "findDaybook";
 	}
 
-	@PostMapping("/daybooks")
+	@PostMapping({ "/reports/daybook", "/daybooks" })
 	public String listDaybook(Model model, DaybookForm formdata, @AuthenticationPrincipal CustomUserDetails user) {
 		Long cid = requireCompanyId(user.getId());
 		List<DaybookView> daybookViewObj = daybookService.daybookViewRange(formdata.getStartDate(),
@@ -189,7 +244,7 @@ public class AppController {
 		return "daybooks";
 	}
 
-	@GetMapping("/findLedger")
+	@GetMapping({ "/reports/ledger", "/findLedger" })
 	public String findLedger(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
@@ -205,7 +260,7 @@ public class AppController {
 		return "findLedger";
 	}
 
-	@PostMapping("/ledger")
+	@PostMapping({ "/reports/ledger", "/ledger" })
 	public String listLedger(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user) {
 		Long cid = requireCompanyId(user.getId());
 		LOGGER.info("Ledger is Ready");
@@ -215,7 +270,7 @@ public class AppController {
 		return "ledger";
 	}
 
-	@PostMapping("/pdfLedger")
+	@PostMapping({ "/reports/ledger/pdf", "/pdfLedger" })
 	public String ledgerPdf(Model model, LedgerForm ledgerForm, @AuthenticationPrincipal CustomUserDetails user)
 			throws IOException, JRException {
 		Long cid = requireCompanyId(user.getId());
@@ -226,7 +281,7 @@ public class AppController {
 		return "success";
 	}
 
-	@GetMapping("/findTrialBal")
+	@GetMapping({ "/reports/trial-balance", "/findTrialBal" })
 	public String findTrial(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
@@ -242,7 +297,7 @@ public class AppController {
 		return "findTrialBal";
 	}
 
-	@PostMapping("/trial")
+	@PostMapping({ "/reports/trial-balance", "/trial" })
 	public String trialbal(Model model, TrialForm trialform, @AuthenticationPrincipal CustomUserDetails user) {
 		Long cid = requireCompanyId(user.getId());
 		LOGGER.warn("Trial Balance Page Start");
@@ -253,7 +308,7 @@ public class AppController {
 		return "trialBal";
 	}
 
-	@GetMapping("/findTradingPL")
+	@GetMapping({ "/reports/trading-pl", "/findTradingPL" })
 	public String findTradingPl(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
@@ -270,7 +325,7 @@ public class AppController {
 		return "findTradingPL";
 	}
 
-	@PostMapping("/tradingPL")
+	@PostMapping({ "/reports/trading-pl", "/tradingPL" })
 	public String tradingPL(Model model, CommonForm tradingPLForm, @AuthenticationPrincipal CustomUserDetails user) {
 		Long cid = requireCompanyId(user.getId());
 		if (tradingPLForm.isReportOrder()) {
@@ -289,7 +344,7 @@ public class AppController {
 		}
 	}
 
-	@GetMapping("/findBalSheet")
+	@GetMapping({ "/reports/balance-sheet", "/findBalSheet" })
 	public String findBalSheet(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		CompanySelection cs = csr.findCompanyByUser(user.getId());
 		if (cs == null) {
@@ -306,7 +361,7 @@ public class AppController {
 		return "findBalanceSheet";
 	}
 
-	@PostMapping("/BalanceSheet")
+	@PostMapping({ "/reports/balance-sheet", "/BalanceSheet" })
 	public String balanceSheet(Model model, CommonForm balSheetForm, @AuthenticationPrincipal CustomUserDetails user) {
 		Long cid = requireCompanyId(user.getId());
 		if (balSheetForm.isReportOrder()) {

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments :: navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-gear"></i> Workspace Settings</h1>
+				<p class="crdr-page-subtitle">Runtime environment, active company context, and administrative shortcuts.</p>
+			</div>
+			<div class="crdr-btn-row">
+				<a th:href="@{/profile}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-circle-user"></i> Profile</a>
+				<a th:href="@{/reports}" class="crdr-btn crdr-btn-primary"><i
+					class="fa-solid fa-chart-pie"></i> Reports</a>
+			</div>
+		</div>
+
+		<section class="crdr-grid crdr-grid-3">
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-blue"><i
+					class="fa-solid fa-database"></i></span>
+				<h3 class="crdr-card-title">Database Engine</h3>
+				<p class="crdr-card-desc">
+					<strong>Mode:</strong> [[${dbMode}]]<br />
+					<strong>Spring Profile:</strong> [[${activeProfiles}]]<br />
+					<strong>DDL Strategy:</strong> <code>[[${ddlAuto}]]</code>
+				</p>
+				<a sec:authorize="hasAnyAuthority('developer','admin')"
+					th:if="${h2ConsoleEnabled == 'true'}" th:href="@{${h2ConsolePath}}"
+					class="crdr-card-link">Open H2 Console <i
+					class="fa-solid fa-chevron-right"></i></a>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-emerald"><i
+					class="fa-solid fa-building"></i></span>
+				<h3 class="crdr-card-title">Active Company</h3>
+				<p class="crdr-card-desc">
+					<strong>Company:</strong> [[${activeCompany}]]<br />
+					<strong>Financial Year:</strong> [[${activeYear}]]<br />
+					<strong>Locale Format:</strong> <code>en-IN</code> (INR)
+				</p>
+				<a th:href="@{/companies/select}" class="crdr-card-link">Change Company <i
+					class="fa-solid fa-chevron-right"></i></a>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-violet"><i
+					class="fa-solid fa-shield-halved"></i></span>
+				<h3 class="crdr-card-title">Account &amp; Access</h3>
+				<p class="crdr-card-desc">
+					<strong>Signed In:</strong> [[${userName}]]<br />
+					<strong>Email:</strong> [[${userEmail}]]
+				</p>
+				<a sec:authorize="hasAnyAuthority('developer','admin')"
+					th:href="@{/admin/users}" class="crdr-card-link">Manage Users <i
+					class="fa-solid fa-chevron-right"></i></a>
+			</div>
+		</section>
+
+		<section class="crdr-docs-section" style="margin-top: 22px;">
+			<h2><i class="fa-solid fa-sliders"></i> Quick Actions</h2>
+			<div class="crdr-btn-row">
+				<a th:href="@{/companies/upload}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-database"></i> Import .mdb Database</a>
+				<a th:href="@{/csv/upload}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-file-csv"></i> Upload Daybook CSV</a>
+				<a th:href="@{/companies/delete}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-trash-can"></i> Delete Company</a>
+				<a th:href="@{/docs}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-book"></i> View Documentation</a>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+</body>
+</html>

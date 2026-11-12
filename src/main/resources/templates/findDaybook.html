@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace = "fragments :: head" />
+<head th:replace="fragments :: head" />
 <body>
+	<div th:replace="fragments :: navbar"></div>
 
-  	<div th:replace = "fragments::navbar"> </div>  
-	<!-- jQuery UI DateRangePicker -->	
-	<div class="container">
-        <h2 style="text-align: left;">Select Date Range</h2>
-		<form class="form-horizontal" th:action="@{/daybooks}" th:object="${formdata}" method="post" style="max-width: 600px; margin: 0 auto;">
-            <div class="form-group">
-                <label class="control-label col-sm-2">From Date:</label>  
-                <div class="col-sm-4">   
-			 <input type="date" class="form-control" th:field="*{startDate}" name="startDate" th:min=${fromdate} th:max=${todate} value="" >
-            </div></div>
-            <div class="form-group">
-                <label class="control-label col-sm-2">To Date:</label>
-                <div class="col-sm-4">
-                <input type="date" class="form-control" th:field="*{endDate}" name="endDate" th:min=${fromdate} th:max=${todate} value="">
-        </div> </div>
-        <div class="col-sm-offset-2 col-sm-4">
-        <button type="submit" class="btn btn-success">Submit </button>
-		<button type="button" class="btn btn-danger" onclick="window.history.back()" value="Close"	>Close</button>
-	</div>	
-    </form>	
-	</div>
-	<script th:src ="@{/script/daybook.js}"></script>
+	<main class="crdr-main">
+		<div style="max-width: 560px; margin: 16px auto;">
+			<div class="crdr-card" style="padding: 28px;">
+				<span class="crdr-icon-box crdr-icon-blue"><i
+					class="fa-solid fa-book-open"></i></span>
+				<h1 style="font-size: 22px; font-weight: 800; margin: 4px 0 6px;">Daybook Date Range</h1>
+				<p class="crdr-card-desc">Select start and end dates to view daily debit and credit entries.</p>
+
+				<form th:action="@{/reports/daybook}" th:object="${formdata}" method="post" style="margin-top: 12px;">
+					<div class="form-group">
+						<label for="startDate">From Date</label>
+						<input id="startDate" type="date" class="form-control" th:field="*{startDate}"
+							name="startDate" th:min="${fromdate}" th:max="${todate}" required />
+					</div>
+					<div class="form-group">
+						<label for="endDate">To Date</label>
+						<input id="endDate" type="date" class="form-control" th:field="*{endDate}"
+							name="endDate" th:min="${fromdate}" th:max="${todate}" required />
+					</div>
+					<div class="crdr-btn-row" style="margin-top: 16px;">
+						<button type="submit" class="crdr-btn crdr-btn-primary"><i
+							class="fa-solid fa-magnifying-glass"></i> Generate Daybook</button>
+						<button type="button" class="crdr-btn crdr-btn-outline" onclick="window.history.back()">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+	<script th:src="@{/script/daybook.js}"></script>
 </body>
 </html>

@@ -57,16 +57,19 @@ public class WebSecurityConfig {
 		final String DEVELOPER = "developer";
 		final String USER = "user";
 
-		String[] preLoginPaths = new String[] { "/", "/login", "/403", "/error", "/css/**", "/img/**", "/script/**" };
-		String[] findPaths = new String[] { "/findDaybook", "/findLedger", "/findTrialBal", "/findTradingPL",
-				"/findBalSheet" };
-		String[] viewPaths = new String[] { "/daybooks", "/ledger", "/pdfLedger", "/trial", "/tradingPL",
-				"/BalanceSheet" };
-		String[] userPaths = new String[] { "/reports", "/upload", "/uploaded", "/uploadcsv", "/csvuploaded",
-				"/profile", "/success", "/StoreCompany", "/company_selection", "/companyselect", "/delete_company",
-				"/process_delete_company", "/api/v1/years" };
-		String[] adminPaths = new String[] { "/delete_user", "/process_delete_user", "/disable_user", "/users",
-				"/create_user", "/process_register", "/actuator/**", "/api/v1/**", "/h2-console/**" };
+		String[] preLoginPaths = new String[] { "/", "/login", "/faq", "/docs", "/403", "/error", "/css/**", "/img/**",
+				"/script/**" };
+		String[] findPaths = new String[] { "/reports/daybook", "/reports/ledger", "/reports/trial-balance",
+				"/reports/trading-pl", "/reports/balance-sheet", "/findDaybook", "/findLedger", "/findTrialBal",
+				"/findTradingPL", "/findBalSheet" };
+		String[] viewPaths = new String[] { "/reports/ledger/pdf", "/daybooks", "/ledger", "/pdfLedger", "/trial",
+				"/tradingPL", "/BalanceSheet" };
+		String[] userPaths = new String[] { "/dashboard", "/reports", "/reports/menu", "/companies/select",
+				"/companies/store", "/companies/upload", "/companies/delete", "/csv/upload", "/profile", "/settings",
+				"/upload", "/uploaded", "/uploadcsv", "/csvuploaded", "/success", "/StoreCompany", "/company_selection",
+				"/companyselect", "/delete_company", "/process_delete_company", "/api/v1/years" };
+		String[] adminPaths = new String[] { "/admin/**", "/delete_user", "/process_delete_user", "/disable_user",
+				"/users", "/create_user", "/process_register", "/actuator/**", "/api/v1/**", "/h2-console/**" };
 
 		http.authenticationProvider(authProvider())
 				.csrf().ignoringAntMatchers("/h2-console/**")
@@ -84,7 +87,7 @@ public class WebSecurityConfig {
 				.and()
 				.formLogin()
 				.loginPage("/login").usernameParameter("email").passwordParameter("pass")
-				.loginProcessingUrl("/processLogin").defaultSuccessUrl("/company_selection").permitAll()
+				.loginProcessingUrl("/processLogin").defaultSuccessUrl("/companies/select").permitAll()
 				.and()
 				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll()

@@ -34,13 +34,13 @@ public class DBUploadController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DBUploadController.class);
 
-	@GetMapping("/upload")
+	@GetMapping({ "/companies/upload", "/upload" })
 	public String uploadMDB(Model model) {
-		model.addAttribute("pageTitle", "Upload Access Databse");
+		model.addAttribute("pageTitle", "Upload Access Database");
 		return "upload_db";
 	}
 
-	@PostMapping("/uploaded")
+	@PostMapping({ "/companies/upload", "/uploaded" })
 	public String uploadSuccess(@AuthenticationPrincipal CustomUserDetails user, Model model,
 			@RequestParam(value = "file") MultipartFile uploadedFile) {
 		try {

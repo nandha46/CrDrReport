@@ -1,34 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-<div th:replace="fragments :: profile"> </div>
-</head>
+<head th:replace="fragments :: head" />
 <body>
-	<div th:replace="fragments::navbar"></div>
-	<h2 style="text-align:center">Company Profile</h2>
-<div class="container">
-<div class="card">
-  <img th:src="@{/img/logo.png}" alt="CompanyName" style="width:100%">
-  <h1>[[${company_name}]]</h1>
-  <p class="title">[[${year}]]</p>
-  <p>[[${address}]]</p>
-  <div style="margin: 24px 0;">
-    <a href="#"><i class="fa fa-dribbble"></i></a> 
-    <a href="#"><i class="fa fa-twitter"></i></a>  
-    <a href="#"><i class="fa fa-linkedin"></i></a>  
-    <a href="#"><i class="fa fa-facebook"></i></a> 
-  </div>
-  <p><button>Contact</button></p>
-</div>
+	<div th:replace="fragments :: navbar"></div>
 
-<div class="card">
-  <p class="details">No of Accs: [[${company.noOfAccs}]] </p>
-  <p class="details">No of Entries: [[${company.noOfEntries}]] </p>
-  <p class="details">Closing Stock: [[${company.closingStock}]] </p>
-  <p class="details">Opening Cash: [[${company.openCash}]] </p>
-  <p class="details">Company Type: [[${company.companyType}]] </p>
-</div>
-</div>
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-circle-user"></i> Account &amp; Company Profile</h1>
+				<p class="crdr-page-subtitle">Signed-in user details and active company ledger metrics.</p>
+			</div>
+			<div class="crdr-btn-row">
+				<a th:href="@{/settings}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-gear"></i> Settings</a>
+				<a th:href="@{/companies/select}" class="crdr-btn crdr-btn-primary"><i
+					class="fa-solid fa-arrows-rotate"></i> Switch Company</a>
+			</div>
+		</div>
+
+		<section class="crdr-grid">
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-blue"><i
+					class="fa-solid fa-building"></i></span>
+				<h3 class="crdr-card-title">[[${company_name}]]</h3>
+				<p class="crdr-card-desc">
+					<strong>Financial Year:</strong> [[${year}]]<br />
+					<strong>Address:</strong> [[${address}]]<br />
+					<strong>Company Type:</strong> [[${company.companyType}]]
+				</p>
+				<div class="crdr-btn-row">
+					<a th:href="@{/reports}" class="crdr-btn crdr-btn-primary"><i
+						class="fa-solid fa-chart-pie"></i> Open Reports</a>
+				</div>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-violet"><i
+					class="fa-solid fa-id-badge"></i></span>
+				<h3 class="crdr-card-title">User Session</h3>
+				<p class="crdr-card-desc">
+					<strong>Name:</strong> [[${userName}]]<br />
+					<strong>Email:</strong> [[${userEmail}]]<br />
+					<strong>Roles:</strong> <span th:each="r,iter : ${userRoles}"
+						th:text="${r.authority + (iter.last ? '' : ', ')}">user</span>
+				</p>
+				<div class="crdr-btn-row">
+					<a th:href="@{/logout}" class="crdr-btn crdr-btn-outline"><i
+						class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="crdr-grid crdr-grid-3" style="margin-top: 20px;">
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-emerald"><i
+					class="fa-solid fa-sitemap"></i></span>
+				<h3 class="crdr-card-title">Account Heads</h3>
+				<p class="crdr-card-desc" style="font-size: 24px; font-weight: 800; color: var(--crdr-text);">
+					[[${company.noOfAccs}]]
+				</p>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-amber"><i
+					class="fa-solid fa-receipt"></i></span>
+				<h3 class="crdr-card-title">Daybook Entries</h3>
+				<p class="crdr-card-desc" style="font-size: 24px; font-weight: 800; color: var(--crdr-text);">
+					[[${company.noOfEntries}]]
+				</p>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-cyan"><i
+					class="fa-solid fa-coins"></i></span>
+				<h3 class="crdr-card-title">Opening Cash / Closing Stock</h3>
+				<p class="crdr-card-desc">
+					<strong>Opening Cash:</strong> [[${company.openCash}]]<br />
+					<strong>Closing Stock:</strong> [[${company.closingStock}]]
+				</p>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 </body>
 </html>

@@ -1,36 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: head" />
-
 <body>
 	<div th:replace="fragments :: navbar"></div>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<h2>Upload CSV Files</h2>
-				<form th:action="@{/csvuploaded}" th:object="${csvUploadModel}" enctype="multipart/form-data" method="post">
+
+	<main class="crdr-main">
+		<div style="max-width: 640px; margin: 16px auto;">
+			<div class="crdr-card" style="padding: 28px;">
+				<span class="crdr-icon-box crdr-icon-amber"><i
+					class="fa-solid fa-file-csv"></i></span>
+				<h1 style="font-size: 22px; font-weight: 800; margin: 4px 0 6px;">Upload Daybook CSV Files</h1>
+				<p class="crdr-card-desc">Required CSV header: <code>Sno,TDate,Narration,acccode,dramt,cramt,stkvalue</code></p>
+
+				<form th:action="@{/csv/upload}" th:object="${csvUploadModel}" enctype="multipart/form-data" method="post" style="margin-top: 12px;">
 					<div class="form-group">
 						<label for="file1">Daybook CSV File 1</label>
-						<input type="file" class="form-control-file" id="file1" th:field="*{file1}" accept=".csv,text/csv">
+						<input type="file" class="form-control" id="file1" th:field="*{file1}" accept=".csv,text/csv">
 					</div>
 					<div class="form-group">
 						<label for="file2">Daybook CSV File 2 (Optional)</label>
-						<input type="file" class="form-control-file" id="file2" th:field="*{file2}" accept=".csv,text/csv">
+						<input type="file" class="form-control" id="file2" th:field="*{file2}" accept=".csv,text/csv">
 					</div>
 					<div class="form-group">
 						<label for="file3">Daybook CSV File 3 (Optional)</label>
-						<input type="file" class="form-control-file" id="file3" th:field="*{file3}" accept=".csv,text/csv">
+						<input type="file" class="form-control" id="file3" th:field="*{file3}" accept=".csv,text/csv">
 					</div>
 					<div class="form-group">
 						<label for="file4">Daybook CSV File 4 (Optional)</label>
-						<input type="file" class="form-control-file" id="file4" th:field="*{file4}" accept=".csv,text/csv">
+						<input type="file" class="form-control" id="file4" th:field="*{file4}" accept=".csv,text/csv">
 					</div>
-					<button type="submit" class="btn btn-success">Upload CSV</button>
+					<div class="crdr-btn-row" style="margin-top: 16px;">
+						<button type="submit" class="crdr-btn crdr-btn-primary"><i
+							class="fa-solid fa-upload"></i> Upload CSV</button>
+						<button type="button" class="crdr-btn crdr-btn-outline" onclick="window.history.back()">Cancel</button>
+					</div>
 				</form>
 			</div>
 		</div>
-	</div>
-</body>
+	</main>
 
+	<div th:replace="fragments :: footer"></div>
+</body>
 </html>

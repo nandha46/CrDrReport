@@ -3,102 +3,92 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments :: head" />
 <body>
-	<div th:replace="fragments::navbar"></div>
-	<div class="container">
-		<div class="row">
-			<form th:action="@{/ledger}" th:object="${formdata}" method="post">
-				<div class="col-xs-7 col-sm-6 col-lg-7">
-					<fieldset>
-						<legend>Select an Account</legend>
-						<div class="form-group col-xs-8">
-							<select class="form-control" th:field="*{accCode}" id="accs"
-								name="accCode" size="22" multiple disabled
-								style="font-weight: bold;" onchange=multiSelect(this)>
-								<th:block th:each="accHead,accStat : ${accHeadList}">
-									<th:block th:switch="${accHead.level1}">
-										<option th:case="1" th:id="${accHead.level1}"
-											th:value="${accHead.accCode}"
-											th:text="${#strings.prepend(accHead.accName,'')}"
-											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
-											WIREFRAME</option>
-										<option th:case="2" th:id="${accHead.level1}"
-											th:value="${accHead.accCode}"
-											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp')}"
-											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
-											WIREFRAME</option>
-										<option th:case="3" th:id="${accHead.level1}"
-											th:value="${accHead.accCode}"
-											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp')}"
-											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
-											WIREFRAME</option>
-										<option th:case="4" th:id="${accHead.level1}"
-											th:value="${accHead.accCode}"
-											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
-											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
-											WIREFRAME</option>
-										<option th:case="5" th:id="${accHead.level1}"
-											th:value="${accHead.accCode}"
-											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
-											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
-											WIREFRAME</option>
-										<option th:case="6" th:id="${accHead.level1}"
-											th:value="${accHead.accCode}"
-											th:text="${#strings.prepend(accHead.accName,'&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp')}"
-											th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count =${accStat.count}">
-											WIREFRAME</option>
-							</select>
-						</div>
-					</fieldset>
-				</div>
-				<div class="col-xs-5 col-sm-6 col-lg-5">
-					<fieldset>
-						<legend style="width: auto;">Select Specifications</legend>
-						<div class="form-group  col-xs-10">
-							<label for="exampleFormControlSelect1">Report Order</label> <select
-								class="form-control" th:field="*{reportOrder}"
-								id="exampleFormControlSelect1" onchange="level(this)">
-								<option value="false" selected>All</option>
-								<option value="true">Select</option>
-							</select>
-						</div>
-						<div class="form-group  col-xs-10">
-							<label for="inputdefault">From Date :</label> <input
-								class="input-group date" type="date" th:field="*{startDate}"
-								name="startDate" th:min=${fromdate} th:max=${todate} value="">
-						</div>
-						<div class="form-group  col-xs-10">
-							<label for="inputdefault">To Date :</label> <input
-								class="input-group date" type="date" th:field="*{endDate}"
-								name="endDate" th:min=${fromdate} th:max=${todate} value="">
-						</div>
-						<div class="form-group  col-xs-10">
-							<label for="exampleFormControlSelect2">Transacted
-								Accounts Only</label> <select class="form-control"
-								th:field="*{transactedAccOnly}" id="exampleFormControlSelect2">
-								<option value="false">No</option>
-								<option value="true" selected>Yes</option>
-							</select>
-						</div>
-						<div class="form-group  col-xs-10">
-							<label for="exampleFormControlSelect3">Monthly Cut-Off</label> <select
-								class="form-control" th:field="*{cutOff}"
-								id="exampleFormControlSelect3">
-								<option value="false">Don't Include</option>
-								<option value="true">Include</option>
-							</select>
-						</div>
-						<div class="form-group  col-xs-10">
-							<!--  Nice Listing format for Acc Selection -->
-							<button class="btn btn-success" type="submit">Submit</button>
-							<button class="btn btn-danger" type="button"
-								onclick="window.history.back()" value="Close">Close</button>
-						</div>
+	<div th:replace="fragments :: navbar"></div>
 
-					</fieldset>
-				</div>
-			</form>
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-file-invoice-dollar"></i> Ledger Filter</h1>
+				<p class="crdr-page-subtitle">Choose account heads, date range, and ledger options.</p>
+			</div>
 		</div>
-	</div>
+
+		<form th:action="@{/reports/ledger}" th:object="${formdata}" method="post">
+			<div class="crdr-grid">
+				<div class="crdr-card">
+					<h3 class="crdr-card-title">Select Account(s)</h3>
+					<select class="form-control" th:field="*{accCode}" id="accs"
+						name="accCode" size="18" multiple disabled
+						style="font-weight: bold; min-height: 360px;" onchange="multiSelect(this)">
+						<th:block th:each="accHead,accStat : ${accHeadList}">
+							<th:block th:switch="${accHead.level1}">
+								<option th:case="1" th:id="${accHead.level1}" th:value="${accHead.accCode}"
+									th:text="${#strings.prepend(accHead.accName,'')}"
+									th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count=${accStat.count}">Account</option>
+								<option th:case="2" th:id="${accHead.level1}" th:value="${accHead.accCode}"
+									th:text="${#strings.prepend(accHead.accName,'&nbsp;&nbsp;')}"
+									th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count=${accStat.count}">Account</option>
+								<option th:case="3" th:id="${accHead.level1}" th:value="${accHead.accCode}"
+									th:text="${#strings.prepend(accHead.accName,'&nbsp;&nbsp;&nbsp;&nbsp;')}"
+									th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count=${accStat.count}">Account</option>
+								<option th:case="4" th:id="${accHead.level1}" th:value="${accHead.accCode}"
+									th:text="${#strings.prepend(accHead.accName,'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')}"
+									th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count=${accStat.count}">Account</option>
+								<option th:case="5" th:id="${accHead.level1}" th:value="${accHead.accCode}"
+									th:text="${#strings.prepend(accHead.accName,'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')}"
+									th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count=${accStat.count}">Account</option>
+								<option th:case="6" th:id="${accHead.level1}" th:value="${accHead.accCode}"
+									th:text="${#strings.prepend(accHead.accName,'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')}"
+									th:attrappend="isHeader=${accHead.accCode == 0?1:0}, count=${accStat.count}">Account</option>
+							</th:block>
+						</th:block>
+					</select>
+				</div>
+
+				<div class="crdr-card">
+					<h3 class="crdr-card-title">Report Specifications</h3>
+					<div class="form-group">
+						<label for="exampleFormControlSelect1">Report Order</label>
+						<select class="form-control" th:field="*{reportOrder}" id="exampleFormControlSelect1" onchange="level(this)">
+							<option value="false" selected>All</option>
+							<option value="true">Select</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="ledgerStartDate">From Date</label>
+						<input id="ledgerStartDate" class="form-control" type="date" th:field="*{startDate}"
+							name="startDate" th:min="${fromdate}" th:max="${todate}" />
+					</div>
+					<div class="form-group">
+						<label for="ledgerEndDate">To Date</label>
+						<input id="ledgerEndDate" class="form-control" type="date" th:field="*{endDate}"
+							name="endDate" th:min="${fromdate}" th:max="${todate}" />
+					</div>
+					<div class="form-group">
+						<label for="exampleFormControlSelect2">Transacted Accounts Only</label>
+						<select class="form-control" th:field="*{transactedAccOnly}" id="exampleFormControlSelect2">
+							<option value="false">No</option>
+							<option value="true" selected>Yes</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="exampleFormControlSelect3">Monthly Cut-Off</label>
+						<select class="form-control" th:field="*{cutOff}" id="exampleFormControlSelect3">
+							<option value="false">Don't Include</option>
+							<option value="true">Include</option>
+						</select>
+					</div>
+					<div class="crdr-btn-row" style="margin-top: 12px;">
+						<button class="crdr-btn crdr-btn-primary" type="submit"><i
+							class="fa-solid fa-magnifying-glass"></i> Generate Ledger</button>
+						<button class="crdr-btn crdr-btn-outline" type="button" onclick="window.history.back()">Close</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 	<script th:src="@{/script/ledger_script.js}"></script>
 </body>
 </html>

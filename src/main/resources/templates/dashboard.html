@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments :: app-shell"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-chart-line"></i> Financial Analytics Dashboard</h1>
+				<p class="crdr-page-subtitle">Real-time ledger volume, multi-year trends, and quick report launchers.</p>
+			</div>
+			<div class="crdr-btn-row">
+				<span class="crdr-company-pill">
+					<i class="fa-solid fa-building"></i> [[${analytics.companyName}]] &middot; FY [[${analytics.activeYear}]]
+				</span>
+				<a th:href="@{/companies/select}" class="crdr-btn crdr-btn-outline">
+					<i class="fa-solid fa-arrows-rotate"></i> Switch Company / Year
+				</a>
+			</div>
+		</div>
+
+		<!-- KPI Cards -->
+		<section class="crdr-kpi-grid">
+			<div class="crdr-kpi-card">
+				<div class="crdr-kpi-label"><i class="fa-solid fa-arrow-trend-up" style="color: #059669;"></i> Total Credit</div>
+				<div class="crdr-kpi-value" th:text="${analytics.totalCredit}">0.00</div>
+			</div>
+			<div class="crdr-kpi-card">
+				<div class="crdr-kpi-label"><i class="fa-solid fa-arrow-trend-down" style="color: #2563eb;"></i> Total Debit</div>
+				<div class="crdr-kpi-value" th:text="${analytics.totalDebit}">0.00</div>
+			</div>
+			<div class="crdr-kpi-card">
+				<div class="crdr-kpi-label"><i class="fa-solid fa-scale-balanced" style="color: #7c3aed;"></i> Net Flow (Cr - Dr)</div>
+				<div class="crdr-kpi-value" th:text="${analytics.netFlow}">0.00</div>
+			</div>
+			<div class="crdr-kpi-card">
+				<div class="crdr-kpi-label"><i class="fa-solid fa-wallet" style="color: #0891b2;"></i> Opening Cash</div>
+				<div class="crdr-kpi-value" th:text="${analytics.openingCash}">0.00</div>
+			</div>
+			<div class="crdr-kpi-card">
+				<div class="crdr-kpi-label"><i class="fa-solid fa-boxes-stacked" style="color: #d97706;"></i> Closing Stock</div>
+				<div class="crdr-kpi-value" th:text="${analytics.closingStock}">0.00</div>
+			</div>
+			<div class="crdr-kpi-card">
+				<div class="crdr-kpi-label"><i class="fa-solid fa-receipt" style="color: #e11d48;"></i> Entries / Accs</div>
+				<div class="crdr-kpi-value">[[${analytics.transactionCount}]] / [[${analytics.accountCount}]]</div>
+			</div>
+		</section>
+
+		<!-- Charts Grid -->
+		<section class="crdr-chart-grid">
+			<div class="crdr-chart-card">
+				<h3><i class="fa-solid fa-chart-column" style="color: #2563eb;"></i> Monthly Cashflow (Credit vs Debit)</h3>
+				<div class="crdr-chart-box">
+					<canvas id="monthlyChart"></canvas>
+				</div>
+			</div>
+			<div class="crdr-chart-card">
+				<h3><i class="fa-solid fa-layer-group" style="color: #059669;"></i> Multi-Year Comparison ([[${analytics.companyName}]])</h3>
+				<div class="crdr-chart-box">
+					<canvas id="yearlyChart"></canvas>
+				</div>
+			</div>
+		</section>
+
+		<!-- Recent Transactions & Quick Reports -->
+		<section class="crdr-chart-grid">
+			<div class="crdr-chart-card">
+				<h3><i class="fa-solid fa-clock-rotate-left" style="color: #7c3aed;"></i> Recent Daybook Entries</h3>
+				<div class="crdr-table-wrap">
+					<table class="crdr-table-clean">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Narration</th>
+								<th>Debit</th>
+								<th>Credit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${#lists.isEmpty(analytics.recentEntries)}">
+								<td colspan="4" style="text-align: center; color: var(--crdr-muted);">No daybook entries for this period yet.</td>
+							</tr>
+							<tr th:each="entry : ${analytics.recentEntries}">
+								<td th:text="${entry.date}">2025-03-01</td>
+								<td th:text="${entry.narration}">Narration</td>
+								<td th:text="${entry.drAmt}">0.00</td>
+								<td th:text="${entry.crAmt}">0.00</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="crdr-chart-card">
+				<h3><i class="fa-solid fa-bolt" style="color: #d97706;"></i> Quick Financial Statements</h3>
+				<div class="crdr-grid">
+					<a class="crdr-card" th:href="@{/reports/daybook}" style="padding: 16px;">
+						<span class="crdr-icon-box crdr-icon-blue"><i class="fa-solid fa-book-open"></i></span>
+						<h4 class="crdr-card-title">Daybook</h4>
+						<span class="crdr-card-link">Open <i class="fa-solid fa-chevron-right"></i></span>
+					</a>
+					<a class="crdr-card" th:href="@{/reports/ledger}" style="padding: 16px;">
+						<span class="crdr-icon-box crdr-icon-emerald"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+						<h4 class="crdr-card-title">Ledger &amp; PDF</h4>
+						<span class="crdr-card-link">Open <i class="fa-solid fa-chevron-right"></i></span>
+					</a>
+					<a class="crdr-card" th:href="@{/reports/trial-balance}" style="padding: 16px;">
+						<span class="crdr-icon-box crdr-icon-violet"><i class="fa-solid fa-scale-balanced"></i></span>
+						<h4 class="crdr-card-title">Trial Balance</h4>
+						<span class="crdr-card-link">Open <i class="fa-solid fa-chevron-right"></i></span>
+					</a>
+					<a class="crdr-card" th:href="@{/reports/trading-pl}" style="padding: 16px;">
+						<span class="crdr-icon-box crdr-icon-amber"><i class="fa-solid fa-chart-line"></i></span>
+						<h4 class="crdr-card-title">Trading &amp; P&amp;L</h4>
+						<span class="crdr-card-link">Open <i class="fa-solid fa-chevron-right"></i></span>
+					</a>
+					<a class="crdr-card" th:href="@{/reports/balance-sheet}" style="padding: 16px;">
+						<span class="crdr-icon-box crdr-icon-cyan"><i class="fa-solid fa-landmark"></i></span>
+						<h4 class="crdr-card-title">Balance Sheet</h4>
+						<span class="crdr-card-link">Open <i class="fa-solid fa-chevron-right"></i></span>
+					</a>
+					<a class="crdr-card" th:href="@{/csv/upload}" style="padding: 16px;">
+						<span class="crdr-icon-box crdr-icon-rose"><i class="fa-solid fa-file-csv"></i></span>
+						<h4 class="crdr-card-title">Upload CSV</h4>
+						<span class="crdr-card-link">Import <i class="fa-solid fa-chevron-right"></i></span>
+					</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+	<script th:inline="javascript">
+		(function () {
+			var monthLabels = /*[[${analytics.monthLabels}]]*/ [];
+			var monthDebits = /*[[${analytics.monthDebits}]]*/ [];
+			var monthCredits = /*[[${analytics.monthCredits}]]*/ [];
+			var yearLabels = /*[[${analytics.yearLabels}]]*/ [];
+			var yearDebits = /*[[${analytics.yearDebits}]]*/ [];
+			var yearCredits = /*[[${analytics.yearCredits}]]*/ [];
+
+			var mCtx = document.getElementById('monthlyChart');
+			if (mCtx && typeof Chart !== 'undefined') {
+				new Chart(mCtx, {
+					type: 'bar',
+					data: {
+						labels: monthLabels,
+						datasets: [
+							{ label: 'Credit', data: monthCredits, backgroundColor: 'rgba(5, 150, 105, 0.8)', borderRadius: 6 },
+							{ label: 'Debit', data: monthDebits, backgroundColor: 'rgba(37, 99, 235, 0.8)', borderRadius: 6 }
+						]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: { legend: { position: 'bottom' } },
+						scales: { y: { beginAtZero: true } }
+					}
+				});
+			}
+
+			var yCtx = document.getElementById('yearlyChart');
+			if (yCtx && typeof Chart !== 'undefined') {
+				new Chart(yCtx, {
+					type: 'line',
+					data: {
+						labels: yearLabels,
+						datasets: [
+							{ label: 'Credit Volume', data: yearCredits, borderColor: '#059669', backgroundColor: 'rgba(5, 150, 105, 0.14)', fill: true, tension: 0.3 },
+							{ label: 'Debit Volume', data: yearDebits, borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.14)', fill: true, tension: 0.3 }
+						]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: { legend: { position: 'bottom' } },
+						scales: { y: { beginAtZero: true } }
+					}
+				});
+			}
+		})();
+	</script>
+</body>
+</html>

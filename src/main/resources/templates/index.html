@@ -1,14 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace = "fragments :: head" />
+<head th:replace="fragments :: head" />
 <body>
-  	<div th:replace = "fragments::index-navbar"> </div>  
-	<div class="container text-center">
-	<h1>CrDr for financial accounting</h1>
-	</div>
-	<div class="flex-container">
-  <div class="zoom"><a th:href="@{/login}">Login</a></div>
-	</div>
+	<div th:replace="fragments :: index-navbar"></div>
+
+	<main class="crdr-main">
+		<section class="crdr-hero">
+			<span class="crdr-hero-eyebrow"><i class="fa-solid fa-sparkles"></i>
+				Financial Reporting Suite</span>
+			<h1>CrDr Financial Accounting &amp; Reporting</h1>
+			<p>Import Microsoft Access (.mdb) databases or Daybook CSV files,
+				switch seamlessly between companies and financial years, and generate
+				audit-ready Daybooks, Ledgers, Trial Balances, Trading &amp; P&amp;L,
+				and Balance Sheets from any device.</p>
+			<div class="crdr-btn-row">
+				<a sec:authorize="!isAuthenticated()" th:href="@{/login}"
+					class="crdr-btn crdr-btn-primary"><i
+					class="fa-solid fa-right-to-bracket"></i> Sign In to Workspace</a>
+				<a sec:authorize="isAuthenticated()" th:href="@{/dashboard}"
+					class="crdr-btn crdr-btn-primary"><i
+					class="fa-solid fa-chart-line"></i> Open Analytics Dashboard</a>
+				<a th:href="@{/docs}" class="crdr-btn crdr-btn-ghost"><i
+					class="fa-solid fa-book-open"></i> Read Documentation</a>
+				<a th:href="@{/faq}" class="crdr-btn crdr-btn-ghost"><i
+					class="fa-solid fa-circle-question"></i> Browse FAQ</a>
+			</div>
+		</section>
+
+		<section class="crdr-grid crdr-grid-3">
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-blue"><i
+					class="fa-solid fa-book-open"></i></span>
+				<h3 class="crdr-card-title">Daybook &amp; Date Ranges</h3>
+				<p class="crdr-card-desc">Inspect daily debit and credit vouchers
+					across custom date ranges with automatic INR formatting and stock
+					values.</p>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-emerald"><i
+					class="fa-solid fa-file-pdf"></i></span>
+				<h3 class="crdr-card-title">Ledger &amp; Jasper PDF</h3>
+				<p class="crdr-card-desc">Compute prior-period opening balances,
+					running Dr/Cr totals, and export print-ready Ledger PDFs in one
+					click.</p>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-violet"><i
+					class="fa-solid fa-scale-balanced"></i></span>
+				<h3 class="crdr-card-title">Trial Balance &amp; Final Accounts</h3>
+				<p class="crdr-card-desc">Generate Trial Balance, Trading &amp;
+					Profit &amp; Loss, and Schedule-grouped Balance Sheets accurately.</p>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-amber"><i
+					class="fa-solid fa-database"></i></span>
+				<h3 class="crdr-card-title">Access (.mdb) &amp; CSV Import</h3>
+				<p class="crdr-card-desc">Upload legacy MS Access accounting
+					databases via UCanAccess or append transactions using standard CSV
+					templates.</p>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-cyan"><i
+					class="fa-solid fa-building-columns"></i></span>
+				<h3 class="crdr-card-title">Multi-Company &amp; Year Isolation</h3>
+				<p class="crdr-card-desc">Every company, financial year, and
+					uploaded dataset is isolated per user account for clean multi-tenant
+					reporting.</p>
+			</div>
+
+			<div class="crdr-card">
+				<span class="crdr-icon-box crdr-icon-rose"><i
+					class="fa-solid fa-mobile-screen-button"></i></span>
+				<h3 class="crdr-card-title">Mobile-First &amp; Zero-Setup DB</h3>
+				<p class="crdr-card-desc">Responsive on phones, tablets, and
+					desktops, backed by an embedded H2 database or configurable MySQL.</p>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
 </body>
 </html>

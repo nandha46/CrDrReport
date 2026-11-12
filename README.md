@@ -51,7 +51,7 @@ Use the included Maven Wrapper (`mvnw.cmd` on Windows, `./mvnw` on Linux/macOS):
    ```powershell
    .\mvnw.cmd clean package
    ```
-   Output artifact: `target/CrDrReport-0.0.9e-SNAPSHOT.jar`
+   Output artifact: `target/CrDrReport-0.0.12-SNAPSHOT.jar`
 
    *Available Maven/Spring profiles:* `dev` (default), `deploy` (initializes schema/data via `data.sql`), `aws`. Example:
    ```powershell
@@ -83,7 +83,7 @@ Use the included Maven Wrapper (`mvnw.cmd` on Windows, `./mvnw` on Linux/macOS):
    ```
 3. Start the application using either the packaged JAR or Maven:
    ```powershell
-   java -jar target/CrDrReport-0.0.9e-SNAPSHOT.jar
+   java -jar target/CrDrReport-0.0.12-SNAPSHOT.jar
    ```
    *(or `.\mvnw.cmd spring-boot:run`)*
 4. Open `http://localhost:8080` in your browser (port `5000` when running the `aws` profile unless `PORT` is set).

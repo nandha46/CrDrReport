@@ -27,14 +27,14 @@ public class CSVController {
 	@Autowired
 	private CompSelectionRepo compSelectionRepo;
 
-	@GetMapping("/uploadcsv")
+	@GetMapping({ "/csv/upload", "/uploadcsv" })
 	public String uploadCSV(Model model) {
 		model.addAttribute("pageTitle", "Upload CSV File");
 		model.addAttribute("csvUploadModel", new CSVUploadModel());
 		return "uploadCSV";
 	}
 
-	@PostMapping("/csvuploaded")
+	@PostMapping({ "/csv/upload", "/csvuploaded" })
 	public String success(@AuthenticationPrincipal CustomUserDetails user, Model model, CSVUploadModel csvUploadModel) {
 		Long companyId = compSelectionRepo.findCompanyIdByUserId(user.getId());
 		if (companyId == null) {
