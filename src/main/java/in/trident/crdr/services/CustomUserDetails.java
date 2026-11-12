@@ -1,8 +1,12 @@
 package in.trident.crdr.services;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -75,6 +79,50 @@ public class CustomUserDetails implements UserDetails {
 
 	public Long getId() {
 		return user.getId();
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public String getAvatarType() {
+		return user.getAvatarType() != null && !user.getAvatarType().trim().isEmpty()
+				? user.getAvatarType()
+				: "initials";
+	}
+
+	public String getAvatarValue() {
+		return user.getAvatarValue();
+	}
+
+	public String getInitials() {
+		String f = user.getFirstName() != null && !user.getFirstName().isEmpty()
+				? user.getFirstName().substring(0, 1).toUpperCase(Locale.ROOT)
+				: "";
+		String l = user.getLastName() != null && !user.getLastName().isEmpty()
+				? user.getLastName().substring(0, 1).toUpperCase(Locale.ROOT)
+				: "";
+		String combined = f + l;
+		return combined.isEmpty() ? "U" : combined;
+	}
+
+	public String getGravatarUrl() {
+		return gravatarUrlFor(user.getEmail());
+	}
+
+	public static String gravatarUrlFor(String email) {
+		String normalized = email == null ? "" : email.trim().toLowerCase(Locale.ROOT);
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] digest = md.digest(normalized.getBytes(StandardCharsets.UTF_8));
+			StringBuilder hex = new StringBuilder(digest.length * 2);
+			for (byte b : digest) {
+				hex.append(String.format("%02x", b & 0xff));
+			}
+			return "https://www.gravatar.com/avatar/" + hex + "?s=160&d=identicon";
+		} catch (NoSuchAlgorithmException e) {
+			return "https://www.gravatar.com/avatar/?s=160&d=identicon";
+		}
 	}
 
 }

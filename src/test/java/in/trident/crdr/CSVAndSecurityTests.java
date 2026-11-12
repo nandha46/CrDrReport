@@ -161,4 +161,29 @@ public class CSVAndSecurityTests {
 				.andExpect(status().isOk())
 				.andExpect(view().name("performance"));
 	}
+
+	@Test
+	public void userCanUpdateProfileAndAvatarAndViewLogo() throws Exception {
+		User u = new User();
+		u.setEmail("profile-test@example.com");
+		u.setPassword("hashed-pass");
+		u.setFirstName("Test");
+		u.setLastName("User");
+		u.setEnabled(true);
+		u = userRepository.save(u);
+
+		CustomUserDetails principal = new CustomUserDetails(u);
+		mockMvc.perform(post("/profile/update").with(user(principal)).with(csrf())
+				.param("firstName", "Updated")
+				.param("lastName", "Person")
+				.param("avatarType", "gravatar")
+				.param("avatarValue", ""))
+				.andExpect(status().is3xxRedirection());
+
+		User refreshed = userRepository.findById(u.getId()).orElseThrow(AssertionError::new);
+		assertThat(refreshed.getFirstName()).isEqualTo("Updated");
+		assertThat(refreshed.getLastName()).isEqualTo("Person");
+		assertThat(refreshed.getAvatarType()).isEqualTo("gravatar");
+		assertThat(principal.getGravatarUrl()).contains("https://www.gravatar.com/avatar/");
+	}
 }

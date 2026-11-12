@@ -4,7 +4,21 @@
 <head th:fragment="head">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}" />
 <title>[[${pageTitle}]]</title>
+<link rel="icon" type="image/svg+xml" th:href="@{/images/logo.svg}" />
+<script>
+(function () {
+	var t = localStorage.getItem('crdr-theme');
+	if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		t = 'dark';
+	}
+	if (t === 'dark') {
+		document.documentElement.setAttribute('data-theme', 'dark');
+	}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet"
@@ -34,7 +48,7 @@
 						<i class="fa-solid fa-bars"></i>
 					</button>
 					<a class="navbar-brand" th:href="@{/dashboard}">
-						<span class="crdr-brand-badge"><i class="fa-solid fa-scale-balanced"></i></span>
+						<img th:src="@{/images/logo.svg}" alt="CrDr Report" style="width: 28px; height: 28px; border-radius: 8px;" />
 						<span>CrDr Report</span>
 					</a>
 					<button type="button" class="navbar-toggle collapsed"
@@ -48,13 +62,24 @@
 				</div>
 				<div class="collapse navbar-collapse" id="crdr-nav-shell">
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<button type="button" id="crdrThemeToggle" class="crdr-theme-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+								<i class="fa-solid fa-moon"></i>
+							</button>
+						</li>
 						<li><a th:href="@{/companies/select}"><i
 								class="fa-solid fa-building"></i> Switch Company</a></li>
 						<li><a th:href="@{/settings}"><i
 								class="fa-solid fa-gear"></i> Settings</a></li>
 						<li sec:authorize="isAuthenticated()"><a th:href="@{/profile}"
-							id="nav-username"><i class="fa-solid fa-circle-user"></i> <span
-								sec:authentication="principal.name">User</span></a></li>
+							id="nav-username" style="display:flex;align-items:center;">
+								<span class="crdr-nav-avatar" th:switch="${#authentication.principal.avatarType}">
+									<img th:case="'gravatar'" th:src="${#authentication.principal.gravatarUrl}" alt="Avatar" />
+									<img th:case="'url'" th:src="${#authentication.principal.avatarValue}" alt="Avatar" />
+									<i th:case="'icon'" th:class="'fa-solid ' + (${#authentication.principal.avatarValue} ?: 'fa-scale-balanced')"></i>
+									<span th:case="*" th:text="${#authentication.principal.initials}">U</span>
+								</span>
+								<span sec:authentication="principal.name">User</span></a></li>
 						<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i
 								class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
 						<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}"
@@ -97,6 +122,10 @@
 			<a class="crdr-sidebar-link" th:href="@{/reports/trading-pl}">
 				<i class="fa-solid fa-chart-column"></i>
 				<span class="crdr-sidebar-text">Trading &amp; P&amp;L</span>
+			</a>
+			<a class="crdr-sidebar-link" th:href="@{/accounts}">
+				<i class="fa-solid fa-sitemap"></i>
+				<span class="crdr-sidebar-text">Account Heads</span>
 			</a>
 			<a class="crdr-sidebar-link" th:href="@{/reports/balance-sheet}">
 				<i class="fa-solid fa-landmark"></i>
@@ -182,7 +211,7 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" th:href="@{/}">
-						<span class="crdr-brand-badge"><i class="fa-solid fa-scale-balanced"></i></span>
+						<img th:src="@{/images/logo.svg}" alt="CrDr Report" style="width: 28px; height: 28px; border-radius: 8px;" />
 						<span>CrDr Report</span>
 					</a>
 				</div>
@@ -193,6 +222,11 @@
 						<li><a th:href="@{/faq}"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<button type="button" id="crdrThemeToggle" class="crdr-theme-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+								<i class="fa-solid fa-moon"></i>
+							</button>
+						</li>
 						<li sec:authorize="isAuthenticated()"><a th:href="@{/dashboard}"
 							class="crdr-nav-cta"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
 						<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i
@@ -226,9 +260,29 @@
 		<link rel="stylesheet" th:href="@{/css/modern.css}" />
 	</div>
 
+	<div th:fragment="report-actions(reportSlug, reportLabel)" class="crdr-report-toolbar crdr-no-print">
+		<button type="button" class="crdr-btn crdr-btn-outline" onclick="window.print()">
+			<i class="fa-solid fa-print"></i> Print
+		</button>
+		<a th:href="@{'/reports/' + ${reportSlug} + '/export/pdf'}" class="crdr-btn crdr-btn-outline">
+			<i class="fa-solid fa-file-pdf"></i> Export PDF
+		</a>
+		<a th:href="@{'/reports/' + ${reportSlug} + '/export/excel'}" class="crdr-btn crdr-btn-outline">
+			<i class="fa-solid fa-file-excel"></i> Export Excel
+		</a>
+		<button type="button" class="crdr-btn crdr-btn-whatsapp js-crdr-wa-share"
+			th:data-title="${reportLabel}"
+			th:data-company="${companyName}"
+			th:data-period="${reportPeriod}"
+			th:data-pdf-url="@{'/reports/' + ${reportSlug} + '/export/pdf'}"
+			th:data-file-name="${reportSlug + '-report.pdf'}">
+			<i class="fa-brands fa-whatsapp"></i> Share WhatsApp
+		</button>
+	</div>
+
 	<footer th:fragment="footer" class="crdr-footer">
 		<div class="crdr-footer-inner">
-			<span><i class="fa-solid fa-scale-balanced"></i> CrDr Report &middot; v0.0.14-SNAPSHOT</span>
+			<span><img th:src="@{/images/logo.svg}" alt="CrDr" style="width: 18px; height: 18px; vertical-align: -3px; margin-right: 6px; border-radius: 4px;" />CrDr Report powered by <strong>Extenzia Technology Solutions</strong> &middot; v0.0.15-SNAPSHOT</span>
 			<div class="crdr-footer-links">
 				<a th:href="@{/}">Home</a>
 				<a th:href="@{/docs}">Documentation</a>

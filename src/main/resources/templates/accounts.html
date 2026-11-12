@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: head" />
+<body>
+	<div th:replace="fragments :: navbar"></div>
+
+	<main class="crdr-main">
+		<div class="crdr-page-header">
+			<div>
+				<h1><i class="fa-solid fa-sitemap"></i> Account Heads</h1>
+				<p class="crdr-page-subtitle">[[${companyName}]] &middot; Add or update ledger account heads and opening balances.</p>
+			</div>
+			<div class="crdr-btn-row">
+				<a th:href="@{/reports/daybook}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-book-open"></i> Daybook</a>
+				<a th:href="@{/dashboard}" class="crdr-btn crdr-btn-primary"><i
+					class="fa-solid fa-chart-line"></i> Dashboard</a>
+			</div>
+		</div>
+
+		<div th:if="${param.saved}" class="alert alert-success" role="alert">
+			<i class="fa-solid fa-circle-check"></i> Account head saved successfully.
+		</div>
+
+		<section class="crdr-card" style="margin-bottom: 20px;">
+			<h2 class="crdr-card-title"><i class="fa-solid fa-plus-circle"></i> Add / Update Account Head</h2>
+			<form th:action="@{/accounts/save}" method="post" id="accHeadForm">
+				<div class="row">
+					<div class="col-sm-2 form-group">
+						<label for="accCode">Code</label>
+						<input type="number" id="accCode" name="accCode" class="form-control" required min="1" placeholder="101" />
+					</div>
+					<div class="col-sm-4 form-group">
+						<label for="accName">Account Name</label>
+						<input type="text" id="accName" name="accName" class="form-control" required placeholder="e.g. Office Expenses" />
+					</div>
+					<div class="col-sm-3 form-group">
+						<label for="shortName">Short Name</label>
+						<input type="text" id="shortName" name="shortName" class="form-control" placeholder="e.g. OFFICE EXP" />
+					</div>
+					<div class="col-sm-3 form-group">
+						<label for="accType">Type</label>
+						<select id="accType" name="accType" class="form-control">
+							<option value="A">Asset (A)</option>
+							<option value="L">Liability (L)</option>
+							<option value="I">Income (I)</option>
+							<option value="E">Expense (E)</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3 form-group">
+						<label for="drAmt">Opening Debit</label>
+						<input type="number" step="0.01" min="0" id="drAmt" name="drAmt" class="form-control" value="0" />
+					</div>
+					<div class="col-sm-3 form-group">
+						<label for="crAmt">Opening Credit</label>
+						<input type="number" step="0.01" min="0" id="crAmt" name="crAmt" class="form-control" value="0" />
+					</div>
+					<div class="col-sm-3 form-group">
+						<label for="level1">Level</label>
+						<input type="number" id="level1" name="level1" class="form-control" value="2" min="1" max="5" />
+					</div>
+					<div class="col-sm-3 form-group">
+						<label for="orderCode">Order Code</label>
+						<input type="number" id="orderCode" name="orderCode" class="form-control" value="1" min="1" max="10" />
+					</div>
+				</div>
+				<button type="submit" class="crdr-btn crdr-btn-primary">
+					<i class="fa-solid fa-floppy-disk"></i> Save Account Head
+				</button>
+			</form>
+		</section>
+
+		<section class="crdr-card">
+			<h2 class="crdr-card-title"><i class="fa-solid fa-list"></i> Existing Account Heads ([[${#lists.size(accHeadList)}]])</h2>
+			<div class="crdr-table-wrap">
+				<table class="table table-striped table-bordered crdr-table-clean">
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th>Account Name</th>
+							<th>Short Name</th>
+							<th>Type</th>
+							<th class="text-right">Opening Dr</th>
+							<th class="text-right">Opening Cr</th>
+							<th class="crdr-no-print">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="a : ${accHeadList}">
+							<td th:text="${a.accCode}">101</td>
+							<td th:text="${a.accName}">Cash</td>
+							<td th:text="${a.shortName}">CASH</td>
+							<td th:text="${a.accType}">A</td>
+							<td class="text-right" th:text="${a.drAmt}">0.00</td>
+							<td class="text-right" th:text="${a.crAmt}">0.00</td>
+							<td class="crdr-no-print">
+								<button type="button" class="btn btn-xs btn-default js-edit-acc"
+									th:data-code="${a.accCode}"
+									th:data-name="${a.accName}"
+									th:data-short="${a.shortName}"
+									th:data-type="${a.accType}"
+									th:data-dr="${a.drAmt}"
+									th:data-cr="${a.crAmt}"
+									th:data-level="${a.level1}"
+									th:data-order="${a.orderCode}">
+									<i class="fa-solid fa-pen"></i> Edit
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="fragments :: footer"></div>
+
+	<script>
+	(function () {
+		document.querySelectorAll('.js-edit-acc').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				document.getElementById('accCode').value = btn.dataset.code || '';
+				document.getElementById('accName').value = btn.dataset.name || '';
+				document.getElementById('shortName').value = btn.dataset.short || '';
+				document.getElementById('accType').value = btn.dataset.type || 'A';
+				document.getElementById('drAmt').value = btn.dataset.dr || '0';
+				document.getElementById('crAmt').value = btn.dataset.cr || '0';
+				document.getElementById('level1').value = btn.dataset.level || '2';
+				document.getElementById('orderCode').value = btn.dataset.order || '1';
+				document.getElementById('accName').focus();
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+		});
+	})();
+	</script>
+</body>
+</html>

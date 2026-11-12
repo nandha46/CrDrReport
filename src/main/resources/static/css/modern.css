@@ -3,6 +3,7 @@
 :root {
 	--crdr-bg: #f8fafc;
 	--crdr-surface: #ffffff;
+	--crdr-surface-2: #f1f5f9;
 	--crdr-nav-bg: #0f172a;
 	--crdr-nav-border: rgba(255, 255, 255, 0.08);
 	--crdr-primary: #2563eb;
@@ -16,6 +17,26 @@
 	--crdr-shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -4px rgba(15, 23, 42, 0.04);
 }
 
+[data-theme="dark"] {
+	--crdr-bg: #0b1120;
+	--crdr-surface: #111827;
+	--crdr-surface-2: #1e293b;
+	--crdr-nav-bg: #070b14;
+	--crdr-nav-border: rgba(255, 255, 255, 0.1);
+	--crdr-primary: #3b82f6;
+	--crdr-primary-hover: #2563eb;
+	--crdr-accent: #38bdf8;
+	--crdr-text: #f1f5f9;
+	--crdr-muted: #94a3b8;
+	--crdr-border: #1e293b;
+	--crdr-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.25);
+	--crdr-shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.45), 0 4px 10px -4px rgba(0, 0, 0, 0.3);
+}
+
+html {
+	height: 100%;
+}
+
 html, body {
 	min-height: 100%;
 	background-color: var(--crdr-bg);
@@ -24,8 +45,15 @@ html, body {
 	-webkit-font-smoothing: antialiased;
 }
 
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
 /* Override legacy table border in main.css only when using modern cards/tables */
 .crdr-main {
+	flex: 1 0 auto;
 	padding: 20px 16px 48px;
 	width: 100%;
 	max-width: none;
@@ -772,6 +800,8 @@ a.crdr-card:hover {
 
 /* Footer */
 .crdr-footer {
+	flex-shrink: 0;
+	margin-top: auto;
 	border-top: 1px solid var(--crdr-border);
 	background: var(--crdr-surface);
 	padding: 20px 16px;
@@ -809,4 +839,233 @@ a.crdr-card:hover {
 
 .crdr-footer-links a:hover {
 	color: var(--crdr-primary);
+}
+
+/* Theme Toggle & Navbar Avatar */
+.crdr-theme-btn {
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	color: #e2e8f0;
+	border-radius: 8px;
+	width: 34px;
+	height: 34px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	margin: 10px 6px;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.crdr-theme-btn:hover {
+	background: rgba(255, 255, 255, 0.18);
+	color: #ffffff;
+}
+
+.crdr-nav-avatar {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	object-fit: cover;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, #2563eb, #0ea5e9);
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: 700;
+	vertical-align: middle;
+	margin-right: 6px;
+	overflow: hidden;
+}
+
+.crdr-nav-avatar img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Avatar Picker */
+.crdr-avatar-preview {
+	width: 84px;
+	height: 84px;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, #2563eb, #0ea5e9);
+	color: #ffffff;
+	font-size: 30px;
+	font-weight: 800;
+	overflow: hidden;
+	border: 3px solid var(--crdr-border);
+	box-shadow: var(--crdr-shadow-sm);
+}
+
+.crdr-avatar-preview img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.crdr-avatar-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 8px;
+}
+
+.crdr-avatar-choice {
+	width: 52px;
+	height: 52px;
+	border-radius: 12px;
+	border: 2px solid var(--crdr-border);
+	background: var(--crdr-surface-2);
+	color: var(--crdr-text);
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-size: 18px;
+	transition: border-color 0.15s ease, transform 0.12s ease, background 0.15s ease;
+	overflow: hidden;
+	padding: 0;
+}
+
+.crdr-avatar-choice:hover {
+	border-color: var(--crdr-primary);
+	transform: translateY(-1px);
+}
+
+.crdr-avatar-choice.is-selected {
+	border-color: var(--crdr-primary);
+	background: rgba(37, 99, 235, 0.14);
+	color: var(--crdr-primary);
+	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+/* Report Actions Toolbar */
+.crdr-report-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.crdr-btn-whatsapp {
+	background: #16a34a;
+	color: #ffffff !important;
+	border: 1px solid #15803d;
+}
+
+.crdr-btn-whatsapp:hover {
+	background: #15803d;
+	color: #ffffff !important;
+}
+
+/* Dark Mode Component Overrides */
+[data-theme="dark"] .crdr-card,
+[data-theme="dark"] .crdr-docs-section,
+[data-theme="dark"] .crdr-docs-nav,
+[data-theme="dark"] .panel,
+[data-theme="dark"] .modal-content {
+	background-color: var(--crdr-surface);
+	border-color: var(--crdr-border);
+	color: var(--crdr-text);
+}
+
+[data-theme="dark"] .crdr-table-clean,
+[data-theme="dark"] .crdr-table,
+[data-theme="dark"] .table {
+	background-color: var(--crdr-surface) !important;
+	color: var(--crdr-text) !important;
+	border-color: var(--crdr-border) !important;
+}
+
+[data-theme="dark"] .crdr-table-clean th,
+[data-theme="dark"] .crdr-table th,
+[data-theme="dark"] .table > thead > tr > th {
+	background-color: var(--crdr-surface-2) !important;
+	color: var(--crdr-text) !important;
+	border-color: var(--crdr-border) !important;
+}
+
+[data-theme="dark"] .crdr-table-clean td,
+[data-theme="dark"] .crdr-table td,
+[data-theme="dark"] .table > tbody > tr > td {
+	border-color: var(--crdr-border) !important;
+}
+
+[data-theme="dark"] .table-striped > tbody > tr:nth-of-type(odd) {
+	background-color: rgba(255, 255, 255, 0.025) !important;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] select.form-control,
+[data-theme="dark"] input.form-control {
+	background-color: var(--crdr-surface-2);
+	border-color: #334155;
+	color: var(--crdr-text);
+}
+
+[data-theme="dark"] .form-control:focus {
+	border-color: var(--crdr-primary);
+	box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+[data-theme="dark"] .crdr-btn-outline,
+[data-theme="dark"] .crdr-btn-ghost {
+	background: var(--crdr-surface-2);
+	color: var(--crdr-text);
+	border-color: #334155;
+}
+
+[data-theme="dark"] .crdr-docs-nav a:hover {
+	background: var(--crdr-surface-2);
+}
+
+[data-theme="dark"] .crdr-badge {
+	background: var(--crdr-surface-2);
+	color: var(--crdr-text);
+}
+
+[data-theme="dark"] code {
+	background-color: #1e293b;
+	color: #7dd3fc;
+}
+
+/* Print Layout for Financial Reports */
+@media print {
+	.crdr-navbar,
+	.crdr-sidebar,
+	.crdr-sidebar-backdrop,
+	.crdr-footer,
+	.crdr-no-print,
+	.crdr-page-header .crdr-btn-row,
+	.crdr-report-toolbar {
+		display: none !important;
+	}
+
+	body,
+	body.crdr-has-sidebar,
+	body.crdr-has-sidebar .crdr-main {
+		margin: 0 !important;
+		padding: 0 !important;
+		width: 100% !important;
+		background: #ffffff !important;
+		color: #000000 !important;
+	}
+
+	.crdr-card {
+		box-shadow: none !important;
+		border: none !important;
+		padding: 0 !important;
+	}
+
+	.crdr-table-clean,
+	.table {
+		font-size: 11px !important;
+	}
 }

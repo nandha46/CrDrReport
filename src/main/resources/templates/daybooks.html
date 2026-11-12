@@ -8,25 +8,87 @@
 		<div class="crdr-page-header">
 			<div>
 				<h1><i class="fa-solid fa-book-open"></i> Day Book Report</h1>
-				<p class="crdr-page-subtitle">Daily voucher entries with opening balance and totals.</p>
+				<p class="crdr-page-subtitle">[[${companyName}]] &middot; [[${reportPeriod}]]</p>
 			</div>
 			<div class="crdr-btn-row">
 				<a th:href="@{/reports/daybook}" class="crdr-btn crdr-btn-outline"><i
 					class="fa-solid fa-filter"></i> New Filter</a>
+				<a th:href="@{/accounts}" class="crdr-btn crdr-btn-outline"><i
+					class="fa-solid fa-sitemap"></i> Account Heads</a>
 				<a th:href="@{/reports}" class="crdr-btn crdr-btn-primary"><i
 					class="fa-solid fa-chart-pie"></i> Dashboard</a>
 			</div>
 		</div>
 
+		<div class="crdr-report-toolbar crdr-no-print">
+			<button type="button" class="crdr-btn crdr-btn-outline" onclick="window.print()">
+				<i class="fa-solid fa-print"></i> Print
+			</button>
+			<a th:href="@{/reports/daybook/export/pdf(startDate=${startDate},endDate=${endDate})}"
+				class="crdr-btn crdr-btn-outline">
+				<i class="fa-solid fa-file-pdf"></i> Export PDF
+			</a>
+			<a th:href="@{/reports/daybook/export/excel(startDate=${startDate},endDate=${endDate})}"
+				class="crdr-btn crdr-btn-outline">
+				<i class="fa-solid fa-file-excel"></i> Export Excel
+			</a>
+			<button type="button" class="crdr-btn crdr-btn-whatsapp" id="shareDaybookWa"
+				th:data-pdf-url="@{/reports/daybook/export/pdf(startDate=${startDate},endDate=${endDate})}"
+				th:data-company="${companyName}"
+				th:data-period="${reportPeriod}">
+				<i class="fa-brands fa-whatsapp"></i> Share WhatsApp
+			</button>
+			<button type="button" class="crdr-btn crdr-btn-primary" id="toggleAddEntryBtn" style="margin-left: auto;">
+				<i class="fa-solid fa-plus"></i> Add Daybook Entry
+			</button>
+		</div>
+
+		<div id="addDaybookCard" class="crdr-card crdr-no-print" style="display: none; margin-bottom: 18px;">
+			<h3 class="crdr-card-title"><i class="fa-solid fa-plus-circle"></i> New Daybook Entry</h3>
+			<form th:action="@{/reports/daybook/entry}" method="post">
+				<input type="hidden" name="startDate" th:value="${startDate}" />
+				<input type="hidden" name="endDate" th:value="${endDate}" />
+				<div class="row">
+					<div class="col-sm-2 form-group">
+						<label for="newEntryDate">Date</label>
+						<input type="date" id="newEntryDate" name="date" class="form-control" th:value="${startDate}" required />
+					</div>
+					<div class="col-sm-3 form-group">
+						<label for="newEntryAcc">Account Head</label>
+						<select id="newEntryAcc" name="acccode" class="form-control" required>
+							<option th:each="a : ${accHeadList}" th:value="${a.accCode}"
+								th:text="${a.shortName + ' - ' + a.accName}">Account</option>
+						</select>
+					</div>
+					<div class="col-sm-3 form-group">
+						<label for="newEntryNarr">Narration</label>
+						<input type="text" id="newEntryNarr" name="narration" class="form-control" required placeholder="Voucher narration" />
+					</div>
+					<div class="col-sm-2 form-group">
+						<label for="newEntryDr">Debit</label>
+						<input type="number" step="0.01" min="0" id="newEntryDr" name="drAmt" class="form-control" value="0" />
+					</div>
+					<div class="col-sm-2 form-group">
+						<label for="newEntryCr">Credit</label>
+						<input type="number" step="0.01" min="0" id="newEntryCr" name="crAmt" class="form-control" value="0" />
+					</div>
+				</div>
+				<button type="submit" class="crdr-btn crdr-btn-primary">
+					<i class="fa-solid fa-floppy-disk"></i> Save Entry
+				</button>
+			</form>
+		</div>
+
 		<div class="crdr-card">
 			<div class="crdr-table-wrap">
-				<table class="table table-striped table-bordered crdr-table-clean">
+				<table class="table table-striped table-bordered crdr-table-clean" id="daybookTable">
 					<thead class="thead-dark">
 						<tr>
-							<th id="center_align">Date</th>
+							<th id="center_align">Date / Account</th>
 							<th id="center_align">Narration</th>
 							<th id="center_align">Debit</th>
 							<th id="center_align">Credit</th>
+							<th class="crdr-no-print" style="width: 120px; text-align: center;">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -36,6 +98,7 @@
 								<td id="left_align">Opening Balance</td>
 								<td id="right_align"> </td>
 								<td id="right_align" th:text="${openingBal}">Opening Balance Value</td>
+								<td class="crdr-no-print"></td>
 							</tr>
 							<tr>
 								<td id="left_align" style="color: red"
@@ -44,12 +107,28 @@
 									th:text="${daybookview.dayOfWeek}">Day of week</td>
 								<td></td>
 								<td></td>
+								<td class="crdr-no-print"></td>
 							</tr>
-							<tr th:each="transaction: ${daybookview.transList}">
-								<td id="left_align" th:text="${transaction.shortName}">Date</td>
-								<td id="left_align" th:text="${transaction.narration}">Narration</td>
-								<td id="right_align" th:text="${transaction.debitAmt}">Debit</td>
-								<td id="right_align" th:text="${transaction.creditAmt}">Credit</td>
+							<tr th:each="transaction: ${daybookview.transList}"
+								class="js-tx-row"
+								th:data-id="${transaction.id}"
+								th:data-date="${transaction.date}"
+								th:data-acccode="${transaction.acccode}"
+								th:data-narration="${transaction.narration}"
+								th:data-debit="${transaction.rawDebit}"
+								th:data-credit="${transaction.rawCredit}">
+								<td id="left_align" class="js-cell-acc" th:text="${transaction.shortName}">Account</td>
+								<td id="left_align" class="js-cell-narr" th:text="${transaction.narration}">Narration</td>
+								<td id="right_align" class="js-cell-dr" th:text="${transaction.debitAmt}">Debit</td>
+								<td id="right_align" class="js-cell-cr" th:text="${transaction.creditAmt}">Credit</td>
+								<td class="crdr-no-print" style="text-align: center; white-space: nowrap;">
+									<button type="button" class="btn btn-xs btn-default js-inline-edit" title="Edit inline">
+										<i class="fa-solid fa-pen"></i>
+									</button>
+									<button type="button" class="btn btn-xs btn-danger js-inline-delete" title="Delete entry">
+										<i class="fa-solid fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 							<tr>
 								<td></td>
@@ -58,13 +137,15 @@
 									th:text="${daybookview.debitTot}">Debit Total</td>
 								<td id="right_align" style="color: red"
 									th:text="${daybookview.creditTot}">Credit Total</td>
+								<td class="crdr-no-print"></td>
 							</tr>
 							<tr>
-								<td id="left_align"><!--   Date Placeholder --></td>
-								<td id="left_align" th:text="${daybookviewStat.last} ? 'Closing Balance'"><!--   Closing Balance Placeholder --></td>
+								<td id="left_align"></td>
+								<td id="left_align" th:text="${daybookviewStat.last} ? 'Closing Balance'"></td>
 								<td></td>
 								<td id="right_align" style="color: darkgreen"
 									th:text="${daybookview.closingBal}">Closing Balance Value</td>
+								<td class="crdr-no-print"></td>
 							</tr>
 						</th:block>
 					</tbody>
@@ -73,5 +154,156 @@
 		</div>
 	</main>
 	<div th:replace="fragments :: footer"></div>
+
+	<select id="accHeadTemplateSelect" style="display: none;">
+		<option th:each="a : ${accHeadList}" th:value="${a.accCode}"
+			th:text="${a.shortName + ' - ' + a.accName}">Account</option>
+	</select>
+
+	<script th:inline="javascript">
+	(function () {
+		var toggleBtn = document.getElementById('toggleAddEntryBtn');
+		var addCard = document.getElementById('addDaybookCard');
+		if (toggleBtn && addCard) {
+			toggleBtn.addEventListener('click', function () {
+				addCard.style.display = addCard.style.display === 'none' ? 'block' : 'none';
+			});
+		}
+
+		var waBtn = document.getElementById('shareDaybookWa');
+		if (waBtn && window.crdrShareWhatsApp) {
+			waBtn.addEventListener('click', function () {
+				window.crdrShareWhatsApp({
+					title: 'Daybook Report - ' + (waBtn.dataset.company || ''),
+					summary: 'Daybook Report for ' + (waBtn.dataset.company || '') + ' (' + (waBtn.dataset.period || '') + ')',
+					pdfUrl: waBtn.dataset.pdfUrl,
+					fileName: 'daybook-report.pdf'
+				});
+			});
+		}
+
+		var templateSelect = document.getElementById('accHeadTemplateSelect');
+		var csrfTokenMeta = document.querySelector('meta[name="_csrf"]');
+		var csrfHeaderMeta = document.querySelector('meta[name="_csrf_header"]');
+
+		function getCsrfHeaders() {
+			var h = { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' };
+			if (csrfTokenMeta && csrfHeaderMeta) {
+				h[csrfHeaderMeta.content] = csrfTokenMeta.content;
+			}
+			return h;
+		}
+
+		document.querySelectorAll('.js-inline-edit').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var row = btn.closest('tr');
+				if (!row || row.dataset.editing === 'true') {
+					return;
+				}
+				row.dataset.editing = 'true';
+				var id = row.dataset.id;
+				var dateVal = row.dataset.date || '';
+				var accVal = row.dataset.acccode || '';
+				var narrVal = row.dataset.narration || '';
+				var drVal = row.dataset.debit || '0';
+				var crVal = row.dataset.credit || '0';
+
+				var accCell = row.querySelector('.js-cell-acc');
+				var narrCell = row.querySelector('.js-cell-narr');
+				var drCell = row.querySelector('.js-cell-dr');
+				var crCell = row.querySelector('.js-cell-cr');
+				var actCell = btn.parentElement;
+
+				var origAccHtml = accCell.innerHTML;
+				var origNarrHtml = narrCell.innerHTML;
+				var origDrHtml = drCell.innerHTML;
+				var origCrHtml = crCell.innerHTML;
+				var origActHtml = actCell.innerHTML;
+
+				var sel = templateSelect.cloneNode(true);
+				sel.id = '';
+				sel.style.display = 'block';
+				sel.className = 'form-control input-sm';
+				sel.value = accVal;
+
+				var dateIn = document.createElement('input');
+				dateIn.type = 'date';
+				dateIn.className = 'form-control input-sm';
+				dateIn.value = dateVal;
+				dateIn.style.marginBottom = '4px';
+
+				accCell.innerHTML = '';
+				accCell.appendChild(dateIn);
+				accCell.appendChild(sel);
+
+				narrCell.innerHTML = '<input type="text" class="form-control input-sm" value="' +
+					narrVal.replace(/"/g, '&quot;') + '" />';
+				drCell.innerHTML = '<input type="number" step="0.01" min="0" class="form-control input-sm text-right" value="' + drVal + '" />';
+				crCell.innerHTML = '<input type="number" step="0.01" min="0" class="form-control input-sm text-right" value="' + crVal + '" />';
+
+				actCell.innerHTML = '<button type="button" class="btn btn-xs btn-primary js-save-inline"><i class="fa-solid fa-check"></i></button> ' +
+					'<button type="button" class="btn btn-xs btn-default js-cancel-inline"><i class="fa-solid fa-xmark"></i></button>';
+
+				actCell.querySelector('.js-cancel-inline').addEventListener('click', function () {
+					accCell.innerHTML = origAccHtml;
+					narrCell.innerHTML = origNarrHtml;
+					drCell.innerHTML = origDrHtml;
+					crCell.innerHTML = origCrHtml;
+					actCell.innerHTML = origActHtml;
+					row.dataset.editing = 'false';
+					location.reload();
+				});
+
+				actCell.querySelector('.js-save-inline').addEventListener('click', function () {
+					var body = new URLSearchParams();
+					body.append('date', dateIn.value);
+					body.append('acccode', sel.value);
+					body.append('narration', narrCell.querySelector('input').value);
+					body.append('drAmt', drCell.querySelector('input').value || '0');
+					body.append('crAmt', crCell.querySelector('input').value || '0');
+					fetch('/reports/daybook/entry/' + encodeURIComponent(id), {
+						method: 'POST',
+						headers: getCsrfHeaders(),
+						credentials: 'same-origin',
+						body: body.toString()
+					}).then(function (r) {
+						if (!r.ok) {
+							throw new Error('Save failed');
+						}
+						window.location.href = '/reports/daybook/view?startDate=' +
+							encodeURIComponent(/*[[${startDate}]]*/ '') +
+							'&endDate=' + encodeURIComponent(/*[[${endDate}]]*/ '');
+					}).catch(function () {
+						alert('Unable to save daybook entry.');
+					});
+				});
+			});
+		});
+
+		document.querySelectorAll('.js-inline-delete').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var row = btn.closest('tr');
+				if (!row || !confirm('Delete this daybook entry?')) {
+					return;
+				}
+				var id = row.dataset.id;
+				fetch('/reports/daybook/entry/' + encodeURIComponent(id) + '/delete', {
+					method: 'POST',
+					headers: getCsrfHeaders(),
+					credentials: 'same-origin'
+				}).then(function (r) {
+					if (!r.ok) {
+						throw new Error('Delete failed');
+					}
+					window.location.href = '/reports/daybook/view?startDate=' +
+						encodeURIComponent(/*[[${startDate}]]*/ '') +
+						'&endDate=' + encodeURIComponent(/*[[${endDate}]]*/ '');
+				}).catch(function () {
+					alert('Unable to delete daybook entry.');
+				});
+			});
+		});
+	})();
+	</script>
 </body>
 </html>

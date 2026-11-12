@@ -8,13 +8,15 @@
     <div class="crdr-page-header">
         <div>
             <h1><i class="fa-solid fa-file-invoice-dollar"></i> Ledger</h1>
-            <p class="crdr-page-subtitle">Account-wise transactions and running debit/credit balances.</p>
+            <p class="crdr-page-subtitle">[[${companyName}]] &middot; [[${reportPeriod}]]</p>
         </div>
         <div class="crdr-btn-row">
             <a th:href="@{/reports/ledger}" class="crdr-btn crdr-btn-outline"><i class="fa-solid fa-filter"></i> New Filter</a>
             <a th:href="@{/reports}" class="crdr-btn crdr-btn-primary"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
         </div>
     </div>
+
+    <div th:replace="fragments :: report-actions('ledger', 'Ledger Report')"></div>
 
     <div class="crdr-card">
     	<div class="crdr-table-wrap">

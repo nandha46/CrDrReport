@@ -122,8 +122,12 @@ public class DaybookServiceImpl implements DaybookService {
 			List<Transactions> trans = new ArrayList<>(dayEntries.size());
 			for (Daybook transaction : dayEntries) {
 				String shortName = shortNames.get(transaction.getAcccode());
-				trans.add(new Transactions(transaction.getsNo(), transaction.getCrAmt(), transaction.getDrAmt(),
-						transaction.getNarration(), transaction.getSktValue(), shortName));
+				Transactions t = new Transactions(transaction.getsNo(), transaction.getCrAmt(), transaction.getDrAmt(),
+						transaction.getNarration(), transaction.getSktValue(), shortName);
+				t.setId(transaction.getDbId());
+				t.setAcccode(transaction.getAcccode());
+				t.setDate(isoDate);
+				trans.add(t);
 			}
 			Collections.sort(trans);
 			daybookView.setTransList(trans);
@@ -164,8 +168,12 @@ public class DaybookServiceImpl implements DaybookService {
 		List<Transactions> trans = new ArrayList<>();
 		for (Daybook transaction : daybook) {
 			String shortName = accHeadRepo.findShortNameByAccHead(transaction.getAcccode(), uid, cid);
-			trans.add(new Transactions(transaction.getsNo(), transaction.getCrAmt(),
-					transaction.getDrAmt(), transaction.getNarration(), transaction.getSktValue(), shortName));
+			Transactions t = new Transactions(transaction.getsNo(), transaction.getCrAmt(),
+					transaction.getDrAmt(), transaction.getNarration(), transaction.getSktValue(), shortName);
+			t.setId(transaction.getDbId());
+			t.setAcccode(transaction.getAcccode());
+			t.setDate(isoDate);
+			trans.add(t);
 		}
 		Collections.sort(trans);
 		daybookView.setTransList(trans);

@@ -41,6 +41,12 @@ public class User{
 	
 	@Column(name="enabled")
 	private boolean enabled;
+
+	@Column(name = "avatar_type", length = 20)
+	private String avatarType = "initials";
+
+	@Column(name = "avatar_value", length = 255)
+	private String avatarValue;
 	
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name="users_roles", 
@@ -90,6 +96,18 @@ public class User{
 	}
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	public String getAvatarType() {
+		return avatarType;
+	}
+	public void setAvatarType(String avatarType) {
+		this.avatarType = avatarType;
+	}
+	public String getAvatarValue() {
+		return avatarValue;
+	}
+	public void setAvatarValue(String avatarValue) {
+		this.avatarValue = avatarValue;
 	}
 	@Override
 	public String toString() {

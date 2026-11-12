@@ -9,7 +9,7 @@
 		<div class="crdr-page-header">
 			<div>
 				<h1><i class="fa-solid fa-circle-user"></i> Account &amp; Company Profile</h1>
-				<p class="crdr-page-subtitle">Signed-in user details and active company ledger metrics.</p>
+				<p class="crdr-page-subtitle">Edit your profile details, choose your avatar or Gravatar, and review active company metrics.</p>
 			</div>
 			<div class="crdr-btn-row">
 				<a th:href="@{/settings}" class="crdr-btn crdr-btn-outline"><i
@@ -19,8 +19,111 @@
 			</div>
 		</div>
 
+		<div th:if="${param.updated}" class="alert alert-success" role="alert">
+			<i class="fa-solid fa-circle-check"></i> Profile updated successfully.
+		</div>
+		<div th:if="${param.error}" class="alert alert-danger" role="alert">
+			<i class="fa-solid fa-circle-exclamation"></i> [[${param.error}]]
+		</div>
+
 		<section class="crdr-grid">
 			<div class="crdr-card">
+				<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 18px;">
+					<div id="avatarPreview" class="crdr-avatar-preview" th:switch="${userEntity.avatarType ?: 'initials'}">
+						<img th:case="'gravatar'" th:src="${gravatarUrl}" alt="Gravatar" />
+						<img th:case="'url'" th:src="${userEntity.avatarValue}" alt="Avatar" />
+						<i th:case="'icon'" th:class="'fa-solid ' + (${userEntity.avatarValue} ?: 'fa-scale-balanced')"></i>
+						<span th:case="*" th:text="${initials}">U</span>
+					</div>
+					<div>
+						<h3 class="crdr-card-title" style="margin-bottom: 4px;">[[${userName}]]</h3>
+						<p class="crdr-card-desc" style="margin: 0;">
+							[[${userEmail}]]<br />
+							<strong>Roles:</strong>
+							<span th:each="r,iter : ${userRoles}" th:text="${r.authority + (iter.last ? '' : ', ')}">user</span>
+						</p>
+					</div>
+				</div>
+
+				<form th:action="@{/profile/update}" method="post" id="profileForm">
+					<div class="row">
+						<div class="col-sm-6 form-group">
+							<label for="firstName">First Name</label>
+							<input type="text" id="firstName" name="firstName" class="form-control"
+								th:value="${userEntity.firstName}" maxlength="20" required />
+						</div>
+						<div class="col-sm-6 form-group">
+							<label for="lastName">Last Name</label>
+							<input type="text" id="lastName" name="lastName" class="form-control"
+								th:value="${userEntity.lastName}" maxlength="20" required />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label>Profile Picture / Avatar</label>
+						<input type="hidden" id="avatarType" name="avatarType" th:value="${userEntity.avatarType ?: 'initials'}" />
+						<input type="hidden" id="avatarValue" name="avatarValue" th:value="${userEntity.avatarValue}" />
+
+						<div class="crdr-avatar-grid" role="group" aria-label="Choose profile avatar">
+							<button type="button" class="crdr-avatar-choice" data-type="initials" data-value=""
+								title="Initials Badge">
+								<span style="font-size: 15px; font-weight: 800;" th:text="${initials}">U</span>
+							</button>
+							<button type="button" class="crdr-avatar-choice" data-type="gravatar" th:data-value="${gravatarUrl}"
+								title="Use Gravatar (linked to your email)">
+								<img th:src="${gravatarUrl}" alt="Gravatar" style="width: 100%; height: 100%; object-fit: cover;" />
+							</button>
+							<button type="button" class="crdr-avatar-choice" data-type="icon" data-value="fa-scale-balanced" title="Scale Icon">
+								<i class="fa-solid fa-scale-balanced"></i>
+							</button>
+							<button type="button" class="crdr-avatar-choice" data-type="icon" data-value="fa-chart-line" title="Analytics Icon">
+								<i class="fa-solid fa-chart-line"></i>
+							</button>
+							<button type="button" class="crdr-avatar-choice" data-type="icon" data-value="fa-briefcase" title="Business Icon">
+								<i class="fa-solid fa-briefcase"></i>
+							</button>
+							<button type="button" class="crdr-avatar-choice" data-type="icon" data-value="fa-shield-halved" title="Shield Icon">
+								<i class="fa-solid fa-shield-halved"></i>
+							</button>
+							<button type="button" class="crdr-avatar-choice" data-type="icon" data-value="fa-gem" title="Gem Icon">
+								<i class="fa-solid fa-gem"></i>
+							</button>
+							<button type="button" class="crdr-avatar-choice" data-type="icon" data-value="fa-calculator" title="Calculator Icon">
+								<i class="fa-solid fa-calculator"></i>
+							</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="customAvatarUrl">Or Custom Image URL (optional)</label>
+						<div class="input-group">
+							<input type="url" id="customAvatarUrl" class="form-control"
+								placeholder="https://example.com/avatar.png"
+								th:value="${userEntity.avatarType == 'url' ? userEntity.avatarValue : ''}" />
+							<span class="input-group-btn">
+								<button type="button" id="applyCustomAvatarBtn" class="btn btn-default">Use URL</button>
+							</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="newPassword">New Password <small class="text-muted">(leave blank to keep current)</small></label>
+						<input type="password" id="newPassword" name="newPassword" class="form-control"
+							placeholder="Minimum 6 characters" minlength="6" autocomplete="new-password" />
+					</div>
+
+					<div class="crdr-btn-row">
+						<button type="submit" class="crdr-btn crdr-btn-primary">
+							<i class="fa-solid fa-floppy-disk"></i> Save Profile
+						</button>
+						<a th:href="@{/logout}" class="crdr-btn crdr-btn-outline">
+							<i class="fa-solid fa-right-from-bracket"></i> Sign Out
+						</a>
+					</div>
+				</form>
+			</div>
+
+			<div class="crdr-card" th:if="${company != null}">
 				<span class="crdr-icon-box crdr-icon-blue"><i
 					class="fa-solid fa-building"></i></span>
 				<h3 class="crdr-card-title">[[${company_name}]]</h3>
@@ -34,25 +137,9 @@
 						class="fa-solid fa-chart-pie"></i> Open Reports</a>
 				</div>
 			</div>
-
-			<div class="crdr-card">
-				<span class="crdr-icon-box crdr-icon-violet"><i
-					class="fa-solid fa-id-badge"></i></span>
-				<h3 class="crdr-card-title">User Session</h3>
-				<p class="crdr-card-desc">
-					<strong>Name:</strong> [[${userName}]]<br />
-					<strong>Email:</strong> [[${userEmail}]]<br />
-					<strong>Roles:</strong> <span th:each="r,iter : ${userRoles}"
-						th:text="${r.authority + (iter.last ? '' : ', ')}">user</span>
-				</p>
-				<div class="crdr-btn-row">
-					<a th:href="@{/logout}" class="crdr-btn crdr-btn-outline"><i
-						class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
-				</div>
-			</div>
 		</section>
 
-		<section class="crdr-grid crdr-grid-3" style="margin-top: 20px;">
+		<section class="crdr-grid crdr-grid-3" style="margin-top: 20px;" th:if="${company != null}">
 			<div class="crdr-card">
 				<span class="crdr-icon-box crdr-icon-emerald"><i
 					class="fa-solid fa-sitemap"></i></span>
@@ -84,5 +171,75 @@
 	</main>
 
 	<div th:replace="fragments :: footer"></div>
+
+	<script th:inline="javascript">
+	(function () {
+		var typeInput = document.getElementById('avatarType');
+		var valInput = document.getElementById('avatarValue');
+		var preview = document.getElementById('avatarPreview');
+		var initials = /*[[${initials}]]*/ 'U';
+		var gravatarUrl = /*[[${gravatarUrl}]]*/ '';
+		var choices = document.querySelectorAll('.crdr-avatar-choice');
+
+		function renderPreview(type, value) {
+			preview.innerHTML = '';
+			if (type === 'gravatar') {
+				var img = document.createElement('img');
+				img.src = gravatarUrl;
+				img.alt = 'Gravatar';
+				preview.appendChild(img);
+			} else if (type === 'url' && value) {
+				var cImg = document.createElement('img');
+				cImg.src = value;
+				cImg.alt = 'Custom Avatar';
+				preview.appendChild(cImg);
+			} else if (type === 'icon' && value) {
+				var icon = document.createElement('i');
+				icon.className = 'fa-solid ' + value;
+				preview.appendChild(icon);
+			} else {
+				var span = document.createElement('span');
+				span.textContent = initials;
+				preview.appendChild(span);
+			}
+		}
+
+		function syncSelected() {
+			var t = typeInput.value || 'initials';
+			var v = valInput.value || '';
+			choices.forEach(function (btn) {
+				var match = btn.dataset.type === t && (t !== 'icon' || btn.dataset.value === v);
+				btn.classList.toggle('is-selected', match);
+			});
+		}
+
+		choices.forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var t = btn.dataset.type;
+				var v = btn.dataset.value || '';
+				typeInput.value = t;
+				valInput.value = t === 'icon' ? v : '';
+				renderPreview(t, t === 'gravatar' ? gravatarUrl : v);
+				syncSelected();
+			});
+		});
+
+		var applyBtn = document.getElementById('applyCustomAvatarBtn');
+		var customInput = document.getElementById('customAvatarUrl');
+		if (applyBtn && customInput) {
+			applyBtn.addEventListener('click', function () {
+				var url = (customInput.value || '').trim();
+				if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
+					typeInput.value = 'url';
+					valInput.value = url;
+					renderPreview('url', url);
+					syncSelected();
+				}
+			});
+		}
+
+		syncSelected();
+	})();
+	</script>
 </body>
 </html>

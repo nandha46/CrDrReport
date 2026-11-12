@@ -9,6 +9,11 @@ import in.trident.crdr.util.FormatUtil;
  */
 public class Transactions implements Comparable<Transactions> {
 
+	private Long id;
+	private Integer acccode;
+	private String date;
+	private Double rawDebit;
+	private Double rawCredit;
 	private Integer sNo;
 	private String creditAmt;
 	private String debitAmt;
@@ -24,11 +29,53 @@ public class Transactions implements Comparable<Transactions> {
 		this.sNo = sNo;
 		BigDecimal cr = FormatUtil.nvl(creditAmt);
 		BigDecimal dr = FormatUtil.nvl(debitAmt);
+		this.rawCredit = cr.doubleValue();
+		this.rawDebit = dr.doubleValue();
 		this.creditAmt = cr.compareTo(BigDecimal.ZERO) == 0 ? "" : FormatUtil.formatAmount(cr);
 		this.debitAmt = dr.compareTo(BigDecimal.ZERO) == 0 ? "" : FormatUtil.formatAmount(dr);
 		this.narration = narration;
 		this.stkValue = stkValue;
 		this.shortName = shortName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getAcccode() {
+		return acccode;
+	}
+
+	public void setAcccode(Integer acccode) {
+		this.acccode = acccode;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public Double getRawDebit() {
+		return rawDebit;
+	}
+
+	public void setRawDebit(Double rawDebit) {
+		this.rawDebit = rawDebit;
+	}
+
+	public Double getRawCredit() {
+		return rawCredit;
+	}
+
+	public void setRawCredit(Double rawCredit) {
+		this.rawCredit = rawCredit;
 	}
 
 	public Integer getsNo() {
